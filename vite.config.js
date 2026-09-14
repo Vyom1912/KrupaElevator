@@ -1,10 +1,10 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 
-// Base path must match the GitHub repository name exactly.
-// When deploying to https://Vyom1912.github.io/KrupaElevator/ the
-// asset paths need the /KrupaElevator/ prefix.
-export default defineConfig({
+export default defineConfig(({ command }) => ({
   plugins: [react()],
-  base: '/KrupaElevator/',
-})
+  // In dev (`vite`) base is '/' so localhost works normally.
+  // In production (`vite build`) base is '/KrupaElevator/' so GitHub Pages
+  // asset paths resolve correctly under the repo subdirectory.
+  base: command === 'build' ? '/KrupaElevator/' : '/',
+}))
