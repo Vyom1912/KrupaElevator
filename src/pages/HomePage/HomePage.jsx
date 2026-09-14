@@ -2,8 +2,7 @@ import { Link } from "react-router-dom";
 import { useFloorCounter } from "../../hooks/index";
 import SectionLabel from "../../components/SectionLabel/SectionLabel";
 import { ELEVATORS, ENERGY_FEATURES, ENERGY_STATS } from "../../data/index";
-import { HeroRight } from "../../image";
-
+import { HeroRight, serviceRight, serviceTeam, serviceParts, serviceSystem } from "../../image";
 import "./HomePage.css";
 
 /* ── Hero ─────────────────────────────────────────────────── */
@@ -232,7 +231,7 @@ function TechPreview() {
           </div>
           <div>
             <img
-              src='/images/service_hero.jpg'
+              src={serviceRight}
               alt='Elevator drive technology'
               className='tech-right-img'
               loading='lazy'
@@ -255,19 +254,19 @@ function TechPreview() {
 /* ── Service Preview ──────────────────────────────────────── */
 const SVC_CARDS = [
   {
-    img: "/images/service_1.jpg",
+    img: serviceTeam,
     alt: "Service team",
     title: "Specialized Service Team",
     text: "Strict on-the-job training, strong technical network and management system.",
   },
   {
-    img: "/images/service_2.jpg",
+    img: serviceParts,
     alt: "Spare parts",
     title: "Superior Spare Parts",
     text: "All parts tested before delivery. Rapid supply network across north India.",
   },
   {
-    img: "/images/service_3.jpg",
+    img: serviceSystem,
     alt: "Monitoring",
     title: "24-Hour Monitoring",
     text: "Remote elevator monitoring with timely alarm, rescue and maintenance.",

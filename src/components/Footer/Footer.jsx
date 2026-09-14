@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import { logo } from "../../image";
 import "./Footer.css";
 
 const PRODUCTS = [
@@ -38,7 +39,7 @@ export default function Footer() {
           <div className='footer-band-inner'>
             <Link to='/' aria-label='Krupa Elevators home'>
               <img
-                src='/images/logo.png'
+                src={logo}
                 alt='Krupa Elevators'
                 className='footer-logo'
               />

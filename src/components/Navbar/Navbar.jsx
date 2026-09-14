@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from 'react'
 import { NavLink, Link, useLocation } from 'react-router-dom'
+import { logo } from '../../image'
 import './Navbar.css'
 
 const PAGES = [
@@ -29,7 +30,7 @@ export default function Navbar() {
     <nav className="navbar" role="navigation" aria-label="Main navigation" ref={navRef}>
       <div className="navbar-inner">
         <Link to="/" aria-label="Krupa Elevators home">
-          <img src="/images/logo.png" alt="Krupa Elevators" className="navbar-logo" />
+          <img src={logo} alt="Krupa Elevators" className="navbar-logo" />
         </Link>
 
         <ul className={`navbar-links${open ? ' open' : ''}`} id="navbar-links">
