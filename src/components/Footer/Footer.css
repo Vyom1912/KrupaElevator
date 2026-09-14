@@ -1,0 +1,177 @@
+/* ============================================================
+   FOOTER.CSS
+   ============================================================ */
+.footer {
+  font-family: "Inter", sans-serif;
+}
+
+/* ── Zone 1 — white logo band ── */
+.footer-band {
+  background: var(--white);
+  border-top: 4px solid var(--teal);
+  padding: 32px 0;
+}
+.footer-band-inner {
+  display: flex;
+  align-items: flex-start;
+  gap: 40px;
+  flex-wrap: wrap;
+}
+.footer-logo {
+  height: 40px;
+  flex-shrink: 0;
+}
+.footer-tagline {
+  flex: 1;
+  min-width: 220px;
+  font-size: 13.5px;
+  color: var(--steel);
+  line-height: 1.7;
+}
+.footer-certs {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  align-self: center;
+}
+.footer-cert {
+  font-size: var(--fs-xs);
+  font-weight: 700;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  padding: 4px 12px;
+  border: 1.5px solid var(--line);
+  color: var(--steel);
+  border-radius: 20px;
+}
+
+/* ── Zone 2 — dark grid ── */
+.footer-main {
+  background: var(--ink);
+  padding: 52px 0 44px;
+}
+.footer-grid {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr 1.2fr;
+  gap: 52px;
+}
+.footer-col-title {
+  font-family: "Space Grotesk", sans-serif;
+  font-size: var(--fs-xs);
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--teal);
+  margin-bottom: 18px;
+}
+.footer-links {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.footer-links li a,
+.footer-links li span {
+  font-size: 13.5px;
+  color: #8a9297;
+  transition:
+    color var(--t-base),
+    padding-left var(--t-fast);
+  display: inline-block;
+}
+.footer-links li a:hover {
+  color: var(--white);
+  padding-left: 4px;
+}
+.footer-hr {
+  height: 1px;
+  background: rgba(255, 255, 255, 0.08);
+  margin: 18px 0;
+}
+
+.footer-contact-col {
+  display: flex;
+  flex-direction: column;
+}
+.footer-contact-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  margin-bottom: 14px;
+}
+.footer-contact-icon {
+  font-size: 15px;
+  margin-top: 1px;
+  flex-shrink: 0;
+}
+.footer-contact-val {
+  font-size: 13px;
+  color: #8a9297;
+  line-height: 1.6;
+  white-space: pre-line;
+}
+
+.footer-quote-btn {
+  display: inline-block;
+  margin-top: 8px;
+  background: var(--teal);
+  color: var(--white);
+  font-family: "Space Grotesk", sans-serif;
+  font-size: 12.5px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding: 11px 22px;
+  clip-path: polygon(6px 0%, 100% 0%, calc(100% - 6px) 100%, 0% 100%);
+  transition: background var(--t-base);
+  align-self: flex-start;
+}
+.footer-quote-btn:hover {
+  background: var(--teal-deep);
+}
+
+/* ── Zone 3 — bottom bar ── */
+.footer-bar {
+  color: var(--white) !important;
+  background: #0a0d0f;
+  padding: 16px 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
+.footer-bar-inner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+.footer-bar-inner p {
+  font-size: 12px;
+  /* color: #3e4549; */
+}
+.footer-bar-inner p:last-child {
+  font-style: italic;
+}
+
+/* ── Responsive ── */
+@media (max-width: 900px) {
+  .footer-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 36px;
+  }
+  .footer-band-inner {
+    flex-direction: column;
+    gap: 18px;
+  }
+  .footer-bar-inner {
+    flex-direction: column;
+    text-align: center;
+  }
+}
+
+@media (max-width: 600px) {
+  .footer-grid {
+    grid-template-columns: 1fr;
+    gap: 28px;
+  }
+}

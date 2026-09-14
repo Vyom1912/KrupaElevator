@@ -1,0 +1,132 @@
+/* ============================================================
+   NAVBAR.CSS
+   ============================================================ */
+.navbar {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 300;
+  height: var(--nav-h);
+  background: rgba(255,255,255,.97);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--line);
+  /* Allow the mobile dropdown to overflow below the navbar height */
+  overflow: visible;
+}
+
+.navbar-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 100%;
+  max-width: var(--maxw);
+  margin: 0 auto;
+  padding: 0 32px;
+  gap: 24px;
+  position: relative;
+  /* Ensure the mobile dropdown can overflow the navbar bounds */
+  overflow: visible;
+}
+
+.navbar-logo { height: 30px; flex-shrink: 0; }
+
+/* ── Nav links ── */
+.navbar-links {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  list-style: none;
+}
+.navbar-links a {
+  display: inline-block;
+  padding: 6px 12px;
+  font-size: var(--fs-sm);
+  font-weight: 500;
+  color: var(--steel);
+  border-radius: var(--radius-sm);
+  position: relative;
+  transition: color var(--t-base);
+}
+.navbar-links a::after {
+  content: '';
+  position: absolute;
+  bottom: 2px; left: 12px; right: 12px;
+  height: 2px;
+  background: var(--teal);
+  border-radius: 1px;
+  transform: scaleX(0);
+  transform-origin: center;
+  transition: transform var(--t-base);
+}
+.navbar-links a:hover,
+.navbar-links a.active { color: var(--teal); font-weight: 600; }
+.navbar-links a.active::after,
+.navbar-links a:hover::after { transform: scaleX(1); }
+
+/* ── CTA button ── */
+.navbar-cta {
+  flex-shrink: 0;
+  background: var(--ink);
+  color: var(--white);
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: var(--fs-sm);
+  font-weight: 700;
+  letter-spacing: .04em;
+  padding: 9px 20px;
+  white-space: nowrap;
+  clip-path: polygon(6px 0%,100% 0%,calc(100% - 6px) 100%,0% 100%);
+  transition: background var(--t-base);
+}
+.navbar-cta:hover { background: var(--teal); }
+
+/* ── Burger (mobile) ── */
+.navbar-burger {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 6px;
+  flex-shrink: 0;
+}
+.navbar-burger span {
+  display: block;
+  width: 22px;
+  height: 2px;
+  background: var(--ink);
+  border-radius: 1px;
+  transition: transform var(--t-base), opacity var(--t-fast);
+}
+.navbar-burger[aria-expanded="true"] span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+.navbar-burger[aria-expanded="true"] span:nth-child(2) { opacity: 0; }
+.navbar-burger[aria-expanded="true"] span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+/* ── Responsive ── */
+@media (max-width: 900px) {
+  .navbar-burger { display: flex; }
+  .navbar-cta    { display: none; }
+
+  .navbar-links {
+    display: none;
+    position: absolute;
+    top: var(--nav-h);
+    left: 0; right: 0;
+    background: var(--white);
+    border-top: 1px solid var(--line);
+    border-bottom: 2px solid var(--teal);
+    flex-direction: column;
+    align-items: stretch;
+    padding: 8px 0;
+    gap: 0;
+    box-shadow: var(--shadow-md);
+    z-index: 400;
+  }
+  .navbar-links.open { display: flex; }
+  .navbar-links a { padding: 12px 24px; border-radius: 0; font-size: 14px; width: 100%; }
+  .navbar-links a::after { left: 24px; right: 24px; }
+}
+
+@media (max-width: 600px) {
+  .navbar-inner { padding: 0 16px; }
+}
