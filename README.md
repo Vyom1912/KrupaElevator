@@ -1,5 +1,9 @@
 # Krupa Elevators — Website
 
+[![Deploy to GitHub Pages](https://github.com/Vyom1912/KrupaElevator/actions/workflows/deploy.yml/badge.svg)](https://github.com/Vyom1912/KrupaElevator/actions/workflows/deploy.yml)
+
+**Live site:** https://vyom1912.github.io/KrupaElevator/
+
 Official website for **Krupa Elevators**, a manufacturer and installer of passenger, hospital, goods, capsule, car, home, MRL and hydraulic elevators across Gujarat, India.
 
 Built with **React 19 + React Router 7 + Vite 8**. Plain CSS with design tokens — no Tailwind, no CSS Modules.
