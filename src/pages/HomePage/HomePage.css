@@ -1,10 +1,3 @@
-/* ============================================================
-   HOMEPAGE.CSS
-   Sections: Hero · Strip · Why · ProductPreview ·
-             TechPreview · ServicePreview · ContactCTA
-   ============================================================ */
-
-/* ── HERO ─────────────────────────────────────────────────── */
 .hero {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -102,7 +95,7 @@
   box-shadow: var(--shadow-sm);
 }
 
-/* ── STRIP ────────────────────────────────────────────────── */
+/* STRIP ────────────────────────────────────────────────── */
 .strip {
   background: var(--teal);
   padding: 44px 0;
@@ -145,7 +138,7 @@
   padding-left: 22px;
 }
 
-/* ── WHY KRUPA ────────────────────────────────────────────── */
+/* WHY KRUPA */
 .why {
   padding: var(--space-2xl) 0;
   background: var(--mist);
@@ -192,7 +185,7 @@
   line-height: 1.6;
 }
 
-/* ── PRODUCT PREVIEW ──────────────────────────────────────── */
+/* PRODUCT PREVIEW */
 .product-preview {
   padding: var(--space-2xl) 0;
 }
@@ -316,7 +309,7 @@
   border-bottom-color: var(--teal);
 }
 
-/* ── TECH PREVIEW ─────────────────────────────────────────── */
+/* TECH PREVIEW */
 .tech-preview {
   padding: var(--space-2xl) 0;
   background: var(--mist);
@@ -406,7 +399,7 @@
   line-height: 1.4;
 }
 
-/* ── SERVICE PREVIEW ──────────────────────────────────────── */
+/* SERVICE PREVIEW */
 .service-preview {
   padding: var(--space-2xl) 0;
   background: var(--teal);
@@ -492,7 +485,7 @@
   line-height: 1.65;
 }
 
-/* ── CONTACT CTA ──────────────────────────────────────────── */
+/* CONTACT CTA */
 .contact-cta {
   padding: var(--space-2xl) 0;
   background: var(--ink);
@@ -557,7 +550,7 @@
   line-height: 1.55;
 }
 
-/* ── Responsive ── */
+/* Responsive */
 @media (max-width: 1100px) {
   .product-grid {
     grid-template-columns: repeat(3, 1fr);

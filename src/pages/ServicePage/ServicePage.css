@@ -1,8 +1,4 @@
-/* ============================================================
-   SERVICEPAGE.CSS
-   ============================================================ */
-
-/* ── Intro section ── */
+/* Intro section */
 .service-intro {
   padding: var(--space-2xl) 0;
 }
@@ -33,7 +29,7 @@
   display: block;
 }
 
-/* ── Service cards ── */
+/* Service cards */
 .service-cards {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -50,9 +46,11 @@
   object-fit: cover;
   display: block;
 }
-.service-card-body { padding: 22px; }
+.service-card-body {
+  padding: 22px;
+}
 .service-card-title {
-  font-family: 'Space Grotesk', sans-serif;
+  font-family: "Space Grotesk", sans-serif;
   font-size: 16px;
   font-weight: 700;
   color: var(--ink);
@@ -64,7 +62,7 @@
   line-height: 1.68;
 }
 
-/* ── Values strip ── */
+/* Values strip */
 .service-values-strip {
   background: var(--teal);
   padding: 52px 0;
@@ -75,25 +73,41 @@
   gap: 24px;
   text-align: center;
 }
-.service-value-item { color: var(--white); }
-.service-value-icon  { font-size: 28px; margin-bottom: 8px; }
+.service-value-item {
+  color: var(--white);
+}
+.service-value-icon {
+  font-size: 28px;
+  margin-bottom: 8px;
+}
 .service-value-label {
-  font-family: 'Space Grotesk', sans-serif;
+  font-family: "Space Grotesk", sans-serif;
   font-size: 12px;
   font-weight: 700;
-  letter-spacing: .06em;
+  letter-spacing: 0.06em;
   text-transform: uppercase;
-  color: rgba(255,255,255,.88);
+  color: rgba(255, 255, 255, 0.88);
 }
 
-/* ── Responsive ── */
+/* Responsive */
 @media (max-width: 900px) {
-  .service-intro-inner { grid-template-columns: 1fr; gap: var(--space-lg); }
-  .service-cards       { grid-template-columns: 1fr 1fr; }
-  .service-values-grid { grid-template-columns: repeat(2, 1fr); }
+  .service-intro-inner {
+    grid-template-columns: 1fr;
+    gap: var(--space-lg);
+  }
+  .service-cards {
+    grid-template-columns: 1fr 1fr;
+  }
+  .service-values-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
 }
 
 @media (max-width: 600px) {
-  .service-cards       { grid-template-columns: 1fr; }
-  .service-values-grid { grid-template-columns: repeat(2, 1fr); }
+  .service-cards {
+    grid-template-columns: 1fr;
+  }
+  .service-values-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
 }

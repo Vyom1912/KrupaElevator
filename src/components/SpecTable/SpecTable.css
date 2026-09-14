@@ -1,13 +1,11 @@
-/* ============================================================
-   SPECTABLE.CSS — scrollbar styling
-   ============================================================ */
-
 /* Remove the white fade-hint gradient entirely */
-.table-wrap::after { display: none; }
+.table-wrap::after {
+  display: none;
+}
 
 /* ── Always-visible styled scrollbar (Chromium / Safari) ── */
 .table-wrap::-webkit-scrollbar {
-  height: 8px;           /* horizontal bar height */
+  height: 8px; /* horizontal bar height */
 }
 .table-wrap::-webkit-scrollbar-track {
   background: var(--mist);

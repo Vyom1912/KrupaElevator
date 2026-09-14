@@ -1,6 +1,3 @@
-/* ============================================================
-   CONTACTPAGE.CSS
-   ============================================================ */
 .contact-page {
   padding: var(--space-2xl) 0;
 }
@@ -11,7 +8,7 @@
   align-items: start;
 }
 
-/* ── Info column ── */
+/* Info column */
 .contact-info-heading {
   font-size: var(--fs-2xl);
   font-weight: 700;
@@ -31,7 +28,7 @@
   display: block;
   font-size: var(--fs-xs);
   font-weight: 700;
-  letter-spacing: .1em;
+  letter-spacing: 0.1em;
   text-transform: uppercase;
   color: var(--teal);
   margin-bottom: 3px;
@@ -43,7 +40,7 @@
   white-space: pre-line;
 }
 
-/* ── Form column ── */
+/* Form column */
 .contact-form {
   background: var(--mist);
   padding: 32px;
@@ -56,32 +53,40 @@
   margin-bottom: 14px;
   border: 1.5px solid var(--line);
   background: var(--white);
-  font-family: 'Inter', sans-serif;
+  font-family: "Inter", sans-serif;
   font-size: 14px;
   color: var(--ink);
   outline: none;
   border-radius: var(--radius-sm);
   transition: border-color var(--t-base);
 }
-.contact-form-field:focus { border-color: var(--teal); }
-.contact-form-field.error { border-color: #E53935; }
-.contact-form-field::placeholder { color: var(--steel-light); }
+.contact-form-field:focus {
+  border-color: var(--teal);
+}
+.contact-form-field.error {
+  border-color: #e53935;
+}
+.contact-form-field::placeholder {
+  color: var(--steel-light);
+}
 
 .contact-form-submit {
   width: 100%;
   padding: 13px;
   background: var(--ink);
   color: var(--white);
-  font-family: 'Space Grotesk', sans-serif;
+  font-family: "Space Grotesk", sans-serif;
   font-size: 14px;
   font-weight: 700;
-  letter-spacing: .05em;
+  letter-spacing: 0.05em;
   border: none;
   cursor: pointer;
   transition: background var(--t-base);
-  clip-path: polygon(6px 0%,100% 0%,calc(100% - 6px) 100%,0% 100%);
+  clip-path: polygon(6px 0%, 100% 0%, calc(100% - 6px) 100%, 0% 100%);
 }
-.contact-form-submit:hover { background: var(--teal); }
+.contact-form-submit:hover {
+  background: var(--teal);
+}
 
 .contact-success {
   display: none;
@@ -94,12 +99,19 @@
   border-left: 3px solid var(--teal);
   line-height: 1.5;
 }
-.contact-success.show { display: block; }
+.contact-success.show {
+  display: block;
+}
 
-/* ── Responsive ── */
+/* Responsive */
 @media (max-width: 900px) {
-  .contact-page-inner { grid-template-columns: 1fr; gap: var(--space-lg); }
+  .contact-page-inner {
+    grid-template-columns: 1fr;
+    gap: var(--space-lg);
+  }
 }
 @media (max-width: 600px) {
-  .contact-form { padding: 22px 18px; }
+  .contact-form {
+    padding: 22px 18px;
+  }
 }
