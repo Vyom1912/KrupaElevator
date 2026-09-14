@@ -16,7 +16,7 @@ const CHIPS = [
 ];
 
 function Hero() {
-  const floor = useFloorCounter();
+  // const floor = useFloorCounter();
   return (
     <section className='hero' aria-label='Hero banner'>
       <div className='hero-left'>
@@ -43,13 +43,13 @@ function Hero() {
             Get a Quote
           </Link>
         </div>
-        <div
+        {/* <div
           className='hero-floor'
           aria-live='polite'
           aria-label='Floor display'>
           <span className='hero-floor-label'>Floor</span>
           <span className='hero-floor-digit'>{floor}</span>
-        </div>
+        </div> */}
       </div>
       <div className='hero-right'>
         <img
