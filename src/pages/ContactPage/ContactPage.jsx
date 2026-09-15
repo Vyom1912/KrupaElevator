@@ -118,7 +118,6 @@ function ContactPage() {
               ))}
             </div>
 
-            {/* Contact Form */}
             <form
               className='contact-form'
               onSubmit={handleSubmit}
