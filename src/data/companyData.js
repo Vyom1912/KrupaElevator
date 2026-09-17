@@ -25,7 +25,7 @@ export const companyData = {
     }
   },
   brochurePdf: "/assets/krupa-brochure.pdf",
-  logo: "/assets/logo.jpg",
+  logo: "/assets/logo-clean.png",
   heroImage: "/assets/generated/capsule-hero.jpg",
   villaElevatorImage: "/assets/generated/home-elevator.jpg",
   stats: [
