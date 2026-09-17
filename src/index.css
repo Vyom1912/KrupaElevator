@@ -108,3 +108,45 @@
   transform: translateY(-6px);
   box-shadow: 0 20px 30px -10px rgba(15, 23, 42, 0.12), 0 10px 15px -5px rgba(7, 153, 164, 0.08);
 }
+
+/* Smooth Application Transition Animations */
+@keyframes fadeInScale {
+  0% {
+    opacity: 0;
+    transform: scale(0.96);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes slideUpFade {
+  0% {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-scale {
+  animation: fadeInScale 0.4s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.animate-fade-slide-up {
+  animation: slideUpFade 0.38s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+/* Hide scrollbar for Chrome, Safari and Opera */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+/* Hide scrollbar for IE, Edge and Firefox */
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
