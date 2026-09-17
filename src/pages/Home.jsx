@@ -22,12 +22,13 @@ import {
   SlidersHorizontal,
   Compass,
   Cpu,
-  Check
+  Check,
+  Filter,
+  RotateCcw
 } from "lucide-react";
 import { companyData } from "../data/companyData";
 import { productsData, elevatorApplications, doorSystemsData } from "../data/productsData";
 import { interiorSeries } from "../data/interiorsData";
-import ElevatorFinder from "../components/ElevatorFinder";
 import ProductModal from "../components/ProductModal";
 import ScrollReveal from "../components/ScrollReveal";
 import { assetUrl } from "../utils/assetPath";
@@ -136,12 +137,51 @@ export default function Home() {
     }
   };
 
+  const [floorFilter, setFloorFilter] = useState("all");
+  const [priorityFilter, setPriorityFilter] = useState("all");
+
+  const priorityMap = ["energy", "space", "luxury", "medical", "freight", "automotive"];
+
+  const handlePriorityChange = (val) => {
+    setPriorityFilter(val);
+    if (val === "energy") setActiveAppIndex(0); // building
+    else if (val === "space") setActiveAppIndex(1); // private-villa
+    else if (val === "luxury") setActiveAppIndex(2); // commercial
+    else if (val === "medical") setActiveAppIndex(3); // hospital
+    else if (val === "freight") setActiveAppIndex(4); // industrial
+    else if (val === "automotive") setActiveAppIndex(5); // car-park
+  };
+
+  const handleFloorChange = (val) => {
+    setFloorFilter(val);
+    if (val === "low" && activeAppIndex !== 1) {
+      setActiveAppIndex(1); // Private Villa
+    } else if (val === "high" && (activeAppIndex === 1 || activeAppIndex === 5)) {
+      setActiveAppIndex(0); // Building
+    }
+  };
+
+  const handleTabSelect = (idx) => {
+    setActiveAppIndex(idx);
+    setPriorityFilter(priorityMap[idx] || "all");
+  };
+
+  const resetFilters = () => {
+    setFloorFilter("all");
+    setPriorityFilter("all");
+    setActiveAppIndex(0);
+  };
+
   const goToPrevApp = () => {
-    setActiveAppIndex((prev) => (prev - 1 + elevatorApplications.length) % elevatorApplications.length);
+    const nextIdx = (activeAppIndex - 1 + elevatorApplications.length) % elevatorApplications.length;
+    setActiveAppIndex(nextIdx);
+    setPriorityFilter(priorityMap[nextIdx] || "all");
   };
 
   const goToNextApp = () => {
-    setActiveAppIndex((prev) => (prev + 1) % elevatorApplications.length);
+    const nextIdx = (activeAppIndex + 1) % elevatorApplications.length;
+    setActiveAppIndex(nextIdx);
+    setPriorityFilter(priorityMap[nextIdx] || "all");
   };
 
   // Animated Background Loop: Smooth continuous cross-fade every 2 seconds
@@ -244,18 +284,18 @@ export default function Home() {
         </div>
       </section>
 
-      {/* 2. ELEVATOR SOLUTIONS BY APPLICATION (6 CORE TYPES) */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      {/* 2. ELEVATOR SOLUTIONS BY APPLICATION & INTERACTIVE FINDER (MERGED FULL-WIDTH SECTION) */}
+      <section className="w-full max-w-[1680px] mx-auto px-4 sm:px-6 lg:px-8 xl:px-12">
         <ScrollReveal direction="up" distance={20} duration={500}>
           <div className="text-center max-w-3xl mx-auto mb-8 sm:mb-10 space-y-3">
             <span className="text-xs font-bold uppercase tracking-widest text-brand-teal block">
-              Specialized Vertical Transportation
+              Interactive Application & Solution Explorer
             </span>
-            <h2 className="text-3xl sm:text-4xl font-black text-slate-900 tracking-tight">
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black text-slate-900 tracking-tight">
               Elevator Solutions by Application
             </h2>
             <p className="text-xs sm:text-sm text-slate-600 leading-relaxed max-w-2xl mx-auto">
-              Select any application type below to view tailored engineering parameters, capacity specifications, door mechanisms, and architectural photography.
+              Explore verified civil configurations, capacity ratings, and door systems tailored for your building type. Use the interactive filters below or click any elevator type to view details or launch the full technical pop-up.
             </p>
           </div>
         </ScrollReveal>
@@ -270,41 +310,34 @@ export default function Home() {
               return (
                 <button
                   key={app.id}
-                  onClick={() => setActiveAppIndex(idx)}
-                  className={`relative p-3.5 rounded-2xl border text-center transition-all duration-300 flex flex-col items-center justify-center space-y-2 group ${
-                    isSelected
-                      ? "bg-slate-900 text-white border-brand-teal shadow-xl ring-2 ring-brand-teal/20 scale-[1.03]"
-                      : "bg-white text-slate-700 border-slate-200 hover:border-brand-teal/50 hover:bg-slate-50/90 shadow-sm hover:scale-[1.01]"
-                  }`}
+                  onClick={() => handleTabSelect(idx)}
+                  className={`relative p-3.5 rounded-2xl border text-center transition-all duration-300 flex flex-col items-center justify-center space-y-2 group ${isSelected
+                    ? "bg-slate-900 text-white border-brand-teal shadow-xl ring-2 ring-brand-teal/20 scale-[1.02]"
+                    : "bg-white text-slate-700 border-slate-200 hover:border-brand-teal/50 hover:bg-slate-50/90 shadow-sm"
+                    }`}
                 >
                   <div
-                    className={`w-9 h-9 rounded-xl flex items-center justify-center transition-all duration-300 ${
-                      isSelected
-                        ? "bg-brand-orange text-white shadow-md shadow-orange-500/30"
-                        : "bg-slate-100 text-slate-600 group-hover:bg-teal-50 group-hover:text-brand-teal"
-                    }`}
+                    className={`w-9 h-9 rounded-xl flex items-center justify-center transition-all duration-300 ${isSelected
+                      ? "bg-brand-orange text-white shadow-md shadow-orange-500/30"
+                      : "bg-slate-100 text-slate-600 group-hover:bg-teal-50 group-hover:text-brand-teal"
+                      }`}
                   >
                     <AppIcon className="w-5 h-5" />
                   </div>
                   <div className="w-full">
                     <span
-                      className={`text-xs font-black block truncate ${
-                        isSelected ? "text-white" : "text-slate-900 group-hover:text-brand-teal"
-                      }`}
+                      className={`text-xs font-black block truncate ${isSelected ? "text-white" : "text-slate-900 group-hover:text-brand-teal"
+                        }`}
                     >
                       {meta.short}
                     </span>
                     <span
-                      className={`text-[10px] block truncate font-medium mt-0.5 ${
-                        isSelected ? "text-teal-300" : "text-slate-400"
-                      }`}
+                      className={`text-[10px] block truncate font-medium mt-0.5 ${isSelected ? "text-teal-300" : "text-slate-400"
+                        }`}
                     >
                       {meta.sub}
                     </span>
                   </div>
-                  {isSelected && (
-                    <span className="absolute -bottom-1 w-8 h-1 bg-brand-orange rounded-full shadow-sm" />
-                  )}
                 </button>
               );
             })}
@@ -322,12 +355,11 @@ export default function Home() {
                   <button
                     key={app.id}
                     ref={(el) => (tabButtonRefs.current[idx] = el)}
-                    onClick={() => setActiveAppIndex(idx)}
-                    className={`shrink-0 snap-center px-3.5 py-2 rounded-xl border flex items-center space-x-2 text-xs transition-all duration-300 active:scale-95 ${
-                      isSelected
-                        ? "bg-brand-teal text-white border-brand-teal shadow-md shadow-teal-600/30 font-bold scale-[1.02]"
-                        : "bg-white text-slate-700 border-slate-200 shadow-sm font-medium hover:bg-slate-50"
-                    }`}
+                    onClick={() => handleTabSelect(idx)}
+                    className={`shrink-0 snap-center px-3.5 py-2 rounded-xl border flex items-center space-x-2 text-xs transition-all duration-300 active:scale-95 ${isSelected
+                      ? "bg-brand-teal text-white border-brand-teal shadow-md shadow-teal-600/30 font-bold scale-[1.02]"
+                      : "bg-white text-slate-700 border-slate-200 shadow-sm font-medium hover:bg-slate-50"
+                      }`}
                   >
                     <AppIcon className={`w-4 h-4 ${isSelected ? "text-brand-orange" : "text-slate-500"}`} />
                     <span>{meta.short}</span>
@@ -361,13 +393,12 @@ export default function Home() {
                   {elevatorApplications.map((_, i) => (
                     <button
                       key={i}
-                      onClick={() => setActiveAppIndex(i)}
+                      onClick={() => handleTabSelect(i)}
                       aria-label={`Jump to application ${i + 1}`}
-                      className={`transition-all duration-300 rounded-full ${
-                        i === activeAppIndex
-                          ? "w-5 h-1.5 bg-brand-orange shadow-sm shadow-orange-500/50"
-                          : "w-1.5 h-1.5 bg-slate-700 hover:bg-slate-500"
-                      }`}
+                      className={`transition-all duration-300 rounded-full ${i === activeAppIndex
+                        ? "w-5 h-1.5 bg-brand-orange shadow-sm shadow-orange-500/50"
+                        : "w-1.5 h-1.5 bg-slate-700 hover:bg-slate-500"
+                        }`}
                     />
                   ))}
                 </div>
@@ -384,153 +415,176 @@ export default function Home() {
           </div>
         </ScrollReveal>
 
-        {/* Active Application Detailed Showcase Card (with Touch Swipe & Smooth Transition) */}
+        {/* Active Application Detailed Showcase Card (Full-Width Display with Modal Detail Pop-up) */}
         <ScrollReveal direction="up" delay={130} distance={20} duration={550}>
-          <div
-            onTouchStart={handleTouchStart}
-            onTouchMove={handleTouchMove}
-            onTouchEnd={handleTouchEnd}
-            className="bg-white rounded-3xl border border-slate-200 shadow-xl overflow-hidden grid grid-cols-1 lg:grid-cols-12 transition-all relative select-none"
-          >
-            {/* Left: Continuous Cross-Fade Image Stack (Zero White Flash) */}
-            <div className="lg:col-span-6 h-72 sm:h-96 lg:h-auto min-h-[300px] sm:min-h-[380px] lg:min-h-[500px] relative overflow-hidden bg-slate-950">
-              {elevatorApplications.map((app, idx) => {
-                const isCurrent = idx === activeAppIndex;
-                const AppIcon = applicationIcons[app.id] || Building2;
-                return (
-                  <div
-                    key={app.id}
-                    className={`absolute inset-0 transition-all duration-700 ease-out ${
-                      isCurrent
-                        ? "opacity-100 scale-100 z-10"
-                        : "opacity-0 scale-105 pointer-events-none z-0"
-                    }`}
-                  >
-                    <img
-                      src={app.image}
-                      alt={app.title}
-                      className="w-full h-full object-cover"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-slate-950/95 via-slate-950/30 to-transparent" />
-                    <div className="absolute inset-0 bg-gradient-to-r from-slate-950/50 via-transparent to-transparent hidden lg:block" />
-
-                    {/* Floating Top Pill Badge */}
-                    <div className="absolute top-3.5 sm:top-4 left-3.5 sm:left-4 flex items-center space-x-2 bg-slate-900/90 border border-teal-500/40 text-brand-teal px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider shadow-lg backdrop-blur-md">
-                      <AppIcon className="w-3.5 h-3.5 text-brand-orange" />
-                      <span className="text-white font-semibold">{app.title.split(" ")[0]}</span>
-                      <span className="text-slate-400 font-mono text-[10px]">({idx + 1}/6)</span>
-                    </div>
-
-                    {/* Bottom Overlay Title on Image */}
-                    <div className="absolute bottom-3.5 sm:bottom-4 left-3.5 sm:left-4 right-3.5 sm:right-4 text-white">
-                      <span className="text-xs font-bold text-teal-300 block mb-0.5">{app.subtitle}</span>
-                      <h3 className="text-xl sm:text-2xl font-black tracking-tight">{app.title}</h3>
-                      {/* Mobile swipe hint */}
-                      <div className="flex items-center space-x-1.5 text-[11px] text-slate-300/80 pt-1.5 lg:hidden">
-                        <span className="w-1.5 h-1.5 rounded-full bg-brand-orange animate-pulse" />
-                        <span>Swipe card left / right to change elevator</span>
-                      </div>
-                    </div>
-                  </div>
-                );
-              })}
-            </div>
-
-            {/* Right: Detailed Parameters & Specs (Smooth Animated Re-render with Key) */}
-            <div
-              key={activeApp.id}
-              className="lg:col-span-6 p-5 sm:p-8 lg:p-10 flex flex-col justify-between space-y-5 sm:space-y-6 animate-fade-slide-up"
-            >
-              <div className="space-y-4">
-                <div>
-                  <div className="inline-flex items-center space-x-2 px-2.5 py-0.5 rounded-md bg-orange-50 border border-orange-200/80 text-brand-orange text-[11px] font-bold uppercase tracking-wider mb-1.5">
-                    <span className="w-1.5 h-1.5 rounded-full bg-brand-orange" />
-                    <span>Application Parameters &bull; {applicationShortMeta[activeApp.id]?.tag || "Elevator"}</span>
-                  </div>
-                  <h4 className="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight">{activeApp.title}</h4>
-                  <p className="text-xs sm:text-sm text-slate-600 mt-2 leading-relaxed">
-                    {activeApp.description}
-                  </p>
-                </div>
-
-                {/* Key Quick Metrics */}
-                <div className="grid grid-cols-2 gap-3 bg-slate-50 p-3.5 sm:p-4 rounded-2xl border border-slate-100 text-xs">
-                  <div className="flex items-start space-x-2.5">
-                    <div className="p-2 rounded-xl bg-teal-50 border border-teal-100 text-brand-teal shrink-0 mt-0.5">
-                      <ShieldCheck className="w-4 h-4" />
-                    </div>
-                    <div>
-                      <span className="text-slate-400 block text-[11px] font-medium">Capacity Range</span>
-                      <strong className="text-slate-900 text-xs sm:text-sm font-bold">{activeApp.capacity}</strong>
-                    </div>
-                  </div>
-                  <div className="flex items-start space-x-2.5">
-                    <div className="p-2 rounded-xl bg-orange-50 border border-orange-100 text-brand-orange shrink-0 mt-0.5">
-                      <Zap className="w-4 h-4" />
-                    </div>
-                    <div>
-                      <span className="text-slate-400 block text-[11px] font-medium">Operating Speed</span>
-                      <strong className="text-brand-orange text-xs sm:text-sm font-bold">{activeApp.speed}</strong>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Suitable For Pill */}
-                {activeApp.suitableFor && (
-                  <div className="text-xs text-slate-600 bg-slate-50/80 px-3 py-2 rounded-xl border border-slate-100">
-                    <span className="font-bold text-slate-800">Suitable For: </span>
-                    <span>{activeApp.suitableFor}</span>
-                  </div>
-                )}
-
-                {/* Highlights Checklist */}
-                <div className="space-y-2 pt-1 border-t border-slate-100">
-                  <span className="text-xs font-bold text-slate-800 block">Engineering Highlights:</span>
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
-                    {activeApp.highlights.map((h, i) => (
-                      <div key={i} className="flex items-start space-x-2 text-xs text-slate-700">
-                        <Check className="w-4 h-4 text-brand-teal shrink-0 mt-0.5" />
-                        <span className="font-medium leading-snug">{h}</span>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-
-                {/* Compatible Door Systems */}
-                <div className="pt-1">
-                  <span className="text-xs font-bold text-slate-800 block mb-1.5">Compatible Door Configurations:</span>
-                  <div className="flex flex-wrap gap-1.5">
-                    {activeApp.doorTypes.map((door, di) => (
-                      <span
-                        key={di}
-                        className="px-2.5 py-1 rounded-lg bg-teal-50 text-brand-teal border border-teal-200/60 text-[11px] font-semibold"
+          {(() => {
+            const matchingProduct = productsData.find((p) => p.id === activeApp.productId) || productsData[0];
+            return (
+              <div
+                onTouchStart={handleTouchStart}
+                onTouchMove={handleTouchMove}
+                onTouchEnd={handleTouchEnd}
+                className="bg-white rounded-3xl border border-slate-200 shadow-xl overflow-hidden grid grid-cols-1 lg:grid-cols-12 transition-all relative select-none"
+              >
+                {/* Left: Continuous Cross-Fade Image Stack (Zero White Flash) */}
+                <div className="lg:col-span-6 h-80 sm:h-96 lg:h-auto min-h-[340px] sm:min-h-[420px] lg:min-h-[520px] relative overflow-hidden bg-slate-950">
+                  {elevatorApplications.map((app, idx) => {
+                    const isCurrent = idx === activeAppIndex;
+                    const AppIcon = applicationIcons[app.id] || Building2;
+                    return (
+                      <div
+                        key={app.id}
+                        className={`absolute inset-0 transition-all duration-700 ease-out ${isCurrent
+                          ? "opacity-100 scale-100 z-10"
+                          : "opacity-0 scale-105 pointer-events-none z-0"
+                          }`}
                       >
-                        {door}
-                      </span>
-                    ))}
+                        <img
+                          src={app.image}
+                          alt={app.title}
+                          className="w-full h-full object-cover"
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-t from-slate-950/95 via-slate-950/30 to-transparent" />
+                        <div className="absolute inset-0 bg-gradient-to-r from-slate-950/50 via-transparent to-transparent hidden lg:block" />
+
+                        {/* Floating Top Pill Badge */}
+                        <div className="absolute top-3.5 sm:top-4 left-3.5 sm:left-4 flex items-center space-x-2 bg-slate-900/90 border border-teal-500/40 text-brand-teal px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider shadow-lg backdrop-blur-md">
+                          <AppIcon className="w-3.5 h-3.5 text-brand-orange" />
+                          <span className="text-white font-semibold">{app.title.split(" ")[0]}</span>
+                          <span className="text-slate-400 font-mono text-[10px]">({idx + 1}/6)</span>
+                        </div>
+
+                        {/* Floating Quick Specs Pop-up Trigger on Image */}
+                        <button
+                          onClick={() => setSelectedProduct(matchingProduct)}
+                          className="absolute top-3.5 sm:top-4 right-3.5 sm:right-4 z-20 flex items-center space-x-1.5 bg-white/95 hover:bg-white text-slate-900 px-3.5 py-1.5 rounded-full text-xs font-bold shadow-xl backdrop-blur-md transition-all hover:scale-105 active:scale-95 border border-slate-200/80 cursor-pointer"
+                          title="Open full product modal"
+                        >
+                          <Maximize2 className="w-3.5 h-3.5 text-brand-teal" />
+                          <span>Full Specs</span>
+                        </button>
+
+                        {/* Bottom Overlay Title on Image */}
+                        <div className="absolute bottom-3.5 sm:bottom-4 left-3.5 sm:left-4 right-3.5 sm:right-4 text-white">
+                          <span className="text-xs font-bold text-teal-300 block mb-0.5">{app.subtitle}</span>
+                          <h3 className="text-xl sm:text-2xl lg:text-3xl font-black tracking-tight">{app.title}</h3>
+                          {/* Mobile swipe hint */}
+                          <div className="flex items-center space-x-1.5 text-[11px] text-slate-300/80 pt-1.5 lg:hidden">
+                            <span className="w-1.5 h-1.5 rounded-full bg-brand-orange animate-pulse" />
+                            <span>Swipe card left / right to change elevator</span>
+                          </div>
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+
+                {/* Right: Detailed Parameters & Specs (Smooth Animated Re-render with Key) */}
+                <div
+                  key={activeApp.id}
+                  className="lg:col-span-6 p-6 sm:p-8 lg:p-10 flex flex-col justify-between space-y-5 sm:space-y-6 animate-fade-slide-up"
+                >
+                  <div className="space-y-4">
+                    <div>
+                      <div className="inline-flex items-center space-x-2 px-2.5 py-0.5 rounded-md bg-orange-50 border border-orange-200/80 text-brand-orange text-[11px] font-bold uppercase tracking-wider mb-1.5">
+                        <span className="w-1.5 h-1.5 rounded-full bg-brand-orange" />
+                        <span>Verified Solution &bull; {applicationShortMeta[activeApp.id]?.tag || "Elevator"}</span>
+                      </div>
+                      <h4 className="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight">{activeApp.title}</h4>
+                      <p className="text-xs sm:text-sm text-slate-600 mt-2 leading-relaxed">
+                        {activeApp.description}
+                      </p>
+                    </div>
+
+                    {/* Key Quick Metrics */}
+                    <div className="grid grid-cols-2 gap-3 bg-slate-50 p-3.5 sm:p-4 rounded-2xl border border-slate-100 text-xs">
+                      <div className="flex items-start space-x-2.5">
+                        <div className="p-2 rounded-xl bg-teal-50 border border-teal-100 text-brand-teal shrink-0 mt-0.5">
+                          <ShieldCheck className="w-4 h-4" />
+                        </div>
+                        <div>
+                          <span className="text-slate-400 block text-[11px] font-medium">Capacity Range</span>
+                          <strong className="text-slate-900 text-xs sm:text-sm font-bold">{activeApp.capacity}</strong>
+                        </div>
+                      </div>
+                      <div className="flex items-start space-x-2.5">
+                        <div className="p-2 rounded-xl bg-orange-50 border border-orange-100 text-brand-orange shrink-0 mt-0.5">
+                          <Zap className="w-4 h-4" />
+                        </div>
+                        <div>
+                          <span className="text-slate-400 block text-[11px] font-medium">Operating Speed</span>
+                          <strong className="text-brand-orange text-xs sm:text-sm font-bold">{activeApp.speed}</strong>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Suitable For Pill */}
+                    {activeApp.suitableFor && (
+                      <div className="text-xs text-slate-600 bg-slate-50/80 px-3 py-2 rounded-xl border border-slate-100">
+                        <span className="font-bold text-slate-800">Suitable Environments: </span>
+                        <span>{activeApp.suitableFor}</span>
+                      </div>
+                    )}
+
+                    {/* Highlights Checklist */}
+                    <div className="space-y-2 pt-1 border-t border-slate-100">
+                      <span className="text-xs font-bold text-slate-800 block">Engineering Highlights:</span>
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                        {activeApp.highlights.map((h, i) => (
+                          <div key={i} className="flex items-start space-x-2 text-xs text-slate-700">
+                            <Check className="w-4 h-4 text-brand-teal shrink-0 mt-0.5" />
+                            <span className="font-medium leading-snug">{h}</span>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+
+                    {/* Compatible Door Systems */}
+                    <div className="pt-1">
+                      <span className="text-xs font-bold text-slate-800 block mb-1.5">Compatible Door Configurations:</span>
+                      <div className="flex flex-wrap gap-1.5">
+                        {activeApp.doorTypes.map((door, di) => (
+                          <span
+                            key={di}
+                            className="px-2.5 py-1 rounded-lg bg-teal-50 text-brand-teal border border-teal-200/60 text-[11px] font-semibold"
+                          >
+                            {door}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Action Buttons: Includes Pop-up Modal Button for Deep Details */}
+                  <div className="pt-4 border-t border-slate-100 flex flex-col sm:flex-row items-center gap-3">
+                    <button
+                      onClick={() => setSelectedProduct(matchingProduct)}
+                      className="w-full sm:w-auto flex-1 py-3 px-5 rounded-xl bg-slate-900 hover:bg-brand-teal text-white text-xs font-bold transition-all flex items-center justify-center space-x-2 shadow-md hover:shadow-lg active:scale-95 group cursor-pointer"
+                    >
+                      <Maximize2 className="w-4 h-4 text-brand-orange group-hover:text-white transition-colors" />
+                      <span>View Full Specs & Dimensions (Pop-up)</span>
+                    </button>
+
+                    <Link
+                      to="/specifications"
+                      className="w-full sm:w-auto py-3 px-4 rounded-xl border border-slate-200 text-slate-800 text-xs font-bold hover:bg-slate-50 text-center transition-colors flex items-center justify-center space-x-1.5 shadow-sm"
+                    >
+                      <SlidersHorizontal className="w-3.5 h-3.5 text-brand-teal" />
+                      <span>Civil Dimensions</span>
+                    </Link>
+
+                    <Link
+                      to="/contact"
+                      className="w-full sm:w-auto py-3 px-5 rounded-xl bg-brand-orange hover:bg-brand-orange-hover text-white text-xs font-bold shadow-md transition-all text-center flex items-center justify-center space-x-1.5 active:scale-95"
+                    >
+                      <span>Consultation</span>
+                      <ArrowRight className="w-4 h-4" />
+                    </Link>
                   </div>
                 </div>
               </div>
-
-              {/* Action Buttons */}
-              <div className="pt-4 border-t border-slate-100 flex flex-col sm:flex-row items-center gap-3">
-                <Link
-                  to="/specifications"
-                  className="w-full sm:w-auto flex-1 py-3 px-4 rounded-xl border border-slate-200 text-slate-800 text-xs font-bold hover:bg-slate-50 text-center transition-colors flex items-center justify-center space-x-1.5 shadow-sm"
-                >
-                  <SlidersHorizontal className="w-3.5 h-3.5 text-brand-teal" />
-                  <span>View Full Civil Dimensions</span>
-                </Link>
-                <Link
-                  to="/contact"
-                  className="w-full sm:w-auto py-3 px-6 rounded-xl bg-brand-orange hover:bg-brand-orange-hover text-white text-xs font-bold shadow-md transition-all text-center flex items-center justify-center space-x-1.5 active:scale-95"
-                >
-                  <span>Request Site Consultation</span>
-                  <ArrowRight className="w-4 h-4" />
-                </Link>
-              </div>
-            </div>
-          </div>
+            );
+          })()}
         </ScrollReveal>
       </section>
 
@@ -726,19 +780,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* 5. INTERACTIVE ELEVATOR FINDER WIZARD */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <ScrollReveal direction="up" distance={20} duration={500}>
-          <ElevatorFinder
-            onSelectProduct={(id) => {
-              const match = productsData.find((p) => p.id === id);
-              if (match) setSelectedProduct(match);
-            }}
-          />
-        </ScrollReveal>
-      </section>
-
-      {/* 6. DIRECT ACTION & CONSULTATION BANNER */}
+      {/* 5. DIRECT ACTION & CONSULTATION BANNER */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <ScrollReveal direction="up" distance={20} duration={500}>
           <div className="rounded-3xl bg-gradient-to-r from-brand-teal via-teal-800 to-slate-900 text-white p-8 sm:p-12 flex flex-col md:flex-row justify-between items-center gap-6 shadow-2xl">

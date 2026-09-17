@@ -1,11 +1,13 @@
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 
-export default defineConfig(({ command }) => ({
+const base = process.env.VITE_BASE_URL ?? '/KrupaElevator/';
+
+export default defineConfig({
   plugins: [react()],
-  base: command === 'serve' ? '/' : (process.env.VITE_BASE_URL ?? '/KrupaElevator/'),
+  base,
   server: {
     port: 3000,
     open: false
   }
-}));
+});
