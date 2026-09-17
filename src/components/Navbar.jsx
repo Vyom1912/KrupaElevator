@@ -6,6 +6,7 @@ import { companyData } from "../data/companyData";
 export default function Navbar() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [scrollProgress, setScrollProgress] = useState(0);
   const navRef = useRef(null);
   const location = useLocation();
 
@@ -29,12 +30,16 @@ export default function Navbar() {
     setMobileMenuOpen(false);
   }, [location.pathname]);
 
-  // Scroll listener for elevation effect
+  // Scroll listener for elevation effect & smooth reading progress
   useEffect(() => {
     const handleScroll = () => {
       setScrolled(window.scrollY > 15);
+      const totalHeight = document.documentElement.scrollHeight - window.innerHeight;
+      if (totalHeight > 0) {
+        setScrollProgress((window.scrollY / totalHeight) * 100);
+      }
     };
-    window.addEventListener("scroll", handleScroll);
+    window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
@@ -233,6 +238,14 @@ export default function Navbar() {
           </div>
         )}
       </nav>
+
+      {/* Subtle Scroll Reading Progress Bar (Smooth 2px line) */}
+      <div className="h-[2px] w-full bg-slate-200/50 overflow-hidden">
+        <div
+          className="h-full bg-gradient-to-r from-brand-teal via-teal-400 to-brand-orange transition-all duration-150 ease-out"
+          style={{ width: `${scrollProgress}%` }}
+        />
+      </div>
     </header>
   );
 }

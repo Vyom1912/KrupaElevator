@@ -18,6 +18,7 @@ import {
   FileText
 } from "lucide-react";
 import { technologiesData } from "../data/technologiesData";
+import ScrollReveal from "../components/ScrollReveal";
 
 export default function Technologies({ onOpenBrochurePage }) {
   const iconMap = {
@@ -33,7 +34,7 @@ export default function Technologies({ onOpenBrochurePage }) {
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 space-y-16">
       {/* Header */}
-      <div className="max-w-3xl space-y-3">
+      <ScrollReveal direction="up" distance={20} className="max-w-3xl space-y-3">
         <span className="text-xs font-bold uppercase tracking-widest text-brand-teal block">
           Engineering & Innovation
         </span>
@@ -43,10 +44,10 @@ export default function Technologies({ onOpenBrochurePage }) {
         <p className="text-sm sm:text-base text-slate-600 leading-relaxed">
           KRUPA ELEVATORS combines permanent magnet synchronous (PMS) gearless traction, German-engineered V3F inverters, multi-layered automatic safety devices, and intelligent IoT telemetry to achieve industry-leading energy savings and flawless ride comfort.
         </p>
-      </div>
+      </ScrollReveal>
 
       {/* PMS TRACTION MACHINE & GEARED COMPARISON */}
-      <div className="bg-white rounded-3xl border border-slate-200 shadow-sm p-6 sm:p-10 space-y-8">
+      <ScrollReveal direction="up" distance={20} className="bg-white rounded-3xl border border-slate-200 shadow-sm p-6 sm:p-10 space-y-8">
         <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 border-b border-slate-100 pb-6">
           <div>
             <span className="inline-flex items-center space-x-1 px-3 py-1 rounded-full text-xs font-bold bg-brand-teal-light text-brand-teal mb-2">
@@ -112,10 +113,10 @@ export default function Technologies({ onOpenBrochurePage }) {
             </table>
           </div>
         </div>
-      </div>
+      </ScrollReveal>
 
       {/* GERMAN INVERTER & ECO LED SYSTEM */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+      <ScrollReveal direction="up" distance={20} className="grid grid-cols-1 lg:grid-cols-2 gap-8">
         {/* German Inverter */}
         <div className="bg-white rounded-3xl border border-slate-200 p-6 sm:p-8 shadow-sm space-y-4">
           <div className="w-12 h-12 rounded-2xl bg-brand-teal-light text-brand-teal flex items-center justify-center">
@@ -163,10 +164,10 @@ export default function Technologies({ onOpenBrochurePage }) {
             ))}
           </div>
         </div>
-      </div>
+      </ScrollReveal>
 
       {/* SAFETY ECOSYSTEM GRID */}
-      <div className="bg-slate-900 text-white rounded-3xl p-6 sm:p-12 space-y-8">
+      <ScrollReveal direction="up" distance={20} className="bg-slate-900 text-white rounded-3xl p-6 sm:p-12 space-y-8">
         <div className="max-w-2xl">
           <span className="text-xs font-bold uppercase tracking-widest text-brand-teal block mb-1">
             Zero-Compromise Security
@@ -180,7 +181,7 @@ export default function Technologies({ onOpenBrochurePage }) {
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
-          {technologiesData.safetySystems.map((sys) => {
+          {technologiesData.safetySystems.map((sys, idx) => {
             const Icon = iconMap[sys.icon] || ShieldCheck;
             return (
               <div
@@ -196,10 +197,10 @@ export default function Technologies({ onOpenBrochurePage }) {
             );
           })}
         </div>
-      </div>
+      </ScrollReveal>
 
       {/* CONTROLLER PANELS & ARD */}
-      <div className="space-y-6">
+      <ScrollReveal direction="up" distance={20} className="space-y-6">
         <div className="border-b border-slate-200 pb-4">
           <span className="text-xs font-bold uppercase tracking-widest text-brand-teal block">
             Intelligence & Logic
@@ -211,7 +212,7 @@ export default function Technologies({ onOpenBrochurePage }) {
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {technologiesData.controllers.map((ctrl, i) => (
-            <div key={i} className="p-6 rounded-3xl bg-white border border-slate-200 shadow-sm space-y-3">
+            <div key={i} className="p-6 rounded-3xl bg-white border border-slate-200 shadow-sm space-y-3 hover:shadow-md transition-shadow">
               <span className="w-8 h-8 rounded-full bg-slate-100 text-slate-800 flex items-center justify-center text-xs font-black">
                 0{i + 1}
               </span>
@@ -228,10 +229,10 @@ export default function Technologies({ onOpenBrochurePage }) {
             </div>
           ))}
         </div>
-      </div>
+      </ScrollReveal>
 
       {/* COP & LOP OPERATING PANELS */}
-      <div className="bg-white rounded-3xl border border-slate-200 p-6 sm:p-10 shadow-sm space-y-8">
+      <ScrollReveal direction="up" distance={20} className="bg-white rounded-3xl border border-slate-200 p-6 sm:p-10 shadow-sm space-y-8">
         <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 border-b border-slate-100 pb-4">
           <div>
             <span className="text-xs font-bold uppercase tracking-widest text-brand-teal block">
@@ -256,7 +257,7 @@ export default function Technologies({ onOpenBrochurePage }) {
         {/* Models Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
           {technologiesData.copLop.models.map((cop) => (
-            <div key={cop.id} className="p-4 rounded-2xl bg-slate-50 border border-slate-200 space-y-2">
+            <div key={cop.id} className="p-4 rounded-2xl bg-slate-50 border border-slate-200 space-y-2 hover:border-slate-300 transition-colors">
               <div className="flex justify-between items-center">
                 <strong className="text-xs font-extrabold text-brand-teal">{cop.id}</strong>
                 <span className="text-[10px] px-2 py-0.5 rounded bg-slate-200 font-bold text-slate-700">
@@ -288,7 +289,7 @@ export default function Technologies({ onOpenBrochurePage }) {
           </h4>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
             {technologiesData.copLop.displayTypes.map((disp, i) => (
-              <div key={i} className="p-3.5 rounded-2xl border border-slate-200 bg-white">
+              <div key={i} className="p-3.5 rounded-2xl border border-slate-200 bg-white hover:border-brand-teal/40 transition-colors">
                 <Monitor className="w-4 h-4 text-brand-orange mb-1.5" />
                 <strong className="text-xs font-bold text-slate-900 block">{disp.name}</strong>
                 <p className="text-[11px] text-slate-600 mt-1 leading-snug">{disp.desc}</p>
@@ -296,7 +297,7 @@ export default function Technologies({ onOpenBrochurePage }) {
             ))}
           </div>
         </div>
-      </div>
+      </ScrollReveal>
     </div>
   );
 }

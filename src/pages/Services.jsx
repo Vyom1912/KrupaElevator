@@ -15,6 +15,7 @@ import {
 } from "lucide-react";
 import { servicesData } from "../data/servicesData";
 import { companyData } from "../data/companyData";
+import ScrollReveal from "../components/ScrollReveal";
 
 export default function Services({ onOpenBrochurePage }) {
   const [formSubmitted, setFormSubmitted] = useState(false);
@@ -28,7 +29,7 @@ export default function Services({ onOpenBrochurePage }) {
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 space-y-16">
       {/* Header */}
-      <div className="max-w-3xl space-y-3">
+      <ScrollReveal direction="up" distance={20} className="max-w-3xl space-y-3">
         <span className="text-xs font-bold uppercase tracking-widest text-brand-teal block">
           Lifecycle Support & Operations
         </span>
@@ -38,10 +39,10 @@ export default function Services({ onOpenBrochurePage }) {
         <p className="text-sm sm:text-base text-slate-600 leading-relaxed">
           {servicesData.hero.summary}
         </p>
-      </div>
+      </ScrollReveal>
 
       {/* THREE CORE BROCHURE PILLARS (PAGE 23) */}
-      <div className="space-y-6">
+      <ScrollReveal direction="up" distance={20} className="space-y-6">
         <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2 border-b border-slate-200 pb-4">
           <div>
             <span className="text-xs font-bold uppercase tracking-widest text-brand-orange block">
@@ -59,7 +60,7 @@ export default function Services({ onOpenBrochurePage }) {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          {servicesData.pillars.map((pil) => (
+          {servicesData.pillars.map((pil, idx) => (
             <div
               key={pil.id}
               className="bg-white p-6 sm:p-8 rounded-3xl border border-slate-200 shadow-sm flex flex-col justify-between space-y-4 hover:shadow-lg hover:border-brand-teal transition-all"
@@ -83,10 +84,10 @@ export default function Services({ onOpenBrochurePage }) {
             </div>
           ))}
         </div>
-      </div>
+      </ScrollReveal>
 
       {/* AMC PACKAGES */}
-      <div className="space-y-8">
+      <ScrollReveal direction="up" distance={20} className="space-y-8">
         <div className="text-center max-w-2xl mx-auto space-y-2">
           <span className="text-xs font-bold uppercase tracking-widest text-brand-teal block">
             Annual Maintenance Contracts
@@ -99,8 +100,11 @@ export default function Services({ onOpenBrochurePage }) {
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {servicesData.amcPackages.map((pkg, idx) => (
-            <div
+            <ScrollReveal
               key={idx}
+              direction="up"
+              distance={20}
+              delay={idx * 80}
               className={`rounded-3xl p-6 sm:p-8 flex flex-col justify-between transition-all ${
                 pkg.popular
                   ? "bg-slate-900 text-white shadow-2xl border-2 border-brand-orange relative"
@@ -165,13 +169,13 @@ export default function Services({ onOpenBrochurePage }) {
                   <ArrowRight className="w-4 h-4" />
                 </Link>
               </div>
-            </div>
+            </ScrollReveal>
           ))}
         </div>
-      </div>
+      </ScrollReveal>
 
       {/* MODERNIZATION SERVICES */}
-      <div className="bg-slate-100 rounded-3xl p-6 sm:p-10 space-y-6">
+      <ScrollReveal direction="up" distance={20} className="bg-slate-100 rounded-3xl p-6 sm:p-10 space-y-6">
         <div>
           <span className="text-xs font-bold uppercase tracking-widest text-brand-teal block">
             Elevator Upgrades
@@ -186,7 +190,7 @@ export default function Services({ onOpenBrochurePage }) {
 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           {servicesData.modernization.map((mod, i) => (
-            <div key={i} className="p-5 rounded-2xl bg-white border border-slate-200 shadow-sm space-y-2">
+            <div key={i} className="p-5 rounded-2xl bg-white border border-slate-200 shadow-sm space-y-2 hover:shadow-md transition-shadow">
               <div className="flex items-center space-x-2">
                 <Wrench className="w-4 h-4 text-brand-orange" />
                 <h4 className="text-base font-bold text-slate-900">{mod.title}</h4>
@@ -195,10 +199,10 @@ export default function Services({ onOpenBrochurePage }) {
             </div>
           ))}
         </div>
-      </div>
+      </ScrollReveal>
 
       {/* SERVICE INQUIRY FORM */}
-      <div className="bg-white rounded-3xl border border-slate-200 p-6 sm:p-10 shadow-lg grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+      <ScrollReveal direction="up" distance={20} className="bg-white rounded-3xl border border-slate-200 p-6 sm:p-10 shadow-lg grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
         <div className="lg:col-span-5 space-y-4">
           <span className="text-xs font-bold uppercase tracking-widest text-brand-teal block">
             Service Desk
@@ -302,7 +306,7 @@ export default function Services({ onOpenBrochurePage }) {
             </form>
           )}
         </div>
-      </div>
+      </ScrollReveal>
     </div>
   );
 }

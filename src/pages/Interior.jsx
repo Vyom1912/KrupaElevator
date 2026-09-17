@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { Sparkles, Eye, Check, SlidersHorizontal, ArrowRight, Layers, X, Shield, Wind, Lightbulb, Maximize2 } from "lucide-react";
 import { interiorSeries, etchingPatterns } from "../data/interiorsData";
 import CabinConfigurator from "../components/CabinConfigurator";
+import ScrollReveal from "../components/ScrollReveal";
 
 export default function Interior() {
   const [activeSeries, setActiveSeries] = useState("All");
@@ -17,7 +18,7 @@ export default function Interior() {
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 space-y-16">
       {/* Header */}
-      <div className="max-w-3xl space-y-3">
+      <ScrollReveal direction="up" distance={20} className="max-w-3xl space-y-3">
         <span className="text-xs font-bold uppercase tracking-widest text-brand-teal block">
           Freedom of Design & Interior Architecture
         </span>
@@ -27,14 +28,16 @@ export default function Interior() {
         <p className="text-sm sm:text-base text-slate-600 leading-relaxed">
           Create the exact aesthetic you desire. Combine materials, hairline stainless steel, titanium gold mirrors, micalex LED ceilings, and etched wall art to achieve the ideal ambiance tailored to your building.
         </p>
-      </div>
+      </ScrollReveal>
 
       {/* Interactive Configurator Callout */}
-      <CabinConfigurator />
+      <ScrollReveal direction="up" delay={60} distance={20}>
+        <CabinConfigurator />
+      </ScrollReveal>
 
       {/* Series Filter Tabs */}
       <div className="space-y-8">
-        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 border-b border-slate-200 pb-4">
+        <ScrollReveal direction="up" distance={15} className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 border-b border-slate-200 pb-4">
           <div>
             <h2 className="text-2xl font-black text-slate-900">Elevator Cabin Designs: KEC-01 to KEC-11</h2>
             <p className="text-xs text-slate-500 mt-0.5">
@@ -57,14 +60,17 @@ export default function Interior() {
               </button>
             ))}
           </div>
-        </div>
+        </ScrollReveal>
 
         {/* Model Cards */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {filteredModels.map((item) => (
-            <div
+          {filteredModels.map((item, idx) => (
+            <ScrollReveal
               key={item.id}
-              className="bg-white rounded-3xl border border-slate-200 overflow-hidden shadow-sm hover:shadow-2xl hover:-translate-y-1.5 transition-all duration-300 flex flex-col justify-between group"
+              direction="up"
+              distance={18}
+              delay={(idx % 3) * 60}
+              className="bg-white rounded-3xl border border-slate-200 overflow-hidden shadow-sm hover:shadow-2xl hover:-translate-y-1.5 transition-all duration-300 flex flex-col justify-between group h-full"
             >
               <div>
                 {/* Visual */}
@@ -172,7 +178,7 @@ export default function Interior() {
                   <ArrowRight className="w-3.5 h-3.5" />
                 </Link>
               </div>
-            </div>
+            </ScrollReveal>
           ))}
         </div>
       </div>
@@ -300,7 +306,7 @@ export default function Interior() {
       )}
 
       {/* Etching Pattern Swatches */}
-      <div className="bg-slate-900 text-white rounded-3xl p-8 sm:p-12 space-y-8 shadow-2xl border border-slate-800">
+      <ScrollReveal direction="up" distance={22} className="bg-slate-900 text-white rounded-3xl p-8 sm:p-12 space-y-8 shadow-2xl border border-slate-800">
         <div className="max-w-2xl">
           <span className="text-xs font-bold uppercase tracking-widest text-brand-teal block mb-1">
             Artistic Etching Patterns
@@ -329,7 +335,7 @@ export default function Interior() {
             </div>
           ))}
         </div>
-      </div>
+      </ScrollReveal>
     </div>
   );
 }

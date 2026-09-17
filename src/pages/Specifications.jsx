@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { SlidersHorizontal, Download, FileText, Search, Info, ArrowRight } from "lucide-react";
 import { specificationsData } from "../data/specificationsData";
 import { companyData } from "../data/companyData";
+import ScrollReveal from "../components/ScrollReveal";
 
 export default function Specifications({ onOpenBrochurePage }) {
   const [activeTab, setActiveTab] = useState("manual-doors");
@@ -29,7 +30,7 @@ export default function Specifications({ onOpenBrochurePage }) {
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 space-y-12">
       {/* Header */}
-      <div className="max-w-3xl space-y-3">
+      <ScrollReveal direction="up" distance={20} className="max-w-3xl space-y-3">
         <span className="text-xs font-bold uppercase tracking-widest text-brand-teal block">
           Engineering Drawings & Dimensional Data
         </span>
@@ -39,10 +40,10 @@ export default function Specifications({ onOpenBrochurePage }) {
         <p className="text-sm sm:text-base text-slate-600 leading-relaxed">
           Comprehensive civil, structural, and mechanical dimensions transcribed directly from pages 18 to 22 of the KRUPA ELEVATORS technical brochure. All measurements are in millimeters (mm) unless noted otherwise.
         </p>
-      </div>
+      </ScrollReveal>
 
       {/* Tabs Bar */}
-      <div className="bg-white rounded-3xl border border-slate-200 p-4 sm:p-6 shadow-sm space-y-6">
+      <ScrollReveal direction="up" distance={20} delay={60} className="bg-white rounded-3xl border border-slate-200 p-4 sm:p-6 shadow-sm space-y-6">
         <div className="flex flex-wrap gap-2 border-b border-slate-100 pb-4">
           {tabs.map((tab) => (
             <button
@@ -135,10 +136,10 @@ export default function Specifications({ onOpenBrochurePage }) {
             <strong>Brochure Engineering Clause:</strong> All dimensions are in mm. This is general data and may be updated or changed without notice based on site conditions or architectural refinements. Hoistway wall thickness, pit waterproofing, and machine room ventilation must be verified prior to civil shaft casting.
           </p>
         </div>
-      </div>
+      </ScrollReveal>
 
       {/* Consultation Action */}
-      <div className="rounded-3xl bg-slate-900 text-white p-8 sm:p-10 flex flex-col md:flex-row justify-between items-center gap-6">
+      <ScrollReveal direction="up" distance={20} className="rounded-3xl bg-slate-900 text-white p-8 sm:p-10 flex flex-col md:flex-row justify-between items-center gap-6 shadow-xl border border-slate-800">
         <div className="space-y-1">
           <h3 className="text-xl font-black">Need Custom Hoistway or Pit Calculations?</h3>
           <p className="text-xs text-slate-400 max-w-xl">
@@ -157,13 +158,13 @@ export default function Specifications({ onOpenBrochurePage }) {
           </a>
           <Link
             to="/contact"
-            className="px-5 py-3 rounded-xl bg-brand-orange hover:bg-brand-orange-hover text-white text-xs font-bold transition-colors flex items-center space-x-2"
+            className="px-5 py-3 rounded-xl bg-brand-orange hover:bg-brand-orange-hover text-white text-xs font-bold transition-colors flex items-center space-x-2 shadow-md"
           >
             <span>Request Site Survey</span>
             <ArrowRight className="w-4 h-4" />
           </Link>
         </div>
-      </div>
+      </ScrollReveal>
     </div>
   );
 }

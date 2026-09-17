@@ -14,6 +14,7 @@ import {
   ChevronDown
 } from "lucide-react";
 import { companyData } from "../data/companyData";
+import ScrollReveal from "../components/ScrollReveal";
 
 export default function Contact({ onOpenBrochure }) {
   const [formSubmitted, setFormSubmitted] = useState(false);
@@ -58,7 +59,7 @@ export default function Contact({ onOpenBrochure }) {
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 space-y-16">
       {/* Header */}
-      <div className="max-w-3xl space-y-3">
+      <ScrollReveal direction="up" distance={20} className="max-w-3xl space-y-3">
         <span className="text-xs font-bold uppercase tracking-widest text-brand-teal block">
           Get in Touch
         </span>
@@ -68,12 +69,12 @@ export default function Contact({ onOpenBrochure }) {
         <p className="text-sm sm:text-base text-slate-600 leading-relaxed">
           Reach our corporate headquarters and manufacturing facility in Ahmedabad, Gujarat. Speak with our application engineers for custom architectural CAD assistance, site surveys, or immediate quotation requests.
         </p>
-      </div>
+      </ScrollReveal>
 
       {/* Facilities & Quick Contacts Cards */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
         {/* Office */}
-        <div className="bg-white p-6 rounded-3xl border border-slate-200 shadow-sm space-y-3">
+        <ScrollReveal direction="up" distance={18} delay={0} className="bg-white p-6 rounded-3xl border border-slate-200 shadow-sm space-y-3 hover:shadow-md transition-shadow">
           <div className="w-10 h-10 rounded-2xl bg-brand-orange-light text-brand-orange flex items-center justify-center">
             <Building className="w-5 h-5" />
           </div>
@@ -81,10 +82,10 @@ export default function Contact({ onOpenBrochure }) {
           <p className="text-xs text-slate-600 leading-relaxed">
             {companyData.contacts.office.address}
           </p>
-        </div>
+        </ScrollReveal>
 
         {/* Factory */}
-        <div className="bg-white p-6 rounded-3xl border border-slate-200 shadow-sm space-y-3">
+        <ScrollReveal direction="up" distance={18} delay={60} className="bg-white p-6 rounded-3xl border border-slate-200 shadow-sm space-y-3 hover:shadow-md transition-shadow">
           <div className="w-10 h-10 rounded-2xl bg-brand-teal-light text-brand-teal flex items-center justify-center">
             <Factory className="w-5 h-5" />
           </div>
@@ -92,10 +93,10 @@ export default function Contact({ onOpenBrochure }) {
           <p className="text-xs text-slate-600 leading-relaxed">
             {companyData.contacts.factory.address}
           </p>
-        </div>
+        </ScrollReveal>
 
         {/* Phone & WhatsApp */}
-        <div className="bg-white p-6 rounded-3xl border border-slate-200 shadow-sm space-y-3">
+        <ScrollReveal direction="up" distance={18} delay={120} className="bg-white p-6 rounded-3xl border border-slate-200 shadow-sm space-y-3 hover:shadow-md transition-shadow">
           <div className="w-10 h-10 rounded-2xl bg-emerald-50 text-emerald-600 flex items-center justify-center">
             <Phone className="w-5 h-5" />
           </div>
@@ -117,10 +118,10 @@ export default function Contact({ onOpenBrochure }) {
               <span>Chat on WhatsApp</span>
             </a>
           </div>
-        </div>
+        </ScrollReveal>
 
         {/* Email & Brochure */}
-        <div className="bg-white p-6 rounded-3xl border border-slate-200 shadow-sm space-y-3">
+        <ScrollReveal direction="up" distance={18} delay={180} className="bg-white p-6 rounded-3xl border border-slate-200 shadow-sm space-y-3 hover:shadow-md transition-shadow">
           <div className="w-10 h-10 rounded-2xl bg-blue-50 text-blue-600 flex items-center justify-center">
             <Mail className="w-5 h-5" />
           </div>
@@ -139,11 +140,11 @@ export default function Contact({ onOpenBrochure }) {
               {companyData.contacts.emailSales}
             </a>
           </div>
-        </div>
+        </ScrollReveal>
       </div>
 
       {/* INQUIRY FORM & SITE VISIT REQUEST */}
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start">
+      <ScrollReveal direction="up" distance={20} className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start">
         <div className="lg:col-span-7 bg-white p-6 sm:p-10 rounded-3xl border border-slate-200 shadow-lg space-y-6">
           <div className="border-b border-slate-100 pb-4">
             <span className="text-xs font-bold uppercase tracking-widest text-brand-teal block">
@@ -374,10 +375,10 @@ export default function Contact({ onOpenBrochure }) {
             </a>
           </div>
         </div>
-      </div>
+      </ScrollReveal>
 
       {/* FREQUENTLY ASKED QUESTIONS */}
-      <div className="bg-white rounded-3xl border border-slate-200 p-6 sm:p-10 shadow-sm space-y-6">
+      <ScrollReveal direction="up" distance={20} className="bg-white rounded-3xl border border-slate-200 p-6 sm:p-10 shadow-sm space-y-6">
         <div className="max-w-2xl">
           <span className="text-xs font-bold uppercase tracking-widest text-brand-teal block mb-1">
             Questions & Answers
@@ -412,7 +413,7 @@ export default function Contact({ onOpenBrochure }) {
             );
           })}
         </div>
-      </div>
+      </ScrollReveal>
     </div>
   );
 }
