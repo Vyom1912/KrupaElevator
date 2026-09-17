@@ -1,3 +1,5 @@
+import { assetUrl } from "../utils/assetPath";
+
 export const companyData = {
   name: "KRUPA ELEVATORS",
   shortName: "Krupa",
@@ -24,10 +26,10 @@ export const companyData = {
       pincode: "382430"
     }
   },
-  brochurePdf: "/assets/krupa-brochure.pdf",
-  logo: "/assets/logo-clean.png",
-  heroImage: "/assets/generated/capsule-hero.jpg",
-  villaElevatorImage: "/assets/generated/home-elevator.jpg",
+  brochurePdf: assetUrl("/assets/krupa-brochure.pdf"),
+  logo: assetUrl("/assets/logo-clean.png"),
+  heroImage: assetUrl("/assets/generated/capsule-hero.jpg"),
+  villaElevatorImage: assetUrl("/assets/generated/home-elevator.jpg"),
   stats: [
     { label: "Energy Cut (PMS)", value: "30%", detail: "PMS Gearless traction machine vs conventional geared machine" },
     { label: "Lighting Savings", value: "50%", detail: "Eco LED lighting with smart auto-shutoff when idle" },

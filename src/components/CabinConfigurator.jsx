@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { Check, Sparkles, Layers, Sliders, ArrowRight, Eye } from "lucide-react";
+import { assetUrl } from "../utils/assetPath";
 
 export default function CabinConfigurator() {
   const [wallFinish, setWallFinish] = useState("rose-gold");
@@ -14,7 +15,7 @@ export default function CabinConfigurator() {
       name: "S.S. Hairline Finish",
       color: "#cbd5e1",
       desc: "Classic brushed silver stainless steel",
-      previewImage: "/assets/interiors/kec-01.jpg",
+      previewImage: assetUrl("/assets/interiors/kec-01.jpg"),
       modelMatch: "KEC-01"
     },
     {
@@ -22,7 +23,7 @@ export default function CabinConfigurator() {
       name: "Rose Gold Titanium",
       color: "#e0a899",
       desc: "Warm luxury brushed rose-gold PVD coating",
-      previewImage: "/assets/interiors/kec-04.jpg",
+      previewImage: assetUrl("/assets/interiors/kec-04.jpg"),
       modelMatch: "KEC-04"
     },
     {
@@ -30,7 +31,7 @@ export default function CabinConfigurator() {
       name: "Titanium Gold Mirror",
       color: "#eab308",
       desc: "Reflective mirror gold for grand architecture",
-      previewImage: "/assets/interiors/kec-03.jpg",
+      previewImage: assetUrl("/assets/interiors/kec-03.jpg"),
       modelMatch: "KEC-03"
     },
     {
@@ -38,7 +39,7 @@ export default function CabinConfigurator() {
       name: "Imitation Bronze SS",
       color: "#926848",
       desc: "Vintage bronze tones with warm ambient charm",
-      previewImage: "/assets/interiors/kec-05.jpg",
+      previewImage: assetUrl("/assets/interiors/kec-05.jpg"),
       modelMatch: "KEC-05"
     },
     {
@@ -46,7 +47,7 @@ export default function CabinConfigurator() {
       name: "Powder Coated Steel",
       color: "#64748b",
       desc: "Impact-resistant architectural powder coat",
-      previewImage: "/assets/interiors/kec-07.jpg",
+      previewImage: assetUrl("/assets/interiors/kec-07.jpg"),
       modelMatch: "KEC-07"
     },
   ];

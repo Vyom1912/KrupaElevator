@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { X, ChevronLeft, ChevronRight, Download, ExternalLink, ZoomIn } from "lucide-react";
 import { companyData } from "../data/companyData";
+import { assetUrl } from "../utils/assetPath";
 
 export default function BrochureModal({ isOpen, onClose, initialPage = 1 }) {
   const [currentPage, setCurrentPage] = useState(initialPage);
@@ -75,7 +76,7 @@ export default function BrochureModal({ isOpen, onClose, initialPage = 1 }) {
         <div className="relative flex-1 overflow-hidden flex flex-col items-center justify-center p-2 sm:p-4 bg-black/40">
           <div className="relative max-h-[68vh] w-auto overflow-auto rounded-xl border border-slate-800 shadow-inner flex items-center justify-center">
             <img
-              src={`/assets/pages/page-${currentPage}.webp`}
+              src={assetUrl(`/assets/pages/page-${currentPage}.webp`)}
               alt={`KRUPA ELEVATORS Brochure Page ${currentPage}`}
               className="max-h-[66vh] w-auto object-contain rounded-lg transition-opacity duration-200"
             />
@@ -118,7 +119,7 @@ export default function BrochureModal({ isOpen, onClose, initialPage = 1 }) {
               }`}
             >
               <img
-                src={`/assets/pages/page-${pg}.webp`}
+                src={assetUrl(`/assets/pages/page-${pg}.webp`)}
                 alt={`Thumb ${pg}`}
                 className="w-14 h-10 object-cover rounded"
               />

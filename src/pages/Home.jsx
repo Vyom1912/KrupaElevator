@@ -29,6 +29,7 @@ import { interiorSeries } from "../data/interiorsData";
 import ElevatorFinder from "../components/ElevatorFinder";
 import ProductModal from "../components/ProductModal";
 import ScrollReveal from "../components/ScrollReveal";
+import { assetUrl } from "../utils/assetPath";
 
 const heroScenes = [
   {
@@ -36,42 +37,42 @@ const heroScenes = [
     tag: "High-Rise Residential",
     title: "Residential Towers & High-Rise",
     subtitle: "High-speed passenger elevator with precision group control",
-    image: "/assets/hero/building.jpg",
+    image: assetUrl("/assets/hero/building.jpg"),
   },
   {
     id: "villa",
     tag: "Private Luxury Villa",
     title: "Private Villas & Bungalows",
     subtitle: "Panoramic glass home lift with whisper-quiet acoustics",
-    image: "/assets/hero/villa.jpg",
+    image: assetUrl("/assets/hero/villa.jpg"),
   },
   {
     id: "commercial",
     tag: "Commercial Atrium",
     title: "Atriums & Shopping Malls",
     subtitle: "High-traffic panoramic capsule elevators with smart dispatch",
-    image: "/assets/hero/commercial.jpg",
+    image: assetUrl("/assets/hero/commercial.jpg"),
   },
   {
     id: "hospital",
     tag: "Hospital & Medical",
     title: "Hospitals & Medical Centers",
     subtitle: "Stretcher-friendly jerk-free bed elevators with priority recall",
-    image: "/assets/hero/hospital.jpg",
+    image: assetUrl("/assets/hero/hospital.jpg"),
   },
   {
     id: "car-park",
     tag: "Automotive Car Park",
     title: "Automated Car Parks",
     subtitle: "Heavy-capacity automotive vehicle lifts & puzzle parking",
-    image: "/assets/hero/car-park.jpg",
+    image: assetUrl("/assets/hero/car-park.jpg"),
   },
   {
     id: "industrial",
     tag: "Industrial Logistics",
     title: "Industrial Warehouses",
     subtitle: "Rugged high-tonnage freight cargo lifts with reinforced sills",
-    image: "/assets/hero/industrial.jpg",
+    image: assetUrl("/assets/hero/industrial.jpg"),
   },
 ];
 

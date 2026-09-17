@@ -2,6 +2,12 @@
 
 > **Modern, High-Performance Elevators for Residential, Commercial, Healthcare, and Industrial Architecture.**
 
+## 🌐 Live Website (Hosted on GitHub Pages)
+
+🔗 **[https://vyom1912.github.io/KrupaElevator/](https://vyom1912.github.io/KrupaElevator/)**
+
+You can easily share this live link with clients, consultants, architects, and partners!
+
 Official web application and technical digital showroom for **KRUPA ELEVATORS**, engineered with React, Vite, and TailwindCSS. Features complete on-site dimensional matrices, interactive cabin configurator, full architectural animations, and responsive navigation.
 
 ---
@@ -98,6 +104,26 @@ npm run build
 # Preview production build locally
 npm run preview
 ```
+
+---
+
+## 🚀 GitHub Pages Deployment
+
+The repository is configured for automated deployment to GitHub Pages via **GitHub Actions**:
+
+1. **One-Time GitHub Settings Setup**:
+   - Go to your repository on GitHub: `https://github.com/Vyom1912/KrupaElevator`
+   - Click **Settings** (tab at the top)
+   - Click **Pages** (in the left sidebar under "Code and automation")
+   - Under **Build and deployment > Source**, select:
+     👉 **`GitHub Actions`**
+2. **Automatic Deployment**:
+   - Any commit pushed to the `main` branch automatically triggers `.github/workflows/deploy.yml`.
+   - The workflow installs dependencies, builds the Vite project with base path `/KrupaElevator/`, and deploys it in ~60 seconds.
+3. **Live URL**:
+   - Your live site will be accessible at:
+     **`https://vyom1912.github.io/KrupaElevator/`**
+   - Share this link or specific sections like `https://vyom1912.github.io/KrupaElevator/#/products`, `https://vyom1912.github.io/KrupaElevator/#/interior`, etc.
 
 ---
 

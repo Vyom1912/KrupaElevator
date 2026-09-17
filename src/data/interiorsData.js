@@ -1,4 +1,6 @@
-export const interiorSeries = [
+import { assetUrl } from "../utils/assetPath";
+
+const rawInteriorSeries = [
   {
     id: "kec-01",
     model: "KEC-01",
@@ -211,6 +213,11 @@ export const interiorSeries = [
     highlights: ["Dual-tone material synergy", "Acrylic top ambient ceiling", "Half-mirror glass with SS grab bar"]
   }
 ];
+
+export const interiorSeries = rawInteriorSeries.map((item) => ({
+  ...item,
+  image: assetUrl(item.image)
+}));
 
 export const etchingPatterns = [
   { code: "AG 129", name: "Geometric Arabesque", finish: "Titanium Gold Etched" },

@@ -1,4 +1,6 @@
-export const productsData = [
+import { assetUrl } from "../utils/assetPath";
+
+const rawProductsData = [
   {
     id: "passenger",
     name: "Passenger Elevator",
@@ -302,7 +304,7 @@ export const productsData = [
 ];
 
 // The 6 Elevator Applications requested by the user
-export const elevatorApplications = [
+const rawElevatorApplications = [
   {
     id: "building",
     title: "Building (Residential & Commercial)",
@@ -408,3 +410,14 @@ export const doorSystemsData = [
     ]
   }
 ];
+
+export const productsData = rawProductsData.map((p) => ({
+  ...p,
+  image: assetUrl(p.image),
+  supplementaryImage: p.supplementaryImage ? assetUrl(p.supplementaryImage) : undefined
+}));
+
+export const elevatorApplications = rawElevatorApplications.map((a) => ({
+  ...a,
+  image: assetUrl(a.image)
+}));
