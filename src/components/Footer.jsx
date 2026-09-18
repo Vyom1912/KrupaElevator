@@ -2,6 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { Phone, Mail, MapPin, Download, ArrowUpRight, ShieldCheck, HeartHandshake } from "lucide-react";
 import { companyData } from "../data/companyData";
+import WhatsAppIcon from "./common/WhatsAppIcon";
 
 export default function Footer({ onOpenBrochure }) {
   const currentYear = new Date().getFullYear();
@@ -184,6 +185,19 @@ export default function Footer({ onOpenBrochure }) {
                 </a>
               </div>
               <div className="flex items-center space-x-2">
+                <WhatsAppIcon className="w-4 h-4 text-[#25D366] shrink-0" />
+                <a
+                  href={`https://wa.me/${companyData.contacts.whatsapp}?text=${encodeURIComponent(
+                    "Hello Krupa Elevators, I would like to inquire about elevator solutions."
+                  )}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-emerald-400 font-semibold hover:text-emerald-300 transition-colors"
+                >
+                  WhatsApp Us
+                </a>
+              </div>
+              <div className="flex items-center space-x-2">
                 <Mail className="w-4 h-4 text-brand-teal shrink-0" />
                 <a
                   href={`mailto:${companyData.contacts.emailPrimary}`}
@@ -202,7 +216,7 @@ export default function Footer({ onOpenBrochure }) {
             © {currentYear} {companyData.name}. All rights reserved. Reliable Riding Experience.
           </p>
           <p className="max-w-xl text-center sm:text-right text-[11px] text-slate-600">
-            Note: General brochure engineering data may be updated without prior notice. Consult KRUPA ELEVATORS engineering team for exact site hoistway and pit drawings.
+            Note: Technical engineering data is subject to site survey and customized architectural requirements. Consult KRUPA ELEVATORS engineering team for exact site hoistway and pit drawings.
           </p>
         </div>
       </div>

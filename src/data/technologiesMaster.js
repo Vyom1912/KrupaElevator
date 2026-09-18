@@ -182,7 +182,7 @@ export const technologiesMaster = {
 
   machineComparison: {
     title: "Traction Machine Engineering: Gearless PMSM vs. Geared Traction",
-    subtitle: "Direct technical comparison from Krupa Elevators engineering catalog (IS 14665 standard compliance).",
+    subtitle: "Direct technical comparison per Krupa Elevators engineering standards (IS 14665 compliance).",
     parameters: [
       {
         feature: "Motor & Drive Architecture",

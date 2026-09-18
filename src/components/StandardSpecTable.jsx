@@ -79,7 +79,7 @@ export default function StandardSpecTable({ specs, title = "Standard Technical S
       <div className="p-4 bg-slate-50 border-t border-slate-200 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 text-xs text-slate-500">
         <div className="flex items-center space-x-1.5">
           <CheckCircle2 className="w-4 h-4 text-brand-teal shrink-0" />
-          <span>Non-fabricated baseline engineering parameters from Krupa Elevators manufacturing catalog.</span>
+          <span>Baseline engineering parameters adhering to IS 14665 elevator manufacturing standards.</span>
         </div>
         <span className="text-[11px] text-slate-400">Custom civil modifications accommodated on site survey.</span>
       </div>

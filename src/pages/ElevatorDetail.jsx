@@ -16,7 +16,9 @@ import {
   Sparkles,
   Cpu,
   Layers,
-  DoorClosed
+  DoorClosed,
+  Info,
+  Shield
 } from "lucide-react";
 import { elevatorMaster } from "../data/elevatorMaster";
 import { allDoors } from "../data/doorsMaster";
@@ -26,6 +28,9 @@ import ElevatorStructureViewer from "../components/ElevatorStructureViewer";
 import CustomizationProcess from "../components/CustomizationProcess";
 import MergedCivilTable from "../components/MergedCivilTable";
 import ScrollReveal from "../components/ScrollReveal";
+import WhatsAppIcon from "../components/common/WhatsAppIcon";
+import { getElevatorSingleTable } from "../data/elevatorSingleTables";
+import MergedSpecTable from "../components/MergedSpecTable";
 
 export default function ElevatorDetail({ onOpenBrochure }) {
   const { elevatorId } = useParams();
@@ -83,8 +88,8 @@ export default function ElevatorDetail({ onOpenBrochure }) {
                 <span className="px-3.5 py-1 rounded-full bg-brand-teal/20 border border-brand-teal/40 text-brand-teal text-xs font-bold uppercase tracking-wider">
                   {elevator.category}
                 </span>
-                <span className="px-3 py-1 rounded-full bg-slate-800 border border-slate-700 text-slate-300 text-xs font-mono">
-                  {elevator.brochurePage}
+                <span className="px-3 py-1 rounded-full bg-slate-800 border border-slate-700 text-slate-300 text-xs font-semibold">
+                  ISO 9001:2015 Certified
                 </span>
                 <span className="px-3 py-1 rounded-full bg-orange-500/20 text-orange-300 border border-orange-500/30 text-xs font-bold">
                   IS 14665 Standard
@@ -112,6 +117,29 @@ export default function ElevatorDetail({ onOpenBrochure }) {
                   <span>Request Site Survey & Layout</span>
                   <ArrowRight className="w-4 h-4" />
                 </Link>
+
+                <a
+                  href={`tel:${companyData.contacts.phoneRaw}`}
+                  className="px-5 py-3.5 rounded-xl bg-slate-900/90 hover:bg-slate-800 text-slate-200 border border-slate-700 text-xs sm:text-sm font-bold transition-all flex items-center space-x-2"
+                  title="Call Technical Engineer"
+                >
+                  <Phone className="w-4 h-4 text-brand-orange" />
+                  <span>Call Us</span>
+                </a>
+
+                <a
+                  href={`https://wa.me/${companyData.contacts.whatsapp}?text=${encodeURIComponent(
+                    `Hello Krupa Elevators, I would like to inquire about ${elevator.name} specifications and request a quote.`
+                  )}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="px-5 py-3.5 rounded-xl bg-[#25D366] hover:bg-[#20bd5a] text-white text-xs sm:text-sm font-bold transition-all flex items-center space-x-2 shadow-sm"
+                  title="Chat on WhatsApp"
+                >
+                  <WhatsAppIcon className="w-4 h-4" />
+                  <span>WhatsApp</span>
+                </a>
+
                 <button
                   onClick={() => {
                     document.getElementById("civil-specifications")?.scrollIntoView({ behavior: "smooth" });
@@ -119,7 +147,7 @@ export default function ElevatorDetail({ onOpenBrochure }) {
                   className="px-5 py-3.5 rounded-xl bg-slate-900/90 hover:bg-slate-800 text-slate-200 border border-slate-700 text-xs sm:text-sm font-bold transition-all flex items-center space-x-2 cursor-pointer"
                 >
                   <SlidersHorizontal className="w-4 h-4 text-brand-teal" />
-                  <span>View Specifications Matrix</span>
+                  <span>Specifications Matrix</span>
                 </button>
               </div>
             </div>
@@ -343,31 +371,18 @@ export default function ElevatorDetail({ onOpenBrochure }) {
           />
         </ScrollReveal>
 
-        {/* Merged Civil Dimensions Matrix */}
-        {elevator.civilMatrix && elevator.civilMatrix.length > 0 && (
-          <ScrollReveal direction="up" distance={20}>
-            <div className="space-y-4">
-              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
-                <div>
-                  <span className="text-xs font-bold text-brand-teal uppercase tracking-widest block">
-                    Civil Engineering Matrix
-                  </span>
-                  <h3 className="text-xl sm:text-2xl font-black text-slate-900">
-                    Official Hoistway & Cabin Dimension Table
-                  </h3>
-                </div>
-                <div className="text-xs text-slate-500">
-                  Common column specifications merged for architectural clarity.
-                </div>
-              </div>
+        {/* Technical Hoistway & Civil Engineering Dimensions Matrix (ONLY ONE TABLE WITH MERGED CELLS) */}
+        {(() => {
+          const singleTable = getElevatorSingleTable(elevator.id);
 
-              <MergedCivilTable
-                rows={elevator.civilMatrix}
-                tableTitle={`${elevator.name} Hoistway Dimensions`}
-              />
-            </div>
-          </ScrollReveal>
-        )}
+          return (
+            <ScrollReveal direction="up" distance={20}>
+              <div className="bg-white p-6 sm:p-8 rounded-3xl border border-slate-200 shadow-sm">
+                <MergedSpecTable tableData={singleTable} />
+              </div>
+            </ScrollReveal>
+          );
+        })()}
       </section>
 
       {/* ========================================================================= */}

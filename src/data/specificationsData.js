@@ -5,7 +5,7 @@ export const specificationsData = {
     drawing: "/assets/drawings/manual_passenger_technical_drawing.png",
     planDrawing: "/assets/drawings/manual_door_plan.png",
     elevationDrawing: "/assets/drawings/manual_door_elevation.png",
-    note: "All dimensions in mm. Hoistway walls should be minimum 230 mm brick or 150 mm R.C.C. General engineering data from brochure page 19.",
+    note: "All dimensions in mm. Hoistway walls should be minimum 230 mm brick or 150 mm R.C.C. Standard engineering specifications per IS 14665.",
     legend: [
       { key: "Platform A × B", desc: "Platform exterior width (A) × depth (B)" },
       { key: "Lift-Well C × D", desc: "Shaft inside finished width (C) × depth (D)" },
@@ -19,7 +19,9 @@ export const specificationsData = {
       ["5", "340", "1300", "1000", "1700", "1300", "760", "Collapsible / Swing / Imperforate", "300+C+300", "600+D+1500", "Up to 0.68", "1600", "4900"],
       ["6", "408", "1200", "1200", "1600", "1500", "800", "Collapsible / Swing / Imperforate", "300+C+300", "600+D+1500", "Up to 0.68", "1600", "4900"],
       ["8", "544", "1500", "1200", "1900", "1500", "800", "Collapsible / Swing / Imperforate", "300+C+300", "600+D+1500", "Up to 0.68", "1600", "4900"],
-      ["13", "884", "1900", "1500", "2400", "1850", "900", "Collapsible / Swing / Imperforate", "600+C+600", "300+D+1500", "Up to 0.68", "1600", "4900"]
+      ["13", "884", "1900", "1500", "2400", "1850", "900", "Collapsible / Swing / Imperforate", "600+C+600", "300+D+1500", "Up to 0.68", "1600", "4900"],
+      ["16", "1088", "1900", "1800", "2400", "2150", "1000", "Collapsible / Swing / Imperforate", "600+C+600", "300+D+1500", "Up to 0.68", "1600", "4900"],
+      ["20", "1360", "1900", "2250", "2400", "2600", "1000", "Collapsible / Swing / Imperforate", "600+C+600", "300+D+1500", "Up to 0.68", "1600", "4900"]
     ]
   },
   "automatic-doors": {
@@ -28,7 +30,7 @@ export const specificationsData = {
     drawing: "/assets/drawings/auto_passenger_technical_drawing.png",
     planDrawing: "/assets/drawings/auto_door_plan.png",
     elevationDrawing: "/assets/drawings/auto_door_elevation.png",
-    note: "All dimensions in mm. Hoistway walls should be minimum 230 mm brick or 150 mm R.C.C. General engineering data from brochure page 19.",
+    note: "All dimensions in mm. Hoistway walls should be minimum 230 mm brick or 150 mm R.C.C. Standard engineering specifications per IS 14665.",
     legend: [
       { key: "Platform A × B", desc: "Car platform width (A) × depth (B)" },
       { key: "Lift-Well C × D", desc: "Shaft inside finished width (C) × depth (D)" },
@@ -41,14 +43,16 @@ export const specificationsData = {
       ["6", "408", "1200", "1300", "1700", "1800", "700", "Auto Center Opening", "300+C+300", "600+D+1500", "Up to 1.5", "1600", "4900"],
       ["8", "544", "1500", "1330", "2000", "1800", "800", "Auto Center Opening", "300+C+300", "600+D+1500", "Up to 1.5", "1600", "4900"],
       ["10", "680", "1650", "1450", "2150", "2000", "800", "Auto Center Opening", "600+C+600", "600+D+1500", "Up to 1.5", "1600", "4900"],
-      ["13", "884", "1900", "1500", "2400", "2000", "900", "Auto Center Opening", "600+C+600", "600+D+1500", "Up to 1.5", "1600", "4900"]
+      ["13", "884", "1900", "1500", "2400", "2000", "900", "Auto Center Opening", "600+C+600", "600+D+1500", "Up to 1.5", "1600", "4900"],
+      ["16", "1088", "1900", "1800", "2400", "2300", "1000", "Auto Center Opening", "600+C+600", "600+D+1500", "Up to 1.5", "1600", "4900"],
+      ["20", "1360", "1900", "2250", "2400", "2750", "1000", "Auto Center Opening", "600+C+600", "600+D+1500", "Up to 1.5", "1600", "4900"]
     ]
   },
   "capsule": {
     title: "Capsule Panoramic Elevator Dimensions",
     brochurePage: 19,
     drawing: "/assets/drawings/capsule_technical_drawing.png",
-    note: "All dimensions in mm. Option-A (Semi-Circle / Circular) & Option-B (Square / Polygon Cutting Edge). Full architectural callouts A through H from brochure page 19.",
+    note: "All dimensions in mm. Option-A (Semi-Circle / Circular) & Option-B (Square / Polygon Cutting Edge). Full architectural callouts A through H.",
     legend: [
       { key: "Car Inside (A × B)", desc: "A: Car Inside Width | B: Car Inside Depth" },
       { key: "Front Geometry (J / G)", desc: "J: Arc diameter (Option-A) | G: Side chamfer edge offset" },

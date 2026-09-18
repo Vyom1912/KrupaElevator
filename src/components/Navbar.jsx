@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Phone, Mail, MapPin, Menu, X, ChevronRight, ArrowRight, Sparkles } from "lucide-react";
 import { companyData } from "../data/companyData";
+import WhatsAppIcon from "./common/WhatsAppIcon";
 
 export default function Navbar() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -82,9 +83,22 @@ export default function Navbar() {
             <a
               href={`tel:${companyData.contacts.phoneRaw}`}
               className="flex items-center space-x-1.5 text-slate-300 hover:text-brand-orange transition-colors"
+              title="Call Krupa Elevators"
             >
               <Phone className="w-3 h-3 text-brand-orange" />
               <span className="font-semibold">{companyData.contacts.phone}</span>
+            </a>
+            <a
+              href={`https://wa.me/${companyData.contacts.whatsapp}?text=${encodeURIComponent(
+                "Hello Krupa Elevators, I would like to inquire about elevator solutions."
+              )}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center space-x-1.5 text-emerald-400 hover:text-emerald-300 transition-colors"
+              title="Chat on WhatsApp"
+            >
+              <WhatsAppIcon className="w-3 h-3 text-[#25D366]" />
+              <span className="font-semibold">WhatsApp</span>
             </a>
             <a
               href={`mailto:${companyData.contacts.emailPrimary}`}
@@ -160,8 +174,32 @@ export default function Navbar() {
               })}
             </div>
 
-            {/* Right Action Button - Compact Pill */}
+            {/* Right Action Buttons - Modern Call, WhatsApp & Survey */}
             <div className="hidden lg:flex items-center space-x-2">
+              {/* Modern Phone Call Button */}
+              <a
+                href={`tel:${companyData.contacts.phoneRaw}`}
+                className="inline-flex items-center space-x-1.5 px-3 py-1.5 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-800 text-xs font-bold transition-all border border-slate-200 hover:scale-105 active:scale-95"
+                title="Call Technical Desk: +91 97277 64868"
+              >
+                <Phone className="w-3.5 h-3.5 text-brand-orange" />
+                <span>Call</span>
+              </a>
+
+              {/* Modern WhatsApp Button */}
+              <a
+                href={`https://wa.me/${companyData.contacts.whatsapp}?text=${encodeURIComponent(
+                  "Hello Krupa Elevators, I would like to inquire about elevator solutions."
+                )}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center space-x-1.5 px-3.5 py-1.5 rounded-full bg-[#25D366] hover:bg-[#20bd5a] text-white text-xs font-bold transition-all shadow-xs hover:scale-105 active:scale-95"
+                title="Chat with Engineer on WhatsApp"
+              >
+                <WhatsAppIcon className="w-3.5 h-3.5" />
+                <span>WhatsApp</span>
+              </a>
+
               <Link
                 to="/contact"
                 className="inline-flex items-center space-x-1.5 px-4 py-1.5 rounded-full bg-brand-orange text-white text-xs font-bold shadow-xs hover:bg-brand-orange-hover transition-all transform active:scale-95"
@@ -171,14 +209,28 @@ export default function Navbar() {
               </Link>
             </div>
 
-            {/* Mobile Menu & Quick CTA */}
-            <div className="flex items-center lg:hidden space-x-2">
-              <Link
-                to="/contact"
-                className="px-3 py-1 rounded-full bg-brand-orange text-white text-xs font-bold shadow-xs"
+            {/* Mobile Quick Action Buttons & Menu Hamburger */}
+            <div className="flex items-center lg:hidden space-x-1.5">
+              <a
+                href={`tel:${companyData.contacts.phoneRaw}`}
+                className="p-2 rounded-full bg-slate-100 text-slate-800 hover:bg-slate-200 transition-all active:scale-90 border border-slate-200"
+                aria-label="Call Krupa Elevators"
+                title="Call: +91 97277 64868"
               >
-                Quote
-              </Link>
+                <Phone className="w-4 h-4 text-brand-orange" />
+              </a>
+              <a
+                href={`https://wa.me/${companyData.contacts.whatsapp}?text=${encodeURIComponent(
+                  "Hello Krupa Elevators, I would like to inquire about elevator solutions."
+                )}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="p-2 rounded-full bg-[#25D366] text-white hover:bg-[#20bd5a] transition-all active:scale-90 shadow-xs"
+                aria-label="WhatsApp Krupa Elevators"
+                title="WhatsApp Message"
+              >
+                <WhatsAppIcon className="w-4 h-4" />
+              </a>
               <button
                 onClick={() => setMobileMenuOpen((prev) => !prev)}
                 className="p-1.5 rounded-lg text-slate-700 hover:bg-slate-100 focus:outline-none transition-colors"
@@ -202,7 +254,7 @@ export default function Navbar() {
 
         {/* Mobile Slide-Down Menu */}
         {mobileMenuOpen && (
-          <div className="relative z-50 lg:hidden bg-white border-t border-slate-200 px-4 pt-2 pb-5 space-y-1 shadow-xl animate-in slide-in-from-top-2 duration-200 max-h-[78vh] overflow-y-auto">
+          <div className="relative z-50 lg:hidden bg-white border-t border-slate-200 px-4 pt-2 pb-5 space-y-2 shadow-xl animate-in slide-in-from-top-2 duration-200 max-h-[78vh] overflow-y-auto">
             {navLinks.map((link) => {
               const active = isActive(link.path);
               return (
@@ -222,6 +274,28 @@ export default function Navbar() {
             })}
 
             <div className="pt-3 border-t border-slate-100 space-y-2">
+              {/* Quick Contact Buttons for Mobile */}
+              <div className="grid grid-cols-2 gap-2">
+                <a
+                  href={`tel:${companyData.contacts.phoneRaw}`}
+                  className="flex items-center justify-center space-x-2 py-2.5 px-3 rounded-xl bg-slate-100 text-slate-800 text-xs font-bold border border-slate-200 hover:bg-slate-200 transition-colors"
+                >
+                  <Phone className="w-3.5 h-3.5 text-brand-orange" />
+                  <span>Call Direct</span>
+                </a>
+                <a
+                  href={`https://wa.me/${companyData.contacts.whatsapp}?text=${encodeURIComponent(
+                    "Hello Krupa Elevators, I would like to inquire about elevator solutions."
+                  )}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center justify-center space-x-2 py-2.5 px-3 rounded-xl bg-[#25D366] text-white text-xs font-bold hover:bg-[#20bd5a] transition-colors shadow-xs"
+                >
+                  <WhatsAppIcon className="w-3.5 h-3.5" />
+                  <span>WhatsApp</span>
+                </a>
+              </div>
+
               <Link
                 to="/contact"
                 onClick={() => setMobileMenuOpen(false)}

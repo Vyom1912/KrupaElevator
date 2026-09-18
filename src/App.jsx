@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
-import { HashRouter as Router, Routes, Route, useLocation, Navigate } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route, useLocation, Navigate } from "react-router-dom";
 import { Phone, MessageSquare } from "lucide-react";
+import WhatsAppIcon from "./components/common/WhatsAppIcon";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import BrochureModal from "./components/BrochureModal";
@@ -20,6 +21,16 @@ function ScrollToTop() {
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [pathname]);
+
+  // Strip legacy '#' hashes from old cached/bookmarked URLs (e.g. #/elevators -> /elevators)
+  useEffect(() => {
+    if (window.location.hash.startsWith("#/")) {
+      const cleanSubpath = window.location.hash.slice(2);
+      const base = (import.meta.env.BASE_URL || "/").replace(/\/$/, "");
+      window.history.replaceState(null, "", (base ? base : "") + "/" + cleanSubpath);
+    }
+  }, []);
+
   return null;
 }
 
@@ -33,7 +44,7 @@ export default function App() {
   };
 
   return (
-    <Router>
+    <Router basename={import.meta.env.BASE_URL}>
       <ScrollToTop />
       <div className="min-h-screen flex flex-col bg-slate-50 font-sans antialiased text-slate-900">
         <Navbar onOpenBrochure={() => handleOpenBrochure(1)} />
@@ -152,19 +163,38 @@ export default function App() {
           onClose={() => setBrochureModalOpen(false)}
         />
 
-        {/* Fixed Quick Action WhatsApp Button */}
+        {/* Fixed Quick Action Call & WhatsApp Dock */}
         <div className="fixed bottom-6 right-6 z-40 flex flex-col items-end space-y-3">
+          {/* Quick Call Button */}
+          <a
+            href="tel:+919727764868"
+            className="group relative flex items-center justify-center w-12 h-12 rounded-full bg-slate-900 hover:bg-brand-teal text-white shadow-lg border border-slate-700/60 transition-all duration-300 hover:scale-110 active:scale-95 focus:outline-hidden focus:ring-4 focus:ring-brand-teal/40"
+            title="Call Technical Desk: +91 97277 64868"
+            aria-label="Call Krupa Elevators"
+          >
+            <Phone className="w-5 h-5 text-brand-teal group-hover:text-white transition-colors" />
+            <span className="absolute right-14 px-3 py-1.5 rounded-xl bg-slate-900/95 text-white text-xs font-semibold whitespace-nowrap opacity-0 pointer-events-none group-hover:opacity-100 transition-opacity shadow-md border border-slate-700/50">
+              Call: +91 97277 64868
+            </span>
+          </a>
+
+          {/* Quick WhatsApp Button */}
           <a
             href={`https://wa.me/${companyData.contacts.whatsapp}?text=${encodeURIComponent(
-              "Hello Krupa Elevators, I would like to inquire about elevator specifications and request a site survey."
+              "Hello Krupa Elevators, I would like to inquire about elevator specifications and request a quotation."
             )}`}
             target="_blank"
             rel="noopener noreferrer"
-            className="w-13 h-13 rounded-full bg-emerald-500 hover:bg-emerald-600 text-white shadow-xl flex items-center justify-center transition-all hover:scale-110 active:scale-95 group focus:outline-hidden focus:ring-4 focus:ring-emerald-300"
+            className="group relative flex items-center justify-center w-14 h-14 rounded-full bg-[#25D366] hover:bg-[#20bd5a] text-white shadow-2xl transition-all duration-300 hover:scale-110 active:scale-95 focus:outline-hidden focus:ring-4 focus:ring-emerald-300"
             title="Chat with Technical Engineer on WhatsApp"
             aria-label="WhatsApp technical consultation"
           >
-            <MessageSquare className="w-6 h-6 fill-white" />
+            {/* Subtle animated ambient ring */}
+            <span className="absolute inset-0 rounded-full bg-[#25D366] animate-ping opacity-20 pointer-events-none" />
+            <WhatsAppIcon className="w-7 h-7 text-white relative z-10" />
+            <span className="absolute right-16 px-3 py-1.5 rounded-xl bg-slate-900/95 text-white text-xs font-semibold whitespace-nowrap opacity-0 pointer-events-none group-hover:opacity-100 transition-opacity shadow-md border border-slate-700/50">
+              WhatsApp Us
+            </span>
           </a>
         </div>
       </div>

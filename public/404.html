@@ -3,18 +3,22 @@
   <head>
     <meta charset="utf-8">
     <title>KRUPA ELEVATORS | Reliable Riding Experience</title>
-    <script>
-      // Single Page Apps for GitHub Pages redirect script
-      // Redirects non-hash URLs back into the HashRouter
+    <script type="text/javascript">
+      // Single Page Apps for GitHub Pages
+      // MIT License
+      // https://github.com/rafgraph/spa-github-pages
+      // Converts path and query string into a clean query param and redirects to index.html
+      // without adding any '#' hash to the URL.
       var pathSegmentsToKeep = 1;
+
       var l = window.location;
-      var path = l.pathname.slice(1).split('/').slice(pathSegmentsToKeep).join('/');
-      var redirectUrl = l.protocol + '//' + l.hostname + (l.port ? ':' + l.port : '') +
-        l.pathname.split('/').slice(0, 1 + pathSegmentsToKeep).join('/') +
-        '/#' + (path ? '/' + path : '') +
-        (l.search ? '?' + l.search.slice(1) : '') +
-        l.hash;
-      window.location.replace(redirectUrl);
+      l.replace(
+        l.protocol + '//' + l.hostname + (l.port ? ':' + l.port : '') +
+        l.pathname.split('/').slice(0, 1 + pathSegmentsToKeep).join('/') + '/?/' +
+        l.pathname.slice(1).split('/').slice(pathSegmentsToKeep).join('/').replace(/&/g, '~and~') +
+        (l.search ? '&' + l.search.slice(1).replace(/&/g, '~and~') : '') +
+        l.hash
+      );
     </script>
   </head>
   <body>

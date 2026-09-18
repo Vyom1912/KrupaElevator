@@ -185,8 +185,8 @@ export default function Interior() {
                               <h4 className="text-xl font-black text-slate-900 group-hover:text-brand-teal transition-colors">
                                 {item.model}
                               </h4>
-                              <span className="text-[10px] font-mono text-slate-400">
-                                Brochure P{item.brochurePage}
+                              <span className="text-[10px] font-semibold text-teal-700 bg-teal-50 border border-teal-200 px-2 py-0.5 rounded">
+                                Custom Craft
                               </span>
                             </div>
 
@@ -354,7 +354,7 @@ export default function Interior() {
             <div className="flex justify-between items-start pb-4 border-b border-slate-100">
               <div>
                 <span className="text-xs font-bold text-brand-teal uppercase tracking-wider block">
-                  {selectedCabin.series} &bull; Brochure Page {selectedCabin.brochurePage}
+                  {selectedCabin.series} &bull; Architectural Finish
                 </span>
                 <h3 className="text-2xl font-black text-slate-900">
                   {selectedCabin.model} — Complete Finishes & Material Specification

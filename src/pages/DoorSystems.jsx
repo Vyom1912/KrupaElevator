@@ -36,7 +36,7 @@ export default function DoorSystems() {
     <div className="space-y-16 sm:space-y-24 pb-20 overflow-x-hidden">
       {/* Page Hero */}
       <PageHero
-        badge="Brochure Pages 08 & 09"
+        badge="Certified Landing Entrances • Manual & Automatic Doors"
         title="Elevator Door Systems"
         description="Complete catalog of manual and automatic elevator entrance door configurations. Focused on three core engineering pillars: safety, reliability, and speed."
         breadcrumbs={[{ label: "Door Systems" }]}

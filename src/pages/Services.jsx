@@ -35,7 +35,7 @@ export default function Services() {
     <div className="space-y-16 sm:space-y-24 pb-20 overflow-x-hidden">
       {/* Page Hero */}
       <PageHero
-        badge="Brochure Page 12 &bull; Lifecycle Support"
+        badge="Certified Engineering • Lifecycle Support"
         title="Reliable Support Throughout the Life of Your Elevator"
         subtitle="Our service team provides professional installation support, preventive maintenance, troubleshooting, and ongoing elevator care. We combine trained personnel, supervisory support, genuine spare parts, and monitoring solutions to maintain reliable elevator performance."
         breadcrumbs={[{ label: "Service & Maintenance" }]}

@@ -1,4 +1,16 @@
 import { assetUrl } from "../utils/assetPath";
+import {
+  manualDoorElevatorTable,
+  automaticDoorElevatorTable,
+  capsuleElevatorTable,
+  hospitalElevatorTable,
+  goodsElevatorTable,
+  carElevatorTechnical,
+  mrlElevatorTechnical,
+  homeElevatorTechnical,
+  hydraulicElevatorTechnical,
+  generalNotes
+} from "./krupaElevatorsData";
 
 export const elevatorMaster = [
   {
@@ -6,8 +18,8 @@ export const elevatorMaster = [
     name: "Passenger Elevator",
     category: "Residential & Commercial",
     tagline: "Form, Function & Architectural Flexibility",
-    brochurePage: "Pages 02, 18 & 19",
-    image: assetUrl("/assets/elevators/building.jpg"),
+    standard: "BIS IS 14665 Standard",
+    image: assetUrl("/assets/elevators/passenger_elevator.jpg"),
     drawings: {
       main: assetUrl("/assets/drawings/auto_passenger_technical_drawing.png"),
       plan: assetUrl("/assets/drawings/auto_door_plan.png"),
@@ -45,11 +57,37 @@ export const elevatorMaster = [
       rescueSystem: "Automatic Rescue Device (ARD) with battery-driven landing recall",
       monitoring: "24-Hour IoT Remote Telemetry Monitoring Available"
     },
-    civilMatrix: [
-      { persons: 6, capacity: 408, carW: 1200, carD: 1300, shaftW: 1700, shaftD: 1800, entrance: 700, doorType: "Auto Center Opening", speed: "1.0 / 1.5", pit: 1600, overhead: 4900, machineRoom: "300+C × 600+D" },
-      { persons: 8, capacity: 544, carW: 1500, carD: 1330, shaftW: 2000, shaftD: 1800, entrance: 800, doorType: "Auto Center Opening", speed: "1.0 / 1.5", pit: 1600, overhead: 4900, machineRoom: "300+C × 600+D" },
-      { persons: 10, capacity: 680, carW: 1650, carD: 1450, shaftW: 2150, shaftD: 2000, entrance: 800, doorType: "Auto Center Opening", speed: "1.0 / 1.5", pit: 1600, overhead: 4900, machineRoom: "600+C × 600+D" },
-      { persons: 13, capacity: 884, carW: 1900, carD: 1500, shaftW: 2400, shaftD: 2000, entrance: 900, doorType: "Auto Center Opening", speed: "1.0 / 1.5", pit: 1600, overhead: 4900, machineRoom: "600+C × 600+D" }
+    civilMatrix: automaticDoorElevatorTable.rows.map(r => ({
+      persons: r.persons,
+      capacity: r.loadKg,
+      carW: r.platformEdgeWidth_A,
+      carD: r.platformEdgeDepth_B,
+      shaftW: r.liftWellWidth_C,
+      shaftD: r.liftWellDepth_D,
+      entrance: r.entranceWidth_E,
+      doorType: r.doorType,
+      speed: r.speedMps,
+      pit: r.pitDepth,
+      overhead: r.overHead,
+      machineRoom: `${r.machineRoomWidth_K} × ${r.machineRoomLength_L}`
+    })),
+    technicalTables: [
+      {
+        id: "auto",
+        title: automaticDoorElevatorTable.title,
+        notes: automaticDoorElevatorTable.notes,
+        legend: automaticDoorElevatorTable.legend,
+        columns: automaticDoorElevatorTable.columns,
+        rows: automaticDoorElevatorTable.rows
+      },
+      {
+        id: "manual",
+        title: manualDoorElevatorTable.title,
+        notes: manualDoorElevatorTable.notes,
+        legend: manualDoorElevatorTable.legend,
+        columns: manualDoorElevatorTable.columns,
+        rows: manualDoorElevatorTable.rows
+      }
     ],
     compatibleDoors: ["ss-center-opening", "ss-telescopic", "small-vision-autodoor", "powder-coated-glass-swing"],
     compatibleMachines: ["PMS Gearless Traction", "M67 Geared Machine", "M76 Geared Machine"],
@@ -64,10 +102,10 @@ export const elevatorMaster = [
   {
     id: "capsule",
     name: "Capsule Elevator",
-    category: "Architectural & Luxury",
-    tagline: "Panoramic Elegance & Smooth Operation",
-    brochurePage: "Pages 06, 10 & 19",
-    image: assetUrl("/assets/elevators/commercial.jpg"),
+    category: "Architectural & Commercial",
+    tagline: "Futuristic Design, Architectural Jewel",
+    standard: "BIS IS 14665 Standard",
+    image: assetUrl("/assets/elevators/capsule_elevator.jpg"),
     drawings: {
       main: assetUrl("/assets/drawings/capsule_technical_drawing.png"),
       plan: assetUrl("/assets/drawings/capsule_option_a_plan.png"),
@@ -104,10 +142,39 @@ export const elevatorMaster = [
       rescueSystem: "Automatic Rescue Device (ARD) with battery backup",
       monitoring: "24-Hour IoT Remote Telemetry Ready"
     },
-    civilMatrix: [
-      { persons: 10, capacity: 680, carW: 1100, carD: 1300, shaftW: 2200, shaftD: 1325, entrance: 800, doorType: "Glass Big Vision", speed: "1.0 / 1.5 / 2.0", pit: 1600, overhead: 4900, machineRoom: "Option A / B" },
-      { persons: 13, capacity: 884, carW: 1400, carD: 1550, shaftW: 2400, shaftD: 1425, entrance: 900, doorType: "Glass Big Vision", speed: "1.0 / 1.5 / 2.0", pit: 1600, overhead: 4900, machineRoom: "Option A / B" },
-      { persons: 16, capacity: 1088, carW: 1500, carD: 1700, shaftW: 2800, shaftD: 1530, entrance: 1000, doorType: "Glass Big Vision", speed: "1.0 / 1.5 / 2.0", pit: 1600, overhead: 4900, machineRoom: "Option A / B" }
+    civilMatrix: capsuleElevatorTable.optionA.rows.map(r => ({
+      persons: r.person,
+      capacity: r.kgs,
+      carW: r.carInside_A,
+      carD: r.carInside_B,
+      shaftW: r.leftWell_C,
+      shaftD: r.leftWell_D,
+      entrance: r.entrance,
+      doorType: "Glass Big Vision",
+      speed: "1.0 / 1.5 / 2.0",
+      pit: 1600,
+      overhead: 4900,
+      machineRoom: "Option A / B"
+    })),
+    technicalTables: [
+      {
+        id: "optA",
+        title: `${capsuleElevatorTable.title} – ${capsuleElevatorTable.optionA.label}`,
+        notes: capsuleElevatorTable.notes,
+        legend: capsuleElevatorTable.legend,
+        legendCaveat: capsuleElevatorTable.legendCaveat,
+        columns: capsuleElevatorTable.optionA.columns,
+        rows: capsuleElevatorTable.optionA.rows
+      },
+      {
+        id: "optB",
+        title: `${capsuleElevatorTable.title} – ${capsuleElevatorTable.optionB.label}`,
+        notes: capsuleElevatorTable.notes,
+        legend: capsuleElevatorTable.legend,
+        legendCaveat: capsuleElevatorTable.legendCaveat,
+        columns: capsuleElevatorTable.optionB.columns,
+        rows: capsuleElevatorTable.optionB.rows
+      }
     ],
     compatibleDoors: ["glass-big-vision", "glass-full-vision", "ss-center-opening"],
     compatibleMachines: ["I-127 Gearless PMS Machine", "Permanent Magnet Synchronous Motor"],
@@ -122,10 +189,10 @@ export const elevatorMaster = [
   {
     id: "hospital",
     name: "Hospital Elevator",
-    category: "Healthcare & Stretcher Transit",
-    tagline: "Smooth and Secure, Electromagnetic Compatibility",
-    brochurePage: "Pages 06, 11 & 20",
-    image: assetUrl("/assets/elevators/hospital.jpg"),
+    category: "Healthcare & Critical Care",
+    tagline: "Smooth, Secure & Rapid Patient Transport",
+    standard: "BIS IS 14665 Standard",
+    image: assetUrl("/assets/elevators/hospital_elevator.jpg"),
     drawings: {
       main: assetUrl("/assets/drawings/hospital_technical_drawing.png"),
       plan: assetUrl("/assets/drawings/hospital_plan.png"),
@@ -162,10 +229,43 @@ export const elevatorMaster = [
       rescueSystem: "Automatic Rescue Device (ARD) with immediate nearest-floor landing recall",
       monitoring: "24-Hour IoT Medical Facility Priority Telemetry Ready"
     },
-    civilMatrix: [
-      { persons: 15, capacity: 1020, carW: 1000, carD: 2400, shaftW: 1900, shaftD: 3000, entrance: 800, doorType: "Auto Center Opening", speed: "0.63 / 1.0", pit: 1600, overhead: 5100, machineRoom: "600+C × 600+D" },
-      { persons: 20, capacity: 1360, carW: 1300, carD: 2400, shaftW: 2300, shaftD: 3000, entrance: 900, doorType: "Auto Center Opening", speed: "0.63 / 1.0", pit: 1600, overhead: 5100, machineRoom: "600+C × 600+D" },
-      { persons: 26, capacity: 1768, carW: 1600, carD: 2400, shaftW: 2600, shaftD: 3000, entrance: 1000, doorType: "Auto Center Opening", speed: "0.63 / 1.0", pit: 1600, overhead: 5100, machineRoom: "600+C × 600+D" }
+    civilMatrix: hospitalElevatorTable.automaticCentreOpeningDoor.rows.map(r => ({
+      persons: r.person,
+      capacity: r.capacityKg,
+      carW: r.carWidth_C,
+      carD: r.carDepth_D,
+      shaftW: r.shaftWidth_A,
+      shaftD: r.shaftDepth_B,
+      entrance: r.entrance_E,
+      doorType: "Auto Center Opening",
+      speed: "0.63 / 1.0",
+      pit: 1600,
+      overhead: 5100,
+      machineRoom: "600+C × 600+D"
+    })),
+    technicalTables: [
+      {
+        id: "autoCentre",
+        title: hospitalElevatorTable.automaticCentreOpeningDoor.title,
+        legend: hospitalElevatorTable.automaticCentreOpeningDoor.legend,
+        columns: hospitalElevatorTable.automaticCentreOpeningDoor.columns,
+        rows: hospitalElevatorTable.automaticCentreOpeningDoor.rows
+      },
+      {
+        id: "autoTelescopic",
+        title: hospitalElevatorTable.automaticTelescopicDoor.title,
+        legend: hospitalElevatorTable.automaticTelescopicDoor.legend,
+        columns: hospitalElevatorTable.automaticTelescopicDoor.columns,
+        rows: hospitalElevatorTable.automaticTelescopicDoor.rows
+      },
+      {
+        id: "stretcherManual",
+        title: hospitalElevatorTable.title,
+        notes: hospitalElevatorTable.notes,
+        legend: hospitalElevatorTable.legend,
+        columns: hospitalElevatorTable.columns,
+        rows: hospitalElevatorTable.rows
+      }
     ],
     compatibleDoors: ["center-opening-4panel", "ss-telescopic", "ss-center-opening", "manual-swing"],
     compatibleMachines: ["PMS Gearless Traction", "M76 Heavy Geared Machine"],
@@ -180,10 +280,10 @@ export const elevatorMaster = [
   {
     id: "goods",
     name: "Goods Elevator",
-    category: "Industrial & Freight Logistics",
-    tagline: "Bear Any Heavy Load at Ease, Easy Transport",
-    brochurePage: "Pages 07, 12 & 20",
-    image: assetUrl("/assets/elevators/industrial.jpg"),
+    category: "Industrial & Warehousing",
+    tagline: "Sturdy & Heavy Carrying Solutions",
+    standard: "BIS IS 14665 Standard",
+    image: assetUrl("/assets/elevators/goods_elevator.jpg"),
     drawings: {
       main: assetUrl("/assets/drawings/goods_technical_drawing.png"),
       plan: assetUrl("/assets/drawings/goods_plan.png"),
@@ -201,18 +301,18 @@ export const elevatorMaster = [
       doorSystem: "Heavy industrial vertical bi-parting doors, collapsible steel gates, or reinforced power sliding doors.",
       landingDoors: "Flush steel or collapsible steel landing gates with mechanical cam interlocks.",
       pit: "1600 mm deep reinforced concrete pit with heavy structural I-beam buffer pedestals.",
-      overhead: "5100 mm clearance providing safe headroom for high freight loads and overhead crane access."
+      overhead: "5100 mm / 5400 mm clearance providing safe headroom for high freight loads and overhead crane access."
     },
     standardSpecs: {
       application: "Industrial warehouses, manufacturing facilities, logistics parks, shipping hubs",
-      capacity: "500 to 4000 Kgs (High-tonnage custom engineering up to 10 tons)",
+      capacity: "500 to 3000 Kgs (High-tonnage custom engineering up to 5 tons)",
       ratedSpeed: "0.25 to 1.0 MPS",
       voltage: "415V, 3-Phase, 50 Hz",
       entrances: "1 (Single Way) or 2 (Double Way / Through Cabin Access)",
-      carWidth: "1200 mm to 2000 mm (Dimension A - Freight Width)",
-      carDepth: "1900 mm to 3000 mm (Dimension B - Freight Depth)",
+      carWidth: "1500 mm to 2000 mm (Dimension A - Freight Width)",
+      carDepth: "1200 mm to 3000 mm (Dimension B - Freight Depth)",
       pitDepth: "1600 mm",
-      overhead: "5100 mm",
+      overhead: "5100 mm to 5400 mm",
       doorType: "Collapsible Landing Gate / Vertical Bi-Parting / Two-Panel Sliding",
       drive: "Heavy Duty Geared Traction Machine or Hydraulic Power Unit",
       control: "Heavy-duty Microprocessor Control with Electronic Overload Indicator",
@@ -220,12 +320,29 @@ export const elevatorMaster = [
       rescueSystem: "Manual brake release lever + optional Automatic Rescue Device",
       monitoring: "Industrial Plant Telemetry Ready"
     },
-    civilMatrix: [
-      { persons: "-", capacity: 500, carW: 1200, carD: 1900, shaftW: 1600, shaftD: 2500, entrance: 1200, doorType: "Collapsible / Sliding", speed: "0.25 - 1.0", pit: 1600, overhead: 5100, machineRoom: "2500 × 4100" },
-      { persons: "-", capacity: 1000, carW: 1500, carD: 1800, shaftW: 2300, shaftD: 2000, entrance: 1500, doorType: "Collapsible / Sliding", speed: "0.25 - 1.0", pit: 1600, overhead: 5100, machineRoom: "2500 × 4700" },
-      { persons: "-", capacity: 1500, carW: 1700, carD: 2000, shaftW: 2600, shaftD: 2300, entrance: 1700, doorType: "Collapsible / Sliding", speed: "0.25 - 1.0", pit: 1600, overhead: 5100, machineRoom: "2600 × 4900" },
-      { persons: "-", capacity: 2000, carW: 1700, carD: 2500, shaftW: 2600, shaftD: 2900, entrance: 1700, doorType: "Collapsible / Sliding", speed: "0.25 - 1.0", pit: 1600, overhead: 5100, machineRoom: "2600 × 5400" },
-      { persons: "-", capacity: 3000, carW: 2000, carD: 3000, shaftW: 2900, shaftD: 3400, entrance: 2000, doorType: "Collapsible / Sliding", speed: "0.25 - 1.0", pit: 1600, overhead: 5100, machineRoom: "2900 × 5900" }
+    civilMatrix: goodsElevatorTable.rows.map(r => ({
+      persons: "-",
+      capacity: r.loadKg,
+      carW: r.carInsideWidth_A,
+      carD: r.carInsideDepth_B,
+      shaftW: r.liftWellWidth_C,
+      shaftD: r.liftWellDepth_D,
+      entrance: r.entranceWidth,
+      doorType: "Collapsible / Sliding",
+      speed: r.speedMps,
+      pit: r.pitDepth,
+      overhead: r.overHead,
+      machineRoom: `${r.machineRoomWidth_K} × ${r.machineRoomLength_L}`
+    })),
+    technicalTables: [
+      {
+        id: "goodsMain",
+        title: goodsElevatorTable.title,
+        notes: goodsElevatorTable.notes,
+        legend: goodsElevatorTable.legend,
+        columns: goodsElevatorTable.columns,
+        rows: goodsElevatorTable.rows
+      }
     ],
     compatibleDoors: ["collapsible", "imperforated", "vertical-bi-parting", "center-opening-4panel"],
     compatibleMachines: ["Heavy Duty Geared Traction Machine", "Industrial Hydraulic Cylinder"],
@@ -239,11 +356,11 @@ export const elevatorMaster = [
   },
   {
     id: "car",
-    name: "Car Elevator",
-    category: "Automotive & Multi-Tier Parking",
-    tagline: "The Most Reliable Parking Assistants",
-    brochurePage: "Pages 07, 13 & 21",
-    image: assetUrl("/assets/elevators/car-park.jpg"),
+    name: "Car Elevator & Multi-Level Parking",
+    category: "Automotive & Logistics",
+    tagline: "Pioneering Solutions for Automobile Transportation",
+    standard: "BIS IS 14665 Standard",
+    image: assetUrl("/assets/elevators/car_elevator.jpg"),
     drawings: {
       main: assetUrl("/assets/drawings/car_elevator_technical_drawing.png"),
       plan: assetUrl("/assets/drawings/car_elevator_plan.png"),
@@ -266,15 +383,15 @@ export const elevatorMaster = [
     standardSpecs: {
       isCarElevator: true,
       application: "Commercial car parks, automobile dealerships, luxury residential towers, private garages",
-      capacity: "2500 to 5000 Kgs (Rated for full-sized SUVs and commercial vans)",
-      ratedSpeed: "0.30 to 0.50 MPS",
+      capacity: "500 to 5000 Kgs (Solutions available for higher capacities)",
+      ratedSpeed: "0.50 MPS (Solutions available for other speeds)",
       voltage: "415V, 3-Phase, 50 Hz",
       entrances: "1 (Single End) or 2 (Front-to-Back Drive-Through Option)",
-      carWidth: "2500 mm (Platform Width)",
-      carDepth: "5190 mm (Platform Depth)",
+      carWidth: "2500 mm to 2800 mm (Platform Width)",
+      carDepth: "5190 mm to 6000 mm (Platform Depth)",
       pitDepth: "1600 mm",
       overhead: "4900 mm",
-      doorType: "Automatic Center Opening (4-Panel) / Vertical Bi-Parting Steel Door",
+      doorType: "Vertical Bi-Parting Door / Auto Center Opening",
       drive: "Heavy Duty Geared Traction or Hydraulic Power Unit",
       control: "Automotive Microprocessor Control with Driver In-Car Remote Calling",
       lighting: "High-intensity flush LED ceiling strip arrays with vehicle positioning guide lights",
@@ -282,9 +399,19 @@ export const elevatorMaster = [
       monitoring: "Smart Parking Telemetry Integration Ready"
     },
     civilMatrix: [
-      { persons: "Car / LMV", capacity: 2500, carW: 2500, carD: 5190, shaftW: 4000, shaftD: 6000, entrance: 2500, doorType: "4-Panel Auto Center", speed: "0.30 / 0.50", pit: 1600, overhead: 4900, machineRoom: "3500 Kg Hoist Beam" },
-      { persons: "SUV / Van", capacity: 3500, carW: 2600, carD: 5500, shaftW: 4200, shaftD: 6300, entrance: 2500, doorType: "4-Panel Auto Center", speed: "0.30 / 0.50", pit: 1600, overhead: 4900, machineRoom: "4500 Kg Hoist Beam" },
-      { persons: "Heavy Comm.", capacity: 5000, carW: 2800, carD: 6000, shaftW: 4500, shaftD: 6800, entrance: 2700, doorType: "Vertical Bi-Parting", speed: "0.30 / 0.50", pit: 1600, overhead: 4900, machineRoom: "6000 Kg Hoist Beam" }
+      { persons: "Car / LMV", capacity: 2500, carW: 2500, carD: 5190, shaftW: 4000, shaftD: 6000, entrance: 2500, doorType: "4-Panel Auto Center", speed: "0.50", pit: 1600, overhead: 4900, machineRoom: "3500 Kg Hoist Beam" },
+      { persons: "SUV / Van", capacity: 3500, carW: 2600, carD: 5500, shaftW: 4200, shaftD: 6300, entrance: 2500, doorType: "4-Panel Auto Center", speed: "0.50", pit: 1600, overhead: 4900, machineRoom: "4500 Kg Hoist Beam" },
+      { persons: "Heavy Comm.", capacity: 5000, carW: 2800, carD: 6000, shaftW: 4500, shaftD: 6800, entrance: 2700, doorType: "Vertical Bi-Parting", speed: "0.50", pit: 1600, overhead: 4900, machineRoom: "6000 Kg Hoist Beam" }
+    ],
+    technicalTables: [
+      {
+        id: "carMain",
+        title: carElevatorTechnical.title + " – Technical Specifications",
+        loadHookNote: carElevatorTechnical.loadHookNote,
+        holdingBeamCapacity: carElevatorTechnical.holdingBeamCapacity,
+        columns: carElevatorTechnical.columns,
+        rows: carElevatorTechnical.rows
+      }
     ],
     compatibleDoors: ["center-opening-4panel", "vertical-bi-parting"],
     compatibleMachines: ["Heavy Duty Geared Traction Machine", "Multi-Ram Hydraulic Cylinder"],
@@ -298,11 +425,11 @@ export const elevatorMaster = [
   },
   {
     id: "mrl",
-    name: "MRL Elevator",
-    category: "Machine Roomless & Eco-Green",
-    tagline: "Minimal Space, Maximum Value!",
-    brochurePage: "Pages 08, 14 & 21",
-    image: assetUrl("/assets/elevators/mrl.jpg"),
+    name: "MRL (Machine Room Less) Elevator",
+    category: "Architectural & Space-Saving",
+    tagline: "More Space, More Efficiency, Futuristic Tech",
+    standard: "BIS IS 14665 Standard",
+    image: assetUrl("/assets/elevators/mrl_elevator.jpg"),
     drawings: {
       main: assetUrl("/assets/drawings/mrl_technical_drawing.png"),
       plan: assetUrl("/assets/drawings/mrl_liftwell_plan.png"),
@@ -324,12 +451,12 @@ export const elevatorMaster = [
     },
     standardSpecs: {
       application: "Residential towers, commercial buildings, villas requiring zero rooftop machine room",
-      capacity: "06 to 13 Persons (408 to 884 Kgs) / Up to 26 Persons (1768 Kgs)",
+      capacity: "05 to 26 Persons (340 to 1768 Kgs)",
       ratedSpeed: "1.00 / 1.50 / 2.0 MPS",
       voltage: "415V, 3-Phase, 50 Hz",
       entrances: "1 or 2 (Front / Rear)",
-      carWidth: "970 mm to 1620 mm (Dimension C - Cabin Width)",
-      carDepth: "1130 mm to 2400 mm (Dimension D - Cabin Depth)",
+      carWidth: "1070 mm to 2100 mm (Cabin Inside C)",
+      carDepth: "1270 mm to 2400 mm (Cabin Inside D)",
       pitDepth: "1600 mm",
       overhead: "4900 mm to 5185 mm (Inspection window at terrace level)",
       doorType: "Automatic Center Opening / Telescopic Doors",
@@ -339,11 +466,30 @@ export const elevatorMaster = [
       rescueSystem: "Automatic Rescue Device (ARD) with electrical brake release",
       monitoring: "24-Hour IoT Remote Telemetry Ready"
     },
-    civilMatrix: [
-      { persons: 6, capacity: 408, carW: 970, carD: 1130, shaftW: 1650, shaftD: 1600, entrance: 700, doorType: "Auto Center Opening", speed: "1.0 / 1.5 / 2.0", pit: 1600, overhead: 5185, machineRoom: "Zero (Inside Shaft)" },
-      { persons: 8, capacity: 544, carW: 1120, carD: 1280, shaftW: 1850, shaftD: 1700, entrance: 800, doorType: "Auto Center Opening", speed: "1.0 / 1.5 / 2.0", pit: 1600, overhead: 5185, machineRoom: "Zero (Inside Shaft)" },
-      { persons: 10, capacity: 680, carW: 1270, carD: 1380, shaftW: 2000, shaftD: 1850, entrance: 800, doorType: "Auto Center Opening", speed: "1.0 / 1.5 / 2.0", pit: 1600, overhead: 5185, machineRoom: "Zero (Inside Shaft)" },
-      { persons: 13, capacity: 884, carW: 1070, carD: 2100, shaftW: 2100, shaftD: 2600, entrance: 800, doorType: "Auto Center Opening", speed: "1.0 / 1.5 / 2.0", pit: 1600, overhead: 5185, machineRoom: "Zero (Inside Shaft)" }
+    civilMatrix: mrlElevatorTechnical.rows.map(r => ({
+      persons: r.person,
+      capacity: r.kgs,
+      carW: r.cabinInsideWidth_C || "-",
+      carD: r.cabinInsideDepth_D || "-",
+      shaftW: r.liftWellWidth_A,
+      shaftD: r.liftWellDepth_B,
+      entrance: r.entry,
+      doorType: "Auto Center Opening",
+      speed: "1.0 / 1.5 / 2.0",
+      pit: 1600,
+      overhead: 5185,
+      machineRoom: "Zero (Inside Shaft)"
+    })),
+    technicalTables: [
+      {
+        id: "mrlMain",
+        title: mrlElevatorTechnical.title,
+        notes: mrlElevatorTechnical.notes,
+        legend: mrlElevatorTechnical.legend,
+        dataConfidenceNote: mrlElevatorTechnical.dataConfidenceNote,
+        columns: mrlElevatorTechnical.columns,
+        rows: mrlElevatorTechnical.rows
+      }
     ],
     compatibleDoors: ["ss-center-opening", "ss-telescopic", "small-vision-autodoor", "glass-big-vision"],
     compatibleMachines: ["New Generation PMS Gearless Machine", "I-127 Gearless Machine"],
@@ -358,10 +504,10 @@ export const elevatorMaster = [
   {
     id: "home",
     name: "Home Elevator",
-    category: "Luxury Residential & Private Villa",
-    tagline: "Change Your Lifestyle with the Best Home Lift",
-    brochurePage: "Pages 08, 15 & 22",
-    image: assetUrl("/assets/elevators/private-villa.jpg"),
+    category: "Luxury Residential & Private Villas",
+    tagline: "Elevate Your Living Standard, Care for Your Family",
+    standard: "BIS IS 14665 Standard",
+    image: assetUrl("/assets/elevators/home_elevator.jpg"),
     drawings: {
       main: assetUrl("/assets/drawings/home_technical_drawing.png"),
       plan: assetUrl("/assets/drawings/home_plan.png"),
@@ -387,8 +533,8 @@ export const elevatorMaster = [
       ratedSpeed: "0.30 / 0.63 MPS",
       voltage: "220V, Single Phase Domestic Power Supply (or 415V 3-Phase)",
       entrances: "1 (Single) or 2 (Opposite / Adjacent Corner Entrance)",
-      carWidth: "800 mm to 850 mm (Dimension A - Cabin Width)",
-      carDepth: "700 mm to 1150 mm (Dimension B - Cabin Depth)",
+      carWidth: "810 mm to 850 mm (Dimension A - Cabin Width)",
+      carDepth: "700 mm to 1200 mm (Dimension B - Cabin Depth)",
       pitDepth: "550 mm (Ultra-compact civil pit)",
       overhead: "3100 mm (Fits under standard residential ceiling)",
       doorType: "Manual Swing Door with Smoked Glass / Automatic Telescopic Sliding",
@@ -398,11 +544,29 @@ export const elevatorMaster = [
       rescueSystem: "Integrated Battery-Powered Automatic Rescue Device (ARD)",
       monitoring: "Home Automation / Smart Villa Integration Ready"
     },
-    civilMatrix: [
-      { persons: 3, capacity: 204, carW: 810, carD: 700, shaftW: 1100, shaftD: 1200, entrance: 700, doorType: "Manual Door", speed: "0.30", pit: 550, overhead: 3100, machineRoom: "Zero (Inside Shaft)" },
-      { persons: 4, capacity: 272, carW: 800, carD: 1200, shaftW: 1300, shaftD: 1400, entrance: 700, doorType: "Manual Door", speed: "0.30", pit: 550, overhead: 3100, machineRoom: "Zero (Inside Shaft)" },
-      { persons: 3, capacity: 204, carW: 810, carD: 700, shaftW: 1250, shaftD: 1250, entrance: 700, doorType: "Auto Door", speed: "0.30", pit: 550, overhead: 3100, machineRoom: "Zero (Inside Shaft)" },
-      { persons: 4, capacity: 272, carW: 850, carD: 1150, shaftW: 1300, shaftD: 1600, entrance: 700, doorType: "Auto Door", speed: "0.30", pit: 550, overhead: 3100, machineRoom: "Zero (Inside Shaft)" }
+    civilMatrix: homeElevatorTechnical.rows.map(r => ({
+      persons: r.persons,
+      capacity: r.kgs,
+      carW: r.carInsideWidth_A,
+      carD: r.carInsideDepth_B,
+      shaftW: r.liftWellWidth_C,
+      shaftD: r.liftWellDepth_D,
+      entrance: r.entrance_E,
+      doorType: r.doorOperation,
+      speed: r.speedMps,
+      pit: r.pit,
+      overhead: r.overHead,
+      machineRoom: "Zero (Inside Shaft)"
+    })),
+    technicalTables: [
+      {
+        id: "homeMain",
+        title: homeElevatorTechnical.title + " – Space & Civil Matrix",
+        notes: homeElevatorTechnical.notes,
+        legend: homeElevatorTechnical.legend,
+        columns: homeElevatorTechnical.columns,
+        rows: homeElevatorTechnical.rows
+      }
     ],
     compatibleDoors: ["powder-coated-glass-swing", "manual-swing", "ss-telescopic", "telescopic-solid"],
     compatibleMachines: ["Mini Gearless Machine", "Single-Phase Traction Drive"],
@@ -420,8 +584,8 @@ export const elevatorMaster = [
     name: "Hydraulic Elevator",
     category: "Low-Rise & Zero Overhead Flexibility",
     tagline: "Green Solutions For Better Tomorrow",
-    brochurePage: "Pages 09, 16 & 22",
-    image: assetUrl("/assets/elevators/hydraulic.jpg"),
+    standard: "BIS IS 14665 Standard",
+    image: assetUrl("/assets/elevators/hydraulic_elevator.jpg"),
     drawings: {
       main: assetUrl("/assets/drawings/hydraulic_technical_drawing.png"),
       plan: assetUrl("/assets/drawings/hydraulic_center_bore_plan.png"),
@@ -448,10 +612,10 @@ export const elevatorMaster = [
       ratedSpeed: "Up to 0.50 MPS",
       voltage: "415V, 3-Phase, 50 Hz (220V single-phase available for compact villa models)",
       entrances: "1 or 2 (Front / Rear Walk-Through)",
-      carWidth: "800 mm to 1500 mm (Dimension C - Cabin Width)",
+      carWidth: "850 mm to 1500 mm (Dimension C - Cabin Width)",
       carDepth: "900 mm to 2500 mm (Dimension D - Cabin Depth)",
       pitDepth: "1200 mm (Roping type) / 1500 mm (Center bore type)",
-      overhead: "3100 mm to 4000 mm",
+      overhead: "4000 mm",
       doorType: "Manual Swing Door / Collapsible Gate / Automatic Telescopic",
       drive: "Direct Central Acting / Indirect Side Acting 2:1 / Direct Side Acting Hydraulic Ram",
       control: "Integrated Hydraulic Microprocessor Controller with Soft Start/Stop Valve",
@@ -459,12 +623,39 @@ export const elevatorMaster = [
       rescueSystem: "Emergency manual lowering valve (gravity-driven descent during power outage)",
       monitoring: "Hydraulic Pressure & Thermal Telemetry Ready"
     },
-    civilMatrix: [
-      { persons: 3, capacity: 225, carW: 800, carD: 900, shaftW: 1200, shaftD: 1200, entrance: 700, doorType: "Manual / Auto", speed: "0.30 - 0.50", pit: 1500, overhead: 4000, machineRoom: "Remote Pump (0-10m)" },
-      { persons: 4, capacity: 300, carW: 850, carD: 1050, shaftW: 1250, shaftD: 1350, entrance: 700, doorType: "Manual / Auto", speed: "0.30 - 0.50", pit: 1500, overhead: 4000, machineRoom: "Remote Pump (0-10m)" },
-      { persons: 6, capacity: 450, carW: 1100, carD: 1150, shaftW: 1500, shaftD: 1500, entrance: 800, doorType: "Manual / Auto", speed: "0.30 - 0.50", pit: 1500, overhead: 4000, machineRoom: "Remote Pump (0-10m)" },
-      { persons: 8, capacity: 600, carW: 1100, carD: 1400, shaftW: 1500, shaftD: 1700, entrance: 800, doorType: "Manual / Auto", speed: "0.30 - 0.50", pit: 1500, overhead: 4000, machineRoom: "Remote Pump (0-10m)" },
-      { persons: 10, capacity: 750, carW: 1200, carD: 1550, shaftW: 1600, shaftD: 1850, entrance: 800, doorType: "Manual / Auto", speed: "0.30 - 0.50", pit: 1500, overhead: 4000, machineRoom: "Remote Pump (0-10m)" }
+    civilMatrix: hydraulicElevatorTechnical.directOrSplitPistonTable.rows.map(r => ({
+      persons: r.person,
+      capacity: r.capacityKg,
+      carW: r.carWidth_C || "-",
+      carD: r.carDepth_D,
+      shaftW: r.shaftWidth_A,
+      shaftD: r.shaftDepth_B,
+      entrance: 700,
+      doorType: "Manual / Auto",
+      speed: "Up to 0.5",
+      pit: 1500,
+      overhead: 4000,
+      machineRoom: "Remote (0-10m)"
+    })),
+    technicalTables: [
+      {
+        id: "directOrSplit",
+        title: hydraulicElevatorTechnical.directOrSplitPistonTable.title,
+        description: hydraulicElevatorTechnical.directOrSplitPistonTable.description,
+        note: hydraulicElevatorTechnical.directOrSplitPistonTable.note,
+        legend: hydraulicElevatorTechnical.legend,
+        columns: hydraulicElevatorTechnical.directOrSplitPistonTable.columns,
+        rows: hydraulicElevatorTechnical.directOrSplitPistonTable.rows
+      },
+      {
+        id: "singleSide",
+        title: hydraulicElevatorTechnical.singleSideDirectSuspensionTable.title,
+        description: hydraulicElevatorTechnical.singleSideDirectSuspensionTable.description,
+        note: hydraulicElevatorTechnical.singleSideDirectSuspensionTable.note,
+        legend: hydraulicElevatorTechnical.legend,
+        columns: hydraulicElevatorTechnical.singleSideDirectSuspensionTable.columns,
+        rows: hydraulicElevatorTechnical.singleSideDirectSuspensionTable.rows
+      }
     ],
     compatibleDoors: ["powder-coated-glass-swing", "manual-swing", "collapsible", "ss-telescopic"],
     compatibleMachines: ["Direct Central Acting Hydraulic Ram", "Indirect Side Acting 2:1 Cylinder"],

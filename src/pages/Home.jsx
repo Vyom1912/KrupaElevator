@@ -38,6 +38,7 @@ import { elevatorMaster } from "../data/elevatorMaster";
 import { interiorSeries } from "../data/interiorsMaster";
 import ScrollReveal from "../components/ScrollReveal";
 import { assetUrl } from "../utils/assetPath";
+import WhatsAppIcon from "../components/common/WhatsAppIcon";
 
 // Hero visual scenes
 const heroScenes = [
@@ -107,7 +108,7 @@ const elevatorMechanisms = [
       "100% oil-free and maintenance-friendly: zero gear oil, zero oil changes, and zero environmental leakage.",
       "Compact, low-profile machine geometry fits directly inside shaft overhead for Machine-Room-Less (MRL) architecture."
     ],
-    brochureRef: "Pages 12 & 13"
+    standard: "BIS IS 14665 Standard"
   },
   {
     id: "v3f",
@@ -123,7 +124,7 @@ const elevatorMechanisms = [
       "Drastically suppresses inrush starting current, eliminating building electrical voltage dips and transformer heating.",
       "Extends the operational lifespan of wire ropes, guide rails, and traction sheaves by minimizing mechanical shock loads."
     ],
-    brochureRef: "Page 13"
+    standard: "Closed-Loop Vector Control"
   },
   {
     id: "ard",
@@ -139,7 +140,7 @@ const elevatorMechanisms = [
       "Centrifugal governor continuously monitors car speed: trips safety clamps within milliseconds if rated velocity exceeds 115%.",
       "Manufactured and 100% bench-tested strictly in compliance with IS 14665 Indian Standard elevator safety regulations."
     ],
-    brochureRef: "Pages 14 & 15"
+    standard: "Automatic Rescue Certified"
   },
   {
     id: "curtain",
@@ -155,7 +156,7 @@ const elevatorMechanisms = [
       "Self-diagnosing optical circuitry continuously verifies emitter/receiver alignment and signals door reopen on fault.",
       "Operates reliably in bright sunlight, ambient elevator lobby illumination, and dusty environments."
     ],
-    brochureRef: "Page 09"
+    standard: "154-Beam Non-Contact Sensor"
   },
   {
     id: "geared",
@@ -171,7 +172,7 @@ const elevatorMechanisms = [
       "Smooth crawl-speed precision leveling for seamless rolling vehicle and wheeled cart transfer.",
       "Rugged durability with 25+ years expected service life under intense industrial logistics duty cycles."
     ],
-    brochureRef: "Pages 16 & 17"
+    standard: "Heavy Freight Duty Cycle"
   }
 ];
 
@@ -224,16 +225,14 @@ export default function Home({ onOpenBrochure }) {
             return (
               <div
                 key={scene.id}
-                className={`absolute inset-0 transition-opacity duration-1000 ease-in-out ${
-                  isActive ? "opacity-100 z-10" : "opacity-0 z-0"
-                }`}
+                className={`absolute inset-0 transition-opacity duration-1000 ease-in-out ${isActive ? "opacity-100 z-10" : "opacity-0 z-0"
+                  }`}
               >
                 <img
                   src={scene.image}
                   alt={scene.title}
-                  className={`w-full h-full object-cover object-right md:object-center transition-transform duration-7000 ease ${
-                    isActive ? "scale-105" : "scale-100"
-                  }`}
+                  className={`w-full h-full object-cover object-right md:object-center transition-transform duration-7000 ease ${isActive ? "scale-105" : "scale-100"
+                    }`}
                 />
                 <div className="absolute inset-0 bg-gradient-to-r from-slate-950/95 via-slate-950/80 to-slate-950/45" />
               </div>
@@ -278,16 +277,8 @@ export default function Home({ onOpenBrochure }) {
               >
                 <span>Submit Query / Get Quote</span>
               </button>
-              {onOpenBrochure && (
-                <button
-                  onClick={onOpenBrochure}
-                  className="px-4 py-3.5 rounded-xl bg-slate-900/80 hover:bg-slate-800 text-slate-300 hover:text-white border border-slate-700/80 text-xs sm:text-sm font-medium transition-all flex items-center space-x-1.5 cursor-pointer"
-                  title="View Technical PDF Brochure"
-                >
-                  <Download className="w-4 h-4 text-brand-teal" />
-                  <span className="hidden sm:inline">Brochure (PDF)</span>
-                </button>
-              )}
+              {/* Direct Call & WhatsApp Buttons */}
+
             </div>
 
             {/* Trust Highlights Strip */}
@@ -314,11 +305,10 @@ export default function Home({ onOpenBrochure }) {
             <button
               key={scene.id}
               onClick={() => setCurrentHeroIndex(idx)}
-              className={`h-2 rounded-full transition-all duration-300 cursor-pointer ${
-                idx === currentHeroIndex
+              className={`h-2 rounded-full transition-all duration-300 cursor-pointer ${idx === currentHeroIndex
                   ? "w-8 bg-brand-teal"
                   : "w-2 bg-white/30 hover:bg-white/60"
-              }`}
+                }`}
               title={scene.title}
               aria-label={`Go to ${scene.title}`}
             />
@@ -938,11 +928,10 @@ export default function Home({ onOpenBrochure }) {
                     <div className="lg:col-span-5 space-y-4">
                       <div className="flex items-center space-x-3">
                         <div
-                          className={`w-12 h-12 rounded-2xl flex items-center justify-center shrink-0 ${
-                            isOrange
+                          className={`w-12 h-12 rounded-2xl flex items-center justify-center shrink-0 ${isOrange
                               ? "bg-orange-50 text-brand-orange"
                               : "bg-teal-50 text-brand-teal"
-                          }`}
+                            }`}
                         >
                           <Icon className="w-6 h-6" />
                         </div>
@@ -966,9 +955,9 @@ export default function Home({ onOpenBrochure }) {
                       </div>
 
                       <div className="flex items-center space-x-2 text-xs text-slate-500">
-                        <span className="font-semibold">Brochure Reference:</span>
-                        <span className="font-mono text-slate-700 bg-slate-100 px-2 py-0.5 rounded">
-                          {item.brochureRef}
+                        <span className="font-semibold text-slate-600">Standard:</span>
+                        <span className="text-teal-800 bg-teal-50 border border-teal-200 px-2.5 py-0.5 rounded-full text-[11px] font-semibold">
+                          {item.standard || "IS 14665 Compliant"}
                         </span>
                       </div>
                     </div>

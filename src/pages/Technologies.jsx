@@ -47,7 +47,7 @@ export default function Technologies() {
     <div className="space-y-16 sm:space-y-24 pb-20 overflow-x-hidden">
       {/* Page Hero */}
       <PageHero
-        badge="Brochure Pages 03 & 18 &bull; German Engineering Know-How"
+        badge="Advanced Vertical Mobility • German Engineering Know-How"
         title="Traction Machines & Advanced Elevator Technology"
         subtitle="Engineered with German know-how, permanent magnet synchronous (PMSM) gearless machines, heavy-duty helical geared machines, and 32-bit microprocessor controls. Delivering up to 30% electricity savings and whisper-quiet vertical transit."
         breadcrumbs={[{ label: "Technology" }]}
@@ -120,7 +120,7 @@ export default function Technologies() {
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 border-b border-slate-200 pb-6">
             <div className="space-y-2 max-w-3xl">
               <span className="text-xs font-bold text-brand-teal uppercase tracking-widest block">
-                Primary Drive Technology &bull; Brochure Pages 03 & 18
+                Primary Drive Technology • Heavy-Duty & Precision Engineered
               </span>
               <h2 className="text-2xl sm:text-3xl lg:text-4xl font-black text-slate-900">
                 Traction Machine Architecture: Gearless PMSM vs. Geared
@@ -251,7 +251,7 @@ export default function Technologies() {
                       Heavy-Duty Geared Traction
                     </div>
                     <div className="absolute bottom-4 left-4 right-4 bg-slate-950/80 backdrop-blur-md p-3 rounded-xl border border-slate-700/60 text-xs text-amber-300">
-                      Catalog Page 18: High-torque bronze worm gearing with reinforced cast-iron housing
+                      Engineering Specification: High-torque bronze worm gearing with reinforced cast-iron housing
                     </div>
                   </div>
 
@@ -399,7 +399,7 @@ export default function Technologies() {
         <section className="space-y-12">
           <div className="space-y-2 border-b border-slate-200 pb-6">
             <span className="text-xs font-bold text-brand-teal uppercase tracking-widest block">
-              Motion Control & Intelligence &bull; Brochure Page 03 & 18
+              Motion Control & Intelligence • 32-Bit Microprocessor Core
             </span>
             <h2 className="text-2xl sm:text-3xl lg:text-4xl font-black text-slate-900">
               German V3F Drive & 32-Bit Microprocessor Controller
@@ -455,7 +455,7 @@ export default function Technologies() {
                 </div>
                 <div>
                   <strong className="text-base font-black block">32-Bit Dual-Core DSP</strong>
-                  <span className="text-xs text-slate-300">Catalog Page 18: Industrial Microcontroller</span>
+                  <span className="text-xs text-slate-300">High-Reliability Industrial Microcontroller</span>
                 </div>
               </div>
               <div>
@@ -490,7 +490,7 @@ export default function Technologies() {
                 </div>
                 <div>
                   <strong className="text-base font-black block">Automatic Rescue Device (ARD)</strong>
-                  <span className="text-xs text-amber-100">Brochure Page 03: Blackout Evacuation</span>
+                  <span className="text-xs text-amber-100">Automatic Failsafe: Blackout Evacuation</span>
                 </div>
               </div>
               <div>
@@ -562,7 +562,7 @@ export default function Technologies() {
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 border-b border-slate-800 pb-6">
             <div className="space-y-2 max-w-2xl">
               <span className="text-xs font-bold text-teal-300 uppercase tracking-widest block">
-                Zero Compromise Failsafes &bull; Brochure Page 03
+                Zero Compromise Failsafes • BIS IS 14665 Standard
               </span>
               <h2 className="text-2xl sm:text-3xl lg:text-4xl font-black">
                 Comprehensive Safety Ecosystem

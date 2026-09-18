@@ -1,0 +1,1039 @@
+/**
+ * krupaElevatorsData.js
+ * Data extracted verbatim from the Krupa Elevators company brochure (FINAL_ALL_PAGES_260616_114835.pdf).
+ * No content has been added, summarized, or altered beyond structuring it into JS variables.
+ * Where a value on the original page was not clearly legible, it is marked null.
+ */
+
+// ---------------------------------------------------------------------------
+// 1. COMPANY / CONTACT INFORMATION (Page 1 - Cover)
+// ---------------------------------------------------------------------------
+const company = {
+  name: "Krupa Elevators",
+  tagline: "Reliable Riding Experience",
+  servicesHeader: ["Elevators", "Servicing", "Installation", "Upgrades &", "Maintenance"],
+  office: {
+    label: "Office",
+    address: [
+      "FF-6 Sagun Enclave,",
+      "Beside Nikol Community Hall,",
+      "Nr. Manohar Villa Char Rasta,",
+      "Nikol, Ahmedabad-382345",
+    ],
+  },
+  factory: {
+    label: "Factory",
+    address: [
+      "353, Gopal Charan Industrial Hub,",
+      "Kujad-Bakrol Road, Bakrol,",
+      "Ahmedabad-382430",
+    ],
+  },
+  phone: "+91 82008 59171",
+  emails: ["info@krupaelevators.com", "sales@krupaelevators.com"],
+  website: "www.krupaelevators.com",
+};
+
+// ---------------------------------------------------------------------------
+// 2. "TRUSTED ELEVATOR SOLUTION" SECTION (Pages 2-3)
+// ---------------------------------------------------------------------------
+const trustedSolutionSection = {
+  heading: "Trusted Elevator Solution",
+  imageBandWords: ["Smart", "Sophisticated", "Strength", "Spacious", "Smooth"],
+  quote:
+    "A flexible solution that unifies form and function. An all-round elevator applicable to multiple building types, with outstanding architectural flexibility for car, door and shaft dimensions. Precision assure a smooth and safe user experience.",
+  modernElevatorHeading: "Modern Elevator for Residential & Commercial Buildings",
+  modernElevatorParagraphs: [
+    "Created to enhance the modern and contemporary look of low, mid & high-rise residential buildings and low & mid-rise commercial buildings.",
+    "The design-rich KRUPA ELEVATORS now offer more flexibility to choose the ideal elevators that add to the look, feel, style and class of both your building's interiors and exteriors.",
+    "Excellent ride comfort, energy savings, product design with futuristic technology & impressive aesthetics all come together in perfect combination from KRUPA ELEVATORS, to take the quality of elevator experiences several notches higher for the builder, developer, architect, facility manager and the end user.",
+  ],
+  elevateYourExperience: [
+    "INSPIRING DESIGN",
+    "IMPROVED COMFORT",
+    "INCREASED ECO-EFFICIENCY",
+    "IDEAL PARTNER",
+  ],
+};
+
+// ---------------------------------------------------------------------------
+// 3. HIGH ENERGY EFFICIENCY SECTION (Page 4)
+// ---------------------------------------------------------------------------
+const energyEfficiencySection = {
+  heading: "High Energy Efficiency",
+  subheading:
+    "Best in class energy saving technology that cuts the carbon footprint and provides green environment to the customer.",
+  iconLabels: ["Save Energy", "Low Noise", "Comfortable"],
+  pmsTractionMachine: {
+    heading: "Energy efficient PMS traction machine",
+    text:
+      "Our green, environment friendly PMS traction machine is a compact, reliable, gear less machine with greater energy efficiency. It consumes upto 30% less energy than conventional geared machine.",
+    images: ["Geared Machine", "Gearless Machine"],
+  },
+  energyEfficientInverter: {
+    heading: "Energy efficient inverter",
+    text:
+      "The high performance inverter increases energy efficiency and make it an eco-friendly product. Specially engineered for elevators with German Know-how.",
+  },
+  ledLights: {
+    heading: "Long lasting energy efficient LED lights",
+    paragraphs: [
+      "LED lights consume up to 50% less energy as compared to fluorescent lighting.",
+      "These lights have six times longer life than conventional fluorescent lighting.",
+      "Car lights switch off automatically when elevator is not in use thus further saving energy.",
+    ],
+  },
+  featureStrip: [
+    {
+      title: "Inbuilt CDL (Car Door Lock)",
+      description: "Automatically locks the car doors when stuck between floors.",
+    },
+    {
+      title: "Full Height Door Sensors",
+      description: "A curtain of light ensures safe entry and exit.",
+    },
+    {
+      title: "Emergency Rescue Device (Optional)",
+      description: "Automatically takes elevators to the nearest floor during power failures.",
+    },
+    {
+      title: "Smart User Interfaces",
+      description: "Easy accessibility for every user including the visually challenged. Elevators call using touchless buttons for safe and healthy ride.",
+    },
+    {
+      title: "Automatic Brake Inspection",
+      description: "Every day automatic brake testing to ensure safe & healthy travel.",
+    },
+    {
+      title: "Reliable & Safe Hoisting System",
+      description: "Proven rope technology that is reliable & easy to inspect.",
+    },
+    {
+      title: "Accurate levelling",
+      description: "Closed loop drive ensures levelling accuracy eliminating risk of tripping.",
+    },
+  ],
+};
+
+// ---------------------------------------------------------------------------
+// 4. "FREEDOM OF DESIGN" - INTERIOR / CAR DESIGN SERIES (Pages 4-7)
+//    KEC-01 to KEC-11
+// ---------------------------------------------------------------------------
+const freedomOfDesignIntro = {
+  heading: "Freedom of design",
+  text:
+    "Create the look and feel you like. Combine colors, materials, lighting, mirrors, handrails and fixtures to achieve the ambiance that fits both your ideas and your building. Choose from one of our four interior design lines or design the whole car to your own taste.",
+};
+
+const interiorDesigns = [
+  {
+    code: "KEC-01",
+    series: "Basic",
+    ceiling: "S.S. Ceiling with LED Light",
+    carOperatingPanel:
+      "S.S. wall mounted panel with Luminous Button (Square) with Digital floor Positioning Indicator",
+    carWall: "S.S. Hairline Finish with Back side full mirror",
+    flooring: "PVC Flooring",
+    carDoor: "Stainless Steel Hairline Finish",
+  },
+  {
+    code: "KEC-02",
+    series: "Standard",
+    ceiling: "S.S. Ceiling, LED Light with Blower Fan",
+    carOperatingPanel:
+      "S.S. wall mounted panel with Luminous Button (Square) with Digital floor Positioning Indicator",
+    carWall: "Stainless Steel Finish with Back side Half mirror",
+    flooring: "PVC Flooring",
+    carDoor: "Stainless Steel Finish",
+  },
+  {
+    code: "KEC-03",
+    series: "Semi Designer",
+    ceiling: "Gold Finish Ceiling with LED Light",
+    carOperatingPanel:
+      "S.S. wall mounted panel with Luminous Button (Square) with Digital floor Positioning Indicator",
+    carWall: "Titanium gold Stainless Steel / Titanium gold Mirror Stainless Steel",
+    flooring: "PVC Flooring Marble",
+    carDoor: "Stainless Steel Titanium gold Finish",
+  },
+  {
+    code: "KEC-04",
+    series: "Premium Series",
+    ceiling: "Mirror stainless steel, luminescent micalex LED.",
+    carOperatingPanel:
+      "S.S. wall mounted panel with Luminous Button (Square) with Digital floor Positioning Indicator",
+    carWall: "Rose Gold Hairline stainless steel titanium mirror stainless steel.",
+    flooring: "Standard PVC (optional marble)",
+    carDoor: "Stainless Steel Hairline Finish",
+    patternCodes: ["AG 129", "AG 155", "AG 179"], // one pattern swatch code on the page was not legible
+  },
+  {
+    code: "KEC-05",
+    series: "Premium Series",
+    ceiling: "Four side LED light, imitation bronze stainless steel LED lamp belt.",
+    carOperatingPanel:
+      "S.S. wall mounted panel with Luminous Button (Square) with Digital floor Positioning Indicator",
+    carWall: "On both sides of the imitation bronze, stainless steel back wall decoration",
+    flooring: "Standard PVC (optional marble)",
+    carDoor: "Stainless Steel Bronze Finish",
+  },
+  {
+    code: "KEC-06",
+    series: "Premium Series",
+    ceiling: "Designer Stainless Steel & Two side LED light",
+    carOperatingPanel:
+      "S.S. wall mounted panel with Luminous Button (Square) with Digital floor Positioning Indicator",
+    carWall: "Stainless steel Designer back wall Mirror",
+    flooring: "Standard PVC (optional marble)",
+    carDoor: "Stainless Steel Designer",
+  },
+  {
+    code: "KEC-07",
+    series: "Premium Series",
+    ceiling: "M.S. Powder Coated, LED Lights",
+    carWall: "M.S. Powder Coated",
+    handrail: "S.S. Handle",
+  },
+  {
+    code: "KEC-08",
+    series: "Premium Series",
+    ceiling: "Stainless steel Designer with Four Side Round LED Light",
+    carOperatingPanel:
+      "S.S. wall mounted panel with Luminous Button (Square) with Digital floor Positioning Indicator",
+    carWall: "Stainless steel Strip Designer with Back side mirror",
+    flooring: "Standard PVC (optional marble)",
+    carDoor: "Stainless Steel Designer",
+    patternCodes: ["AG 117", "AG 102", "AG 112", "AG 108"],
+  },
+  {
+    code: "KEC-09",
+    series: "Premium Series",
+    ceiling: "Gold Decoration Stainless Steel with Six side LED light",
+    carOperatingPanel:
+      "S.S. wall mounted panel with Luminous Button (Square) with Digital floor Positioning Indicator",
+    carWall: "Gold Decoration Stainless Steel",
+    flooring: "Standard PVC (optional marble)",
+    carDoor: "Gold Decoration Stainless Steel",
+  },
+  {
+    code: "KEC-10",
+    series: "Premium Series",
+    ceiling: "Titanium Gold Mirror Designer S.S. & Acrylic LED light",
+    carOperatingPanel:
+      "S.S. wall mounted panel with Luminous Button (Square) with Digital floor Positioning Indicator",
+    carWall: "Titanium Gold Mirror Designer Stainless Steel with back wall Mirror",
+    flooring: "Standard PVC (optional marble)",
+    carDoor: "Titanium Gold Designer",
+  },
+  {
+    code: "KEC-11",
+    series: "Premium Series",
+    ceiling: "M.S. Powder Coated, Acrylic on Top, LED Light",
+    carWall: "M.S. Powder Coated, S.S. Hairline, Half Mirror Glass",
+    handrail: "S.S. Handle",
+  },
+];
+
+// ---------------------------------------------------------------------------
+// 5. ECONOMIC RANGE - DOOR TYPES (Pages 8-9)
+// ---------------------------------------------------------------------------
+const economicRange = {
+  manualDoorsElevator: {
+    heading: "MANUAL Doors Elevator",
+    description:
+      "Manual Passenger Elevators for economically suited all type of Residential Commercial Buildings depending upon the shaft size with speed / amenities up to choice of owners.",
+    applications: ["Apartment", "Industrial Building", "Offices"],
+    doorImages: [
+      "Manual Collapsible Door",
+      "Imperforated Door",
+      "Manual Telescopic Door",
+      "M.S. Powder Coated Frame Full Glass Swing Door",
+      "Manual Telescopic Door",
+      "Manual Swing Door",
+    ],
+  },
+  automaticDoorsElevator: {
+    heading: "Automatic Doors Elevator",
+    description:
+      "Total elevators door systems focus on three main areas, safety, reliability and speed.",
+    doorImages: [
+      "Glass Door (Big Vision)",
+      "Small Vision Autodoor",
+      "S.S. Center Opening Autodoor",
+      "S.S. Telescopic Door",
+      "Glass Door (Full Vision)",
+      "Center Opening Autodoor (Four Panel)",
+    ],
+    doorOperatorSystem: [
+      "Center Opening Car Door Headers 2 Panel",
+      "Center Opening Landing Door Headers 2 Panel",
+    ],
+  },
+};
+
+// ---------------------------------------------------------------------------
+// 6. ELEVATOR TYPES - OVERVIEW SPECS (Pages 10-17)
+// ---------------------------------------------------------------------------
+const elevatorTypes = {
+  capsuleElevator: {
+    heading: "Capsule Elevator",
+    subheading: "Smooth operation comfortable travel",
+    specs: {
+      availableRatedSpeed: "1.0 / 1.5 / 2 MPS",
+      maxTravelHeight: "66 M",
+      availableRatedCapacity: "408 to 1088 Kgs",
+      maxPassengers: "06 to 16 Passengers",
+    },
+    forms: ["Rear Side", "Semi Circle", "3 Side Cutting Edge", "5 Side Cutting Edge"],
+    applications: ["Hotels", "Shopping Malls", "Offices", "Multiplexes"],
+    cabTypes: [
+      "Full Glass Capsule",
+      "Three Side Glass With MS Powder Coated Car",
+      "Three Side Square Glass Capsule",
+      "Round Glass Cabin With Stainless Steel Hair Line Finish Car",
+    ],
+    cabExterior: {
+      "Full glazing": "Laminated safety glass",
+      "Cab exterior panelling": "Stainless steel, satin finish, concealed fixing",
+      "Ceiling rails": "Stainless steel, satin finish",
+      "Platform": "Aluminum bulb plate all-over",
+      "Crossarms and traction angles": "lacquered",
+      "Door drive": "lacquered",
+    },
+  },
+
+  hospitalElevator: {
+    heading: "Hospital Elevator",
+    description:
+      "KRUPA Hospital Bed Elevators, a right choice for your hospital needs are designed to greatly contributes to provide the most secure and reliable ambience that your hospital requires.",
+    specs: {
+      availableRatedSpeed: "0.63 / 1 MPS",
+      maxTravelHeight: "66 M",
+      availableRatedCapacity: "1020 to 1768 Kgs",
+      maxPassengers: "15 to 26 Passengers",
+    },
+    highlights: ["Smooth and secure", "Electromagnetic compebility", "Emergency landing device"],
+    features: [
+      "Speed options from 0.35 m / sec to 1.5 m / sec.",
+      "Capacity options from 15 to 26 passengers.",
+      "Car and door finish options - powder coated / stainless steel.",
+      "PVC / Chequered flooring.",
+      "Various types of door options such as collapsible / imperforated / Telescopic / automatic centre opening doors.",
+    ],
+    cabinNote: "Stainless Steel Cabin",
+  },
+
+  goodsElevator: {
+    heading: "Goods Elevator",
+    subheading: "Bear any heavy load at ease. easy transport",
+    specs: {
+      availableRatedSpeed: "0.50 / 0.70 MPS",
+      maxTravelHeight: "66 M",
+      availableRatedCapacity: "500 to 4000 Kgs",
+    },
+    images: [
+      "Heavy Duty Powder Coated Cabin",
+      "Heavy Duty Traction Machine",
+      "Accurate Leveling",
+      "Two Panel Sliding Panel",
+      "Center Opening & Double Folded",
+      "Single Way Door",
+      "Double Way Door",
+    ],
+  },
+
+  carElevator: {
+    heading: "Car Elevator",
+    subheading: "The Most Reliable Parking Assistants",
+    specs: {
+      availableRatedSpeed: "0.30 / 0.50 MPS",
+      maxTravelHeight: "30 M",
+      availableRatedCapacity: "2500 to 4000 Kgs",
+      segment: "Industrial applications & Car Parks",
+    },
+    features: [
+      "Auto / Manual door opening Option.",
+      "Two side opening option.",
+      "These are safe and reliable.",
+      "Heavy duty traction machine.",
+    ],
+    materials: ["S.S. Checkered Plate", "Aluminum Checkered Plate"],
+    doorType: "Vertical Bi-Partical Door",
+  },
+
+  parkingSystems: ["Car Puzzle Parking", "Car Scissor Lift", "Car Stacker Parking"],
+
+  mrlElevator: {
+    heading: "MRL Elevator",
+    subheading: "Machine Roomless Elevator",
+    tagline: "Minimal space. maximum value !",
+    specs: {
+      availableRatedSpeed: "1.00 / 1.50 / 2 MPS",
+      maxTravelHeight: "66 M",
+      availableRatedCapacity: "408 to 884 Kgs",
+      maxPassengers: "06 to 13 Person",
+    },
+    description:
+      "In order to know the concept of environmental protection, energy saving, building area, improve the degree of freedom in design is the responsibility of the KRUPA ELEVATORS without machine room, fully reflects the green spirit of humanity, the elevator needs only one independent well space, without room, with the same load weight level than conventional elevators, saving energy by 40%, save construction area of 10%.",
+    benefits: ["Low noise", "Green Environmental Protection", "High efficiency and energy saving"],
+    savings: [
+      "It saves 25% of total elevator equipment area.",
+      "It reduces 40% of space occupation",
+    ],
+  },
+
+  homeElevator: {
+    heading: "Home Elevator",
+    tagline: "Change Your Lifestyle with Best Home Lift",
+    specs: {
+      availableRatedSpeed: "0.30 / 0.63 MPS",
+      maxTravelHeight: "12 M",
+      availableRatedCapacity: "204 to 272 Kgs",
+      maxPassengers: "3 to 4 Passengers",
+    },
+    description:
+      "Our Company is enlisted as the reputed manufacture, service provider and supplier of Home Elevators. Quality stands on paramount importance to us and we make no compromises in the same. Our ultra-modern home elevators compliment your home architecture. We customize our design to suit the interiors and the tested of our clients. The range is installed in multi storey houses, pent houses, bungalow and villas.",
+    dimensions: {
+      highCarCeilingHeight: "2100mm",
+      highEntranceHeight: "2000mm",
+      entrance: {
+        "Doors / Frame": "Coated steel plate",
+        "Windows": "Grey smoked plastic",
+      },
+    },
+    landingOperatingPanel:
+      "Touch Screen with LCD Surface Mounted design with Plexiglass Panel and Zinc Alloy Out Frame",
+    energySaving: "40% Energy Saving (Mini Gearless Machine)",
+    mainFeaturesAndBenefits: [
+      "Runs with single phase power supply.",
+      "Required very compact overhead space and pit area.",
+      "Noiseless and vibration free.",
+      "Saves up 40% energy compared to hydraulic elevator.",
+      "Easy to install and maintain.",
+    ],
+  },
+
+  hydraulicElevator: {
+    heading: "Hydraulic Elevator",
+    subheading: "For Low Rise",
+    description:
+      "The products are of the compact structure, low fault rate, easy for the Daily maintenance.",
+    energySaving: "40% ENERGY SAVING",
+    specs: {
+      availableRatedSpeed: "0.30 MPS",
+      maxTravelHeight: "15 M",
+      availableRatedCapacity: "225 / 1800 Kgs",
+      maxPassengers: "03 / 24 Passengers",
+    },
+    tagline: "Green Solutions For Better Tomorrow",
+    description2:
+      "Compared with traction lift, hydraulic has the following obvious advantages: Flexible setting of the machine room position top machine room is not needed. A machine room can be flexibly set within 0.5 meters rangers near the shaft which more comply with the individual design requirements of the constructions. Wide loading range, strong adaptability, large car and tonnage design, maximum carrying ability reaches 3 tons. Saving space and energy consumption, reducing the cost counterweight device is not needed, which increases the utilization rate of the hoist way and greatly saves the construction space and cost.",
+    advantagesAndBenefits: [
+      "Machine Room Not Required.",
+      "No Maintenance.",
+      "Electric Power Not Required in Down Direction.",
+      "Easy & Fast Installation.",
+    ],
+    actingTypes: ["Direct Central Acting", "Indirect Side Acting 2:1", "Direct Side Acting"],
+    specificationsHydraulics: {
+      "Minimum shaft depth": "1500mm (constructionally)",
+      "Minimum last floor height": "3100mm (constructionally)",
+      "Minimum DBG": "500mm",
+      "Speed": "Up to 0.5m/s",
+      "Maximum travel": "12m",
+    },
+  },
+};
+
+// ---------------------------------------------------------------------------
+// 7. COP & LOP (Car Operating Panel & Landing Operating Panel) - Page 17
+// ---------------------------------------------------------------------------
+const copLop = {
+  heading: "COP & LOP",
+  description:
+    "KRUPA ELEVATORS features a wide variety of operating panels for Elevator with great flexibility in special construction.",
+  models: [
+    "KE-COP-LOP : 001",
+    "KE-COP-LOP : 002",
+    "KE-COP-LOP : 003",
+    "KE-COP-LOP : 004",
+    "KE-COP-LOP : 005",
+    "KE-COP-LOP : 006",
+  ],
+  callingBoxDisplayTypes: ["Horizontal Display Effect", "Vertical Display Effect", "BVT 605", "B2"],
+};
+
+// ---------------------------------------------------------------------------
+// 8. GEARED & GEARLESS MACHINE / CONTROL PANEL (Page 18)
+// ---------------------------------------------------------------------------
+const machinesAndControlPanel = {
+  heading: "Geared & Gearless Machine",
+  description:
+    "Using high quality gear drive machines and V3F Drives, these lift performance is of the highest standard",
+  gearedTractionMachineModels: ["M67 Geared Traction Machine", "M76 Geared Traction Machine"],
+  gearlessTractionMachineModels: ["I-127 Gearless Machine", "Gearless Machine"],
+  controlPanel: {
+    heading: "Control Panel",
+    subheading: "Microprocessor High Technology Control Panel",
+    types: [
+      "Integrated Drive (Elevator Management)",
+      "Microprocessor with Integrated Controller",
+      "Automatic Rescue Device",
+      "MRL Gearless Integrated Controller",
+    ],
+  },
+};
+
+// ---------------------------------------------------------------------------
+// 9. TECHNICAL DRAWING DIMENSION TABLES (Pages 18-22)
+//    All dimensions are in mm unless otherwise noted, as stated on the pages.
+// ---------------------------------------------------------------------------
+/**
+ * krupaElevatorsTechnicalTables.js
+ *
+ * Technical Drawing dimension tables from the Krupa Elevators brochure
+ * (pages 18-22): Manual Door Elevator, Automatic Door Elevator, Capsule
+ * Elevator, Hospital Elevator, Goods Elevator, MRL Elevator, Home Elevator,
+ * and Hydraulic Elevator.
+ *
+ * IMPORTANT ABOUT THE LETTER CODES (A, B, C, D, E, K, L, W...):
+ * Each drawing in the original brochure carries its OWN legend printed
+ * above its table — the letters are NOT used consistently across tables.
+ * For example, on the Manual/Automatic Door Elevator drawings, "A" and "B"
+ * label the platform (car) edges while "C" and "D" label the lift-well —
+ * but on the Hospital Elevator's door sub-tables, "A" and "B" label the
+ * shaft and "C"/"D" label the car instead. This file keeps each table's
+ * legend exactly as printed on its page, and every row uses a descriptive
+ * key name (e.g. `liftWellWidth_C`) instead of a bare letter, so the
+ * meaning is unambiguous no matter which table you're reading. The
+ * trailing "_A", "_B", etc. is kept only so you can still trace each value
+ * back to the letter printed on the original technical drawing.
+ *
+ * All dimensions are in millimetres (mm) unless noted otherwise.
+ * Speed is printed on the original pages as "Mps" (metres per second).
+ * A value that was not legible/printed on the page is set to null.
+ */
+
+// ---------------------------------------------------------------------------
+// Shared notes printed on the technical-drawing pages
+// ---------------------------------------------------------------------------
+const generalNotes = [
+  "All Dimensions are in mm.",
+  "This is General Data, it may be changed without notice. For more details contact us.",
+  "All hoist way walls should be minimum 230 mm brick or 150 mm R.C.C.",
+];
+
+// ---------------------------------------------------------------------------
+// 1. MANUAL DOOR ELEVATOR (page 18)
+// ---------------------------------------------------------------------------
+const manualDoorElevatorTable = {
+  title: "Manual Door Elevator",
+  notes: generalNotes,
+  legend: {
+    A: "Platform Edge – width (car platform)",
+    B: "Platform Edge – depth (car platform)",
+    C: "Lift-Well In-Side Finished – width",
+    D: "Lift-Well In-Side Finished – depth",
+    E: "Entrance Width",
+    K: "Machine Room – width",
+    L: "Machine Room – length",
+  },
+  columns: [
+    { key: "persons", label: "Persons" },
+    { key: "loadKg", label: "Load (Kg)" },
+    { key: "platformEdgeWidth_A", label: "Platform Edge Width (A)", unit: "mm" },
+    { key: "platformEdgeDepth_B", label: "Platform Edge Depth (B)", unit: "mm" },
+    { key: "liftWellWidth_C", label: "Lift-Well Width, In-Side Finished (C)", unit: "mm" },
+    { key: "liftWellDepth_D", label: "Lift-Well Depth, In-Side Finished (D)", unit: "mm" },
+    { key: "entranceWidth_E", label: "Entrance Width (E)", unit: "mm" },
+    { key: "doorType", label: "Door Type" },
+    { key: "machineRoomWidth_K", label: "Machine Room Width (K)", unit: "mm" },
+    { key: "machineRoomLength_L", label: "Machine Room Length (L)", unit: "mm" },
+    { key: "speedMps", label: "Speed (Mps)" },
+    { key: "pitDepth", label: "Pit Depth", unit: "mm" },
+    { key: "overHead", label: "Over Head", unit: "mm" },
+  ],
+  rows: [
+    { persons: 5, loadKg: 340, platformEdgeWidth_A: 950, platformEdgeDepth_B: 1300, liftWellWidth_C: 1350, liftWellDepth_D: 1650, entranceWidth_E: 760, doorType: "Collapsible", machineRoomWidth_K: "300+C+300", machineRoomLength_L: "600+D+1500", speedMps: "Up to 0.68", pitDepth: 1600, overHead: 4900 },
+    { persons: 5, loadKg: 340, platformEdgeWidth_A: 1300, platformEdgeDepth_B: 1000, liftWellWidth_C: 1700, liftWellDepth_D: 1300, entranceWidth_E: 760, doorType: "Swing", machineRoomWidth_K: "300+C+300", machineRoomLength_L: "600+D+1500", speedMps: "Up to 0.68", pitDepth: 1600, overHead: 4900 },
+    { persons: 6, loadKg: 408, platformEdgeWidth_A: 1200, platformEdgeDepth_B: 1000, liftWellWidth_C: 1600, liftWellDepth_D: 1500, entranceWidth_E: 800, doorType: "Imperforate", machineRoomWidth_K: "300+C+300", machineRoomLength_L: "600+D+1500", speedMps: "Up to 0.68", pitDepth: 1600, overHead: 4900 },
+    { persons: 8, loadKg: 544, platformEdgeWidth_A: 1500, platformEdgeDepth_B: 1200, liftWellWidth_C: 1900, liftWellDepth_D: 1500, entranceWidth_E: 800, doorType: null, machineRoomWidth_K: "300+C+300", machineRoomLength_L: "600+D+1500", speedMps: "Up to 0.68", pitDepth: 1600, overHead: 4900 },
+    { persons: 13, loadKg: 884, platformEdgeWidth_A: 1900, platformEdgeDepth_B: 1500, liftWellWidth_C: 2400, liftWellDepth_D: 1850, entranceWidth_E: 900, doorType: null, machineRoomWidth_K: "600+C+600", machineRoomLength_L: "300+D+1500", speedMps: "Up to 0.68", pitDepth: 1600, overHead: 4900 },
+  ],
+};
+
+// ---------------------------------------------------------------------------
+// 2. AUTOMATIC DOOR ELEVATOR (page 19)
+//    Same legend as the Manual Door Elevator drawing above, plus an
+//    automatic centre-opening door type.
+// ---------------------------------------------------------------------------
+const automaticDoorElevatorTable = {
+  title: "Automatic Door Elevator",
+  notes: generalNotes,
+  legend: {
+    A: "Platform Edge – width (car platform)",
+    B: "Platform Edge – depth (car platform)",
+    C: "Lift-Well In-Side Finished – width",
+    D: "Lift-Well In-Side Finished – depth",
+    E: "Entrance Width",
+    K: "Machine Room – width",
+    L: "Machine Room – length",
+  },
+  columns: [
+    { key: "persons", label: "Persons" },
+    { key: "loadKg", label: "Load (Kg)" },
+    { key: "platformEdgeWidth_A", label: "Platform Edge Width (A)", unit: "mm" },
+    { key: "platformEdgeDepth_B", label: "Platform Edge Depth (B)", unit: "mm" },
+    { key: "liftWellWidth_C", label: "Lift-Well Width, In-Side Finished (C)", unit: "mm" },
+    { key: "liftWellDepth_D", label: "Lift-Well Depth, In-Side Finished (D)", unit: "mm" },
+    { key: "entranceWidth_E", label: "Entrance Width (E)", unit: "mm" },
+    { key: "doorType", label: "Door Type" },
+    { key: "machineRoomWidth_K", label: "Machine Room Width (K)", unit: "mm" },
+    { key: "machineRoomLength_L", label: "Machine Room Length (L)", unit: "mm" },
+    { key: "speedMps", label: "Speed (Mps)" },
+    { key: "pitDepth", label: "Pit Depth", unit: "mm" },
+    { key: "overHead", label: "Over Head", unit: "mm" },
+  ],
+  rows: [
+    { persons: 6, loadKg: 408, platformEdgeWidth_A: 1200, platformEdgeDepth_B: 1300, liftWellWidth_C: 1700, liftWellDepth_D: 1800, entranceWidth_E: 700, doorType: "Auto Center Opening", machineRoomWidth_K: "300+C+300", machineRoomLength_L: "600+D+1500", speedMps: "UPTO 1.5", pitDepth: 1600, overHead: 4900 },
+    { persons: 8, loadKg: 544, platformEdgeWidth_A: 1500, platformEdgeDepth_B: 1330, liftWellWidth_C: 2000, liftWellDepth_D: 1800, entranceWidth_E: 800, doorType: "Auto Center Opening", machineRoomWidth_K: "300+C+300", machineRoomLength_L: "600+D+1500", speedMps: "UPTO 1.5", pitDepth: 1600, overHead: 4900 },
+    { persons: 10, loadKg: 680, platformEdgeWidth_A: 1650, platformEdgeDepth_B: 1450, liftWellWidth_C: 2150, liftWellDepth_D: 2000, entranceWidth_E: 800, doorType: "Auto Center Opening", machineRoomWidth_K: "600+C+600", machineRoomLength_L: "600+D+1500", speedMps: "UPTO 1.5", pitDepth: 1600, overHead: 4900 },
+    { persons: 13, loadKg: 884, platformEdgeWidth_A: 1900, platformEdgeDepth_B: 1500, liftWellWidth_C: 2400, liftWellDepth_D: 2000, entranceWidth_E: 800, doorType: "Auto Center Opening", machineRoomWidth_K: "600+C+600", machineRoomLength_L: "600+D+1500", speedMps: "UPTO 1.5", pitDepth: 1600, overHead: 4900 },
+  ],
+};
+
+// ---------------------------------------------------------------------------
+// 3. CAPSULE ELEVATOR (page 19)
+//    Curved-shape car, so the drawing carries extra dimension points
+//    (A, B, J, G on the car-inside group; C, D, F, H on the left-well
+//    group) beyond a simple width/depth pair.
+// ---------------------------------------------------------------------------
+const capsuleElevatorTable = {
+  title: "Capsule Elevator",
+  notes: generalNotes,
+  legend: {
+    A: "Car Inside – dimension point A (width)",
+    B: "Car Inside – dimension point B (depth)",
+    J: "Car Inside – dimension point J",
+    G: "Car Inside – dimension point G",
+    C: "Left Well – dimension point C (width)",
+    D: "Left Well – dimension point D",
+    F: "Left Well – dimension point F",
+    H: "Left Well – dimension point H",
+    E: "Entrance",
+  },
+  legendCaveat:
+    "The Capsule Elevator plan view (Rear Side / Semi Circle / 3 Side Cutting Edge / 5 Side Cutting Edge forms) uses four points each for the Car Inside and Left Well groups because of the curved cab shape. Points J, G, F and H mark additional curve/side positions on the drawing; the brochure does not spell out each one individually beyond its group label.",
+  optionA: {
+    label: "Option - A",
+    columns: [
+      { key: "person", label: "Person" },
+      { key: "kgs", label: "Capacity (Kgs)" },
+      { key: "carInside_A", label: "Car Inside – A", unit: "mm" },
+      { key: "carInside_B", label: "Car Inside – B", unit: "mm" },
+      { key: "carInside_J", label: "Car Inside – J", unit: "mm" },
+      { key: "carInside_G", label: "Car Inside – G", unit: "mm" },
+      { key: "leftWell_C", label: "Left Well – C", unit: "mm" },
+      { key: "leftWell_D", label: "Left Well – D", unit: "mm" },
+      { key: "leftWell_F", label: "Left Well – F", unit: "mm" },
+      { key: "leftWell_H", label: "Left Well – H", unit: "mm" },
+      { key: "entrance", label: "Entrance", unit: "mm" },
+    ],
+    rows: [
+      { person: 10, kgs: 680, carInside_A: 1100, carInside_B: 1300, carInside_J: 1400, carInside_G: 650, leftWell_C: 2200, leftWell_D: 1325, leftWell_F: 1330, leftWell_H: 800, entrance: 800 },
+      { person: 13, kgs: 884, carInside_A: 1200, carInside_B: 1400, carInside_J: 1550, carInside_G: 700, leftWell_C: 2400, leftWell_D: 1425, leftWell_F: 1430, leftWell_H: 900, entrance: 900 },
+      { person: 16, kgs: 1088, carInside_A: 1300, carInside_B: 1500, carInside_J: 1700, carInside_G: 750, leftWell_C: 2800, leftWell_D: 1530, leftWell_F: 1530, leftWell_H: 1000, entrance: 1000 },
+    ],
+  },
+  optionB: {
+    label: "Option - B",
+    columns: [
+      { key: "person", label: "Person" },
+      { key: "kgs", label: "Capacity (Kgs)" },
+      { key: "carInside_A", label: "Car Inside – A", unit: "mm" },
+      { key: "carInside_B", label: "Car Inside – B", unit: "mm" },
+      { key: "carInside_G", label: "Car Inside – G", unit: "mm" },
+      { key: "leftWell_C", label: "Left Well – C", unit: "mm" },
+      { key: "leftWell_D", label: "Left Well – D", unit: "mm" },
+      { key: "leftWell_F", label: "Left Well – F", unit: "mm" },
+      { key: "leftWell_H", label: "Left Well – H", unit: "mm" },
+      { key: "entrance_E", label: "Entrance – E", unit: "mm" },
+    ],
+    rows: [
+      { person: 10, kgs: 680, carInside_A: 1250, carInside_B: 1300, carInside_G: 250, leftWell_C: 2200, leftWell_D: 1450, leftWell_F: 1480, leftWell_H: 580, entrance_E: 800 },
+      { person: 13, kgs: 884, carInside_A: 1400, carInside_B: 1400, carInside_G: 300, leftWell_C: 2400, leftWell_D: 1550, leftWell_F: 1630, leftWell_H: 650, entrance_E: 900 },
+      { person: 16, kgs: 1088, carInside_A: 1550, carInside_B: 1500, carInside_G: 350, leftWell_C: 2800, leftWell_D: 1780, leftWell_F: 1650, leftWell_H: 790, entrance_E: 1000 },
+    ],
+  },
+};
+
+// ---------------------------------------------------------------------------
+// 4. HOSPITAL ELEVATOR (page 20)
+//    Main table's legend matches the Manual/Automatic Door Elevator
+//    drawings (A,B = platform edges; C,D = lift-well; E = entrance).
+//    Its two door-type sub-tables print their OWN, different legend
+//    (A,B = shaft; C,D = car), exactly as shown on the page.
+// ---------------------------------------------------------------------------
+const hospitalElevatorTable = {
+  title: "Hospital Elevator – Space Requirements for Manual Door Operation Stretcher Elevators",
+  notes: generalNotes,
+  legend: {
+    A: "Platform Edge – width (car platform)",
+    B: "Platform Edge – depth (car platform)",
+    C: "Lift-Well In-Side Finished – width",
+    D: "Lift-Well In-Side Finished – depth",
+    E: "Entrance Width",
+    K: "Machine Room – width",
+    L: "Machine Room – length",
+  },
+  columns: [
+    { key: "person", label: "Person" },
+    { key: "kg", label: "Load (Kg)" },
+    { key: "platformEdgeWidth_A", label: "Platform Edge Width (A)", unit: "mm" },
+    { key: "platformEdgeDepth_B", label: "Platform Edge Depth (B)", unit: "mm" },
+    { key: "liftWellWidth_C", label: "Lift-Well Width, In-Side Finished (C)", unit: "mm" },
+    { key: "liftWellDepth_D", label: "Lift-Well Depth, In-Side Finished (D)", unit: "mm" },
+    { key: "entranceWidth_E", label: "Entrance Width (E)", unit: "mm" },
+    { key: "doorType", label: "Door Type" },
+    { key: "machineRoomWidth_K", label: "Machine Room Width (K)", unit: "mm" },
+    { key: "machineRoomLength_L", label: "Machine Room Length (L)", unit: "mm" },
+    { key: "speedMps", label: "Speed (Mps)" },
+    { key: "pitDepth", label: "Pit Depth", unit: "mm" },
+    { key: "overHead", label: "Over Head", unit: "mm" },
+  ],
+  rows: [
+    { person: "8 To 16", kg: "544 To 1088", platformEdgeWidth_A: 1200, platformEdgeDepth_B: 2300, liftWellWidth_C: 1900, liftWellDepth_D: 2400, entranceWidth_E: 1600, doorType: "Collapsible", machineRoomWidth_K: "600+C+600", machineRoomLength_L: "600+D+1800", speedMps: "0.3 To 0.5", pitDepth: 1600, overHead: 5100 },
+  ],
+
+  automaticCentreOpeningDoor: {
+    title: "Automatic Centre Opening Door",
+    legend: {
+      A: "Shaft Width",
+      B: "Shaft Depth",
+      C: "Car Width",
+      D: "Car Depth",
+      E: "Entrance",
+    },
+    columns: [
+      { key: "person", label: "Person" },
+      { key: "capacityKg", label: "Capacity (Kg)" },
+      { key: "shaftWidth_A", label: "Shaft Width (A)", unit: "mm" },
+      { key: "shaftDepth_B", label: "Shaft Depth (B)", unit: "mm" },
+      { key: "carWidth_C", label: "Car Width (C)", unit: "mm" },
+      { key: "carDepth_D", label: "Car Depth (D)", unit: "mm" },
+      { key: "entrance_E", label: "Entrance (E)", unit: "mm" },
+    ],
+    rows: [
+      { person: 15, capacityKg: 1020, shaftWidth_A: 1900, shaftDepth_B: 2300, carWidth_C: 1000, carDepth_D: 1700, entrance_E: 800 },
+      { person: 20, capacityKg: 1360, shaftWidth_A: 2300, shaftDepth_B: 3000, carWidth_C: 1300, carDepth_D: 2000, entrance_E: 900 },
+      { person: 26, capacityKg: 1768, shaftWidth_A: 2600, shaftDepth_B: 3000, carWidth_C: 1600, carDepth_D: 2400, entrance_E: 1000 },
+    ],
+  },
+
+  automaticTelescopicDoor: {
+    title: "Automatic Telescopic Door",
+    legend: {
+      A: "Shaft Width",
+      B: "Shaft Depth",
+      C: "Car Width",
+      D: "Car Depth",
+      E: "Entrance",
+    },
+    columns: [
+      { key: "person", label: "Person" },
+      { key: "capacityKg", label: "Capacity (Kg)" },
+      { key: "shaftWidth_A", label: "Shaft Width (A)", unit: "mm" },
+      { key: "shaftDepth_B", label: "Shaft Depth (B)", unit: "mm" },
+      { key: "carWidth_C", label: "Car Width (C)", unit: "mm" },
+      { key: "carDepth_D", label: "Car Depth (D)", unit: "mm" },
+      { key: "entrance_E", label: "Entrance (E)", unit: "mm" },
+    ],
+    rows: [
+      { person: 15, capacityKg: 1020, shaftWidth_A: 1700, shaftDepth_B: 3000, carWidth_C: 1000, carDepth_D: 2400, entrance_E: 800 },
+      { person: 20, capacityKg: 1360, shaftWidth_A: 1950, shaftDepth_B: 3000, carWidth_C: 1300, carDepth_D: 2400, entrance_E: 900 },
+      { person: 26, capacityKg: 1768, shaftWidth_A: 2100, shaftDepth_B: 3000, carWidth_C: 1600, carDepth_D: 2400, entrance_E: 1000 },
+    ],
+  },
+};
+
+// ---------------------------------------------------------------------------
+// 5. GOODS ELEVATOR (page 20)
+//    Legend here reverses the Hospital sub-table order: A,B = car inside;
+//    C,D = lift well; entrance width has no letter of its own on this page.
+// ---------------------------------------------------------------------------
+const goodsElevatorTable = {
+  title: "Goods Elevator – Space Requirements For Goods Elevators",
+  notes: generalNotes,
+  legend: {
+    A: "Car-Inside – width",
+    B: "Car-Inside – depth",
+    C: "Lift-Well – width",
+    D: "Lift-Well – depth",
+    K: "Machine Room – width",
+    L: "Machine Room – length",
+  },
+  columns: [
+    { key: "loadKg", label: "Load (Kg)" },
+    { key: "carInsideWidth_A", label: "Car-Inside Width (A)", unit: "mm" },
+    { key: "carInsideDepth_B", label: "Car-Inside Depth (B)", unit: "mm" },
+    { key: "liftWellWidth_C", label: "Lift-Well Width (C)", unit: "mm" },
+    { key: "liftWellDepth_D", label: "Lift-Well Depth (D)", unit: "mm" },
+    { key: "entranceWidth", label: "Entrance Width", unit: "mm" },
+    { key: "machineRoomWidth_K", label: "Machine Room Width (K)", unit: "mm" },
+    { key: "machineRoomLength_L", label: "Machine Room Length (L)", unit: "mm" },
+    { key: "speedMps", label: "Speed (Mps)" },
+    { key: "pitDepth", label: "Pit Depth", unit: "mm" },
+    { key: "overHead", label: "Over Head", unit: "mm" },
+  ],
+  rows: [
+    { loadKg: 500, carInsideWidth_A: 1500, carInsideDepth_B: 1200, liftWellWidth_C: 1900, liftWellDepth_D: 1600, entranceWidth: 2100, machineRoomWidth_K: 2600, machineRoomLength_L: 1600, speedMps: "0.25 To 1.0", pitDepth: 1600, overHead: 5100 },
+    { loadKg: 1000, carInsideWidth_A: 1500, carInsideDepth_B: 1800, liftWellWidth_C: 2000, liftWellDepth_D: 1800, entranceWidth: 2100, machineRoomWidth_K: 2600, machineRoomLength_L: 1600, speedMps: "0.25 To 1.0", pitDepth: 1600, overHead: 5100 },
+    { loadKg: 1500, carInsideWidth_A: 1700, carInsideDepth_B: 2000, liftWellWidth_C: 2600, liftWellDepth_D: 2300, entranceWidth: 2100, machineRoomWidth_K: 2600, machineRoomLength_L: 1600, speedMps: "0.25 To 1.0", pitDepth: 1600, overHead: 5100 },
+    { loadKg: 2000, carInsideWidth_A: 1700, carInsideDepth_B: 2500, liftWellWidth_C: 2600, liftWellDepth_D: 2300, entranceWidth: 2100, machineRoomWidth_K: 2600, machineRoomLength_L: 1600, speedMps: "0.25 To 1.0", pitDepth: 1600, overHead: 5100 },
+    { loadKg: 2500, carInsideWidth_A: 2000, carInsideDepth_B: 2500, liftWellWidth_C: 2900, liftWellDepth_D: 2700, entranceWidth: 2100, machineRoomWidth_K: 2600, machineRoomLength_L: 1600, speedMps: "0.25 To 1.0", pitDepth: 1600, overHead: 5400 },
+    { loadKg: 3000, carInsideWidth_A: 2000, carInsideDepth_B: 3000, liftWellWidth_C: 2900, liftWellDepth_D: 3400, entranceWidth: 2700, machineRoomWidth_K: 2900, machineRoomLength_L: 1600, speedMps: "0.25 To 1.0", pitDepth: 1600, overHead: 5400 },
+  ],
+};
+
+// ---------------------------------------------------------------------------
+// 6. CAR ELEVATOR (page 21)
+//    Printed as a description table, not a lettered dimension table.
+// ---------------------------------------------------------------------------
+const carElevatorTechnical = {
+  title: "Car Elevator",
+  columns: [
+    { key: "description", label: "Description" },
+    { key: "value", label: "Value" },
+  ],
+  rows: [
+    { description: "Segment", value: "Industrial applications & Car Parks" },
+    { description: "Max. Travel (m)", value: "100 (Solutions available for higher travel)" },
+    { description: "Max. Load (kg)", value: "500 - 5000 Kg per persons (Solutions available for higher capacities)" },
+    { description: "Max. Speed (m/s)", value: "0.5 mps (Solutions available for other speeds)" },
+    { description: "Max. Group size", value: "Simplex" },
+  ],
+  loadHookNote:
+    "3 Nos - Load Hook (3 Ton Capacity) Client Scope Refer Details in Inspection Window at Terrace Level",
+  holdingBeamCapacity: "3500 Kg",
+};
+
+// ---------------------------------------------------------------------------
+// 7. MRL ELEVATOR (page 21)
+//    A,B = Lift Well (width, depth); C,D = Cabin Inside (width, depth).
+// ---------------------------------------------------------------------------
+const mrlElevatorTechnical = {
+  title: "MRL Elevator",
+  notes: generalNotes,
+  legend: {
+    A: "Lift Well – width",
+    B: "Lift Well – depth",
+    C: "Cabin Inside – width",
+    D: "Cabin Inside – depth",
+  },
+  dataConfidenceNote:
+    "The five smaller-capacity rows (5–13 persons) come from a compact plan-view diagram whose printed digits were harder to separate cleanly than the 15–26 person rows; treat those five rows as best-effort readings and verify against the original page for critical use.",
+  columns: [
+    { key: "person", label: "Capacity (Person)" },
+    { key: "kgs", label: "Capacity (Kgs)" },
+    { key: "liftWellWidth_A", label: "Lift Well Width (A)", unit: "mm" },
+    { key: "liftWellDepth_B", label: "Lift Well Depth (B)", unit: "mm" },
+    { key: "cabinInsideWidth_C", label: "Cabin Inside Width (C)", unit: "mm" },
+    { key: "cabinInsideDepth_D", label: "Cabin Inside Depth (D)", unit: "mm" },
+    { key: "entry", label: "Entry", unit: "mm" },
+  ],
+  rows: [
+    { person: 5, kgs: 340, liftWellWidth_A: 1050, liftWellDepth_B: 920, cabinInsideWidth_C: 1270, cabinInsideDepth_D: null, entry: 700 },
+    { person: 6, kgs: 408, liftWellWidth_A: 1130, liftWellDepth_B: 970, cabinInsideWidth_C: 1380, cabinInsideDepth_D: null, entry: 700 },
+    { person: 8, kgs: 544, liftWellWidth_A: 1280, liftWellDepth_B: 1120, cabinInsideWidth_C: 1380, cabinInsideDepth_D: null, entry: 800 },
+    { person: 10, kgs: 680, liftWellWidth_A: 1370, liftWellDepth_B: 1270, cabinInsideWidth_C: 1380, cabinInsideDepth_D: null, entry: 800 },
+    { person: 13, kgs: 884, liftWellWidth_A: 1570, liftWellDepth_B: 1630, cabinInsideWidth_C: 2100, cabinInsideDepth_D: null, entry: "800/900" },
+    { person: 15, kgs: 1020, liftWellWidth_A: 2100, liftWellDepth_B: 2600, cabinInsideWidth_C: 1070, cabinInsideDepth_D: 2400, entry: "800/900" },
+    { person: 20, kgs: 1360, liftWellWidth_A: 2100, liftWellDepth_B: 3000, cabinInsideWidth_C: 1070, cabinInsideDepth_D: 2400, entry: "900/1000" },
+    { person: 26, kgs: 1768, liftWellWidth_A: 2450, liftWellDepth_B: 3000, cabinInsideWidth_C: 1620, cabinInsideDepth_D: 2400, entry: "900/1000" },
+  ],
+};
+
+// ---------------------------------------------------------------------------
+// 8. HOME ELEVATOR (page 22)
+//    A,B = Car Inside (width, depth); C,D = Lift Well (width, depth);
+//    E = Entrance.
+// ---------------------------------------------------------------------------
+const homeElevatorTechnical = {
+  title: "Home Elevator",
+  notes: generalNotes,
+  legend: {
+    A: "Car Inside – width",
+    B: "Car Inside – depth",
+    C: "Lift Well – width",
+    D: "Lift Well – depth",
+    E: "Entrance",
+  },
+  columns: [
+    { key: "doorOperation", label: "Door Operation" },
+    { key: "persons", label: "Persons" },
+    { key: "kgs", label: "Load (Kgs)" },
+    { key: "carInsideWidth_A", label: "Car Inside Width (A)", unit: "mm" },
+    { key: "carInsideDepth_B", label: "Car Inside Depth (B)", unit: "mm" },
+    { key: "liftWellWidth_C", label: "Lift Well Width (C)", unit: "mm" },
+    { key: "liftWellDepth_D", label: "Lift Well Depth (D)", unit: "mm" },
+    { key: "entrance_E", label: "Entrance (E)", unit: "mm" },
+    { key: "speedMps", label: "Speed (Mps)" },
+    { key: "pit", label: "Pit", unit: "mm" },
+    { key: "overHead", label: "Over Head", unit: "mm" },
+  ],
+  rows: [
+    { doorOperation: "Manual Door", persons: 3, kgs: 204, carInsideWidth_A: 810, carInsideDepth_B: 700, liftWellWidth_C: 1100, liftWellDepth_D: 1200, entrance_E: 700, speedMps: 0.3, pit: 550, overHead: 3100 },
+    { doorOperation: "Manual Door", persons: 4, kgs: 272, carInsideWidth_A: 810, carInsideDepth_B: 1200, liftWellWidth_C: 1300, liftWellDepth_D: 1400, entrance_E: 700, speedMps: 0.3, pit: 550, overHead: 3100 },
+    { doorOperation: "Auto Door", persons: 3, kgs: 204, carInsideWidth_A: 810, carInsideDepth_B: 700, liftWellWidth_C: 1250, liftWellDepth_D: 1250, entrance_E: 700, speedMps: 0.3, pit: 550, overHead: 3100 },
+    { doorOperation: "Auto Door", persons: 4, kgs: 272, carInsideWidth_A: 850, carInsideDepth_B: 1150, liftWellWidth_C: 1300, liftWellDepth_D: 1600, entrance_E: 700, speedMps: 0.3, pit: 550, overHead: 3100 },
+  ],
+};
+
+// ---------------------------------------------------------------------------
+// 9. HYDRAULIC ELEVATOR (page 22)
+//    A = Shaft Width, B = Shaft Depth, C = Car Width, D = Car Depth.
+// ---------------------------------------------------------------------------
+const hydraulicElevatorTechnical = {
+  title: "Hydraulic Elevator",
+  legend: {
+    A: "Shaft – width",
+    B: "Shaft – depth",
+    C: "Car – width",
+    D: "Car – depth",
+  },
+
+  directOrSplitPistonTable: {
+    title: "Direct Suspension (Simple or Split Piston)",
+    description:
+      "It is a direct suspension with a simple or split piston. It is the simplest solution of suspension for any load.",
+    note: "PIT: 1500 mm • O.H.: 4000 mm (Pit & O.H. change the technical specification)",
+    columns: [
+      { key: "person", label: "Person" },
+      { key: "capacityKg", label: "Capacity (Kg)" },
+      { key: "shaftWidth_A", label: "Shaft Width (A)", unit: "mm" },
+      { key: "shaftDepth_B", label: "Shaft Depth (B)", unit: "mm" },
+      { key: "carWidth_C", label: "Car Width (C)", unit: "mm" },
+      { key: "carDepth_D", label: "Car Depth (D)", unit: "mm" },
+    ],
+    rows: [
+      { person: 3, capacityKg: 225, shaftWidth_A: 1200, shaftDepth_B: 1200, carWidth_C: 850, carDepth_D: 900 },
+      { person: 4, capacityKg: 300, shaftWidth_A: 1250, shaftDepth_B: 1350, carWidth_C: 850, carDepth_D: 1050 },
+      { person: 5, capacityKg: 375, shaftWidth_A: 1400, shaftDepth_B: 1500, carWidth_C: 1000, carDepth_D: 1100 },
+      { person: 6, capacityKg: 450, shaftWidth_A: 1500, shaftDepth_B: 1500, carWidth_C: 1100, carDepth_D: 1150 },
+      { person: 8, capacityKg: 600, shaftWidth_A: 1700, shaftDepth_B: 1700, carWidth_C: 1100, carDepth_D: 1400 },
+      { person: 10, capacityKg: 750, shaftWidth_A: 1600, shaftDepth_B: 1850, carWidth_C: 1200, carDepth_D: 1550 },
+      { person: 12, capacityKg: 900, shaftWidth_A: 1700, shaftDepth_B: 1950, carWidth_C: 1300, carDepth_D: 1650 },
+      { person: 15, capacityKg: 1125, shaftWidth_A: 2300, shaftDepth_B: 2300, carWidth_C: 1300, carDepth_D: 2000 },
+      { person: 20, capacityKg: 1500, shaftWidth_A: 1800, shaftDepth_B: 2700, carWidth_C: 1300, carDepth_D: 2400 },
+      { person: 24, capacityKg: 1800, shaftWidth_A: 1900, shaftDepth_B: 2800, carWidth_C: 1500, carDepth_D: 2500 },
+    ],
+  },
+
+  singleSideDirectSuspensionTable: {
+    title: "Single-Side Direct Suspension (Simple Piston)",
+    description:
+      "This is a single side direct suspension with a simple piston for regular loads and short travels of maximum 4 meters.",
+    note: "PIT: 1200 mm • O.H.: 4000 mm",
+    columns: [
+      { key: "person", label: "Person" },
+      { key: "capacityKg", label: "Capacity (Kg)" },
+      { key: "shaftWidth_A", label: "Shaft Width (A)", unit: "mm" },
+      { key: "shaftDepth_B", label: "Shaft Depth (B)", unit: "mm" },
+      { key: "carWidth_C", label: "Car Width (C)", unit: "mm" },
+      { key: "carDepth_D", label: "Car Depth (D)", unit: "mm" },
+    ],
+    rows: [
+      { person: 3, capacityKg: 225, shaftWidth_A: 1500, shaftDepth_B: 1500, carWidth_C: 850, carDepth_D: 900 },
+      { person: 4, capacityKg: 300, shaftWidth_A: 1550, shaftDepth_B: 1550, carWidth_C: 850, carDepth_D: 1050 },
+      { person: 5, capacityKg: 375, shaftWidth_A: 1700, shaftDepth_B: 1000, carWidth_C: 1000, carDepth_D: 1100 },
+      { person: 6, capacityKg: 450, shaftWidth_A: 1800, shaftDepth_B: 1100, carWidth_C: 1100, carDepth_D: 1400 },
+      { person: 8, capacityKg: 600, shaftWidth_A: 1800, shaftDepth_B: 1100, carWidth_C: 1200, carDepth_D: 1550 },
+      { person: 10, capacityKg: 750, shaftWidth_A: 1900, shaftDepth_B: 1300, carWidth_C: 1200, carDepth_D: 1550 },
+      { person: 12, capacityKg: 900, shaftWidth_A: 2000, shaftDepth_B: 1300, carWidth_C: 1300, carDepth_D: 2000 },
+      { person: 15, capacityKg: 1125, shaftWidth_A: 2000, shaftDepth_B: 1300, carWidth_C: 1300, carDepth_D: 2000 },
+      { person: 20, capacityKg: 1600, shaftWidth_A: 2100, shaftDepth_B: 1400, carWidth_C: null, carDepth_D: 2400 },
+    ],
+  },
+};
+
+
+// ---------------------------------------------------------------------------
+// 10. SERVICE SECTION (Page 23)
+// ---------------------------------------------------------------------------
+const serviceSection = {
+  heading: "service",
+  subheading: "SHARING Wonder together",
+  items: [
+    {
+      title: "Specialized, Service Team",
+      description:
+        "All maintenance service personnel are received strict on the job training to execute standard maintenance procedures and provide perfect service experience for customers by depending on strong technical supporting network as well as management system.",
+    },
+    {
+      title: "Superior, Spare Parts",
+      description:
+        "All supplied spare part are received strict test before delivery, which includes escalator's components of various models distribution network has covered lots of cities all or north India for rapid supply and timely replacement.",
+    },
+    {
+      title: "Secure, Elevator Monitoring System",
+      description:
+        "Achieve information management of operations such as 24-hour elevator monitoring, timely alarm along with rescue and maintenance, inspection etc so as to guarantee elevator's safe operation and carry out more convenient and efficient elevator management.",
+    },
+  ],
+  iconLabels: ["Professional Team", "Convenient Service", "Service Line", "Professional Maintenance"],
+};
+
+const technicalDrawingNotes = generalNotes;
+
+// ---------------------------------------------------------------------------
+// EXPORTS (ES Module + CommonJS compatible)
+// ---------------------------------------------------------------------------
+export {
+  company,
+  trustedSolutionSection,
+  energyEfficiencySection,
+  freedomOfDesignIntro,
+  interiorDesigns,
+  economicRange,
+  elevatorTypes,
+  copLop,
+  machinesAndControlPanel,
+  generalNotes,
+  technicalDrawingNotes,
+  manualDoorElevatorTable,
+  automaticDoorElevatorTable,
+  capsuleElevatorTable,
+  hospitalElevatorTable,
+  goodsElevatorTable,
+  carElevatorTechnical,
+  mrlElevatorTechnical,
+  homeElevatorTechnical,
+  hydraulicElevatorTechnical,
+  serviceSection,
+};
+
+const krupaElevatorsData = {
+  company,
+  trustedSolutionSection,
+  energyEfficiencySection,
+  freedomOfDesignIntro,
+  interiorDesigns,
+  economicRange,
+  elevatorTypes,
+  copLop,
+  machinesAndControlPanel,
+  generalNotes,
+  technicalDrawingNotes,
+  manualDoorElevatorTable,
+  automaticDoorElevatorTable,
+  capsuleElevatorTable,
+  hospitalElevatorTable,
+  goodsElevatorTable,
+  carElevatorTechnical,
+  mrlElevatorTechnical,
+  homeElevatorTechnical,
+  hydraulicElevatorTechnical,
+  serviceSection,
+};
+
+export default krupaElevatorsData;

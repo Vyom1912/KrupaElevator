@@ -17,6 +17,7 @@ import { companyData } from "../data/companyData";
 import ScrollReveal from "../components/ScrollReveal";
 import PageHero from "../components/common/PageHero";
 import { assetUrl } from "../utils/assetPath";
+import WhatsAppIcon from "../components/common/WhatsAppIcon";
 
 export default function Contact({ onOpenBrochure }) {
   const [formSubmitted, setFormSubmitted] = useState(false);
@@ -423,7 +424,7 @@ export default function Contact({ onOpenBrochure }) {
             <span className="text-[11px] font-bold uppercase tracking-widest text-brand-orange">
               Brochure Archive
             </span>
-            <h3 className="text-xl font-black">Official 12-Page Product Catalogue</h3>
+            <h3 className="text-xl font-black">Official Technical Product Catalogue</h3>
             <p className="text-xs text-slate-400 leading-relaxed">
               Download the comprehensive KRUPA ELEVATORS brochure in high resolution PDF format containing complete hoistway layouts, motor ratings, and architectural finishes.
             </p>
@@ -454,15 +455,28 @@ export default function Contact({ onOpenBrochure }) {
             </span>
             <h4 className="text-base font-bold text-slate-900">Need Immediate Site Advice?</h4>
             <p className="text-xs text-slate-600 leading-relaxed">
-              Call directly to speak with our Chief Technical Coordinator for urgent hoistway dimension checks or breakdown reports.
+              Connect directly with our Chief Technical Coordinator for urgent hoistway dimension checks, custom pricing, or breakdown reports.
             </p>
-            <a
-              href={`tel:${companyData.contacts.phoneRaw}`}
-              className="inline-flex items-center space-x-2 text-xs font-bold text-brand-orange hover:underline"
-            >
-              <Phone className="w-4 h-4" />
-              <span>{companyData.contacts.phone}</span>
-            </a>
+            <div className="flex flex-wrap gap-2 pt-1">
+              <a
+                href={`tel:${companyData.contacts.phoneRaw}`}
+                className="inline-flex items-center space-x-2 px-4 py-2.5 rounded-xl bg-slate-900 text-white text-xs font-bold hover:bg-slate-800 transition-colors shadow-xs"
+              >
+                <Phone className="w-3.5 h-3.5 text-brand-orange" />
+                <span>Call: {companyData.contacts.phone}</span>
+              </a>
+              <a
+                href={`https://wa.me/${companyData.contacts.whatsapp}?text=${encodeURIComponent(
+                  "Hello Krupa Elevators, I need urgent site advice and information regarding elevator specifications."
+                )}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center space-x-2 px-4 py-2.5 rounded-xl bg-[#25D366] text-white text-xs font-bold hover:bg-[#20bd5a] transition-colors shadow-xs"
+              >
+                <WhatsAppIcon className="w-3.5 h-3.5 text-white" />
+                <span>WhatsApp Us</span>
+              </a>
+            </div>
           </div>
         </div>
       </ScrollReveal>
