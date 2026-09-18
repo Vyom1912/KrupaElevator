@@ -17,12 +17,31 @@ import Contact from "./pages/Contact";
 import { companyData } from "./data/companyData";
 
 function ScrollToTop() {
-  const { pathname } = useLocation();
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, [pathname]);
+  const { pathname, hash } = useLocation();
 
-  // Strip legacy '#' hashes from old cached/bookmarked URLs (e.g. #/elevators -> /elevators)
+  useEffect(() => {
+    if (hash) {
+      const targetId = hash.replace("#", "");
+      // Timeout allows async DOM render and image layout calculation
+      const timer = setTimeout(() => {
+        const element = document.getElementById(targetId);
+        if (element) {
+          const topOffset = 85; // Fixed navbar height offset
+          const elementPosition = element.getBoundingClientRect().top;
+          const offsetPosition = elementPosition + window.pageYOffset - topOffset;
+          window.scrollTo({
+            top: offsetPosition,
+            behavior: "smooth"
+          });
+        }
+      }, 120);
+      return () => clearTimeout(timer);
+    } else {
+      window.scrollTo({ top: 0, behavior: "instant" });
+    }
+  }, [pathname, hash]);
+
+  // Clean legacy '#' hashes from old cached/bookmarked URLs (e.g. #/elevators -> /elevators)
   useEffect(() => {
     if (window.location.hash.startsWith("#/")) {
       const cleanSubpath = window.location.hash.slice(2);

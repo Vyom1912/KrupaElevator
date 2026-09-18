@@ -723,74 +723,107 @@ export default function Home({ onOpenBrochure }) {
       </section>
 
       {/* ========================================================================= */}
-      {/* 3. OUR ELEVATOR SECTION                                                   */}
+      {/* 3. OUR ELEVATOR SECTION (Client-Friendly & Minimal)                         */}
       {/* ========================================================================= */}
       <section id="our-elevators-section" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
-        <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
-          <div>
-            <span className="text-xs font-bold text-brand-teal uppercase tracking-widest block mb-1">
-              Purpose-Built Product Lines
+        <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 border-b border-slate-200 pb-5">
+          <div className="space-y-1 max-w-2xl">
+            <span className="text-xs font-bold text-brand-teal uppercase tracking-widest block">
+              Architectural Mobility Solutions
             </span>
             <h2 className="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight">
-              Our Elevator Applications
+              Elevator Solutions for Every Building
             </h2>
-            <p className="text-xs sm:text-sm text-slate-600 max-w-xl mt-1">
-              Raw technical breakdown of 8 certified elevator models engineered for distinct structural dimensions, speed requirements, and duty cycles.
+            <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">
+              Engineered for whisper-quiet ride comfort, high energy savings, and reliable daily operation across residential, commercial, medical, and industrial spaces.
             </p>
           </div>
           <Link
             to="/elevators"
-            className="inline-flex items-center space-x-1.5 px-4 py-2 rounded-xl bg-slate-900 text-white text-xs font-bold hover:bg-brand-teal transition-all shadow-xs shrink-0"
+            className="inline-flex items-center space-x-2 px-5 py-2.5 rounded-xl bg-slate-900 text-white text-xs sm:text-sm font-bold hover:bg-brand-teal transition-all shadow-xs shrink-0 cursor-pointer"
           >
-            <span>Open Elevator Engineering Console</span>
-            <ArrowRight className="w-3.5 h-3.5" />
+            <span>Explore All 8 Elevator Models</span>
+            <ArrowRight className="w-4 h-4" />
           </Link>
         </div>
 
-        {/* 8 Elevator Cards */}
+        {/* 4 Curated Client-Focused Highlights */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          {elevatorMaster.map((elevator, idx) => (
+          {[
+            {
+              id: "passenger",
+              name: "Passenger Elevators",
+              tag: "Residential & Commercial",
+              desc: "Smooth, silent, and energy-efficient vertical mobility tailored for apartments, offices, and hotels.",
+              image: elevatorMaster.find((e) => e.id === "passenger")?.image || "/assets/elevators/passenger_elevator.jpg",
+              highlight: "Whisper-quiet ride & smooth leveling"
+            },
+            {
+              id: "capsule",
+              name: "Capsule Elevators",
+              tag: "Architectural Landmark",
+              desc: "Futuristic curved glass panoramic cabins offering 360-degree views in atriums, malls, and luxury resorts.",
+              image: elevatorMaster.find((e) => e.id === "capsule")?.image || "/assets/elevators/capsule_elevator.jpg",
+              highlight: "Panoramic 360° glass aesthetics"
+            },
+            {
+              id: "hospital",
+              name: "Hospital Bed Elevators",
+              tag: "Medical & Stretcher",
+              desc: "Spacious cabins with antibacterial wall protection, wide doors, and emergency medical priority features.",
+              image: elevatorMaster.find((e) => e.id === "hospital")?.image || "/assets/elevators/hospital_elevator.jpg",
+              highlight: "Extra-deep cabins & jerk-free transit"
+            },
+            {
+              id: "goods",
+              name: "Goods & Freight Hoists",
+              tag: "Industrial Logistics",
+              desc: "Rugged structural steel cabins built to handle heavy cargo, forklift loading, and industrial logistics.",
+              image: elevatorMaster.find((e) => e.id === "goods")?.image || "/assets/elevators/goods_elevator.jpg",
+              highlight: "Heavy payload up to 5000 kg"
+            }
+          ].map((item, idx) => (
             <ScrollReveal
-              key={elevator.id}
+              key={item.id}
               direction="up"
-              delay={idx * 30}
+              delay={idx * 35}
               distance={15}
               className="h-full"
             >
-              <div className="bg-white rounded-3xl border border-slate-200 overflow-hidden shadow-xs hover:shadow-xl hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between group h-full">
+              <div className="bg-white rounded-3xl border border-slate-200/90 overflow-hidden shadow-xs hover:shadow-xl hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between group h-full">
                 <div>
-                  <div className="h-44 bg-slate-900 relative overflow-hidden group/img">
+                  <div className="h-48 bg-slate-950 relative overflow-hidden">
                     <img
-                      src={elevator.image}
-                      alt={elevator.name}
-                      className="w-full h-full object-cover group-hover/img:scale-105 transition-transform duration-500"
+                      src={item.image}
+                      alt={item.name}
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
                     />
-                    <div className="absolute top-2.5 left-2.5 bg-slate-900/85 backdrop-blur-md px-2.5 py-0.5 rounded-full text-[10px] font-bold text-teal-300 border border-slate-700">
-                      {elevator.category}
+                    <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-transparent pointer-events-none" />
+                    <div className="absolute top-3 left-3 bg-slate-900/85 backdrop-blur-md px-2.5 py-1 rounded-lg text-[10px] font-bold text-teal-300 border border-slate-700">
+                      {item.tag}
+                    </div>
+                    <div className="absolute bottom-3 left-3 right-3 text-white text-xs font-semibold drop-shadow-sm">
+                      {item.highlight}
                     </div>
                   </div>
 
                   <div className="p-5 space-y-2">
                     <h3 className="text-base font-black text-slate-900 group-hover:text-brand-teal transition-colors">
-                      {elevator.name}
+                      {item.name}
                     </h3>
-                    <p className="text-xs text-slate-600 line-clamp-2 leading-relaxed">
-                      {elevator.overview}
+                    <p className="text-xs text-slate-600 leading-relaxed">
+                      {item.desc}
                     </p>
-                    <div className="pt-2 border-t border-slate-100 flex justify-between text-[11px] text-slate-500">
-                      <span>Speed: <strong className="text-slate-800">{elevator.standardSpecs.ratedSpeed}</strong></span>
-                      <span>Capacity: <strong className="text-brand-teal">{elevator.standardSpecs.capacity.split(' ')[0]}P</strong></span>
-                    </div>
                   </div>
                 </div>
 
                 <div className="p-5 pt-0">
                   <Link
-                    to="/elevators"
-                    className="w-full py-2 px-3 rounded-xl bg-slate-100 group-hover:bg-slate-900 text-slate-800 group-hover:text-white text-xs font-bold transition-all flex items-center justify-center space-x-1.5"
+                    to={`/elevators#elev-${item.id}`}
+                    className="w-full py-2.5 px-3 rounded-xl bg-slate-50 group-hover:bg-slate-900 text-slate-700 group-hover:text-white text-xs font-bold transition-all flex items-center justify-center space-x-1.5 cursor-pointer"
                   >
-                    <span>Inspect Drawing & Specs</span>
-                    <ArrowRight className="w-3.5 h-3.5" />
+                    <span>View Specifications & Layouts</span>
+                    <ArrowRight className="w-3.5 h-3.5 text-brand-teal" />
                   </Link>
                 </div>
               </div>
@@ -800,82 +833,106 @@ export default function Home({ onOpenBrochure }) {
       </section>
 
       {/* ========================================================================= */}
-      {/* 4. INTERIOR SECTION                                                       */}
+      {/* 4. INTERIOR SECTION (Client-Friendly & Minimal)                           */}
       {/* ========================================================================= */}
       <section id="interior-section" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
-        <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
-          <div>
-            <span className="text-xs font-bold uppercase tracking-widest text-brand-teal block mb-1">
-              Architectural Aesthetics & Finishes
+        <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 border-b border-slate-200 pb-5">
+          <div className="space-y-1 max-w-2xl">
+            <span className="text-xs font-bold uppercase tracking-widest text-brand-teal block">
+              Architectural Aesthetics
             </span>
             <h2 className="text-2xl sm:text-3xl font-black text-slate-900">
               Cabin Interior Series
             </h2>
-            <p className="text-xs sm:text-sm text-slate-600 max-w-xl mt-1">
-              Classified across Basic, Standard, Semi, Design, and Premium series with titanium gold, rose gold, laser etching, and modern LED lighting.
+            <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">
+              Transform every vertical journey into an experience of luxury and comfort with stainless steel, warm LED ceilings, and titanium finishes.
             </p>
           </div>
           <Link
             to="/interiors"
-            className="inline-flex items-center space-x-1.5 text-xs font-bold text-brand-orange hover:text-brand-orange-hover"
+            className="inline-flex items-center space-x-2 px-5 py-2.5 rounded-xl bg-slate-900 text-white text-xs sm:text-sm font-bold hover:bg-brand-teal transition-all shadow-xs shrink-0 cursor-pointer"
           >
-            <span>Explore All 11 Cabin Finishes</span>
+            <span>Explore All Cabin Collections</span>
             <ChevronRight className="w-4 h-4" />
           </Link>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {interiorSeries.slice(0, 6).map((item, idx) => (
+        {/* 4 Curated Cabin Series */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          {[
+            {
+              targetHash: "basic-series-section",
+              model: "Basic Series (KEC-01)",
+              series: "Basic Series",
+              image: assetUrl("/assets/interiors/kec-01.jpg"),
+              desc: "Hairline stainless steel with full-width rear mirror that visually amplifies interior cabin space.",
+              features: "S.S. Hairline • Full Rear Mirror • LED Ceiling"
+            },
+            {
+              targetHash: "standard-series-section",
+              model: "Standard Series (KEC-02)",
+              series: "Standard Series",
+              image: assetUrl("/assets/interiors/kec-02.jpg"),
+              desc: "Active cross-flow blower fan built into the ceiling with half-mirror and wrap-around grab bars.",
+              features: "Built-In Blower Fan • Half-Mirror • Ergonomic Grab Bar"
+            },
+            {
+              targetHash: "semi-series-section",
+              model: "Semi Designer (KEC-03)",
+              series: "Semi Designer",
+              image: assetUrl("/assets/interiors/kec-03.jpg"),
+              desc: "Warm titanium gold finishes paired with elegant gold ceiling diffusers and classic marble-textured flooring.",
+              features: "Titanium Gold Insets • Marble PVC • Ambient Glow"
+            },
+            {
+              targetHash: "model-kec-10",
+              model: "Premium Series (KEC-10)",
+              series: "Premium Series",
+              image: assetUrl("/assets/interiors/kec-10.jpg"),
+              desc: "Flagship luxury featuring titanium gold mirror panels, backlit acrylic sky ceiling, and geometric floor medallion.",
+              features: "Acrylic Skylight • Titanium Mirror • Ornate Marble"
+            }
+          ].map((item, idx) => (
             <ScrollReveal
-              key={item.id}
+              key={item.model}
               direction="up"
-              delay={idx * 40}
+              delay={idx * 35}
               distance={15}
               className="h-full"
             >
-              <div className="bg-white rounded-3xl border border-slate-200 overflow-hidden shadow-xs hover:shadow-xl hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between group h-full">
+              <div className="bg-white rounded-3xl border border-slate-200/90 overflow-hidden shadow-xs hover:shadow-xl hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between group h-full">
                 <div>
-                  <div className="h-56 bg-slate-900 relative overflow-hidden group/img">
+                  <div className="h-56 bg-slate-950 relative overflow-hidden">
                     <img
                       src={item.image}
                       alt={item.model}
-                      className="w-full h-full object-cover group-hover/img:scale-105 transition-transform duration-500"
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
                     />
-                    <div className="absolute top-3 left-3 bg-white/90 backdrop-blur-md px-3 py-1 rounded-full text-[10px] font-black text-slate-900 border border-slate-200">
+                    <div className="absolute top-3 left-3 bg-white/95 backdrop-blur-md px-3 py-1 rounded-full text-[10px] font-black text-slate-900 border border-slate-200 shadow-xs">
                       {item.series}
-                    </div>
-                    <div className="absolute bottom-3 right-3 bg-slate-900/80 backdrop-blur-md px-2.5 py-1 rounded-lg text-[10px] font-bold text-teal-300">
-                      {item.model}
                     </div>
                   </div>
 
-                  <div className="p-5 space-y-2.5">
-                    <h3 className="text-lg font-black text-slate-900 group-hover:text-brand-teal transition-colors">
+                  <div className="p-5 space-y-2">
+                    <h3 className="text-base font-black text-slate-900 group-hover:text-brand-teal transition-colors">
                       {item.model}
                     </h3>
-                    <p className="text-xs text-slate-600 line-clamp-2 leading-relaxed">
-                      {item.description}
+                    <p className="text-xs text-slate-600 leading-relaxed">
+                      {item.desc}
                     </p>
-                    <div className="pt-2 border-t border-slate-100 space-y-1 text-[11px] text-slate-600">
-                      <div className="flex justify-between">
-                        <span className="text-slate-400">Wall Finish:</span>
-                        <span className="font-bold text-slate-800 truncate max-w-[170px]">{item.specs.carWall}</span>
-                      </div>
-                      <div className="flex justify-between">
-                        <span className="text-slate-400">Ceiling:</span>
-                        <span className="font-bold text-slate-800 truncate max-w-[170px]">{item.specs.ceiling}</span>
-                      </div>
+                    <div className="pt-2 border-t border-slate-100 text-[11px] font-medium text-brand-teal">
+                      {item.features}
                     </div>
                   </div>
                 </div>
 
                 <div className="p-5 pt-0">
                   <Link
-                    to="/interiors"
-                    className="w-full flex items-center justify-center space-x-1 py-2.5 rounded-xl bg-slate-100 text-slate-800 text-xs font-bold hover:bg-slate-900 hover:text-white transition-colors"
+                    to={`/interiors#${item.targetHash}`}
+                    className="w-full flex items-center justify-center space-x-1.5 py-2.5 rounded-xl bg-slate-50 group-hover:bg-slate-900 text-slate-700 group-hover:text-white text-xs font-bold transition-colors cursor-pointer"
                   >
-                    <span>Inspect Specifications</span>
-                    <ArrowRight className="w-3.5 h-3.5" />
+                    <span>View Cabin Details</span>
+                    <ArrowRight className="w-3.5 h-3.5 text-brand-teal" />
                   </Link>
                 </div>
               </div>
@@ -885,103 +942,100 @@ export default function Home({ onOpenBrochure }) {
       </section>
 
       {/* ========================================================================= */}
-      {/* 5. ELEVATOR MECHANISMS & BENEFITS SECTION                                  */}
+      {/* 5. TECHNOLOGY & MECHANISMS SECTION (Client-Friendly & Minimal)             */}
       {/* ========================================================================= */}
       <section id="mechanisms-section" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
-        <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
-          <div>
-            <span className="text-xs font-bold text-brand-teal uppercase tracking-widest block mb-1">
-              Core Technical Engineering
+        <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 border-b border-slate-200 pb-5">
+          <div className="space-y-1 max-w-2xl">
+            <span className="text-xs font-bold text-brand-teal uppercase tracking-widest block">
+              Advanced Engineering
             </span>
             <h2 className="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight">
-              Elevator Mechanisms & Their Benefits
+              Technology, Safety & Control Systems
             </h2>
-            <p className="text-xs sm:text-sm text-slate-600 max-w-2xl mt-1">
-              A transparent, raw engineering guide to the electro-mechanical drive systems, safety components, and motion control mechanisms powering Krupa elevators.
+            <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">
+              Powered by German-engineered V3F vector drives, energy-saving PMSM motors, and comprehensive fail-safe passenger protection.
             </p>
           </div>
           <Link
             to="/technology"
-            className="inline-flex items-center space-x-1.5 text-xs font-bold text-brand-orange hover:text-brand-orange-hover shrink-0"
+            className="inline-flex items-center space-x-2 px-5 py-2.5 rounded-xl bg-slate-900 text-white text-xs sm:text-sm font-bold hover:bg-brand-teal transition-all shadow-xs shrink-0 cursor-pointer"
           >
-            <span>Explore Green Tech & Safety</span>
+            <span>Explore Technology & Control Systems</span>
             <ChevronRight className="w-4 h-4" />
           </Link>
         </div>
 
-        {/* Mechanisms Breakdown Cards */}
-        <div className="space-y-6">
-          {elevatorMechanisms.map((item, idx) => {
-            const Icon = item.icon;
-            const isOrange = item.color === "orange";
-
+        {/* 4 Minimal Pillars */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          {[
+            {
+              title: "Permanent Magnet PMSM Motor",
+              category: "Green Drive",
+              targetHash: "drive-systems-section",
+              desc: "Eco-friendly gearless drive consuming up to 40% less electrical power with whisper-quiet, frictionless operation.",
+              benefit: "40% Energy Savings & Zero Lubrication",
+              icon: Zap
+            },
+            {
+              title: "Microprocessor V3F Inverter",
+              category: "Intelligent Motion",
+              targetHash: "inverter-section",
+              desc: "Closed-loop vector inverter providing smooth jerk-free S-curve acceleration and millimeter-level landing accuracy.",
+              benefit: "Ultra-Smooth Ride & Precision Leveling",
+              icon: Cpu
+            },
+            {
+              title: "Multi-Beam Light Curtain",
+              category: "Passenger Safety",
+              targetHash: "safety-section",
+              desc: "Over 128 non-contact infrared beams spanning floor to ceiling that instantly reopen doors before any physical touch.",
+              benefit: "100% Non-Contact Passenger Protection",
+              icon: ShieldCheck
+            },
+            {
+              title: "Automatic Rescue Device (ARD)",
+              category: "Emergency Evacuation",
+              targetHash: "safety-section",
+              desc: "Intelligent battery backup that automatically navigates the elevator to the nearest landing during power outages.",
+              benefit: "Automatic Power-Failure Rescue",
+              icon: Activity
+            }
+          ].map((pillar, idx) => {
+            const Icon = pillar.icon;
             return (
               <ScrollReveal
-                key={item.id}
+                key={pillar.title}
                 direction="up"
-                delay={idx * 30}
+                delay={idx * 35}
                 distance={15}
+                className="h-full"
               >
-                <div className="bg-white rounded-3xl p-6 sm:p-8 border border-slate-200/90 shadow-sm hover:shadow-md transition-all">
-                  <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
-                    {/* Left Col: Mechanism Header & Operating Principle (5 cols) */}
-                    <div className="lg:col-span-5 space-y-4">
-                      <div className="flex items-center space-x-3">
-                        <div
-                          className={`w-12 h-12 rounded-2xl flex items-center justify-center shrink-0 ${isOrange
-                              ? "bg-orange-50 text-brand-orange"
-                              : "bg-teal-50 text-brand-teal"
-                            }`}
-                        >
-                          <Icon className="w-6 h-6" />
-                        </div>
-                        <div>
-                          <span className="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-md bg-slate-100 text-slate-700">
-                            {item.tag}
-                          </span>
-                          <h3 className="text-lg sm:text-xl font-black text-slate-900 mt-1">
-                            {item.name}
-                          </h3>
-                        </div>
-                      </div>
-
-                      <div className="space-y-1.5 bg-slate-50 p-4 rounded-2xl border border-slate-200/70">
-                        <span className="text-[11px] font-bold text-slate-500 uppercase tracking-wider block">
-                          How the Mechanism Works:
-                        </span>
-                        <p className="text-xs text-slate-700 leading-relaxed font-medium">
-                          {item.mechanism}
-                        </p>
-                      </div>
-
-                      <div className="flex items-center space-x-2 text-xs text-slate-500">
-                        <span className="font-semibold text-slate-600">Standard:</span>
-                        <span className="text-teal-800 bg-teal-50 border border-teal-200 px-2.5 py-0.5 rounded-full text-[11px] font-semibold">
-                          {item.standard || "IS 14665 Compliant"}
-                        </span>
-                      </div>
+                <div className="bg-white rounded-3xl p-6 border border-slate-200/90 shadow-xs hover:shadow-xl hover:-translate-y-1 transition-all flex flex-col justify-between h-full group">
+                  <div className="space-y-3">
+                    <div className="w-12 h-12 rounded-2xl bg-teal-50 text-brand-teal flex items-center justify-center group-hover:bg-brand-teal group-hover:text-white transition-colors">
+                      <Icon className="w-6 h-6" />
                     </div>
-
-                    {/* Right Col: Concrete Engineering Benefits (7 cols) */}
-                    <div className="lg:col-span-7 bg-slate-900 rounded-2xl p-5 sm:p-6 text-white space-y-3">
-                      <div className="flex items-center justify-between border-b border-slate-800 pb-2">
-                        <span className="text-xs font-bold text-teal-300 uppercase tracking-wider flex items-center space-x-1.5">
-                          <CheckCircle2 className="w-4 h-4 text-brand-teal" />
-                          <span>Key Advantages & Building Benefits</span>
-                        </span>
-                        <span className="text-[10px] text-slate-400 font-mono">100% Bench Tested</span>
-                      </div>
-
-                      <ul className="space-y-2.5 text-xs text-slate-300 pt-1">
-                        {item.benefits.map((benefit, bIdx) => (
-                          <li key={bIdx} className="flex items-start space-x-2.5">
-                            <span className="w-1.5 h-1.5 rounded-full bg-brand-teal mt-1.5 shrink-0" />
-                            <span className="leading-relaxed">{benefit}</span>
-                          </li>
-                        ))}
-                      </ul>
+                    <div>
+                      <span className="text-[10px] font-bold uppercase tracking-wider text-brand-orange block">
+                        {pillar.category}
+                      </span>
+                      <h3 className="text-base font-black text-slate-900 mt-0.5">
+                        {pillar.title}
+                      </h3>
                     </div>
+                    <p className="text-xs text-slate-600 leading-relaxed">
+                      {pillar.desc}
+                    </p>
                   </div>
+
+                  <Link
+                    to={`/technology#${pillar.targetHash}`}
+                    className="pt-4 mt-4 border-t border-slate-100 flex items-center justify-between text-[11px] font-semibold text-brand-teal group-hover:text-teal-700 transition-colors cursor-pointer"
+                  >
+                    <span>{pillar.benefit}</span>
+                    <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
+                  </Link>
                 </div>
               </ScrollReveal>
             );

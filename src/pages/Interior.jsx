@@ -2,426 +2,821 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import {
   Sparkles,
-  Eye,
-  ArrowRight,
   Layers,
-  X,
-  Shield,
-  Lightbulb,
+  ArrowRight,
   Maximize2,
   CheckCircle2,
+  Phone,
+  Compass,
+  Eye,
+  X,
+  Palette,
   SlidersHorizontal,
-  Compass
+  ChevronRight,
+  ShieldCheck,
+  Check
 } from "lucide-react";
 import {
-  rawInteriorSeries,
-  etchingPatterns,
-  operatingPanels
-} from "../data/interiorsMaster";
-import ScrollReveal from "../components/ScrollReveal";
-import PageHero from "../components/common/PageHero";
+  basicSeries,
+  standardSeries,
+  semiDesignerSeries,
+  premiumSeries,
+  architecturalSurfaceDetailing,
+  copLopFixtures
+} from "../data/interiorsSeriesData";
+import StickySidebarNav from "../components/common/StickySidebarNav";
 import CTASection from "../components/common/CTASection";
+import WhatsAppIcon from "../components/common/WhatsAppIcon";
+import { assetUrl } from "../utils/assetPath";
 
-// Human-readable labels for spec keys in modal
-const specLabels = {
-  ceiling: "Ceiling Finish & Lighting",
-  cop: "Cabin Operating Panel (COP)",
-  carWall: "Cabin Wall Finish",
-  flooring: "Flooring Specification",
-  carDoor: "Cabin Door Finish",
-  handrail: "Handrail Profile",
-  ventilation: "Ventilation System",
-  illumination: "Illumination System",
-  mirrorSpec: "Mirror Specification",
-  materials: "Material Composition"
-};
+export default function Interior({ onOpenBrochure }) {
+  // Lightbox state for zooming images
+  const [lightboxImg, setLightboxImg] = useState(null);
 
-export default function Interior() {
-  const [selectedCabin, setSelectedCabin] = useState(null);
-
-  // Group cabin models by series for sequential presentation
-  const seriesGroups = [
+  // Sticky navigation items
+  const sidebarSections = [
+    { id: "basic-series-section", label: "Basic Series (KEC-01)" },
+    { id: "standard-series-section", label: "Standard Series (KEC-02)" },
+    { id: "semi-series-section", label: "Semi Designer (KEC-03)" },
     {
-      seriesName: "Basic Series",
-      tagline: "Essential Durability & Clean Lines",
-      description: "Functional hairline stainless steel with full rear mirror, engineered for dependable daily residential transit.",
-      models: rawInteriorSeries.filter((m) => m.categoryKey === "basic")
+      id: "premium-series-section",
+      label: "Premium Series",
+      subItems: premiumSeries.models.map((m) => ({
+        id: `model-${m.id}`,
+        label: m.model
+      }))
     },
-    {
-      seriesName: "Standard Series",
-      tagline: "Comfort & Enhanced Airflow",
-      description: "Incorporates built-in centrifugal blower fan ventilation and ergonomic half-height mirror with center handrail.",
-      models: rawInteriorSeries.filter((m) => m.categoryKey === "standard")
-    },
-    {
-      seriesName: "Semi Series",
-      tagline: "Architectural Metallic Warmth & Gold Tones",
-      description: "Titanium gold mirror, rose gold hairline, and imitation bronze finishes complemented by perimeter LED cove lighting.",
-      models: rawInteriorSeries.filter((m) => m.categoryKey === "semi")
-    },
-    {
-      seriesName: "Design Series",
-      tagline: "Contemporary Modernist Geometry",
-      description: "Designer etched stainless steel, linear architectural light bars, and dual-tier contour grab handles.",
-      models: rawInteriorSeries.filter((m) => m.categoryKey === "design")
-    },
-    {
-      seriesName: "Premium Series",
-      tagline: "Flagship Luxury & Signature Craftsmanship",
-      description: "Six-sided multi-angle lighting, translucent acrylic ceiling sky panels, and beveled titanium gold mirror inlays.",
-      models: rawInteriorSeries.filter((m) => m.categoryKey === "premium")
-    }
+    { id: "ag-series-section", label: "AG Surface Detailing" },
+    { id: "cop-lop-section", label: "COP & LOP Fixtures" }
   ];
 
   return (
-    <div className="space-y-16 sm:space-y-24 pb-20 overflow-x-hidden">
-      {/* Page Hero */}
-      <PageHero
-        badge="Architectural Interior Collections"
-        title="Elevator Interiors Designed Around Your Space"
-        subtitle="From economical hairline stainless steel to custom titanium gold luxury, our cabin collections deliver tailored aesthetics, acoustic isolation, and energy-efficient illumination for residential, commercial, and hospitality projects."
-        breadcrumbs={[{ label: "Interiors" }]}
-        actions={
-          <div className="flex flex-wrap gap-3">
-            <Link
-              to="/contact"
-              className="px-6 py-3 rounded-full bg-brand-orange hover:bg-brand-orange-hover text-white text-xs sm:text-sm font-bold shadow-lg transition-colors flex items-center space-x-2"
-            >
-              <span>Request Material Swatches & Catalog</span>
-              <ArrowRight className="w-4 h-4" />
-            </Link>
-            <Link
-              to="/elevators"
-              className="px-6 py-3 rounded-full bg-slate-800/90 border border-slate-700 text-white text-xs sm:text-sm font-bold hover:bg-slate-700 transition-colors flex items-center space-x-2"
-            >
-              <SlidersHorizontal className="w-4 h-4 text-brand-teal" />
-              <span>Explore Elevator Applications</span>
-            </Link>
-          </div>
-        }
-      />
-
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-20 sm:space-y-28">
-        
-        {/* ========================================================= */}
-        {/* SECTION 1: CABIN COLLECTIONS (Sequential by Series)       */}
-        {/* ========================================================= */}
-        <section className="space-y-12">
-          {/* Section Header */}
-          <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 border-b border-slate-200 pb-6">
-            <div className="space-y-2 max-w-2xl">
-              <span className="text-xs font-bold text-brand-teal uppercase tracking-widest block">
-                Bespoke Cabin Aesthetics
-              </span>
-              <h2 className="text-2xl sm:text-3xl lg:text-4xl font-black text-slate-900">
-                Architectural Cabin Series
-              </h2>
-              <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">
-                Fabricated with SS 304 grade sheets, acoustic false ceilings, warm LED downlights, and shatter-resistant safety mirrors. Browse our series progression from functional simplicity to ultra-luxury.
-              </p>
+    <div className="min-h-screen bg-slate-50 pt-20 pb-20">
+      {/* ========================================================================= */}
+      {/* 1. PAGE HEADER                                                            */}
+      {/* ========================================================================= */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-4 pb-6 border-b border-slate-200">
+        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
+          <div>
+            <div className="flex items-center space-x-2 text-brand-teal text-xs font-bold uppercase tracking-widest mb-1">
+              <Palette className="w-4 h-4" />
+              <span>Architectural Interior Aesthetics & Fixtures</span>
             </div>
-            <div className="flex items-center space-x-2 text-xs font-medium text-slate-500 bg-slate-50 px-4 py-2 rounded-xl border border-slate-200 self-start md:self-auto">
-              <Compass className="w-4 h-4 text-brand-teal" />
-              <span>Basic &bull; Standard &bull; Semi &bull; Design &bull; Premium</span>
-            </div>
-          </div>
-
-          {/* Sequential Series Groups */}
-          <div className="space-y-16">
-            {seriesGroups.map((group) => (
-              <div key={group.seriesName} className="space-y-6">
-                {/* Series Header Banner */}
-                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 bg-slate-50 p-4 sm:p-5 rounded-2xl border border-slate-200">
-                  <div>
-                    <div className="flex items-center space-x-2.5">
-                      <span className="w-2.5 h-2.5 rounded-full bg-brand-teal" />
-                      <h3 className="text-lg sm:text-xl font-black text-slate-900">
-                        {group.seriesName}
-                      </h3>
-                      <span className="text-xs text-slate-500 font-medium hidden sm:inline">
-                        — {group.tagline}
-                      </span>
-                    </div>
-                    <p className="text-xs text-slate-600 mt-1 max-w-3xl">
-                      {group.description}
-                    </p>
-                  </div>
-                  <span className="text-[11px] font-bold text-slate-500 uppercase tracking-wider bg-white px-3 py-1 rounded-lg border border-slate-200 self-start sm:self-auto">
-                    Krupa Engineering
-                  </span>
-                </div>
-
-                {/* Cabins Grid for this Series */}
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                  {group.models.map((item, idx) => (
-                    <ScrollReveal
-                      key={item.id}
-                      direction="up"
-                      delay={idx * 30}
-                      distance={20}
-                      className="h-full"
-                    >
-                      <div className="bg-white rounded-3xl border border-slate-200 overflow-hidden shadow-xs hover:shadow-xl hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between group h-full">
-                        <div>
-                          {/* Large Interior Photograph */}
-                          <div className="h-64 bg-slate-900 relative overflow-hidden group/img">
-                            <img
-                              src={item.image}
-                              alt={item.model}
-                              className="w-full h-full object-cover group-hover/img:scale-105 transition-transform duration-500"
-                              loading="lazy"
-                            />
-                            <div className="absolute top-3 left-3 bg-white/90 backdrop-blur-md px-3 py-1 rounded-full text-[10px] font-black text-slate-900 border border-slate-200 uppercase tracking-wider">
-                              {item.series}
-                            </div>
-                            <div className="absolute bottom-3 right-3 bg-slate-900/80 backdrop-blur-md px-2.5 py-1 rounded-lg text-[10px] font-bold text-teal-300 border border-slate-700">
-                              {item.model}
-                            </div>
-                          </div>
-
-                          {/* Content */}
-                          <div className="p-6 space-y-3">
-                            <div className="flex items-center justify-between">
-                              <h4 className="text-xl font-black text-slate-900 group-hover:text-brand-teal transition-colors">
-                                {item.model}
-                              </h4>
-                              <span className="text-[10px] font-semibold text-teal-700 bg-teal-50 border border-teal-200 px-2 py-0.5 rounded">
-                                Custom Craft
-                              </span>
-                            </div>
-
-                            <p className="text-xs text-slate-600 line-clamp-2 leading-relaxed">
-                              {item.description}
-                            </p>
-
-                            {/* Architectural Specifications Table */}
-                            <div className="pt-2 border-t border-slate-100 space-y-1.5 text-xs text-slate-700">
-                              <div className="flex justify-between">
-                                <span className="text-slate-400 text-[11px]">Ceiling:</span>
-                                <span className="font-medium text-slate-800 text-right truncate max-w-[180px]">
-                                  {item.specs.ceiling}
-                                </span>
-                              </div>
-                              <div className="flex justify-between">
-                                <span className="text-slate-400 text-[11px]">Cabin Wall:</span>
-                                <span className="font-bold text-slate-900 text-right truncate max-w-[180px]">
-                                  {item.specs.carWall}
-                                </span>
-                              </div>
-                              <div className="flex justify-between">
-                                <span className="text-slate-400 text-[11px]">Flooring:</span>
-                                <span className="font-medium text-slate-800 text-right truncate max-w-[180px]">
-                                  {item.specs.flooring}
-                                </span>
-                              </div>
-                              {item.specs.handrail && (
-                                <div className="flex justify-between">
-                                  <span className="text-slate-400 text-[11px]">Handrail:</span>
-                                  <span className="font-medium text-slate-800 text-right truncate max-w-[180px]">
-                                    {item.specs.handrail}
-                                  </span>
-                                </div>
-                              )}
-                            </div>
-                          </div>
-                        </div>
-
-                        {/* Card Actions */}
-                        <div className="p-6 pt-0 flex gap-2">
-                          <button
-                            onClick={() => setSelectedCabin(item)}
-                            className="flex-1 py-2.5 px-3 rounded-xl bg-slate-900 hover:bg-brand-teal text-white text-xs font-bold transition-colors flex items-center justify-center space-x-1.5 cursor-pointer shadow-xs"
-                          >
-                            <Eye className="w-3.5 h-3.5 text-teal-300" />
-                            <span>Inspect Finishes</span>
-                          </button>
-                          <Link
-                            to="/contact"
-                            className="py-2.5 px-3.5 rounded-xl bg-brand-orange hover:bg-brand-orange-hover text-white text-xs font-bold transition-colors"
-                          >
-                            Quote
-                          </Link>
-                        </div>
-                      </div>
-                    </ScrollReveal>
-                  ))}
-                </div>
-              </div>
-            ))}
-          </div>
-        </section>
-
-        {/* ========================================================= */}
-        {/* SECTION 2: LASER ETCHING PATTERNS (AG Series)             */}
-        {/* ========================================================= */}
-        <section className="space-y-8">
-          <div className="bg-slate-900 rounded-3xl p-6 sm:p-10 text-white space-y-3 shadow-xl border border-slate-800">
-            <span className="text-xs font-bold text-teal-300 uppercase tracking-widest block">
-              Architectural Surface Detailing &bull; AG Series
-            </span>
-            <h2 className="text-2xl sm:text-3xl font-black">
-              Precision Laser Etching Patterns
-            </h2>
-            <p className="text-xs sm:text-sm text-slate-300 max-w-3xl leading-relaxed">
-              Permanently etched onto hairline stainless steel, titanium gold mirrors, and rose gold surfaces. These intricate geometric and organic motifs elevate elevator entrances and cabin back walls into bespoke works of architectural art.
+            <h1 className="text-2xl sm:text-3xl lg:text-4xl font-black text-slate-900 tracking-tight">
+              Cabin Interior Series & Operating Panels
+            </h1>
+            <p className="text-xs sm:text-sm text-slate-600 max-w-3xl mt-1 leading-relaxed">
+              Discover Krupa's architectural cabin interiors categorized across Basic, Standard, Semi Designer, and Premium series, complemented by PVD laser-etched AG Series motifs and certified COP/LOP fixtures.
             </p>
           </div>
 
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6">
-            {etchingPatterns.map((pat) => (
-              <div
-                key={pat.code}
-                className="bg-white p-5 rounded-2xl border border-slate-200 shadow-xs space-y-3 text-center hover:shadow-md transition-shadow"
-              >
-                <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 text-teal-300 mx-auto flex items-center justify-center font-black text-sm border border-slate-700 shadow-xs">
-                  {pat.code}
-                </div>
-                <div>
-                  <h4 className="text-sm font-bold text-slate-900">{pat.name}</h4>
-                  <span className="text-[11px] text-brand-teal font-semibold block mt-0.5">
-                    {pat.finish}
-                  </span>
-                </div>
-              </div>
-            ))}
+          <div className="flex flex-wrap items-center gap-2.5 self-start md:self-auto">
+            <a
+              href="tel:+919727764868"
+              className="px-4 py-2.5 rounded-xl bg-slate-900 hover:bg-brand-teal text-white text-xs font-bold flex items-center space-x-2 transition-all shadow-xs cursor-pointer"
+            >
+              <Phone className="w-3.5 h-3.5 text-brand-orange" />
+              <span>Call: +91 97277 64868</span>
+            </a>
+            <a
+              href={`https://wa.me/919727764868?text=${encodeURIComponent(
+                "Hello Krupa Elevators, I would like to consult regarding cabin interior designs, material swatches, and COP/LOP panels."
+              )}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="px-4 py-2.5 rounded-xl bg-[#25D366] hover:bg-[#20bd5a] text-white text-xs font-bold flex items-center space-x-2 shadow-xs transition-all cursor-pointer"
+            >
+              <WhatsAppIcon className="w-4 h-4 text-white" />
+              <span>WhatsApp Inquiry</span>
+            </a>
           </div>
-        </section>
-
-        {/* ========================================================= */}
-        {/* SECTION 3: OPERATING PANELS & INDICATORS (COP & LOP)      */}
-        {/* ========================================================= */}
-        <section className="space-y-8">
-          <div className="bg-slate-900 rounded-3xl p-6 sm:p-10 text-white space-y-3 shadow-xl border border-slate-800">
-            <span className="text-xs font-bold text-brand-orange uppercase tracking-widest block">
-              User Interface Fixtures
-            </span>
-            <h2 className="text-2xl sm:text-3xl font-black">
-              Cabin & Landing Operating Panels (COP & LOP)
-            </h2>
-            <p className="text-xs sm:text-sm text-slate-300 max-w-3xl leading-relaxed">
-              Engineered with ergonomic tactile buttons, high-visibility digital indicators, dot-matrix displays, full-color TFT multimedia screens, and vandal-resistant stainless steel faceplates.
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {operatingPanels.map((panel) => (
-              <div
-                key={panel.code}
-                className="bg-white p-6 rounded-3xl border border-slate-200 shadow-xs space-y-4 hover:shadow-md transition-shadow"
-              >
-                <div className="flex items-center justify-between">
-                  <span className="text-xs font-black text-brand-teal font-mono bg-teal-50 px-2.5 py-1 rounded-lg border border-teal-100">
-                    {panel.code}
-                  </span>
-                  <span className="text-[10px] text-slate-400 font-semibold uppercase tracking-wider">
-                    Interface
-                  </span>
-                </div>
-
-                <h4 className="text-base font-bold text-slate-900">{panel.type}</h4>
-
-                <div className="pt-2 border-t border-slate-100 space-y-2 text-xs text-slate-700">
-                  <div>
-                    <span className="text-slate-400 block text-[11px]">Display Interface:</span>
-                    <strong className="text-slate-900 font-bold">{panel.display}</strong>
-                  </div>
-                  <div>
-                    <span className="text-slate-400 block text-[11px]">Material & Finish:</span>
-                    <span className="text-slate-800 font-medium">{panel.finish}</span>
-                  </div>
-                  <div>
-                    <span className="text-slate-400 block text-[11px]">Special Features:</span>
-                    <span className="text-slate-600 leading-relaxed block">{panel.features}</span>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </section>
-
+        </div>
       </div>
 
-      {/* Detail Lightbox Modal for Selected Cabin */}
-      {selectedCabin && (
+      {/* Main Container with Sticky Navigation + Content */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6">
+        <div className="flex flex-col lg:flex-row gap-8 items-start">
+          {/* Sticky Navigation (Mobile Horizontal Bar + Desktop Left Sidebar) */}
+          <StickySidebarNav
+            sections={sidebarSections}
+            title="Interior Hub"
+          />
+
+          {/* Main Content Body */}
+          <div className="flex-1 w-full min-w-0 space-y-16">
+            {/* ===================================================================== */}
+            {/* 1. BASIC SERIES (KEC-01)                                              */}
+            {/* Hierarchy: Series → Description → Image → Details → Specifications   */}
+            {/* ===================================================================== */}
+            <section
+              id="basic-series-section"
+              className="bg-white rounded-3xl border border-slate-200 shadow-sm p-6 sm:p-8 space-y-8 scroll-mt-24"
+            >
+              <div className="border-b border-slate-100 pb-4 flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+                <div>
+                  <span className="text-xs font-bold text-brand-teal uppercase tracking-widest block">
+                    {basicSeries.badge}
+                  </span>
+                  <h2 className="text-xl sm:text-2xl font-black text-slate-900">
+                    {basicSeries.seriesName}
+                  </h2>
+                </div>
+                <span className="text-xs text-slate-500 font-medium bg-slate-100 px-3 py-1 rounded-full border border-slate-200">
+                  Model: {basicSeries.models[0].model}
+                </span>
+              </div>
+
+              {/* Model Showcase */}
+              <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+                {/* Left: Image */}
+                <div className="lg:col-span-5 space-y-3">
+                  <div className="relative rounded-3xl overflow-hidden border border-slate-200 bg-slate-950 shadow-md group h-80 sm:h-96">
+                    <img
+                      src={basicSeries.models[0].image}
+                      alt={basicSeries.models[0].name}
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-transparent pointer-events-none" />
+                    <div className="absolute bottom-4 left-4 right-4 text-white">
+                      <h3 className="text-lg font-black">{basicSeries.models[0].name}</h3>
+                      <p className="text-xs text-slate-300">{basicSeries.models[0].tagline}</p>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Right: Description & Highlights */}
+                <div className="lg:col-span-7 space-y-5">
+                  <div className="space-y-2">
+                    <h3 className="text-xl font-black text-slate-900">
+                      {basicSeries.headline}
+                    </h3>
+                    <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">
+                      {basicSeries.models[0].clientOverview}
+                    </p>
+                  </div>
+
+                  {/* Key Highlights */}
+                  <div className="p-4 rounded-2xl bg-teal-50/60 border border-teal-200 space-y-2">
+                    <strong className="text-xs font-bold text-teal-950 uppercase tracking-wider block">
+                      Client-Focused Design Highlights:
+                    </strong>
+                    <ul className="space-y-1.5 text-xs text-slate-700">
+                      {basicSeries.models[0].keyHighlights.map((h, i) => (
+                        <li key={i} className="flex items-start space-x-2">
+                          <Check className="w-3.5 h-3.5 text-brand-teal shrink-0 mt-0.5" />
+                          <span>{h}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+
+                  {/* Dedicated Isolated Specifications Table */}
+                  <div className="space-y-2 pt-2">
+                    <span className="text-xs font-bold text-slate-900 block">
+                      Series Mechanical & Material Specifications:
+                    </span>
+                    <div className="overflow-x-auto rounded-2xl border border-slate-200">
+                      <table className="w-full text-left text-xs">
+                        <thead className="bg-slate-100 text-slate-700 font-bold border-b border-slate-200">
+                          <tr>
+                            <th className="p-3">Component</th>
+                            <th className="p-3">Material & Finish Specification</th>
+                          </tr>
+                        </thead>
+                        <tbody className="divide-y divide-slate-100 text-slate-600">
+                          {basicSeries.models[0].specifications.map((row, idx) => (
+                            <tr key={idx} className="hover:bg-slate-50">
+                              <td className="p-3 font-semibold text-slate-800">{row.parameter}</td>
+                              <td className="p-3">{row.value}</td>
+                            </tr>
+                          ))}
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </section>
+
+            {/* ===================================================================== */}
+            {/* 2. STANDARD SERIES (KEC-02)                                           */}
+            {/* ===================================================================== */}
+            <section
+              id="standard-series-section"
+              className="bg-white rounded-3xl border border-slate-200 shadow-sm p-6 sm:p-8 space-y-8 scroll-mt-24"
+            >
+              <div className="border-b border-slate-100 pb-4 flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+                <div>
+                  <span className="text-xs font-bold text-brand-orange uppercase tracking-widest block">
+                    {standardSeries.badge}
+                  </span>
+                  <h2 className="text-xl sm:text-2xl font-black text-slate-900">
+                    {standardSeries.seriesName}
+                  </h2>
+                </div>
+                <span className="text-xs text-slate-500 font-medium bg-slate-100 px-3 py-1 rounded-full border border-slate-200">
+                  Model: {standardSeries.models[0].model}
+                </span>
+              </div>
+
+              {/* Model Showcase */}
+              <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+                {/* Left: Image */}
+                <div className="lg:col-span-5 space-y-3">
+                  <div className="relative rounded-3xl overflow-hidden border border-slate-200 bg-slate-950 shadow-md group h-80 sm:h-96">
+                    <img
+                      src={standardSeries.models[0].image}
+                      alt={standardSeries.models[0].name}
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-transparent pointer-events-none" />
+                    <div className="absolute bottom-4 left-4 right-4 text-white">
+                      <h3 className="text-lg font-black">{standardSeries.models[0].name}</h3>
+                      <p className="text-xs text-slate-300">{standardSeries.models[0].tagline}</p>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Right: Description & Highlights */}
+                <div className="lg:col-span-7 space-y-5">
+                  <div className="space-y-2">
+                    <h3 className="text-xl font-black text-slate-900">
+                      {standardSeries.headline}
+                    </h3>
+                    <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">
+                      {standardSeries.models[0].clientOverview}
+                    </p>
+                  </div>
+
+                  {/* Key Highlights */}
+                  <div className="p-4 rounded-2xl bg-orange-50/60 border border-orange-200 space-y-2">
+                    <strong className="text-xs font-bold text-orange-950 uppercase tracking-wider block">
+                      Client-Focused Design Highlights:
+                    </strong>
+                    <ul className="space-y-1.5 text-xs text-slate-700">
+                      {standardSeries.models[0].keyHighlights.map((h, i) => (
+                        <li key={i} className="flex items-start space-x-2">
+                          <Check className="w-3.5 h-3.5 text-brand-orange shrink-0 mt-0.5" />
+                          <span>{h}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+
+                  {/* Dedicated Isolated Specifications Table */}
+                  <div className="space-y-2 pt-2">
+                    <span className="text-xs font-bold text-slate-900 block">
+                      Series Mechanical & Material Specifications:
+                    </span>
+                    <div className="overflow-x-auto rounded-2xl border border-slate-200">
+                      <table className="w-full text-left text-xs">
+                        <thead className="bg-slate-100 text-slate-700 font-bold border-b border-slate-200">
+                          <tr>
+                            <th className="p-3">Component</th>
+                            <th className="p-3">Material & Finish Specification</th>
+                          </tr>
+                        </thead>
+                        <tbody className="divide-y divide-slate-100 text-slate-600">
+                          {standardSeries.models[0].specifications.map((row, idx) => (
+                            <tr key={idx} className="hover:bg-slate-50">
+                              <td className="p-3 font-semibold text-slate-800">{row.parameter}</td>
+                              <td className="p-3">{row.value}</td>
+                            </tr>
+                          ))}
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </section>
+
+            {/* ===================================================================== */}
+            {/* 3. SEMI DESIGNER SERIES (KEC-03)                                      */}
+            {/* ===================================================================== */}
+            <section
+              id="semi-series-section"
+              className="bg-white rounded-3xl border border-slate-200 shadow-sm p-6 sm:p-8 space-y-8 scroll-mt-24"
+            >
+              <div className="border-b border-slate-100 pb-4 flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+                <div>
+                  <span className="text-xs font-bold text-amber-600 uppercase tracking-widest block">
+                    {semiDesignerSeries.badge}
+                  </span>
+                  <h2 className="text-xl sm:text-2xl font-black text-slate-900">
+                    {semiDesignerSeries.seriesName}
+                  </h2>
+                </div>
+                <span className="text-xs text-slate-500 font-medium bg-slate-100 px-3 py-1 rounded-full border border-slate-200">
+                  Model: {semiDesignerSeries.models[0].model}
+                </span>
+              </div>
+
+              {/* Model Showcase */}
+              <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+                {/* Left: Image */}
+                <div className="lg:col-span-5 space-y-3">
+                  <div className="relative rounded-3xl overflow-hidden border border-slate-200 bg-slate-950 shadow-md group h-80 sm:h-96">
+                    <img
+                      src={semiDesignerSeries.models[0].image}
+                      alt={semiDesignerSeries.models[0].name}
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-transparent pointer-events-none" />
+                    <div className="absolute bottom-4 left-4 right-4 text-white">
+                      <h3 className="text-lg font-black">{semiDesignerSeries.models[0].name}</h3>
+                      <p className="text-xs text-slate-300">{semiDesignerSeries.models[0].tagline}</p>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Right: Description & Highlights */}
+                <div className="lg:col-span-7 space-y-5">
+                  <div className="space-y-2">
+                    <h3 className="text-xl font-black text-slate-900">
+                      {semiDesignerSeries.headline}
+                    </h3>
+                    <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">
+                      {semiDesignerSeries.models[0].clientOverview}
+                    </p>
+                  </div>
+
+                  {/* Key Highlights */}
+                  <div className="p-4 rounded-2xl bg-amber-50/60 border border-amber-200 space-y-2">
+                    <strong className="text-xs font-bold text-amber-950 uppercase tracking-wider block">
+                      Client-Focused Design Highlights:
+                    </strong>
+                    <ul className="space-y-1.5 text-xs text-slate-700">
+                      {semiDesignerSeries.models[0].keyHighlights.map((h, i) => (
+                        <li key={i} className="flex items-start space-x-2">
+                          <Check className="w-3.5 h-3.5 text-amber-600 shrink-0 mt-0.5" />
+                          <span>{h}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+
+                  {/* Dedicated Isolated Specifications Table */}
+                  <div className="space-y-2 pt-2">
+                    <span className="text-xs font-bold text-slate-900 block">
+                      Series Mechanical & Material Specifications:
+                    </span>
+                    <div className="overflow-x-auto rounded-2xl border border-slate-200">
+                      <table className="w-full text-left text-xs">
+                        <thead className="bg-slate-100 text-slate-700 font-bold border-b border-slate-200">
+                          <tr>
+                            <th className="p-3">Component</th>
+                            <th className="p-3">Material & Finish Specification</th>
+                          </tr>
+                        </thead>
+                        <tbody className="divide-y divide-slate-100 text-slate-600">
+                          {semiDesignerSeries.models[0].specifications.map((row, idx) => (
+                            <tr key={idx} className="hover:bg-slate-50">
+                              <td className="p-3 font-semibold text-slate-800">{row.parameter}</td>
+                              <td className="p-3">{row.value}</td>
+                            </tr>
+                          ))}
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </section>
+
+            {/* ===================================================================== */}
+            {/* 4. PREMIUM SERIES (KEC-04 to KEC-11)                                  */}
+            {/* ===================================================================== */}
+            <section
+              id="premium-series-section"
+              className="bg-white rounded-3xl border border-slate-200 shadow-sm p-6 sm:p-8 space-y-8 scroll-mt-24"
+            >
+              <div className="border-b border-slate-100 pb-4 flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+                <div>
+                  <span className="text-xs font-bold text-brand-teal uppercase tracking-widest block">
+                    {premiumSeries.badge}
+                  </span>
+                  <h2 className="text-xl sm:text-2xl font-black text-slate-900">
+                    {premiumSeries.seriesName}
+                  </h2>
+                  <p className="text-xs text-slate-500 mt-0.5">
+                    {premiumSeries.headline}
+                  </p>
+                </div>
+                <span className="text-xs font-bold text-brand-teal bg-teal-50 border border-teal-200 px-3 py-1 rounded-full">
+                  8 Bespoke Masterpieces
+                </span>
+              </div>
+
+              {/* Open Field Display of All 8 Premium Cabin Models */}
+              <div className="space-y-12 divide-y divide-slate-200">
+                {premiumSeries.models.map((m, idx) => (
+                  <div
+                    key={m.id}
+                    id={`model-${m.id}`}
+                    className={`grid grid-cols-1 lg:grid-cols-12 gap-8 items-start scroll-mt-28 ${
+                      idx > 0 ? "pt-12" : ""
+                    }`}
+                  >
+                    {/* Left: Image with Zoom */}
+                    <div className="lg:col-span-5 space-y-3">
+                      <div className="relative rounded-3xl overflow-hidden border border-slate-200 bg-slate-950 shadow-md group h-80 sm:h-96">
+                        <img
+                          src={m.image}
+                          alt={m.name}
+                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-transparent pointer-events-none" />
+                        <div className="absolute top-3 left-3 bg-slate-900/85 backdrop-blur-md px-3 py-1 rounded-full text-[10px] font-bold text-teal-300 border border-slate-700">
+                          {m.model}
+                        </div>
+                        <button
+                          onClick={() => setLightboxImg(m.image)}
+                          className="absolute top-3 right-3 p-2 rounded-xl bg-slate-900/80 hover:bg-slate-900 text-white transition-all cursor-pointer"
+                          title="Zoom Cabin"
+                        >
+                          <Maximize2 className="w-4 h-4" />
+                        </button>
+                        <div className="absolute bottom-4 left-4 right-4 text-white">
+                          <h3 className="text-lg font-black">{m.name}</h3>
+                          <p className="text-xs text-slate-300">{m.tagline}</p>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Right: Description, Highlights & Isolated Specs Table */}
+                    <div className="lg:col-span-7 space-y-5">
+                      <div className="space-y-2">
+                        <div className="flex items-center gap-2">
+                          <span className="px-2.5 py-0.5 rounded-full bg-teal-50 text-brand-teal text-xs font-bold border border-teal-200">
+                            {m.model}
+                          </span>
+                          <span className="text-xs text-slate-500 font-medium">Bespoke Stainless Steel Theme</span>
+                        </div>
+                        <h3 className="text-xl font-black text-slate-900">
+                          {m.name}
+                        </h3>
+                        <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">
+                          {m.clientOverview}
+                        </p>
+                      </div>
+
+                      {/* Key Highlights */}
+                      <div className="p-4 rounded-2xl bg-teal-50/60 border border-teal-200 space-y-2">
+                        <strong className="text-xs font-bold text-teal-950 uppercase tracking-wider block">
+                          Architectural Highlights:
+                        </strong>
+                        <ul className="space-y-1.5 text-xs text-slate-700">
+                          {m.keyHighlights.map((h, i) => (
+                            <li key={i} className="flex items-start space-x-2">
+                              <Check className="w-3.5 h-3.5 text-brand-teal shrink-0 mt-0.5" />
+                              <span>{h}</span>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+
+                      {/* Dedicated Isolated Specifications Table for this Model */}
+                      <div className="space-y-2 pt-2">
+                        <span className="text-xs font-bold text-slate-900 block">
+                          {m.model} Exact Material Specifications:
+                        </span>
+                        <div className="overflow-x-auto rounded-2xl border border-slate-200">
+                          <table className="w-full text-left text-xs">
+                            <thead className="bg-slate-100 text-slate-700 font-bold border-b border-slate-200">
+                              <tr>
+                                <th className="p-3">Component</th>
+                                <th className="p-3">Material & Finish Specification</th>
+                              </tr>
+                            </thead>
+                            <tbody className="divide-y divide-slate-100 text-slate-600">
+                              {m.specifications.map((row, rIdx) => (
+                                <tr key={rIdx} className="hover:bg-slate-50">
+                                  <td className="p-3 font-semibold text-slate-800">{row.parameter}</td>
+                                  <td className="p-3">{row.value}</td>
+                                </tr>
+                              ))}
+                            </tbody>
+                          </table>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </section>
+
+            {/* ===================================================================== */}
+            {/* 5. ARCHITECTURAL SURFACE DETAILING — AG SERIES                        */}
+            {/* ===================================================================== */}
+            <section
+              id="ag-series-section"
+              className="bg-white rounded-3xl border border-slate-200 shadow-sm p-6 sm:p-8 space-y-8 scroll-mt-24"
+            >
+              <div className="border-b border-slate-100 pb-4 flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+                <div className="space-y-1 max-w-2xl">
+                  <span className="text-xs font-bold text-brand-orange uppercase tracking-widest block">
+                    {architecturalSurfaceDetailing.badge}
+                  </span>
+                  <h2 className="text-xl sm:text-2xl font-black text-slate-900">
+                    {architecturalSurfaceDetailing.name}
+                  </h2>
+                  <p className="text-xs text-slate-600">
+                    {architecturalSurfaceDetailing.description}
+                  </p>
+                </div>
+                <span className="text-xs font-bold text-brand-orange bg-orange-50 border border-orange-200 px-3 py-1 rounded-full shrink-0">
+                  7 Decorative Motifs
+                </span>
+              </div>
+
+              {/* Authentic Swatch Plates from Brochure Pages 06 & 07 */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div className="p-4 rounded-2xl bg-slate-50 border border-slate-200 flex flex-col items-center space-y-3">
+                  <span className="text-xs font-bold text-slate-700">
+                    AG Series Surface Swatches (Page 06: AG 139, AG 155, AG 179)
+                  </span>
+                  <img
+                    src={assetUrl("/assets/interiors/ag_swatches/ag_series_p6_swatches.png")}
+                    alt="AG Series Swatches"
+                    className="max-h-36 object-contain cursor-pointer rounded-xl"
+                    onClick={() => setLightboxImg(assetUrl("/assets/interiors/ag_swatches/ag_series_p6_swatches.png"))}
+                  />
+                  <p className="text-[11px] text-slate-500 text-center">
+                    Featured on Rose Gold & Titanium Mirror Premium Cabins
+                  </p>
+                </div>
+
+                <div className="p-4 rounded-2xl bg-slate-50 border border-slate-200 flex flex-col items-center space-y-3">
+                  <span className="text-xs font-bold text-slate-700">
+                    AG Series Surface Swatches (Page 07: AG 117, AG 102, AG 112, AG 108)
+                  </span>
+                  <img
+                    src={assetUrl("/assets/interiors/ag_swatches/ag_series_p7_swatches.png")}
+                    alt="AG Series Geometric Swatches"
+                    className="max-h-36 object-contain cursor-pointer rounded-xl"
+                    onClick={() => setLightboxImg(assetUrl("/assets/interiors/ag_swatches/ag_series_p7_swatches.png"))}
+                  />
+                  <p className="text-[11px] text-slate-500 text-center">
+                    Featured on Stainless Steel Strip Designer & Executive Suites
+                  </p>
+                </div>
+              </div>
+
+              {/* Grid of 7 AG Patterns */}
+              <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
+                {architecturalSurfaceDetailing.patterns.map((pat) => (
+                  <div
+                    key={pat.code}
+                    className="p-4 rounded-2xl bg-slate-50 border border-slate-200 space-y-1.5 hover:bg-slate-100/80 transition-colors"
+                  >
+                    <div className="flex items-center justify-between">
+                      <span className="font-mono text-xs font-bold text-brand-orange bg-orange-100 px-2 py-0.5 rounded">
+                        {pat.code}
+                      </span>
+                      <span className="text-[10px] text-slate-400">IS 14665</span>
+                    </div>
+                    <strong className="text-xs font-black text-slate-900 block">
+                      {pat.name}
+                    </strong>
+                    <span className="text-[11px] text-slate-600 block">
+                      {pat.finish}
+                    </span>
+                    <span className="text-[10px] text-brand-teal block pt-1 border-t border-slate-200/80">
+                      {pat.featuredOn}
+                    </span>
+                  </div>
+                ))}
+              </div>
+
+              {/* Technical PVD Features */}
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-2">
+                {architecturalSurfaceDetailing.technicalFeatures.map((f, i) => (
+                  <div key={i} className="p-4 rounded-2xl bg-teal-50/50 border border-teal-200/80 space-y-1">
+                    <strong className="text-xs font-bold text-teal-950 block">{f.title}</strong>
+                    <p className="text-[11px] text-slate-600 leading-relaxed">{f.desc}</p>
+                  </div>
+                ))}
+              </div>
+            </section>
+
+            {/* ===================================================================== */}
+            {/* 6. COP & LOP OPERATING FIXTURES (PDF Page 9 Grounded)                 */}
+            {/* ===================================================================== */}
+            <section
+              id="cop-lop-section"
+              className="bg-white rounded-3xl border border-slate-200 shadow-sm p-6 sm:p-8 space-y-10 scroll-mt-24"
+            >
+              <div className="border-b border-slate-100 pb-4 flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+                <div className="space-y-1 max-w-3xl">
+                  <span className="text-xs font-bold text-brand-teal uppercase tracking-widest block">
+                    Operating Fixtures
+                  </span>
+                  <h2 className="text-xl sm:text-2xl font-black text-slate-900">
+                    COP & LOP Operating Panels
+                  </h2>
+                  <p className="text-xs text-slate-600">
+                    {copLopFixtures.description}
+                  </p>
+                </div>
+                <span className="text-xs font-bold text-brand-teal bg-teal-50 border border-teal-200 px-3 py-1 rounded-full shrink-0">
+                  Brochure Page 17 (PDF Page 9)
+                </span>
+              </div>
+
+              {/* Clear Distinction: COP vs LOP (Client Education) */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div className="p-5 rounded-2xl bg-teal-50/60 border border-teal-200 space-y-2">
+                  <div className="flex items-center space-x-2">
+                    <span className="w-3 h-3 rounded-full bg-brand-teal" />
+                    <h3 className="font-black text-sm text-teal-950">
+                      {copLopFixtures.systemsDistinction.cop.term}
+                    </h3>
+                  </div>
+                  <span className="text-[11px] font-bold text-teal-700 block uppercase">
+                    Location: {copLopFixtures.systemsDistinction.cop.location}
+                  </span>
+                  <p className="text-xs text-slate-700 leading-relaxed">
+                    {copLopFixtures.systemsDistinction.cop.role}
+                  </p>
+                </div>
+
+                <div className="p-5 rounded-2xl bg-orange-50/60 border border-orange-200 space-y-2">
+                  <div className="flex items-center space-x-2">
+                    <span className="w-3 h-3 rounded-full bg-brand-orange" />
+                    <h3 className="font-black text-sm text-orange-950">
+                      {copLopFixtures.systemsDistinction.lop.term}
+                    </h3>
+                  </div>
+                  <span className="text-[11px] font-bold text-orange-700 block uppercase">
+                    Location: {copLopFixtures.systemsDistinction.lop.location}
+                  </span>
+                  <p className="text-xs text-slate-700 leading-relaxed">
+                    {copLopFixtures.systemsDistinction.lop.role}
+                  </p>
+                </div>
+              </div>
+
+              {/* Visual Showcase: Left Hero COP Column | Right 6 Paired Models */}
+              <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+                {/* Left: Hero Luxury Brushed Stainless Steel COP */}
+                <div className="lg:col-span-4 bg-slate-950 rounded-3xl p-6 border border-slate-800 text-white flex flex-col items-center space-y-4">
+                  <div className="text-center space-y-1">
+                    <span className="text-[10px] font-bold uppercase tracking-wider text-teal-300 block">
+                      In-Cabin Masterpiece
+                    </span>
+                    <h4 className="text-sm font-black">Full-Height Column COP</h4>
+                    <p className="text-[11px] text-slate-400">
+                      Brushed stainless steel with red digital floor matrix & round luminous buttons.
+                    </p>
+                  </div>
+                  <img
+                    src={assetUrl("/assets/interiors/cop_lop/hero_cabin_cop.png")}
+                    alt="Hero Car Operating Panel"
+                    className="max-h-96 w-auto object-contain cursor-pointer hover:scale-102 transition-transform"
+                    onClick={() => setLightboxImg(assetUrl("/assets/interiors/cop_lop/hero_cabin_cop.png"))}
+                  />
+                  <div className="w-full text-center text-[10px] text-slate-400 pt-2 border-t border-slate-800">
+                    Laser-engraved Krupa Elevators brandplate & emergency intercom.
+                  </div>
+                </div>
+
+                {/* Right: 6 Verified Models Grid */}
+                <div className="lg:col-span-8 space-y-4">
+                  <div className="space-y-1">
+                    <h4 className="text-base font-black text-slate-900">
+                      The 6 Paired COP & LOP Operating Suites
+                    </h4>
+                    <p className="text-xs text-slate-600">
+                      Each suite provides a matching aesthetic between the in-cabin column (COP) and the landing hall station (LOP).
+                    </p>
+                  </div>
+
+                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                    {copLopFixtures.models.map((item, idx) => {
+                      const imageFile = assetUrl(`/assets/interiors/cop_lop/ke_cop_lop_00${idx + 1}.png`);
+                      return (
+                        <div
+                          key={item.code}
+                          className="rounded-2xl border border-slate-200 overflow-hidden bg-slate-50 flex flex-col justify-between p-3.5 space-y-3 hover:shadow-md transition-all"
+                        >
+                          <div className="space-y-2">
+                            <div className="bg-slate-900 rounded-xl p-2 flex items-center justify-center h-48">
+                              <img
+                                src={imageFile}
+                                alt={item.code}
+                                className="max-h-44 w-auto object-contain cursor-pointer hover:scale-105 transition-transform"
+                                onClick={() => setLightboxImg(imageFile)}
+                              />
+                            </div>
+                            <span className="font-mono text-[11px] font-bold text-brand-teal bg-teal-50 px-2 py-0.5 rounded border border-teal-200 inline-block">
+                              {item.code}
+                            </span>
+                            <h5 className="font-bold text-xs text-slate-900 leading-snug">
+                              {item.title}
+                            </h5>
+                            <p className="text-[11px] text-slate-600 leading-relaxed">
+                              {item.finish}
+                            </p>
+                          </div>
+
+                          <div className="pt-2 border-t border-slate-200 text-[10px] text-slate-500 space-y-0.5">
+                            <div>Display: <strong className="text-slate-700">{item.display}</strong></div>
+                            <div>Buttons: <strong className="text-slate-700">{item.buttons}</strong></div>
+                          </div>
+                        </div>
+                      );
+                    })}
+                  </div>
+                </div>
+              </div>
+
+              {/* Calling Box Display Screens (From Bottom of Page 17) */}
+              <div className="p-6 rounded-3xl bg-slate-50 border border-slate-200 space-y-4">
+                <div className="space-y-1">
+                  <span className="text-xs font-bold text-brand-orange uppercase tracking-wider block">
+                    Display of Calling Box
+                  </span>
+                  <h4 className="text-base font-black text-slate-900">
+                    High-Definition Landing & In-Car Floor Display Screens
+                  </h4>
+                </div>
+
+                <div className="flex flex-col md:flex-row gap-6 items-center">
+                  <div className="bg-slate-900 p-3 rounded-2xl border border-slate-800 shrink-0">
+                    <img
+                      src={assetUrl("/assets/interiors/cop_lop/calling_box_displays.png")}
+                      alt="Calling Box Display Screens"
+                      className="max-h-28 w-auto object-contain cursor-pointer"
+                      onClick={() => setLightboxImg(assetUrl("/assets/interiors/cop_lop/calling_box_displays.png"))}
+                    />
+                  </div>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 flex-1">
+                    {copLopFixtures.displayCallingBoxes.map((box) => (
+                      <div key={box.id} className="p-3 rounded-xl bg-white border border-slate-200 space-y-1">
+                        <strong className="text-xs font-bold text-slate-900 block">{box.name}</strong>
+                        <p className="text-[11px] text-slate-600 leading-relaxed">{box.desc}</p>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </section>
+
+            {/* Call To Action */}
+            <CTASection
+              title="Need Custom Cabin Materials or Architectural Swatches?"
+              subtitle="Our design team provides bespoke samples of titanium gold, rose gold hairline, and custom laser-etched ceiling diffusers for architects and developers."
+              badge="Bespoke Cabin Studio"
+              variant="gradient"
+            />
+          </div>
+        </div>
+      </div>
+
+      {/* Lightbox Modal */}
+      {lightboxImg && (
         <div
-          className="fixed inset-0 z-50 bg-slate-950/85 backdrop-blur-sm flex items-center justify-center p-4 overflow-y-auto"
-          onClick={() => setSelectedCabin(null)}
+          onClick={() => setLightboxImg(null)}
+          className="fixed inset-0 z-50 bg-slate-950/85 backdrop-blur-sm p-4 sm:p-10 flex items-center justify-center animate-in fade-in duration-200"
+          role="dialog"
+          aria-modal="true"
         >
           <div
-            className="relative bg-white rounded-3xl p-6 sm:p-8 max-w-3xl w-full max-h-[90vh] overflow-y-auto space-y-6 shadow-2xl border border-slate-200 my-8"
             onClick={(e) => e.stopPropagation()}
+            className="relative bg-white rounded-3xl p-4 sm:p-6 max-w-4xl w-full max-h-[90vh] flex flex-col shadow-2xl overflow-hidden"
           >
-            <div className="flex justify-between items-start pb-4 border-b border-slate-100">
-              <div>
-                <span className="text-xs font-bold text-brand-teal uppercase tracking-wider block">
-                  {selectedCabin.series} &bull; Architectural Finish
-                </span>
-                <h3 className="text-2xl font-black text-slate-900">
-                  {selectedCabin.model} — Complete Finishes & Material Specification
-                </h3>
-              </div>
+            <div className="flex justify-between items-center pb-3 border-b border-slate-200">
+              <span className="text-xs font-bold text-slate-700 uppercase tracking-wider">
+                Full Resolution View
+              </span>
               <button
-                onClick={() => setSelectedCabin(null)}
-                className="p-2 rounded-full hover:bg-slate-100 text-slate-500 hover:text-slate-900 transition-colors cursor-pointer"
-                aria-label="Close dialog"
+                onClick={() => setLightboxImg(null)}
+                className="p-1.5 rounded-xl hover:bg-slate-100 text-slate-600 transition-colors cursor-pointer"
               >
-                <X className="w-6 h-6" />
+                <X className="w-5 h-5" />
               </button>
             </div>
 
-            {/* Large Image */}
-            <div className="bg-slate-900 rounded-2xl overflow-hidden max-h-72 flex items-center justify-center">
+            <div className="flex-1 overflow-auto p-4 flex items-center justify-center">
               <img
-                src={selectedCabin.image}
-                alt={selectedCabin.model}
-                className="w-full h-full object-cover max-h-72"
+                src={lightboxImg}
+                alt="Enlarged View"
+                className="max-h-[72vh] max-w-full object-contain"
               />
             </div>
 
-            <p className="text-xs sm:text-sm text-slate-700 leading-relaxed font-medium">
-              {selectedCabin.description}
-            </p>
-
-            {/* Complete Specifications Grid */}
-            <div className="bg-slate-50 rounded-2xl p-5 space-y-2.5 text-xs">
-              <strong className="text-slate-900 block font-bold text-sm mb-2">
-                Architectural Finishes Breakdown:
-              </strong>
-              {Object.entries(selectedCabin.specs).map(([k, v]) => (
-                <div key={k} className="flex justify-between border-b border-slate-200/60 pb-2">
-                  <span className="text-slate-500 font-medium">
-                    {specLabels[k] || k.replace(/([A-Z])/g, " $1")}:
-                  </span>
-                  <span className="font-bold text-slate-900 text-right max-w-sm">
-                    {v}
-                  </span>
-                </div>
-              ))}
-            </div>
-
-            <div className="pt-4 border-t border-slate-100 flex justify-end gap-3">
+            <div className="pt-3 border-t border-slate-100 flex justify-end">
               <button
-                onClick={() => setSelectedCabin(null)}
-                className="px-5 py-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-800 text-xs font-bold transition-colors cursor-pointer"
+                onClick={() => setLightboxImg(null)}
+                className="px-4 py-1.5 rounded-xl bg-slate-900 text-white font-bold text-xs cursor-pointer"
               >
                 Close
               </button>
-              <Link
-                to="/contact"
-                className="px-6 py-2.5 rounded-xl bg-brand-orange hover:bg-brand-orange-hover text-white text-xs font-bold transition-colors"
-              >
-                Request Material Samples
-              </Link>
             </div>
           </div>
         </div>
       )}
-
-      <CTASection
-        title="Custom Architectural Finishes for Your Building"
-        subtitle="Our Nikol design studio pairs custom Italian marble inlays, PVD titanium coating, and acoustic LED false ceilings to match your architect's interior vision."
-        variant="gradient"
-      />
     </div>
   );
 }

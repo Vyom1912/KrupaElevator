@@ -108,47 +108,47 @@ export default function Footer({ onOpenBrochure }) {
             </h4>
             <ul className="space-y-2 text-sm">
               <li>
-                <Link to="/elevators/passenger" className="hover:text-white transition-colors">
+                <Link to="/elevators#elev-passenger" className="hover:text-white transition-colors">
                   Passenger Elevators
                 </Link>
               </li>
               <li>
-                <Link to="/elevators/capsule" className="hover:text-white transition-colors">
+                <Link to="/elevators#elev-capsule" className="hover:text-white transition-colors">
                   Capsule Panoramic Lifts
                 </Link>
               </li>
               <li>
-                <Link to="/elevators/hospital" className="hover:text-white transition-colors">
+                <Link to="/elevators#elev-hospital" className="hover:text-white transition-colors">
                   Hospital Bed Elevators
                 </Link>
               </li>
               <li>
-                <Link to="/elevators/goods" className="hover:text-white transition-colors">
+                <Link to="/elevators#elev-goods" className="hover:text-white transition-colors">
                   Goods & Freight Lifts
                 </Link>
               </li>
               <li>
-                <Link to="/elevators/car" className="hover:text-white transition-colors">
+                <Link to="/elevators#elev-car" className="hover:text-white transition-colors">
                   Car Elevators & Parking
                 </Link>
               </li>
               <li>
-                <Link to="/elevators/mrl" className="hover:text-white transition-colors">
+                <Link to="/elevators#elev-mrl" className="hover:text-white transition-colors">
                   MRL Gearless Lifts
                 </Link>
               </li>
               <li>
-                <Link to="/elevators/home" className="hover:text-white transition-colors">
+                <Link to="/elevators#elev-home" className="hover:text-white transition-colors">
                   Home Villa Elevators
                 </Link>
               </li>
               <li>
-                <Link to="/elevators/hydraulic" className="hover:text-white transition-colors">
+                <Link to="/elevators#elev-hydraulic" className="hover:text-white transition-colors">
                   Hydraulic Low-Rise Lifts
                 </Link>
               </li>
               <li>
-                <Link to="/doors" className="hover:text-brand-orange transition-colors font-medium">
+                <Link to="/elevators#elevator-doors-section" className="hover:text-brand-orange transition-colors font-medium">
                   Door Systems (Manual & Auto)
                 </Link>
               </li>
