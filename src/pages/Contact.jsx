@@ -15,6 +15,8 @@ import {
 } from "lucide-react";
 import { companyData } from "../data/companyData";
 import ScrollReveal from "../components/ScrollReveal";
+import PageHero from "../components/common/PageHero";
+import { assetUrl } from "../utils/assetPath";
 
 export default function Contact({ onOpenBrochure }) {
   const [formSubmitted, setFormSubmitted] = useState(false);
@@ -57,87 +59,175 @@ export default function Contact({ onOpenBrochure }) {
   ];
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 space-y-16">
-      {/* Header */}
-      <ScrollReveal direction="up" distance={20} className="max-w-3xl space-y-3">
-        <span className="text-xs font-bold uppercase tracking-widest text-brand-teal block">
-          Get in Touch
-        </span>
-        <h1 className="text-3xl sm:text-5xl font-black text-slate-900 tracking-tight">
-          Let's Plan Your Elevator Solution
-        </h1>
-        <p className="text-sm sm:text-base text-slate-600 leading-relaxed">
-          Reach our corporate headquarters and manufacturing facility in Ahmedabad, Gujarat. Speak with our application engineers for custom architectural CAD assistance, site surveys, or immediate quotation requests.
-        </p>
-      </ScrollReveal>
+    <div className="space-y-16 pb-20">
+      {/* Page Hero */}
+      <PageHero
+        badge="Direct Factory & Nikol Engineering Hub"
+        title="Let's Plan Your Elevator Solution"
+        description="Reach our corporate headquarters and manufacturing facility in Ahmedabad, Gujarat. Speak with our application engineers for custom architectural CAD assistance, site surveys, or immediate quotation requests."
+        breadcrumbs={[{ label: "Contact & Inquiries" }]}
+        actions={
+          <>
+            <a
+              href={`tel:${companyData.contacts.phoneRaw}`}
+              className="px-6 py-3 rounded-full bg-brand-orange hover:bg-brand-orange-hover text-white text-xs sm:text-sm font-bold shadow-lg transition-colors flex items-center space-x-2"
+            >
+              <Phone className="w-4 h-4" />
+              <span>Call +91 82008 59171</span>
+            </a>
+            <a
+              href={`https://wa.me/${companyData.contacts.whatsapp}?text=Hello%20KRUPA%20Elevators%2C%20I%20would%20like%20to%20request%20a%20quote.`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="px-5 py-3 rounded-full bg-emerald-600 hover:bg-emerald-500 text-white text-xs sm:text-sm font-bold transition-colors flex items-center space-x-2"
+            >
+              <MessageSquare className="w-4 h-4" />
+              <span>WhatsApp Us</span>
+            </a>
+          </>
+        }
+      />
 
-      {/* Facilities & Quick Contacts Cards */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-16">
+        {/* Facilities & Quick Contacts Cards */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-        {/* Office */}
-        <ScrollReveal direction="up" distance={18} delay={0} className="bg-white p-6 rounded-3xl border border-slate-200 shadow-sm space-y-3 hover:shadow-md transition-shadow">
-          <div className="w-10 h-10 rounded-2xl bg-brand-orange-light text-brand-orange flex items-center justify-center">
-            <Building className="w-5 h-5" />
+        {/* Office with Architectural CAD Design Studio Image */}
+        <ScrollReveal direction="up" distance={18} delay={0} className="bg-white rounded-3xl border border-slate-200 shadow-sm overflow-hidden hover:shadow-lg transition-all flex flex-col justify-between group">
+          <div>
+            <div className="h-40 w-full relative overflow-hidden bg-slate-900">
+              <img
+                src={assetUrl("/assets/facilities/design-studio.jpg")}
+                alt="Krupa Elevators Corporate Office & Design Studio in Nikol Ahmedabad"
+                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-transparent" />
+              <div className="absolute top-3 left-3 bg-brand-orange text-white px-2.5 py-0.5 rounded-full text-[10px] font-black uppercase tracking-wider shadow">
+                Nikol Hub
+              </div>
+              <div className="absolute bottom-2.5 left-3 right-3 text-white">
+                <span className="text-[11px] font-bold text-slate-200">CAD Studio & Corporate Desk</span>
+              </div>
+            </div>
+            <div className="p-5 space-y-2">
+              <div className="flex items-center space-x-2">
+                <div className="w-8 h-8 rounded-xl bg-brand-orange-light text-brand-orange flex items-center justify-center shrink-0">
+                  <Building className="w-4 h-4" />
+                </div>
+                <strong className="text-sm font-black text-slate-900 block">Registered Office</strong>
+              </div>
+              <p className="text-xs text-slate-600 leading-relaxed pt-1">
+                {companyData.contacts.office.address}
+              </p>
+            </div>
           </div>
-          <strong className="text-sm font-black text-slate-900 block">Registered Office</strong>
-          <p className="text-xs text-slate-600 leading-relaxed">
-            {companyData.contacts.office.address}
-          </p>
+          <div className="px-5 pb-5 pt-1 text-[11px] text-slate-400 border-t border-slate-100 mx-5 mt-auto">
+            Open Mon - Sat: 9:00 AM to 7:00 PM
+          </div>
         </ScrollReveal>
 
-        {/* Factory */}
-        <ScrollReveal direction="up" distance={18} delay={60} className="bg-white p-6 rounded-3xl border border-slate-200 shadow-sm space-y-3 hover:shadow-md transition-shadow">
-          <div className="w-10 h-10 rounded-2xl bg-brand-teal-light text-brand-teal flex items-center justify-center">
-            <Factory className="w-5 h-5" />
+        {/* Factory with Bakrol Works Image */}
+        <ScrollReveal direction="up" distance={18} delay={60} className="bg-white rounded-3xl border border-slate-200 shadow-sm overflow-hidden hover:shadow-lg transition-all flex flex-col justify-between group">
+          <div>
+            <div className="h-40 w-full relative overflow-hidden bg-slate-900">
+              <img
+                src={assetUrl("/assets/facilities/bakrol-facility.jpg")}
+                alt="Krupa Elevators Bakrol Manufacturing Plant in Ahmedabad"
+                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-transparent" />
+              <div className="absolute top-3 left-3 bg-brand-teal text-white px-2.5 py-0.5 rounded-full text-[10px] font-black uppercase tracking-wider shadow">
+                Bakrol Works
+              </div>
+              <div className="absolute bottom-2.5 left-3 right-3 text-white">
+                <span className="text-[11px] font-bold text-teal-300">Fabrication & Testing Facility</span>
+              </div>
+            </div>
+            <div className="p-5 space-y-2">
+              <div className="flex items-center space-x-2">
+                <div className="w-8 h-8 rounded-xl bg-brand-teal-light text-brand-teal flex items-center justify-center shrink-0">
+                  <Factory className="w-4 h-4" />
+                </div>
+                <strong className="text-sm font-black text-slate-900 block">Manufacturing Plant</strong>
+              </div>
+              <p className="text-xs text-slate-600 leading-relaxed pt-1">
+                {companyData.contacts.factory.address}
+              </p>
+            </div>
           </div>
-          <strong className="text-sm font-black text-slate-900 block">Manufacturing Plant</strong>
-          <p className="text-xs text-slate-600 leading-relaxed">
-            {companyData.contacts.factory.address}
-          </p>
+          <div className="px-5 pb-5 pt-1 text-[11px] text-slate-400 border-t border-slate-100 mx-5 mt-auto">
+            Visitors welcome by appointment
+          </div>
         </ScrollReveal>
 
         {/* Phone & WhatsApp */}
-        <ScrollReveal direction="up" distance={18} delay={120} className="bg-white p-6 rounded-3xl border border-slate-200 shadow-sm space-y-3 hover:shadow-md transition-shadow">
-          <div className="w-10 h-10 rounded-2xl bg-emerald-50 text-emerald-600 flex items-center justify-center">
-            <Phone className="w-5 h-5" />
+        <ScrollReveal direction="up" distance={18} delay={120} className="bg-white p-6 rounded-3xl border border-slate-200 shadow-sm space-y-4 hover:shadow-lg transition-all flex flex-col justify-between">
+          <div className="space-y-3">
+            <div className="w-10 h-10 rounded-2xl bg-emerald-50 text-emerald-600 flex items-center justify-center">
+              <Phone className="w-5 h-5" />
+            </div>
+            <strong className="text-sm font-black text-slate-900 block">Phone & Direct Contact</strong>
+            <p className="text-xs text-slate-500 leading-relaxed">
+              Connect directly with our engineering coordinators for quick dimensional inquiries and price estimates.
+            </p>
+            <div className="space-y-1.5 text-xs pt-1">
+              <a
+                href={`tel:${companyData.contacts.phoneRaw}`}
+                className="block font-black text-sm text-slate-900 hover:text-brand-orange transition-colors"
+              >
+                {companyData.contacts.phone}
+              </a>
+              <span className="text-[11px] text-slate-400 block">24/7 Breakdown: +91 82008 59171</span>
+            </div>
           </div>
-          <strong className="text-sm font-black text-slate-900 block">Phone & WhatsApp</strong>
-          <div className="space-y-1 text-xs">
-            <a
-              href={`tel:${companyData.contacts.phoneRaw}`}
-              className="block font-bold text-slate-900 hover:text-brand-orange transition-colors"
-            >
-              {companyData.contacts.phone}
-            </a>
+
+          <div className="pt-3 border-t border-slate-100">
             <a
               href={`https://wa.me/${companyData.contacts.whatsapp}?text=Hi%20KRUPA%20Elevators%2C%20I%20would%20like%20to%20inquire%20about%20your%20elevators.`}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center space-x-1 text-emerald-600 font-semibold hover:underline"
+              className="w-full py-2.5 px-3 rounded-xl bg-emerald-50 text-emerald-700 hover:bg-emerald-100 text-xs font-bold transition-colors flex items-center justify-center space-x-1.5"
             >
-              <MessageSquare className="w-3.5 h-3.5" />
+              <MessageSquare className="w-4 h-4 text-emerald-600" />
               <span>Chat on WhatsApp</span>
             </a>
           </div>
         </ScrollReveal>
 
-        {/* Email & Brochure */}
-        <ScrollReveal direction="up" distance={18} delay={180} className="bg-white p-6 rounded-3xl border border-slate-200 shadow-sm space-y-3 hover:shadow-md transition-shadow">
-          <div className="w-10 h-10 rounded-2xl bg-blue-50 text-blue-600 flex items-center justify-center">
-            <Mail className="w-5 h-5" />
+        {/* Email & Inquiries */}
+        <ScrollReveal direction="up" distance={18} delay={180} className="bg-white p-6 rounded-3xl border border-slate-200 shadow-sm space-y-4 hover:shadow-lg transition-all flex flex-col justify-between">
+          <div className="space-y-3">
+            <div className="w-10 h-10 rounded-2xl bg-blue-50 text-blue-600 flex items-center justify-center">
+              <Mail className="w-5 h-5" />
+            </div>
+            <strong className="text-sm font-black text-slate-900 block">Corporate Email Desk</strong>
+            <p className="text-xs text-slate-500 leading-relaxed">
+              Send structural CAD drawings, tender specifications, and architectural requirements to our team.
+            </p>
+            <div className="space-y-1 text-xs pt-1">
+              <a
+                href={`mailto:${companyData.contacts.emailPrimary}`}
+                className="block text-slate-800 font-bold hover:text-brand-teal truncate"
+              >
+                {companyData.contacts.emailPrimary}
+              </a>
+              <a
+                href={`mailto:${companyData.contacts.emailSales}`}
+                className="block text-slate-600 hover:text-brand-teal truncate"
+              >
+                {companyData.contacts.emailSales}
+              </a>
+            </div>
           </div>
-          <strong className="text-sm font-black text-slate-900 block">Corporate Email</strong>
-          <div className="space-y-1 text-xs">
+
+          <div className="pt-3 border-t border-slate-100">
             <a
-              href={`mailto:${companyData.contacts.emailPrimary}`}
-              className="block text-slate-700 hover:text-brand-teal font-medium"
+              href={companyData.brochurePdf}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="w-full py-2.5 px-3 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold transition-colors flex items-center justify-center space-x-1.5"
             >
-              {companyData.contacts.emailPrimary}
-            </a>
-            <a
-              href={`mailto:${companyData.contacts.emailSales}`}
-              className="block text-slate-700 hover:text-brand-teal font-medium"
-            >
-              {companyData.contacts.emailSales}
+              <Download className="w-4 h-4 text-brand-teal" />
+              <span>Download PDF Brochure</span>
             </a>
           </div>
         </ScrollReveal>
@@ -414,6 +504,7 @@ export default function Contact({ onOpenBrochure }) {
           })}
         </div>
       </ScrollReveal>
+      </div>
     </div>
   );
 }

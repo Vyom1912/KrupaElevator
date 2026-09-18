@@ -1,341 +1,427 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import { Sparkles, Eye, Check, SlidersHorizontal, ArrowRight, Layers, X, Shield, Wind, Lightbulb, Maximize2 } from "lucide-react";
-import { interiorSeries, etchingPatterns } from "../data/interiorsData";
-import CabinConfigurator from "../components/CabinConfigurator";
+import {
+  Sparkles,
+  Eye,
+  ArrowRight,
+  Layers,
+  X,
+  Shield,
+  Lightbulb,
+  Maximize2,
+  CheckCircle2,
+  SlidersHorizontal,
+  Compass
+} from "lucide-react";
+import {
+  rawInteriorSeries,
+  etchingPatterns,
+  operatingPanels
+} from "../data/interiorsMaster";
 import ScrollReveal from "../components/ScrollReveal";
+import PageHero from "../components/common/PageHero";
+import CTASection from "../components/common/CTASection";
+
+// Human-readable labels for spec keys in modal
+const specLabels = {
+  ceiling: "Ceiling Finish & Lighting",
+  cop: "Cabin Operating Panel (COP)",
+  carWall: "Cabin Wall Finish",
+  flooring: "Flooring Specification",
+  carDoor: "Cabin Door Finish",
+  handrail: "Handrail Profile",
+  ventilation: "Ventilation System",
+  illumination: "Illumination System",
+  mirrorSpec: "Mirror Specification",
+  materials: "Material Composition"
+};
 
 export default function Interior() {
-  const [activeSeries, setActiveSeries] = useState("All");
   const [selectedCabin, setSelectedCabin] = useState(null);
 
-  const seriesTabs = ["All", "Basic Series", "Standard Series", "Semi Designer Series", "Premium Series"];
-
-  const filteredModels = interiorSeries.filter(
-    (item) => activeSeries === "All" || item.series === activeSeries
-  );
+  // Group cabin models by series for sequential presentation
+  const seriesGroups = [
+    {
+      seriesName: "Basic Series",
+      tagline: "Essential Durability & Clean Lines",
+      description: "Functional hairline stainless steel with full rear mirror, engineered for dependable daily residential transit.",
+      models: rawInteriorSeries.filter((m) => m.categoryKey === "basic")
+    },
+    {
+      seriesName: "Standard Series",
+      tagline: "Comfort & Enhanced Airflow",
+      description: "Incorporates built-in centrifugal blower fan ventilation and ergonomic half-height mirror with center handrail.",
+      models: rawInteriorSeries.filter((m) => m.categoryKey === "standard")
+    },
+    {
+      seriesName: "Semi Series",
+      tagline: "Architectural Metallic Warmth & Gold Tones",
+      description: "Titanium gold mirror, rose gold hairline, and imitation bronze finishes complemented by perimeter LED cove lighting.",
+      models: rawInteriorSeries.filter((m) => m.categoryKey === "semi")
+    },
+    {
+      seriesName: "Design Series",
+      tagline: "Contemporary Modernist Geometry",
+      description: "Designer etched stainless steel, linear architectural light bars, and dual-tier contour grab handles.",
+      models: rawInteriorSeries.filter((m) => m.categoryKey === "design")
+    },
+    {
+      seriesName: "Premium Series",
+      tagline: "Flagship Luxury & Signature Craftsmanship",
+      description: "Six-sided multi-angle lighting, translucent acrylic ceiling sky panels, and beveled titanium gold mirror inlays.",
+      models: rawInteriorSeries.filter((m) => m.categoryKey === "premium")
+    }
+  ];
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 space-y-16">
-      {/* Header */}
-      <ScrollReveal direction="up" distance={20} className="max-w-3xl space-y-3">
-        <span className="text-xs font-bold uppercase tracking-widest text-brand-teal block">
-          Freedom of Design & Interior Architecture
-        </span>
-        <h1 className="text-3xl sm:text-5xl font-black text-slate-900 tracking-tight">
-          Car Interior Concepts & Finishes
-        </h1>
-        <p className="text-sm sm:text-base text-slate-600 leading-relaxed">
-          Create the exact aesthetic you desire. Combine materials, hairline stainless steel, titanium gold mirrors, micalex LED ceilings, and etched wall art to achieve the ideal ambiance tailored to your building.
-        </p>
-      </ScrollReveal>
+    <div className="space-y-16 sm:space-y-24 pb-20 overflow-x-hidden">
+      {/* Page Hero */}
+      <PageHero
+        badge="Architectural Interior Collections"
+        title="Elevator Interiors Designed Around Your Space"
+        subtitle="From economical hairline stainless steel to custom titanium gold luxury, our cabin collections deliver tailored aesthetics, acoustic isolation, and energy-efficient illumination for residential, commercial, and hospitality projects."
+        breadcrumbs={[{ label: "Interiors" }]}
+        actions={
+          <div className="flex flex-wrap gap-3">
+            <Link
+              to="/contact"
+              className="px-6 py-3 rounded-full bg-brand-orange hover:bg-brand-orange-hover text-white text-xs sm:text-sm font-bold shadow-lg transition-colors flex items-center space-x-2"
+            >
+              <span>Request Material Swatches & Catalog</span>
+              <ArrowRight className="w-4 h-4" />
+            </Link>
+            <Link
+              to="/elevators"
+              className="px-6 py-3 rounded-full bg-slate-800/90 border border-slate-700 text-white text-xs sm:text-sm font-bold hover:bg-slate-700 transition-colors flex items-center space-x-2"
+            >
+              <SlidersHorizontal className="w-4 h-4 text-brand-teal" />
+              <span>Explore Elevator Applications</span>
+            </Link>
+          </div>
+        }
+      />
 
-      {/* Interactive Configurator Callout */}
-      <ScrollReveal direction="up" delay={60} distance={20}>
-        <CabinConfigurator />
-      </ScrollReveal>
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-20 sm:space-y-28">
+        
+        {/* ========================================================= */}
+        {/* SECTION 1: CABIN COLLECTIONS (Sequential by Series)       */}
+        {/* ========================================================= */}
+        <section className="space-y-12">
+          {/* Section Header */}
+          <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 border-b border-slate-200 pb-6">
+            <div className="space-y-2 max-w-2xl">
+              <span className="text-xs font-bold text-brand-teal uppercase tracking-widest block">
+                Bespoke Cabin Aesthetics
+              </span>
+              <h2 className="text-2xl sm:text-3xl lg:text-4xl font-black text-slate-900">
+                Architectural Cabin Series
+              </h2>
+              <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">
+                Fabricated with SS 304 grade sheets, acoustic false ceilings, warm LED downlights, and shatter-resistant safety mirrors. Browse our series progression from functional simplicity to ultra-luxury.
+              </p>
+            </div>
+            <div className="flex items-center space-x-2 text-xs font-medium text-slate-500 bg-slate-50 px-4 py-2 rounded-xl border border-slate-200 self-start md:self-auto">
+              <Compass className="w-4 h-4 text-brand-teal" />
+              <span>Basic &bull; Standard &bull; Semi &bull; Design &bull; Premium</span>
+            </div>
+          </div>
 
-      {/* Series Filter Tabs */}
-      <div className="space-y-8">
-        <ScrollReveal direction="up" distance={15} className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 border-b border-slate-200 pb-4">
-          <div>
-            <h2 className="text-2xl font-black text-slate-900">Elevator Cabin Designs: KEC-01 to KEC-11</h2>
-            <p className="text-xs text-slate-500 mt-0.5">
-              11 verified architectural interior styles across Basic, Standard, Semi-Designer, and Premium collections.
+          {/* Sequential Series Groups */}
+          <div className="space-y-16">
+            {seriesGroups.map((group) => (
+              <div key={group.seriesName} className="space-y-6">
+                {/* Series Header Banner */}
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 bg-slate-50 p-4 sm:p-5 rounded-2xl border border-slate-200">
+                  <div>
+                    <div className="flex items-center space-x-2.5">
+                      <span className="w-2.5 h-2.5 rounded-full bg-brand-teal" />
+                      <h3 className="text-lg sm:text-xl font-black text-slate-900">
+                        {group.seriesName}
+                      </h3>
+                      <span className="text-xs text-slate-500 font-medium hidden sm:inline">
+                        — {group.tagline}
+                      </span>
+                    </div>
+                    <p className="text-xs text-slate-600 mt-1 max-w-3xl">
+                      {group.description}
+                    </p>
+                  </div>
+                  <span className="text-[11px] font-bold text-slate-500 uppercase tracking-wider bg-white px-3 py-1 rounded-lg border border-slate-200 self-start sm:self-auto">
+                    Krupa Engineering
+                  </span>
+                </div>
+
+                {/* Cabins Grid for this Series */}
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                  {group.models.map((item, idx) => (
+                    <ScrollReveal
+                      key={item.id}
+                      direction="up"
+                      delay={idx * 30}
+                      distance={20}
+                      className="h-full"
+                    >
+                      <div className="bg-white rounded-3xl border border-slate-200 overflow-hidden shadow-xs hover:shadow-xl hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between group h-full">
+                        <div>
+                          {/* Large Interior Photograph */}
+                          <div className="h-64 bg-slate-900 relative overflow-hidden group/img">
+                            <img
+                              src={item.image}
+                              alt={item.model}
+                              className="w-full h-full object-cover group-hover/img:scale-105 transition-transform duration-500"
+                              loading="lazy"
+                            />
+                            <div className="absolute top-3 left-3 bg-white/90 backdrop-blur-md px-3 py-1 rounded-full text-[10px] font-black text-slate-900 border border-slate-200 uppercase tracking-wider">
+                              {item.series}
+                            </div>
+                            <div className="absolute bottom-3 right-3 bg-slate-900/80 backdrop-blur-md px-2.5 py-1 rounded-lg text-[10px] font-bold text-teal-300 border border-slate-700">
+                              {item.model}
+                            </div>
+                          </div>
+
+                          {/* Content */}
+                          <div className="p-6 space-y-3">
+                            <div className="flex items-center justify-between">
+                              <h4 className="text-xl font-black text-slate-900 group-hover:text-brand-teal transition-colors">
+                                {item.model}
+                              </h4>
+                              <span className="text-[10px] font-mono text-slate-400">
+                                Brochure P{item.brochurePage}
+                              </span>
+                            </div>
+
+                            <p className="text-xs text-slate-600 line-clamp-2 leading-relaxed">
+                              {item.description}
+                            </p>
+
+                            {/* Architectural Specifications Table */}
+                            <div className="pt-2 border-t border-slate-100 space-y-1.5 text-xs text-slate-700">
+                              <div className="flex justify-between">
+                                <span className="text-slate-400 text-[11px]">Ceiling:</span>
+                                <span className="font-medium text-slate-800 text-right truncate max-w-[180px]">
+                                  {item.specs.ceiling}
+                                </span>
+                              </div>
+                              <div className="flex justify-between">
+                                <span className="text-slate-400 text-[11px]">Cabin Wall:</span>
+                                <span className="font-bold text-slate-900 text-right truncate max-w-[180px]">
+                                  {item.specs.carWall}
+                                </span>
+                              </div>
+                              <div className="flex justify-between">
+                                <span className="text-slate-400 text-[11px]">Flooring:</span>
+                                <span className="font-medium text-slate-800 text-right truncate max-w-[180px]">
+                                  {item.specs.flooring}
+                                </span>
+                              </div>
+                              {item.specs.handrail && (
+                                <div className="flex justify-between">
+                                  <span className="text-slate-400 text-[11px]">Handrail:</span>
+                                  <span className="font-medium text-slate-800 text-right truncate max-w-[180px]">
+                                    {item.specs.handrail}
+                                  </span>
+                                </div>
+                              )}
+                            </div>
+                          </div>
+                        </div>
+
+                        {/* Card Actions */}
+                        <div className="p-6 pt-0 flex gap-2">
+                          <button
+                            onClick={() => setSelectedCabin(item)}
+                            className="flex-1 py-2.5 px-3 rounded-xl bg-slate-900 hover:bg-brand-teal text-white text-xs font-bold transition-colors flex items-center justify-center space-x-1.5 cursor-pointer shadow-xs"
+                          >
+                            <Eye className="w-3.5 h-3.5 text-teal-300" />
+                            <span>Inspect Finishes</span>
+                          </button>
+                          <Link
+                            to="/contact"
+                            className="py-2.5 px-3.5 rounded-xl bg-brand-orange hover:bg-brand-orange-hover text-white text-xs font-bold transition-colors"
+                          >
+                            Quote
+                          </Link>
+                        </div>
+                      </div>
+                    </ScrollReveal>
+                  ))}
+                </div>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        {/* ========================================================= */}
+        {/* SECTION 2: LASER ETCHING PATTERNS (AG Series)             */}
+        {/* ========================================================= */}
+        <section className="space-y-8">
+          <div className="bg-slate-900 rounded-3xl p-6 sm:p-10 text-white space-y-3 shadow-xl border border-slate-800">
+            <span className="text-xs font-bold text-teal-300 uppercase tracking-widest block">
+              Architectural Surface Detailing &bull; AG Series
+            </span>
+            <h2 className="text-2xl sm:text-3xl font-black">
+              Precision Laser Etching Patterns
+            </h2>
+            <p className="text-xs sm:text-sm text-slate-300 max-w-3xl leading-relaxed">
+              Permanently etched onto hairline stainless steel, titanium gold mirrors, and rose gold surfaces. These intricate geometric and organic motifs elevate elevator entrances and cabin back walls into bespoke works of architectural art.
             </p>
           </div>
 
-          <div className="flex flex-wrap gap-1.5">
-            {seriesTabs.map((tab) => (
-              <button
-                key={tab}
-                onClick={() => setActiveSeries(tab)}
-                className={`px-4 py-2 rounded-full text-xs font-bold transition-all ${
-                  activeSeries === tab
-                    ? "bg-brand-teal text-white shadow-md scale-[1.02]"
-                    : "bg-slate-100 text-slate-600 hover:bg-slate-200"
-                }`}
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6">
+            {etchingPatterns.map((pat) => (
+              <div
+                key={pat.code}
+                className="bg-white p-5 rounded-2xl border border-slate-200 shadow-xs space-y-3 text-center hover:shadow-md transition-shadow"
               >
-                {tab}
-              </button>
+                <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 text-teal-300 mx-auto flex items-center justify-center font-black text-sm border border-slate-700 shadow-xs">
+                  {pat.code}
+                </div>
+                <div>
+                  <h4 className="text-sm font-bold text-slate-900">{pat.name}</h4>
+                  <span className="text-[11px] text-brand-teal font-semibold block mt-0.5">
+                    {pat.finish}
+                  </span>
+                </div>
+              </div>
             ))}
           </div>
-        </ScrollReveal>
+        </section>
 
-        {/* Model Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {filteredModels.map((item, idx) => (
-            <ScrollReveal
-              key={item.id}
-              direction="up"
-              distance={18}
-              delay={(idx % 3) * 60}
-              className="bg-white rounded-3xl border border-slate-200 overflow-hidden shadow-sm hover:shadow-2xl hover:-translate-y-1.5 transition-all duration-300 flex flex-col justify-between group h-full"
-            >
-              <div>
-                {/* Visual */}
-                <div className="h-64 bg-slate-900 relative overflow-hidden group/img cursor-pointer" onClick={() => setSelectedCabin(item)}>
-                  <img
-                    src={item.image}
-                    alt={item.model}
-                    className="w-full h-full object-cover group-hover/img:scale-105 transition-transform duration-700"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-slate-950/70 via-transparent to-transparent opacity-60 group-hover/img:opacity-40 transition-opacity" />
+        {/* ========================================================= */}
+        {/* SECTION 3: OPERATING PANELS & INDICATORS (COP & LOP)      */}
+        {/* ========================================================= */}
+        <section className="space-y-8">
+          <div className="bg-slate-900 rounded-3xl p-6 sm:p-10 text-white space-y-3 shadow-xl border border-slate-800">
+            <span className="text-xs font-bold text-brand-orange uppercase tracking-widest block">
+              User Interface Fixtures
+            </span>
+            <h2 className="text-2xl sm:text-3xl font-black">
+              Cabin & Landing Operating Panels (COP & LOP)
+            </h2>
+            <p className="text-xs sm:text-sm text-slate-300 max-w-3xl leading-relaxed">
+              Engineered with ergonomic tactile buttons, high-visibility digital indicators, dot-matrix displays, full-color TFT multimedia screens, and vandal-resistant stainless steel faceplates.
+            </p>
+          </div>
 
-                  <div className="absolute top-3 left-3 bg-white/95 backdrop-blur-md px-3 py-1 rounded-full text-[11px] font-black text-slate-900 border border-slate-200 shadow-sm">
-                    {item.series}
-                  </div>
-
-                  <button
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      setSelectedCabin(item);
-                    }}
-                    className="absolute bottom-3 right-3 bg-slate-900/85 backdrop-blur-md px-3 py-1.5 rounded-xl text-xs font-bold text-white hover:bg-brand-teal transition-all flex items-center space-x-1.5 shadow-md"
-                  >
-                    <Maximize2 className="w-3.5 h-3.5 text-teal-300" />
-                    <span>Inspect Design</span>
-                  </button>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            {operatingPanels.map((panel) => (
+              <div
+                key={panel.code}
+                className="bg-white p-6 rounded-3xl border border-slate-200 shadow-xs space-y-4 hover:shadow-md transition-shadow"
+              >
+                <div className="flex items-center justify-between">
+                  <span className="text-xs font-black text-brand-teal font-mono bg-teal-50 px-2.5 py-1 rounded-lg border border-teal-100">
+                    {panel.code}
+                  </span>
+                  <span className="text-[10px] text-slate-400 font-semibold uppercase tracking-wider">
+                    Interface
+                  </span>
                 </div>
 
-                {/* Body */}
-                <div className="p-6 space-y-4">
+                <h4 className="text-base font-bold text-slate-900">{panel.type}</h4>
+
+                <div className="pt-2 border-t border-slate-100 space-y-2 text-xs text-slate-700">
                   <div>
-                    <div className="flex items-center justify-between">
-                      <span className="text-xs font-black text-brand-orange uppercase tracking-wider block">
-                        Verified Model
-                      </span>
-                      <span className="text-[11px] font-bold text-slate-400 font-mono">
-                        {item.model}
-                      </span>
-                    </div>
-                    <h3 className="text-xl font-black text-slate-900 group-hover:text-brand-teal transition-colors mt-0.5">
-                      {item.model}
-                    </h3>
-                    <p className="text-xs text-slate-600 mt-1.5 leading-relaxed">{item.description}</p>
+                    <span className="text-slate-400 block text-[11px]">Display Interface:</span>
+                    <strong className="text-slate-900 font-bold">{panel.display}</strong>
                   </div>
-
-                  {/* Highlights */}
-                  <div className="space-y-1 bg-slate-50 p-3 rounded-2xl border border-slate-100">
-                    {item.highlights.map((h, i) => (
-                      <div key={i} className="flex items-center space-x-1.5 text-xs text-slate-700">
-                        <Check className="w-3.5 h-3.5 text-brand-teal shrink-0" />
-                        <span className="font-semibold">{h}</span>
-                      </div>
-                    ))}
+                  <div>
+                    <span className="text-slate-400 block text-[11px]">Material & Finish:</span>
+                    <span className="text-slate-800 font-medium">{panel.finish}</span>
                   </div>
-
-                  {/* Detailed Specs Breakdown */}
-                  <div className="pt-2 border-t border-slate-100 space-y-2 text-[11px]">
-                    <div className="flex justify-between items-start">
-                      <span className="text-slate-400 font-medium shrink-0">Ceiling:</span>
-                      <span className="font-bold text-slate-800 text-right max-w-[200px]">{item.specs.ceiling}</span>
-                    </div>
-                    <div className="flex justify-between items-start">
-                      <span className="text-slate-400 font-medium shrink-0">Car Wall:</span>
-                      <span className="font-bold text-slate-800 text-right max-w-[200px]">{item.specs.carWall}</span>
-                    </div>
-                    {item.specs.cop && (
-                      <div className="flex justify-between items-start">
-                        <span className="text-slate-400 font-medium shrink-0">COP:</span>
-                        <span className="font-bold text-slate-800 text-right max-w-[200px]">{item.specs.cop}</span>
-                      </div>
-                    )}
-                    {item.specs.flooring && (
-                      <div className="flex justify-between items-start">
-                        <span className="text-slate-400 font-medium shrink-0">Flooring:</span>
-                        <span className="font-bold text-slate-800 text-right max-w-[200px]">{item.specs.flooring}</span>
-                      </div>
-                    )}
-                    {item.specs.etchingPatterns && (
-                      <div className="pt-1">
-                        <span className="text-slate-400 font-medium block mb-1">Laser Etched Motifs:</span>
-                        <div className="flex flex-wrap gap-1">
-                          {item.specs.etchingPatterns.map((pat, pi) => (
-                            <span key={pi} className="px-2 py-0.5 rounded-lg bg-amber-50 text-amber-900 border border-amber-200 text-[10px] font-bold">
-                              {pat}
-                            </span>
-                          ))}
-                        </div>
-                      </div>
-                    )}
+                  <div>
+                    <span className="text-slate-400 block text-[11px]">Special Features:</span>
+                    <span className="text-slate-600 leading-relaxed block">{panel.features}</span>
                   </div>
                 </div>
               </div>
+            ))}
+          </div>
+        </section>
 
-              <div className="p-6 pt-0 flex gap-2">
-                <button
-                  onClick={() => setSelectedCabin(item)}
-                  className="flex-1 py-2.5 rounded-xl bg-slate-100 text-slate-800 text-xs font-bold hover:bg-slate-200 transition-colors"
-                >
-                  View Details
-                </button>
-                <Link
-                  to="/contact"
-                  className="py-2.5 px-4 rounded-xl bg-brand-orange text-white text-xs font-bold hover:bg-brand-orange-hover transition-colors flex items-center justify-center space-x-1 shadow-sm"
-                >
-                  <span>Inquire</span>
-                  <ArrowRight className="w-3.5 h-3.5" />
-                </Link>
-              </div>
-            </ScrollReveal>
-          ))}
-        </div>
       </div>
 
-      {/* Full-Screen Cabin Inspection Modal */}
+      {/* Detail Lightbox Modal for Selected Cabin */}
       {selectedCabin && (
-        <div className="fixed inset-0 z-50 overflow-y-auto bg-slate-950/85 backdrop-blur-md flex items-center justify-center p-4 animate-in fade-in duration-200">
-          <div className="relative bg-white rounded-3xl max-w-4xl w-full shadow-2xl overflow-hidden border border-slate-200 max-h-[92vh] flex flex-col">
-            {/* Header */}
-            <div className="flex items-center justify-between p-6 border-b border-slate-100 bg-slate-50">
+        <div
+          className="fixed inset-0 z-50 bg-slate-950/85 backdrop-blur-sm flex items-center justify-center p-4 overflow-y-auto"
+          onClick={() => setSelectedCabin(null)}
+        >
+          <div
+            className="relative bg-white rounded-3xl p-6 sm:p-8 max-w-3xl w-full max-h-[90vh] overflow-y-auto space-y-6 shadow-2xl border border-slate-200 my-8"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="flex justify-between items-start pb-4 border-b border-slate-100">
               <div>
-                <span className="inline-block px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider bg-brand-teal-light text-brand-teal mb-1">
-                  {selectedCabin.series}
+                <span className="text-xs font-bold text-brand-teal uppercase tracking-wider block">
+                  {selectedCabin.series} &bull; Brochure Page {selectedCabin.brochurePage}
                 </span>
-                <h3 className="text-2xl font-black text-slate-900">{selectedCabin.model} Cabin Interior</h3>
+                <h3 className="text-2xl font-black text-slate-900">
+                  {selectedCabin.model} — Complete Finishes & Material Specification
+                </h3>
               </div>
               <button
                 onClick={() => setSelectedCabin(null)}
-                className="p-2 rounded-full text-slate-400 hover:text-slate-800 hover:bg-slate-200 transition-colors"
-                aria-label="Close cabin inspection modal"
+                className="p-2 rounded-full hover:bg-slate-100 text-slate-500 hover:text-slate-900 transition-colors cursor-pointer"
+                aria-label="Close dialog"
               >
                 <X className="w-6 h-6" />
               </button>
             </div>
 
-            {/* Modal Body */}
-            <div className="p-6 overflow-y-auto space-y-6">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-center">
-                <div className="rounded-2xl overflow-hidden border border-slate-200 bg-slate-900 aspect-[4/3] shadow-inner">
-                  <img
-                    src={selectedCabin.image}
-                    alt={selectedCabin.model}
-                    className="w-full h-full object-cover"
-                  />
-                </div>
-                <div className="space-y-4">
-                  <div>
-                    <h4 className="text-base font-bold text-slate-900">Design Overview</h4>
-                    <p className="text-xs sm:text-sm text-slate-600 leading-relaxed mt-1">
-                      {selectedCabin.description}
-                    </p>
-                  </div>
-
-                  <div className="space-y-2 text-xs">
-                    <div className="flex items-center space-x-2 p-2.5 rounded-xl bg-slate-50 border border-slate-100">
-                      <Lightbulb className="w-4 h-4 text-brand-orange shrink-0" />
-                      <div>
-                        <span className="text-slate-400 font-medium block text-[10px]">Illumination:</span>
-                        <strong className="text-slate-800">{selectedCabin.specs.illumination || selectedCabin.specs.ceiling}</strong>
-                      </div>
-                    </div>
-                    <div className="flex items-center space-x-2 p-2.5 rounded-xl bg-slate-50 border border-slate-100">
-                      <Wind className="w-4 h-4 text-brand-teal shrink-0" />
-                      <div>
-                        <span className="text-slate-400 font-medium block text-[10px]">Ventilation System:</span>
-                        <strong className="text-slate-800">{selectedCabin.specs.ventilation || "Standard Blower Ventilation"}</strong>
-                      </div>
-                    </div>
-                    <div className="flex items-center space-x-2 p-2.5 rounded-xl bg-slate-50 border border-slate-100">
-                      <Shield className="w-4 h-4 text-emerald-600 shrink-0" />
-                      <div>
-                        <span className="text-slate-400 font-medium block text-[10px]">Mirror & Accents:</span>
-                        <strong className="text-slate-800">{selectedCabin.specs.mirrorSpec || "Integrated Safety Mirror"}</strong>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              {/* Complete Specifications Grid */}
-              <div className="bg-slate-50 rounded-2xl p-4 border border-slate-200 space-y-2">
-                <h4 className="text-xs font-black uppercase tracking-wider text-slate-400 mb-2">
-                  Materials & Finish Breakdown
-                </h4>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
-                  <div className="p-3 bg-white rounded-xl border border-slate-100">
-                    <span className="text-slate-400 block text-[11px] font-medium">Ceiling Construction:</span>
-                    <span className="font-bold text-slate-900">{selectedCabin.specs.ceiling}</span>
-                  </div>
-                  <div className="p-3 bg-white rounded-xl border border-slate-100">
-                    <span className="text-slate-400 block text-[11px] font-medium">Car Wall Paneling:</span>
-                    <span className="font-bold text-slate-900">{selectedCabin.specs.carWall}</span>
-                  </div>
-                  <div className="p-3 bg-white rounded-xl border border-slate-100">
-                    <span className="text-slate-400 block text-[11px] font-medium">Car Operating Panel (COP):</span>
-                    <span className="font-bold text-slate-900">{selectedCabin.specs.cop}</span>
-                  </div>
-                  <div className="p-3 bg-white rounded-xl border border-slate-100">
-                    <span className="text-slate-400 block text-[11px] font-medium">Flooring:</span>
-                    <span className="font-bold text-slate-900">{selectedCabin.specs.flooring}</span>
-                  </div>
-                  <div className="p-3 bg-white rounded-xl border border-slate-100">
-                    <span className="text-slate-400 block text-[11px] font-medium">Car Door Finish:</span>
-                    <span className="font-bold text-slate-900">{selectedCabin.specs.carDoor}</span>
-                  </div>
-                  {selectedCabin.specs.handrail && (
-                    <div className="p-3 bg-white rounded-xl border border-slate-100">
-                      <span className="text-slate-400 block text-[11px] font-medium">Handrail:</span>
-                      <span className="font-bold text-slate-900">{selectedCabin.specs.handrail}</span>
-                    </div>
-                  )}
-                </div>
-              </div>
+            {/* Large Image */}
+            <div className="bg-slate-900 rounded-2xl overflow-hidden max-h-72 flex items-center justify-center">
+              <img
+                src={selectedCabin.image}
+                alt={selectedCabin.model}
+                className="w-full h-full object-cover max-h-72"
+              />
             </div>
 
-            {/* Modal Footer */}
-            <div className="p-4 sm:p-6 border-t border-slate-100 bg-slate-50 flex justify-between items-center">
+            <p className="text-xs sm:text-sm text-slate-700 leading-relaxed font-medium">
+              {selectedCabin.description}
+            </p>
+
+            {/* Complete Specifications Grid */}
+            <div className="bg-slate-50 rounded-2xl p-5 space-y-2.5 text-xs">
+              <strong className="text-slate-900 block font-bold text-sm mb-2">
+                Architectural Finishes Breakdown:
+              </strong>
+              {Object.entries(selectedCabin.specs).map(([k, v]) => (
+                <div key={k} className="flex justify-between border-b border-slate-200/60 pb-2">
+                  <span className="text-slate-500 font-medium">
+                    {specLabels[k] || k.replace(/([A-Z])/g, " $1")}:
+                  </span>
+                  <span className="font-bold text-slate-900 text-right max-w-sm">
+                    {v}
+                  </span>
+                </div>
+              ))}
+            </div>
+
+            <div className="pt-4 border-t border-slate-100 flex justify-end gap-3">
               <button
                 onClick={() => setSelectedCabin(null)}
-                className="px-4 py-2.5 rounded-xl border border-slate-300 text-slate-700 text-xs font-bold hover:bg-white"
+                className="px-5 py-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-800 text-xs font-bold transition-colors cursor-pointer"
               >
                 Close
               </button>
               <Link
                 to="/contact"
-                onClick={() => setSelectedCabin(null)}
-                className="inline-flex items-center space-x-2 px-6 py-2.5 rounded-xl bg-brand-orange text-white text-xs font-bold hover:bg-brand-orange-hover shadow-md"
+                className="px-6 py-2.5 rounded-xl bg-brand-orange hover:bg-brand-orange-hover text-white text-xs font-bold transition-colors"
               >
-                <span>Request Quotation for {selectedCabin.model}</span>
-                <ArrowRight className="w-4 h-4" />
+                Request Material Samples
               </Link>
             </div>
           </div>
         </div>
       )}
 
-      {/* Etching Pattern Swatches */}
-      <ScrollReveal direction="up" distance={22} className="bg-slate-900 text-white rounded-3xl p-8 sm:p-12 space-y-8 shadow-2xl border border-slate-800">
-        <div className="max-w-2xl">
-          <span className="text-xs font-bold uppercase tracking-widest text-brand-teal block mb-1">
-            Artistic Etching Patterns
-          </span>
-          <h2 className="text-2xl sm:text-3xl font-black">
-            Stainless Steel Laser-Etched Motifs
-          </h2>
-          <p className="text-xs sm:text-sm text-slate-400 mt-1">
-            Featured on KEC-04, KEC-06, and KEC-08 models. High-precision laser etching and chemical embossing create unique visual depth and luxury reflections.
-          </p>
-        </div>
-
-        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-7 gap-3">
-          {etchingPatterns.map((pat) => (
-            <div
-              key={pat.code}
-              className="bg-slate-800/80 border border-slate-700 p-3.5 rounded-2xl flex flex-col justify-between text-center hover:border-brand-teal hover:scale-105 transition-all duration-300 shadow-md"
-            >
-              <div className="w-12 h-12 mx-auto rounded-xl bg-slate-700 flex items-center justify-center text-brand-orange font-mono font-black text-xs mb-2 shadow-inner">
-                {pat.code}
-              </div>
-              <div>
-                <strong className="text-xs font-bold block text-white">{pat.name}</strong>
-                <span className="text-[10px] text-slate-400 block mt-0.5">{pat.finish}</span>
-              </div>
-            </div>
-          ))}
-        </div>
-      </ScrollReveal>
+      <CTASection
+        title="Custom Architectural Finishes for Your Building"
+        subtitle="Our Nikol design studio pairs custom Italian marble inlays, PVD titanium coating, and acoustic LED false ceilings to match your architect's interior vision."
+        variant="gradient"
+      />
     </div>
   );
 }

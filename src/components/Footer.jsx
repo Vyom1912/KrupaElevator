@@ -63,8 +63,8 @@ export default function Footer({ onOpenBrochure }) {
                 </Link>
               </li>
               <li>
-                <Link to="/products" className="hover:text-white transition-colors">
-                  Elevator Products (10)
+                <Link to="/elevators" className="hover:text-white transition-colors">
+                  Elevator Models (10)
                 </Link>
               </li>
               <li>
@@ -83,8 +83,13 @@ export default function Footer({ onOpenBrochure }) {
                 </Link>
               </li>
               <li>
-                <Link to="/specifications" className="hover:text-white transition-colors">
-                  Technical Specifications
+                <Link to="/elevators#civil-matrix" className="hover:text-white transition-colors">
+                  Civil Hoistway Matrix
+                </Link>
+              </li>
+              <li>
+                <Link to="/projects" className="hover:text-white transition-colors">
+                  Projects Portfolio
                 </Link>
               </li>
               <li>
@@ -98,42 +103,52 @@ export default function Footer({ onOpenBrochure }) {
           {/* Product Lines */}
           <div className="space-y-3">
             <h4 className="text-xs font-bold uppercase tracking-wider text-white border-l-2 border-brand-orange pl-2">
-              Key Solutions
+              Elevator Applications
             </h4>
             <ul className="space-y-2 text-sm">
               <li>
-                <Link to="/products" className="hover:text-white transition-colors">
+                <Link to="/elevators/passenger" className="hover:text-white transition-colors">
                   Passenger Elevators
                 </Link>
               </li>
               <li>
-                <Link to="/products" className="hover:text-white transition-colors">
-                  MRL Gearless Lifts
+                <Link to="/elevators/capsule" className="hover:text-white transition-colors">
+                  Capsule Panoramic Lifts
                 </Link>
               </li>
               <li>
-                <Link to="/products" className="hover:text-white transition-colors">
-                  Panoramic Capsule Lifts
-                </Link>
-              </li>
-              <li>
-                <Link to="/products" className="hover:text-white transition-colors">
+                <Link to="/elevators/hospital" className="hover:text-white transition-colors">
                   Hospital Bed Elevators
                 </Link>
               </li>
               <li>
-                <Link to="/products" className="hover:text-white transition-colors">
-                  Freight & Goods Lifts
+                <Link to="/elevators/goods" className="hover:text-white transition-colors">
+                  Goods & Freight Lifts
                 </Link>
               </li>
               <li>
-                <Link to="/products" className="hover:text-white transition-colors">
+                <Link to="/elevators/car" className="hover:text-white transition-colors">
+                  Car Elevators & Parking
+                </Link>
+              </li>
+              <li>
+                <Link to="/elevators/mrl" className="hover:text-white transition-colors">
+                  MRL Gearless Lifts
+                </Link>
+              </li>
+              <li>
+                <Link to="/elevators/home" className="hover:text-white transition-colors">
                   Home Villa Elevators
                 </Link>
               </li>
               <li>
-                <Link to="/products" className="hover:text-white transition-colors">
-                  Car Elevators & Parking
+                <Link to="/elevators/hydraulic" className="hover:text-white transition-colors">
+                  Hydraulic Low-Rise Lifts
+                </Link>
+              </li>
+              <li>
+                <Link to="/doors" className="hover:text-brand-orange transition-colors font-medium">
+                  Door Systems (Manual & Auto)
                 </Link>
               </li>
             </ul>

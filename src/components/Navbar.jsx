@@ -12,12 +12,11 @@ export default function Navbar() {
 
   const navLinks = [
     { name: "Home", path: "/" },
-    { name: "Elevators", path: "/products" },
-    { name: "Interiors", path: "/interior" },
-    { name: "Technologies", path: "/technologies" },
-    { name: "Specifications", path: "/specifications" },
-    { name: "Services", path: "/services" },
-    { name: "Contact", path: "/contact" },
+    { name: "Elevators", path: "/elevators" },
+    { name: "Interiors", path: "/interiors" },
+    { name: "Technology", path: "/technology" },
+    { name: "Service", path: "/services" },
+    { name: "Contact / Enquiry", path: "/contact" },
   ];
 
   const isActive = (path) => {
@@ -111,7 +110,7 @@ export default function Navbar() {
             </Link>
             <span className="text-slate-600">&bull;</span>
             <Link
-              to="/specifications"
+              to="/elevators#civil-matrix"
               className="text-slate-300 hover:text-brand-orange transition-colors font-medium"
             >
               CAD Dimensions
@@ -122,11 +121,10 @@ export default function Navbar() {
 
       {/* Main Compact Navbar */}
       <nav
-        className={`bg-white/95 backdrop-blur-md border-b transition-all duration-200 ${
-          scrolled
+        className={`bg-white/95 backdrop-blur-md border-b transition-all duration-200 ${scrolled
             ? "shadow-sm border-slate-200/90 py-0"
             : "border-slate-200/70 py-0.5"
-        }`}
+          }`}
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-14 sm:h-15">
@@ -151,11 +149,10 @@ export default function Navbar() {
                   <Link
                     key={link.name}
                     to={link.path}
-                    className={`px-3 py-1.5 rounded-lg text-xs xl:text-[13px] font-semibold transition-all ${
-                      active
+                    className={`px-3 py-1.5 rounded-lg text-xs xl:text-[13px] font-semibold transition-all ${active
                         ? "text-brand-teal bg-brand-teal-light font-bold"
                         : "text-slate-600 hover:text-brand-teal hover:bg-slate-100/70"
-                    }`}
+                      }`}
                   >
                     {link.name}
                   </Link>
@@ -213,11 +210,10 @@ export default function Navbar() {
                   key={link.name}
                   to={link.path}
                   onClick={() => setMobileMenuOpen(false)}
-                  className={`flex justify-between items-center px-3.5 py-2.5 rounded-xl text-xs font-bold transition-all ${
-                    active
+                  className={`flex justify-between items-center px-3.5 py-2.5 rounded-xl text-xs font-bold transition-all ${active
                       ? "text-brand-teal bg-brand-teal-light"
                       : "text-slate-700 hover:bg-slate-50"
-                  }`}
+                    }`}
                 >
                   <span>{link.name}</span>
                   <ChevronRight className="w-3.5 h-3.5 text-slate-400" />
