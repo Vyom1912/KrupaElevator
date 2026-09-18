@@ -68,12 +68,12 @@ export default function Footer({ onOpenBrochure }) {
                 </Link>
               </li>
               <li>
-                <Link to="/interior" className="hover:text-white transition-colors">
+                <Link to="/interiors" className="hover:text-white transition-colors">
                   Interior Cabin Series
                 </Link>
               </li>
               <li>
-                <Link to="/technologies" className="hover:text-white transition-colors">
+                <Link to="/technology" className="hover:text-white transition-colors">
                   Green Tech & Safety
                 </Link>
               </li>
@@ -83,7 +83,7 @@ export default function Footer({ onOpenBrochure }) {
                 </Link>
               </li>
               <li>
-                <Link to="/elevators#civil-matrix" className="hover:text-white transition-colors">
+                <Link to="/elevators" className="hover:text-white transition-colors">
                   Civil Hoistway Matrix
                 </Link>
               </li>

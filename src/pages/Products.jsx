@@ -1,229 +1,644 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import {
-  SlidersHorizontal,
-  Compass,
-  ArrowRight,
-  Maximize2,
-  X,
-  CheckCircle2,
-  Search,
-  Sparkles,
-  Layers,
+  Building2,
   DoorOpen,
   DoorClosed,
   Cpu,
   ShieldCheck,
-  Building2,
-  FileText
+  ArrowRight,
+  CheckCircle2,
+  Maximize2,
+  X,
+  Download,
+  SlidersHorizontal,
+  Info,
+  Eye,
+  Layers,
+  Compass,
+  ChevronRight,
+  Sparkles,
+  Phone,
+  FileText,
+  Check,
+  Zap,
+  Activity,
+  Shield
 } from "lucide-react";
 import { elevatorMaster } from "../data/elevatorMaster";
 import { manualDoors, automaticDoors } from "../data/doorsMaster";
-import { technologiesMaster } from "../data/technologiesMaster";
-import { specificationsData } from "../data/specificationsData";
-import MergedCivilTable from "../components/MergedCivilTable";
-import StandardSpecTable from "../components/StandardSpecTable";
-import CustomizationProcess from "../components/CustomizationProcess";
+import ElevatorStructureViewer from "../components/ElevatorStructureViewer";
 import PageHero from "../components/common/PageHero";
 import CTASection from "../components/common/CTASection";
 import ScrollReveal from "../components/ScrollReveal";
 
 export default function Products({ onOpenBrochure }) {
-  const [searchQuery, setSearchQuery] = useState("");
+  // 1. Active Selected Elevator Model State (defaults to first elevator: 'passenger')
+  const [activeElevatorId, setActiveElevatorId] = useState("passenger");
 
-  // Integrated Specifications matrix tab state
-  const [activeSpecTab, setActiveSpecTab] = useState("automatic-doors");
-  const [lightboxDrawing, setLightboxDrawing] = useState(null);
+  // Find active elevator object
+  const activeElevator =
+    elevatorMaster.find((e) => e.id === activeElevatorId) || elevatorMaster[0];
 
-  // Filter elevator models by search term
-  const filteredElevators = elevatorMaster.filter((item) => {
-    return (
-      item.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      item.category.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      item.tagline.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      item.overview.toLowerCase().includes(searchQuery.toLowerCase())
-    );
-  });
+  // 2. Active Technical Drawing Sub-tab for active elevator
+  const drawingKeys = Object.keys(activeElevator.drawings || {});
+  const [activeDrawingKey, setActiveDrawingKey] = useState("main");
 
-  const currentSpec = specificationsData[activeSpecTab] || specificationsData["automatic-doors"];
+  // Keep drawing key valid when switching elevators
+  const currentDrawingUrl =
+    activeElevator.drawings[activeDrawingKey] ||
+    activeElevator.drawings.main ||
+    activeElevator.drawings[drawingKeys[0]];
+
+  // 3. Lightbox zoom modal state for CAD drawings
+  const [lightboxImg, setLightboxImg] = useState(null);
+
+  // 4. Door Systems Section Category Tab: 'manual' or 'auto'
+  const [activeDoorType, setActiveDoorType] = useState("auto"); // 'auto' | 'manual'
 
   return (
     <div className="space-y-16 sm:space-y-24 pb-20 overflow-x-hidden">
       {/* Page Hero */}
       <PageHero
-        badge="Direct Bakrol Factory & Nikol Engineering Office"
-        title="Elevator Applications & Systems"
-        description="Explore purpose-built passenger, commercial, hospital, industrial, and residential elevator applications. Precision CAD layouts, certified IS 14665 engineering, and robust traction technologies."
+        badge="Direct Bakrol Factory & Nikol CAD Engineering Office"
+        title="Elevator Systems & Technical Specifications"
+        description="Select any elevator model below to inspect its primary photograph, GA hoistway CAD layout drawings, electro-mechanical sub-assemblies, and comprehensive civil dimension matrix."
         breadcrumbs={[{ label: "Elevators" }]}
       />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-16">
-        {/* Section Quick Jump Strip */}
-        <div className="flex flex-wrap items-center justify-between gap-4 border-b border-slate-200 pb-4">
-          <div className="flex flex-wrap items-center gap-2 text-xs font-bold">
-            <a
-              href="#applications"
-              className="px-4 py-2 rounded-xl bg-slate-900 text-white hover:bg-slate-800 transition-colors flex items-center space-x-1.5"
-            >
-              <Building2 className="w-3.5 h-3.5 text-brand-teal" />
-              <span>Elevator Applications</span>
-            </a>
-            <a
-              href="#doors-section"
-              className="px-4 py-2 rounded-xl bg-slate-100 text-slate-700 hover:bg-slate-200 transition-colors flex items-center space-x-1.5"
-            >
-              <DoorClosed className="w-3.5 h-3.5 text-brand-orange" />
-              <span>Door Systems</span>
-            </a>
-            <a
-              href="#machines-bridge"
-              className="px-4 py-2 rounded-xl bg-slate-100 text-slate-700 hover:bg-slate-200 transition-colors flex items-center space-x-1.5"
-            >
-              <Cpu className="w-3.5 h-3.5 text-teal-500" />
-              <span>Traction Machines</span>
-            </a>
-            <a
-              href="#civil-matrix"
-              className="px-4 py-2 rounded-xl bg-slate-100 text-slate-700 hover:bg-slate-200 transition-colors flex items-center space-x-1.5"
-            >
-              <Compass className="w-3.5 h-3.5 text-slate-500" />
-              <span>Civil Matrix</span>
-            </a>
-          </div>
-
-          <a
-            href="#civil-matrix"
-            className="text-xs font-bold text-brand-teal hover:text-teal-700 transition-colors flex items-center space-x-1"
-          >
-            <span>Civil Hoistway Dimensions Matrix</span>
-            <ArrowRight className="w-3.5 h-3.5" />
-          </a>
-        </div>
-
         {/* ========================================================================= */}
-        {/* SECTION 1: ELEVATOR APPLICATIONS                                          */}
+        {/* PART 1: DIFFERENT KINDS OF ELEVATORS DISPLAYED (INTERACTIVE SELECTOR)     */}
         {/* ========================================================================= */}
-        <div id="applications" className="space-y-8 scroll-mt-24">
-          <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
+        <div id="elevator-selector" className="space-y-6">
+          <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 border-b border-slate-200 pb-4">
             <div>
               <span className="text-xs font-bold text-brand-teal uppercase tracking-widest block mb-1">
-                Vertical Transport Solutions
+                Step 1: Choose Elevator Model
               </span>
               <h2 className="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight">
-                Elevator Applications
+                Different Kinds of Elevators
               </h2>
               <p className="text-xs sm:text-sm text-slate-600 max-w-2xl mt-1">
-                Engineered for distinct architectural, payload, and speed requirements. Click "View Specifications & Drawings" on any model to inspect GA hoistway layouts.
+                Click any elevator model below. The system will immediately display its photograph, full GA layout structure, and raw capacity & dimensions table.
               </p>
             </div>
 
-            {/* Search Input */}
-            <div className="relative w-full sm:w-72">
-              <Search className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" />
-              <input
-                type="text"
-                placeholder="Search elevator applications..."
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full pl-9 pr-3 py-2 rounded-xl bg-white border border-slate-200 text-xs focus:outline-hidden focus:ring-1 focus:ring-brand-teal transition-all shadow-2xs"
-              />
+            {/* Quick jump to Door Systems */}
+            <button
+              onClick={() => {
+                document.getElementById("doors-showcase")?.scrollIntoView({ behavior: "smooth" });
+              }}
+              className="inline-flex items-center space-x-1.5 px-4 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-800 text-xs font-bold transition-colors cursor-pointer shrink-0"
+            >
+              <DoorOpen className="w-3.5 h-3.5 text-brand-orange" />
+              <span>Jump to Door Systems (Manual & Auto)</span>
+            </button>
+          </div>
+
+          {/* Grid of 8 Elevator Model Selectors */}
+          <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-8 gap-2.5 sm:gap-3">
+            {elevatorMaster.map((el) => {
+              const isSelected = el.id === activeElevator.id;
+              return (
+                <button
+                  key={el.id}
+                  onClick={() => {
+                    setActiveElevatorId(el.id);
+                    setActiveDrawingKey("main");
+                  }}
+                  className={`p-3 rounded-2xl border text-left transition-all duration-200 flex flex-col justify-between cursor-pointer ${
+                    isSelected
+                      ? "bg-slate-900 text-white border-slate-900 shadow-md ring-2 ring-brand-teal ring-offset-2 scale-[1.02]"
+                      : "bg-white text-slate-700 border-slate-200 hover:border-brand-teal/60 hover:bg-slate-50"
+                  }`}
+                >
+                  <div className="space-y-1.5">
+                    <div
+                      className={`w-7 h-7 rounded-lg flex items-center justify-center text-xs font-bold ${
+                        isSelected
+                          ? "bg-brand-teal text-white"
+                          : "bg-slate-100 text-slate-600"
+                      }`}
+                    >
+                      <Building2 className="w-4 h-4" />
+                    </div>
+                    <span className="text-xs font-black block leading-snug truncate">
+                      {el.name.replace(" Elevator", "")}
+                    </span>
+                  </div>
+                  <span
+                    className={`text-[10px] block mt-2 font-medium truncate ${
+                      isSelected ? "text-teal-300" : "text-slate-400"
+                    }`}
+                  >
+                    {el.standardSpecs.capacity.split(" ")[0]}P
+                  </span>
+                </button>
+              );
+            })}
+          </div>
+        </div>
+
+        {/* ========================================================================= */}
+        {/* PART 2: SELECTED ELEVATOR DISPLAY (IMAGE + LAYOUT STRUCTURE)              */}
+        {/* ========================================================================= */}
+        <div className="space-y-12 bg-slate-50 p-6 sm:p-10 rounded-3xl border border-slate-200/90 shadow-xs">
+          {/* Header Banner for Selected Elevator */}
+          <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6 border-b border-slate-200 pb-6">
+            <div className="space-y-2">
+              <div className="flex flex-wrap items-center gap-2">
+                <span className="px-3 py-1 rounded-full bg-brand-teal/20 text-brand-teal text-xs font-bold uppercase tracking-wider border border-brand-teal/30">
+                  {activeElevator.category}
+                </span>
+                <span className="px-3 py-1 rounded-full bg-slate-200 text-slate-700 text-xs font-mono">
+                  {activeElevator.brochurePage}
+                </span>
+                <span className="px-3 py-1 rounded-full bg-orange-100 text-brand-orange text-xs font-bold border border-orange-200">
+                  IS 14665 Compliant
+                </span>
+              </div>
+              <h3 className="text-2xl sm:text-4xl font-black text-slate-900 tracking-tight">
+                {activeElevator.name}
+              </h3>
+              <p className="text-xs sm:text-sm text-slate-600 max-w-3xl leading-relaxed">
+                {activeElevator.overview}
+              </p>
+            </div>
+
+            {/* Quick Consultation Button */}
+            <div className="flex flex-wrap items-center gap-3 shrink-0">
+              <Link
+                to="/contact"
+                className="px-5 py-3 rounded-xl bg-brand-orange hover:bg-brand-orange-hover text-white text-xs font-bold shadow-sm transition-all flex items-center space-x-1.5"
+              >
+                <span>Request Custom GA Drawing</span>
+                <ArrowRight className="w-3.5 h-3.5" />
+              </Link>
             </div>
           </div>
 
-          {/* Elevator Applications Cards Grid */}
+          {/* Visual Showcase: FIRST IMAGE of Elevator + FULL LAYOUT STRUCTURE Drawings */}
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+            {/* LEFT: FIRST IMAGE OF ELEVATOR (5 cols) */}
+            <div className="lg:col-span-5 space-y-4">
+              <div className="flex items-center justify-between">
+                <span className="text-xs font-bold text-slate-700 uppercase tracking-wider flex items-center space-x-1.5">
+                  <CheckCircle2 className="w-4 h-4 text-brand-teal" />
+                  <span>Installed Elevator Photograph</span>
+                </span>
+                <span className="text-[10px] text-slate-500 font-mono">Factory Finish</span>
+              </div>
+
+              {/* Elevator High-Res Photograph Card */}
+              <div className="relative rounded-3xl overflow-hidden border border-slate-200 bg-slate-950 shadow-md group h-[380px] sm:h-[440px]">
+                <img
+                  src={activeElevator.image}
+                  alt={activeElevator.name}
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-slate-950/85 via-transparent to-transparent pointer-events-none" />
+
+                {/* Badges on Image */}
+                <div className="absolute bottom-4 left-4 right-4 text-white space-y-1.5">
+                  <div className="text-lg font-black">{activeElevator.name}</div>
+                  <div className="text-xs text-slate-300 font-medium">
+                    {activeElevator.tagline}
+                  </div>
+                  <div className="pt-2 border-t border-slate-700/80 flex justify-between text-xs text-slate-300">
+                    <span>Speed: <strong className="text-white">{activeElevator.standardSpecs.ratedSpeed}</strong></span>
+                    <span>Rated: <strong className="text-brand-teal">{activeElevator.standardSpecs.capacity}</strong></span>
+                  </div>
+                </div>
+              </div>
+
+              {/* Key Highlights Tags */}
+              <div className="bg-white p-4 rounded-2xl border border-slate-200/80 space-y-2">
+                <span className="text-[11px] font-bold text-slate-500 uppercase tracking-wider block">
+                  Typical Building Applications:
+                </span>
+                <div className="flex flex-wrap gap-1.5">
+                  {activeElevator.typicalApplications.map((app, aIdx) => (
+                    <span
+                      key={aIdx}
+                      className="px-2.5 py-1 rounded-lg bg-slate-100 text-slate-700 text-xs font-medium"
+                    >
+                      {app}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            </div>
+
+            {/* RIGHT: FULL LAYOUT STRUCTURE (CAD Technical Hoistway Drawings) (7 cols) */}
+            <div className="lg:col-span-7 space-y-4">
+              <div className="flex flex-wrap items-center justify-between gap-2">
+                <span className="text-xs font-bold text-slate-700 uppercase tracking-wider flex items-center space-x-1.5">
+                  <Layers className="w-4 h-4 text-brand-orange" />
+                  <span>Full Hoistway Layout Structure (CAD GA)</span>
+                </span>
+                <span className="text-[10px] text-slate-500 font-mono">
+                  All dimensions in mm
+                </span>
+              </div>
+
+              {/* Drawing Sub-tab Selectors */}
+              <div className="flex flex-wrap gap-2">
+                {drawingKeys.map((key) => {
+                  const isSelected = (activeDrawingKey === key);
+                  const labelMap = {
+                    main: "Main GA Drawing",
+                    plan: "Hoistway Plan View",
+                    elevation: "Cross-Section Elevation",
+                    door: "Entrance Door Detail",
+                    doors: "Entrance Door Detail",
+                    manualAlt: "Manual Hoistway Plan",
+                    optionB: "Option B Layout",
+                    parkingSystems: "Parking Stacker Plan",
+                    terrace: "Terrace Machine Detail",
+                    threeDShafts: "3D Shaft Layout",
+                    ropingPlan: "Roping Schematic"
+                  };
+                  const label = labelMap[key] || `${key.toUpperCase()} Layout`;
+
+                  return (
+                    <button
+                      key={key}
+                      onClick={() => setActiveDrawingKey(key)}
+                      className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer ${
+                        isSelected
+                          ? "bg-slate-900 text-white shadow-xs"
+                          : "bg-white text-slate-600 hover:bg-slate-100 border border-slate-200"
+                      }`}
+                    >
+                      {label}
+                    </button>
+                  );
+                })}
+              </div>
+
+              {/* Technical Drawing Display Window */}
+              <div className="relative bg-white rounded-3xl p-4 sm:p-6 border border-slate-200 shadow-sm flex flex-col justify-between h-[380px] sm:h-[440px]">
+                <div className="h-full flex items-center justify-center overflow-hidden">
+                  <img
+                    src={currentDrawingUrl}
+                    alt={`${activeElevator.name} Technical Layout Drawing`}
+                    className="max-h-[300px] sm:max-h-[350px] w-auto object-contain transition-transform hover:scale-105 cursor-zoom-in"
+                    onClick={() => setLightboxImg(currentDrawingUrl)}
+                  />
+                </div>
+
+                {/* Drawing Actions Footer */}
+                <div className="pt-3 border-t border-slate-100 flex items-center justify-between text-xs">
+                  <span className="text-slate-500 text-[11px]">
+                    Click image to expand high-resolution CAD schematic
+                  </span>
+                  <button
+                    onClick={() => setLightboxImg(currentDrawingUrl)}
+                    className="inline-flex items-center space-x-1 font-bold text-brand-teal hover:text-teal-700 cursor-pointer"
+                  >
+                    <Maximize2 className="w-3.5 h-3.5" />
+                    <span>Zoom CAD</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Detailed Hoistway Sub-Assemblies Breakdown */}
+          <div className="pt-4">
+            <ElevatorStructureViewer
+              structure={activeElevator.structure}
+              elevatorName={activeElevator.name}
+              drawingUrl={activeElevator.drawings.plan || activeElevator.drawings.main}
+            />
+          </div>
+
+          {/* ========================================================================= */}
+          {/* PART 3: PROPER TABLE: CAPACITIES, LENGTH OF DIFFERENT THINGS, CIVIL SPECS */}
+          {/* ========================================================================= */}
+          <div className="space-y-6 pt-6 border-t border-slate-200">
+            <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
+              <div>
+                <span className="text-xs font-bold text-brand-teal uppercase tracking-widest block mb-1">
+                  Standard Dimension Matrix
+                </span>
+                <h3 className="text-xl sm:text-2xl font-black text-slate-900 tracking-tight">
+                  {activeElevator.name} — Technical Specifications & Civil Hoistway Table
+                </h3>
+                <p className="text-xs sm:text-sm text-slate-600 max-w-2xl mt-1">
+                  Full engineering dimensions specified in accordance with IS 14665. All dimensions in millimeters (mm).
+                </p>
+              </div>
+
+              <div className="flex items-center space-x-2 text-xs text-slate-500 bg-white px-3 py-1.5 rounded-xl border border-slate-200">
+                <Info className="w-4 h-4 text-brand-orange" />
+                <span>Custom hoistway dimensions available on request</span>
+              </div>
+            </div>
+
+            {/* Architectural Dimension Key Explanation */}
+            <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-7 gap-2 p-3 rounded-2xl bg-white border border-slate-200 text-xs">
+              <div className="p-2 rounded-lg bg-slate-50">
+                <span className="font-mono font-bold text-brand-teal block">CW (A)</span>
+                <span className="text-slate-500 text-[11px]">Car Clear Width</span>
+              </div>
+              <div className="p-2 rounded-lg bg-slate-50">
+                <span className="font-mono font-bold text-brand-teal block">CD (B)</span>
+                <span className="text-slate-500 text-[11px]">Car Clear Depth</span>
+              </div>
+              <div className="p-2 rounded-lg bg-slate-50">
+                <span className="font-mono font-bold text-brand-orange block">SW (C)</span>
+                <span className="text-slate-500 text-[11px]">Shaft Clear Width</span>
+              </div>
+              <div className="p-2 rounded-lg bg-slate-50">
+                <span className="font-mono font-bold text-brand-orange block">SD (D)</span>
+                <span className="text-slate-500 text-[11px]">Shaft Clear Depth</span>
+              </div>
+              <div className="p-2 rounded-lg bg-slate-50">
+                <span className="font-mono font-bold text-teal-600 block">OP (E)</span>
+                <span className="text-slate-500 text-[11px]">Door Clear Opening</span>
+              </div>
+              <div className="p-2 rounded-lg bg-slate-50">
+                <span className="font-mono font-bold text-slate-700 block">Pit Depth</span>
+                <span className="text-slate-500 text-[11px]">Below Lowest Floor</span>
+              </div>
+              <div className="p-2 rounded-lg bg-slate-50">
+                <span className="font-mono font-bold text-slate-700 block">Overhead</span>
+                <span className="text-slate-500 text-[11px]">Top Floor to Ceiling</span>
+              </div>
+            </div>
+
+            {/* Civil Specifications Matrix Table */}
+            <div className="overflow-x-auto bg-white rounded-2xl border border-slate-200 shadow-xs">
+              <table className="min-w-full text-xs text-left border-collapse">
+                <thead>
+                  <tr className="bg-slate-900 text-white font-bold border-b border-slate-800">
+                    <th className="py-3 px-3.5">Persons</th>
+                    <th className="py-3 px-3.5">Rated Load</th>
+                    <th className="py-3 px-3.5">Car Inside (CW × CD)</th>
+                    <th className="py-3 px-3.5">Lift Shaft (SW × SD)</th>
+                    <th className="py-3 px-3.5">Door Opening (OP)</th>
+                    <th className="py-3 px-3.5">Door Type</th>
+                    <th className="py-3 px-3.5">Rated Speed</th>
+                    <th className="py-3 px-3.5">Pit Depth</th>
+                    <th className="py-3 px-3.5">Overhead</th>
+                    <th className="py-3 px-3.5">Machine Room / Space</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-slate-100">
+                  {activeElevator.civilMatrix.map((row, rIdx) => (
+                    <tr
+                      key={rIdx}
+                      className={rIdx % 2 === 0 ? "bg-white" : "bg-slate-50/60 hover:bg-teal-50/30"}
+                    >
+                      <td className="py-3 px-3.5 font-bold text-slate-900 whitespace-nowrap">
+                        {row.persons} {typeof row.persons === "number" ? "Persons" : ""}
+                      </td>
+                      <td className="py-3 px-3.5 font-semibold text-brand-teal whitespace-nowrap">
+                        {row.capacity} kg
+                      </td>
+                      <td className="py-3 px-3.5 font-mono text-slate-800 whitespace-nowrap">
+                        {row.carW} × {row.carD} mm
+                      </td>
+                      <td className="py-3 px-3.5 font-mono font-semibold text-brand-orange whitespace-nowrap">
+                        {row.shaftW} × {row.shaftD} mm
+                      </td>
+                      <td className="py-3 px-3.5 font-mono text-slate-700 whitespace-nowrap">
+                        {row.entrance} mm
+                      </td>
+                      <td className="py-3 px-3.5 text-slate-600 whitespace-nowrap">
+                        {row.doorType}
+                      </td>
+                      <td className="py-3 px-3.5 text-slate-700 whitespace-nowrap">
+                        {row.speed} mps
+                      </td>
+                      <td className="py-3 px-3.5 font-mono text-slate-700 whitespace-nowrap">
+                        {row.pit} mm
+                      </td>
+                      <td className="py-3 px-3.5 font-mono text-slate-700 whitespace-nowrap">
+                        {row.overhead} mm
+                      </td>
+                      <td className="py-3 px-3.5 text-slate-600 font-mono text-[11px] whitespace-nowrap">
+                        {row.machineRoom}
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+
+            {/* Standard Electrical & Safety Parameters Grid */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 pt-2">
+              <div className="bg-white p-4 rounded-2xl border border-slate-200 space-y-1 text-xs">
+                <span className="text-slate-400 font-bold uppercase text-[10px] block">
+                  Power Supply & Traction Drive
+                </span>
+                <span className="font-bold text-slate-900 block">
+                  {activeElevator.standardSpecs.drive}
+                </span>
+                <span className="text-slate-500 text-[11px] block">
+                  Voltage: {activeElevator.standardSpecs.voltage}
+                </span>
+              </div>
+
+              <div className="bg-white p-4 rounded-2xl border border-slate-200 space-y-1 text-xs">
+                <span className="text-slate-400 font-bold uppercase text-[10px] block">
+                  Microprocessor Control System
+                </span>
+                <span className="font-bold text-slate-900 block">
+                  {activeElevator.standardSpecs.control}
+                </span>
+                <span className="text-slate-500 text-[11px] block">
+                  CAN bus serial group dispatch protocol
+                </span>
+              </div>
+
+              <div className="bg-white p-4 rounded-2xl border border-slate-200 space-y-1 text-xs">
+                <span className="text-slate-400 font-bold uppercase text-[10px] block">
+                  Blackout Rescue & Safety
+                </span>
+                <span className="font-bold text-brand-orange block">
+                  {activeElevator.standardSpecs.rescueSystem}
+                </span>
+                <span className="text-slate-500 text-[11px] block">
+                  IS 14665 bi-directional progressive safety clamps
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* ========================================================================= */}
+        {/* PART 4: TWO TYPES OF ELEVATOR DOORS: MANUAL AND AUTO                      */}
+        {/* ========================================================================= */}
+        <div id="doors-showcase" className="space-y-8 pt-8 border-t border-slate-200 scroll-mt-24">
+          <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
+            <div>
+              <span className="text-xs font-bold text-brand-orange uppercase tracking-widest block mb-1">
+                Step 2: Entrance Systems
+              </span>
+              <h2 className="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight">
+                Two Types of Elevator Doors: Manual & Automatic
+              </h2>
+              <p className="text-xs sm:text-sm text-slate-600 max-w-2xl mt-1">
+                Elevator doors are engineered to match building foot traffic and civil shaft widths. Switch between Manual and Automatic doors to inspect photographs, CAD drawings, and clear opening widths.
+              </p>
+            </div>
+
+            {/* Dual Door Switcher Tabs */}
+            <div className="flex items-center p-1.5 rounded-2xl bg-slate-100 border border-slate-200 shrink-0">
+              <button
+                onClick={() => setActiveDoorType("auto")}
+                className={`px-4 py-2 rounded-xl text-xs font-bold transition-all flex items-center space-x-2 cursor-pointer ${
+                  activeDoorType === "auto"
+                    ? "bg-brand-teal text-white shadow-sm"
+                    : "text-slate-600 hover:text-slate-900"
+                }`}
+              >
+                <DoorOpen className="w-4 h-4" />
+                <span>Automatic Doors ({automaticDoors.length})</span>
+              </button>
+
+              <button
+                onClick={() => setActiveDoorType("manual")}
+                className={`px-4 py-2 rounded-xl text-xs font-bold transition-all flex items-center space-x-2 cursor-pointer ${
+                  activeDoorType === "manual"
+                    ? "bg-brand-orange text-white shadow-sm"
+                    : "text-slate-600 hover:text-slate-900"
+                }`}
+              >
+                <DoorClosed className="w-4 h-4" />
+                <span>Manual Doors ({manualDoors.length})</span>
+              </button>
+            </div>
+          </div>
+
+          {/* Door Systems Banner Summary */}
+          <div className="p-6 rounded-3xl bg-slate-900 text-white flex flex-col md:flex-row md:items-center justify-between gap-4">
+            <div className="space-y-1">
+              <h3 className="text-lg font-bold">
+                {activeDoorType === "auto"
+                  ? "Automatic Doors: High-Speed, Silent & Full-Height Safety Curtains"
+                  : "Manual Doors: Economic Space-Saving For Compact Hoistways"}
+              </h3>
+              <p className="text-xs text-slate-300 max-w-3xl leading-relaxed">
+                {activeDoorType === "auto"
+                  ? "Featuring VVVF variable frequency door headers, smooth S-curve cycling, stainless steel hairline or glass big vision panels, and up to 154-beam infrared light curtains."
+                  : "Featuring high-tensile collapsible steel gates, imperforated solid privacy folding leaves, and smoked glass swing doors equipped with positive electromechanical interlocks."}
+              </p>
+            </div>
+
+            <div className="flex items-center space-x-2 text-xs text-teal-300 bg-slate-800 px-3.5 py-2 rounded-xl border border-slate-700 shrink-0">
+              <ShieldCheck className="w-4 h-4 text-brand-orange" />
+              <span>IS 14665 Tested Interlocks</span>
+            </div>
+          </div>
+
+          {/* Door Cards Display Grid */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {filteredElevators.map((elevator, idx) => (
+            {(activeDoorType === "auto" ? automaticDoors : manualDoors).map((door, dIdx) => (
               <ScrollReveal
-                key={elevator.id}
+                key={door.id}
                 direction="up"
-                delay={idx * 30}
-                distance={20}
+                delay={dIdx * 40}
+                distance={15}
                 className="h-full"
               >
-                <div className="bg-white rounded-3xl border border-slate-200 overflow-hidden shadow-xs hover:shadow-xl hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between group h-full">
+                <div className="bg-white rounded-3xl border border-slate-200 overflow-hidden shadow-xs hover:shadow-lg transition-all duration-300 flex flex-col justify-between group h-full">
                   <div>
-                    {/* High-Resolution Elevator Photograph */}
-                    <div className="h-56 bg-slate-900 relative overflow-hidden group/img">
-                      <img
-                        src={elevator.image}
-                        alt={elevator.name}
-                        className="w-full h-full object-cover group-hover/img:scale-105 transition-transform duration-500"
-                      />
-                      <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-transparent pointer-events-none" />
-
-                      {/* Application Category Badge */}
-                      <div className="absolute top-3 left-3">
-                        <span className="px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider bg-slate-900/85 text-teal-300 border border-slate-700 backdrop-blur-md">
-                          {elevator.category}
-                        </span>
+                    {/* Door Image + Drawing Header */}
+                    <div className="grid grid-cols-2 h-48 bg-slate-900 border-b border-slate-100 overflow-hidden">
+                      {/* Left: Photograph */}
+                      <div className="relative overflow-hidden group/img">
+                        <img
+                          src={door.image}
+                          alt={door.name}
+                          className="w-full h-full object-cover group-hover/img:scale-105 transition-transform duration-500"
+                        />
+                        <div className="absolute top-2 left-2 bg-slate-900/80 backdrop-blur-md px-2 py-0.5 rounded-md text-[9px] font-bold text-white uppercase">
+                          Photo
+                        </div>
                       </div>
 
-                      {/* Brochure Ref */}
-                      <div className="absolute top-3 right-3 bg-slate-900/80 backdrop-blur-md px-2.5 py-1 rounded-lg text-[10px] font-mono text-slate-300 border border-slate-700">
-                        {elevator.brochurePage}
-                      </div>
-
-                      {/* Tagline */}
-                      <div className="absolute bottom-3 left-3 right-3 text-white text-xs font-medium truncate">
-                        {elevator.tagline}
+                      {/* Right: Technical Drawing */}
+                      <div
+                        className="relative bg-white p-2 flex items-center justify-center cursor-zoom-in group/draw"
+                        onClick={() => setLightboxImg(door.drawing)}
+                      >
+                        <img
+                          src={door.drawing}
+                          alt={`${door.name} CAD Drawing`}
+                          className="max-h-full max-w-full object-contain group-hover/draw:scale-105 transition-transform"
+                        />
+                        <div className="absolute top-2 right-2 bg-slate-900/80 backdrop-blur-md p-1 rounded-md text-white">
+                          <Maximize2 className="w-3 h-3" />
+                        </div>
                       </div>
                     </div>
 
                     {/* Card Content */}
-                    <div className="p-6 space-y-3">
+                    <div className="p-5 space-y-3">
                       <div>
-                        <span className="text-[11px] font-bold text-brand-teal block uppercase tracking-wider">
-                          {elevator.category}
+                        <div className="flex items-center justify-between">
+                          <span
+                            className={`text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded ${
+                              door.category === "automatic"
+                                ? "bg-teal-50 text-brand-teal"
+                                : "bg-orange-50 text-brand-orange"
+                            }`}
+                          >
+                            {door.category === "automatic" ? "Automatic Operator" : "Manual Gate"}
+                          </span>
+                          <span className="text-[10px] font-mono text-slate-400">
+                            Page {door.brochurePage}
+                          </span>
+                        </div>
+                        <h4 className="text-base font-black text-slate-900 group-hover:text-brand-teal transition-colors mt-1">
+                          {door.name}
+                        </h4>
+                        <span className="text-[11px] font-medium text-slate-500 block">
+                          {door.tagline}
                         </span>
-                        <h3 className="text-xl font-black text-slate-900 group-hover:text-brand-teal transition-colors">
-                          {elevator.name}
-                        </h3>
                       </div>
 
                       <p className="text-xs text-slate-600 line-clamp-2 leading-relaxed">
-                        {elevator.overview}
+                        {door.summary}
                       </p>
 
-                      {/* Quick Specs Summary */}
+                      {/* Specifications Summary List */}
                       <div className="pt-2 border-t border-slate-100 space-y-1.5 text-xs text-slate-700">
                         <div className="flex justify-between">
-                          <span className="text-slate-400 text-[11px]">Payload Capacity:</span>
+                          <span className="text-slate-400 text-[11px]">Clear Opening:</span>
                           <span className="font-bold text-slate-900 truncate max-w-[170px]">
-                            {elevator.standardSpecs.capacity}
+                            {door.specs.standardOpening}
                           </span>
                         </div>
                         <div className="flex justify-between">
-                          <span className="text-slate-400 text-[11px]">Rated Speed:</span>
-                          <span className="font-bold text-brand-teal truncate max-w-[170px]">
-                            {elevator.standardSpecs.ratedSpeed}
-                          </span>
-                        </div>
-                        <div className="flex justify-between">
-                          <span className="text-slate-400 text-[11px]">Drive System:</span>
+                          <span className="text-slate-400 text-[11px]">Finished Height:</span>
                           <span className="font-medium text-slate-800 truncate max-w-[170px]">
-                            {elevator.standardSpecs.drive}
+                            {door.specs.standardHeight}
+                          </span>
+                        </div>
+                        <div className="flex justify-between">
+                          <span className="text-slate-400 text-[11px]">Material:</span>
+                          <span className="font-medium text-slate-800 truncate max-w-[170px]">
+                            {door.specs.material}
                           </span>
                         </div>
                       </div>
                     </div>
                   </div>
 
-                  {/* Card Actions */}
-                  <div className="p-6 pt-0 flex gap-2">
-                    <Link
-                      to={`/elevators/${elevator.id}`}
-                      className="flex-1 py-2.5 px-4 rounded-xl bg-slate-900 hover:bg-brand-teal text-white text-xs font-bold transition-colors flex items-center justify-center space-x-2 shadow-sm"
+                  {/* Bottom Action */}
+                  <div className="p-5 pt-0">
+                    <button
+                      onClick={() => setLightboxImg(door.drawing)}
+                      className="w-full py-2 px-3 rounded-xl bg-slate-100 hover:bg-slate-900 text-slate-800 hover:text-white text-xs font-bold transition-colors flex items-center justify-center space-x-1.5 cursor-pointer"
                     >
-                      <span>View Specifications & Drawings</span>
-                      <ArrowRight className="w-3.5 h-3.5" />
-                    </Link>
-                    <Link
-                      to="/contact"
-                      className="py-2.5 px-3 rounded-xl bg-brand-orange hover:bg-brand-orange-hover text-white text-xs font-bold transition-colors"
-                      title="Request Site Survey"
-                    >
-                      Quote
-                    </Link>
+                      <Maximize2 className="w-3.5 h-3.5" />
+                      <span>Inspect CAD Drawing</span>
+                    </button>
                   </div>
                 </div>
               </ScrollReveal>
@@ -231,292 +646,62 @@ export default function Products({ onOpenBrochure }) {
           </div>
         </div>
 
-        {/* ========================================================================= */}
-        {/* SECTION 2: DOOR SYSTEMS (Manual & Automatic)                              */}
-        {/* ========================================================================= */}
-        <div id="doors-section" className="space-y-8 pt-8 border-t border-slate-200 scroll-mt-24">
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 p-6 sm:p-8 rounded-3xl bg-slate-900 text-white">
-            <div className="space-y-2">
-              <div className="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-orange-500/20 text-orange-300 text-xs font-bold uppercase tracking-wider border border-orange-500/30">
-                <DoorOpen className="w-3.5 h-3.5" />
-                <span>Entrance Systems</span>
-              </div>
-              <h2 className="text-xl sm:text-2xl font-black">Door Systems: Manual & Automatic</h2>
-              <p className="text-xs sm:text-sm text-slate-300 max-w-2xl leading-relaxed">
-                Doors are entrance configurations tailored to shaft widths and building traffic. Krupa provides both manual folding/swing doors for compact economical shafts and automatic high-speed sliding doors with full-height safety light curtains.
-              </p>
-            </div>
-            <Link
-              to="/doors"
-              className="px-5 py-2.5 rounded-xl bg-brand-teal hover:bg-teal-600 text-white text-xs font-bold shadow-md transition-all flex items-center space-x-2 shrink-0 self-start sm:self-auto"
-            >
-              <span>Explore All Door Types</span>
-              <ArrowRight className="w-4 h-4" />
-            </Link>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {/* Manual Doors Block */}
-            <div className="bg-white p-6 sm:p-8 rounded-3xl border border-slate-200 shadow-xs space-y-4">
-              <div className="flex items-center space-x-2.5 text-brand-orange">
-                <DoorClosed className="w-6 h-6" />
-                <div>
-                  <h3 className="text-lg font-bold text-slate-900">Manual Doors</h3>
-                  <span className="text-xs text-slate-500">Economic & Compact Shaft Footprints</span>
-                </div>
-              </div>
-              <p className="text-xs text-slate-600 leading-relaxed">
-                Collapsible steel gates, imperforated folding gates, and powder-coated manual swing doors with laminated glass viewing windows. Ideal for residential walk-ups, private villas, and industrial freight elevators.
-              </p>
-              <div className="space-y-2 pt-2">
-                {manualDoors.map((door) => (
-                  <div
-                    key={door.id}
-                    className="p-3 rounded-xl bg-slate-50 border border-slate-100 flex items-center justify-between text-xs"
-                  >
-                    <strong className="text-slate-800 font-bold">{door.name}</strong>
-                    <span className="text-slate-500 font-medium">{door.specs.standardOpening}</span>
-                  </div>
-                ))}
-              </div>
-              <Link
-                to="/doors"
-                className="inline-flex items-center space-x-1 text-xs font-bold text-brand-orange hover:text-brand-orange-hover pt-1"
-              >
-                <span>Inspect Manual Doors Catalog</span>
-                <ChevronRight className="w-3.5 h-3.5" />
-              </Link>
-            </div>
-
-            {/* Automatic Doors Block */}
-            <div className="bg-white p-6 sm:p-8 rounded-3xl border border-slate-200 shadow-xs space-y-4">
-              <div className="flex items-center space-x-2.5 text-brand-teal">
-                <DoorOpen className="w-6 h-6" />
-                <div>
-                  <h3 className="text-lg font-bold text-slate-900">Automatic Doors</h3>
-                  <span className="text-xs text-slate-500">High Speed, Whisper Quiet & Safe</span>
-                </div>
-              </div>
-              <p className="text-xs text-slate-600 leading-relaxed">
-                VVVF microprocessor-controlled center-opening, telescopic side-slide, glass big vision, and 4-panel freight entrance systems. Equipped with full-height infrared light curtains that prevent passenger trapping.
-              </p>
-              <div className="space-y-2 pt-2">
-                {automaticDoors.slice(0, 6).map((door) => (
-                  <div
-                    key={door.id}
-                    className="p-3 rounded-xl bg-slate-50 border border-slate-100 flex items-center justify-between text-xs"
-                  >
-                    <strong className="text-slate-800 font-bold">{door.name}</strong>
-                    <span className="text-slate-500 font-medium">{door.specs.standardOpening}</span>
-                  </div>
-                ))}
-              </div>
-              <Link
-                to="/doors"
-                className="inline-flex items-center space-x-1 text-xs font-bold text-brand-teal hover:text-teal-700 pt-1"
-              >
-                <span>Inspect Automatic Doors Catalog</span>
-                <ChevronRight className="w-3.5 h-3.5" />
-              </Link>
-            </div>
-          </div>
-        </div>
-
-        {/* ========================================================================= */}
-        {/* SECTION 3: TRACTION MACHINES BRIDGE (Geared vs. Gearless PMSM)            */}
-        {/* ========================================================================= */}
-        <div id="machines-bridge" className="space-y-6 pt-8 border-t border-slate-200 scroll-mt-24">
-          <div className="bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 rounded-3xl p-6 sm:p-10 text-white border border-slate-800 space-y-6 shadow-xl">
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-700/80 pb-4">
-              <div className="space-y-1.5">
-                <div className="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-teal-500/20 text-teal-300 text-xs font-bold uppercase tracking-wider border border-teal-500/30">
-                  <Cpu className="w-3.5 h-3.5" />
-                  <span>Traction Machinery</span>
-                </div>
-                <h2 className="text-2xl sm:text-3xl font-black">
-                  Traction Machinery: Geared & Gearless PMSM
-                </h2>
-                <p className="text-xs sm:text-sm text-slate-300 max-w-2xl leading-relaxed">
-                  Elevator performance depends on the right traction machine. We manufacture and deploy both heavy-duty geared machines for high-tonnage freight and Permanent Magnet Synchronous (PMS) gearless direct-drive motors for energy-efficient passenger rides.
-                </p>
-              </div>
-              <Link
-                to="/technology"
-                className="px-5 py-2.5 rounded-xl bg-brand-orange hover:bg-brand-orange-hover text-white text-xs font-bold transition-all shadow-md flex items-center space-x-2 shrink-0 self-start sm:self-auto"
-              >
-                <span>Explore Technology & Machines</span>
-                <ArrowRight className="w-4 h-4" />
-              </Link>
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              {/* Gearless Summary */}
-              <div className="p-5 rounded-2xl bg-slate-800/80 border border-slate-700/80 space-y-3">
-                <div className="flex items-center space-x-2 text-teal-300">
-                  <Sparkles className="w-5 h-5" />
-                  <h3 className="text-base font-bold text-white">Gearless PMS Machines</h3>
-                </div>
-                <p className="text-xs text-slate-300 leading-relaxed">
-                  Permanent Magnet Synchronous motors mount directly to the traction sheave, eliminating gearboxes. Delivers up to 40% energy savings, sub-50dB acoustics, and 100% gear oil-free operation for residential towers, hotels, and MRL elevators.
-                </p>
-                <div className="text-[11px] text-teal-300 font-bold flex items-center space-x-2">
-                  <CheckCircle2 className="w-4 h-4 text-brand-teal shrink-0" />
-                  <span>Sub-50 dB &bull; 30-40% Energy Savings &bull; Oil-Free</span>
-                </div>
-              </div>
-
-              {/* Geared Summary */}
-              <div className="p-5 rounded-2xl bg-slate-800/80 border border-slate-700/80 space-y-3">
-                <div className="flex items-center space-x-2 text-orange-300">
-                  <Cpu className="w-5 h-5" />
-                  <h3 className="text-base font-bold text-white">Geared Traction Machines</h3>
-                </div>
-                <p className="text-xs text-slate-300 leading-relaxed">
-                  Heavy-duty helical and bronze alloy worm reduction gears built for massive torque. Engineered to withstand continuous industrial duty cycles, heavy pallet-truck loading in goods elevators, and multi-tier car elevators.
-                </p>
-                <div className="text-[11px] text-orange-300 font-bold flex items-center space-x-2">
-                  <CheckCircle2 className="w-4 h-4 text-brand-orange shrink-0" />
-                  <span>High Starting Torque &bull; M67 & M76 Series &bull; Rugged Dependability</span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* CUSTOMIZATION SECTION */}
-        <CustomizationProcess />
-
-        {/* ========================================================================= */}
-        {/* CIVIL HOISTWAY LAYOUTS & DIMENSION MATRIX (Catalog Data)                  */}
-        {/* ========================================================================= */}
-        <div id="civil-matrix" className="pt-8 border-t border-slate-200 space-y-8">
-          <div>
-            <div className="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-teal-50 border border-teal-200 text-brand-teal text-xs font-bold uppercase tracking-wider mb-2">
-              <Compass className="w-3.5 h-3.5" />
-              <span>Full Engineering Catalog</span>
-            </div>
-            <h2 className="text-2xl sm:text-3xl font-black text-slate-900">
-              Civil Hoistway Layouts & Dimension Matrix
-            </h2>
-            <p className="text-xs sm:text-sm text-slate-600 max-w-2xl mt-1">
-              Architectural shaft dimensions, car inside clearances, entrance opening widths, pit depths, and overhead heights verbatim from catalog pages 18–23.
-            </p>
-          </div>
-
-          {/* Model Specification Tabs */}
-          <div className="flex flex-wrap gap-2 border-b border-slate-200 pb-3">
-            {[
-              { id: "automatic-doors", label: "Automatic Passenger" },
-              { id: "mrl", label: "MRL Traction" },
-              { id: "manual-doors", label: "Manual Passenger" },
-              { id: "capsule", label: "Capsule Panoramic" },
-              { id: "hospital", label: "Hospital Stretcher" },
-              { id: "goods", label: "Goods Freight" },
-              { id: "home", label: "Home Villa Lift" },
-              { id: "hydraulic", label: "Hydraulic System" },
-            ].map((tab) => (
-              <button
-                key={tab.id}
-                onClick={() => setActiveSpecTab(tab.id)}
-                className={`px-4 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer ${
-                  activeSpecTab === tab.id
-                    ? "bg-brand-teal text-white shadow-sm"
-                    : "bg-slate-100 hover:bg-slate-200 text-slate-700"
-                }`}
-              >
-                {tab.label}
-              </button>
-            ))}
-          </div>
-
-          {/* Active Specification Detail Card */}
-          <div className="bg-slate-900 rounded-3xl p-6 sm:p-8 text-white space-y-6">
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-800 pb-4">
-              <div>
-                <span className="text-xs text-teal-300 font-mono block">
-                  Catalog Brochure {currentSpec.brochurePage}
-                </span>
-                <h3 className="text-xl font-black">{currentSpec.title}</h3>
-                <p className="text-xs text-slate-300 mt-0.5">{currentSpec.subtitle}</p>
-              </div>
-
-              {currentSpec.drawing && (
-                <button
-                  onClick={() => setLightboxDrawing(currentSpec.drawing)}
-                  className="px-4 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-teal-300 text-xs font-bold border border-slate-700 transition-all flex items-center space-x-1.5 cursor-pointer self-start sm:self-auto"
-                >
-                  <Maximize2 className="w-3.5 h-3.5" />
-                  <span>Enlarge Technical Drawing</span>
-                </button>
-              )}
-            </div>
-
-            {/* Drawing Preview */}
-            {currentSpec.drawing && (
-              <div
-                className="bg-white rounded-2xl p-4 flex items-center justify-center max-h-[360px] overflow-hidden cursor-zoom-in"
-                onClick={() => setLightboxDrawing(currentSpec.drawing)}
-              >
-                <img
-                  src={currentSpec.drawing}
-                  alt={`${currentSpec.title} CAD Drawing`}
-                  className="max-h-[320px] object-contain"
-                />
-              </div>
-            )}
-
-            {/* Merged Civil Specifications Table */}
-            <div className="space-y-3">
-              <span className="text-xs font-bold text-slate-300 uppercase tracking-wider block">
-                Official Civil Dimensions Matrix (with merged cells for common data):
-              </span>
-              <MergedCivilTable
-                rows={currentSpec.table}
-                tableTitle={currentSpec.title}
-              />
-            </div>
-          </div>
-        </div>
+        {/* Technical Consultation CTA */}
+        <CTASection
+          title="Need Custom Hoistway Layouts or Non-Standard Doors?"
+          subtitle="Our Nikol engineering headquarters creates bespoke AutoCAD GA drawings for narrow shafts, shallow pits, and high-tonnage cargo hoists."
+          badge="Direct Nikol Engineering & CAD Team"
+          variant="gradient"
+        />
       </div>
 
-      {/* Lightbox for Zooming CAD Drawing */}
-      {lightboxDrawing && (
+      {/* ========================================================================= */}
+      {/* LIGHTBOX MODAL: FULL RESOLUTION CAD DRAWING VIEW                         */}
+      {/* ========================================================================= */}
+      {lightboxImg && (
         <div
-          className="fixed inset-0 z-50 bg-slate-950/90 backdrop-blur-md flex flex-col items-center justify-center p-4 animate-in fade-in duration-200"
-          onClick={() => setLightboxDrawing(null)}
+          onClick={() => setLightboxImg(null)}
+          className="fixed inset-0 z-50 bg-slate-950/85 backdrop-blur-sm p-4 sm:p-10 flex items-center justify-center animate-in fade-in duration-200"
+          role="dialog"
+          aria-modal="true"
         >
           <div
-            className="relative bg-white rounded-3xl p-6 max-w-4xl w-full max-h-[90vh] flex flex-col items-center shadow-2xl border border-slate-700"
             onClick={(e) => e.stopPropagation()}
+            className="relative bg-white rounded-3xl p-4 sm:p-6 max-w-4xl w-full max-h-[90vh] flex flex-col shadow-2xl overflow-hidden"
           >
-            <div className="w-full flex justify-between items-center pb-4 border-b border-slate-100">
-              <h3 className="text-base font-black text-slate-900">
-                Official General Arrangement (GA) Drawing
-              </h3>
+            <div className="flex justify-between items-center pb-3 border-b border-slate-200">
+              <span className="text-xs font-bold text-slate-700 uppercase tracking-wider">
+                Full-Resolution CAD Hoistway Layout Schematic
+              </span>
               <button
-                onClick={() => setLightboxDrawing(null)}
-                className="p-2 rounded-full hover:bg-slate-100 text-slate-500 hover:text-slate-900 transition-colors cursor-pointer"
+                onClick={() => setLightboxImg(null)}
+                className="p-1.5 rounded-xl hover:bg-slate-100 text-slate-600 transition-colors cursor-pointer"
+                aria-label="Close CAD Zoom Lightbox"
               >
-                <X className="w-6 h-6" />
+                <X className="w-5 h-5" />
               </button>
             </div>
-            <div className="overflow-auto max-h-[72vh] w-full flex items-center justify-center p-4 bg-slate-50/60 rounded-2xl my-3">
+
+            <div className="flex-1 overflow-auto p-4 flex items-center justify-center">
               <img
-                src={lightboxDrawing}
-                alt="Technical Drawing"
-                className="max-h-[65vh] object-contain rounded-lg shadow-sm"
+                src={lightboxImg}
+                alt="Enlarged CAD Technical Drawing"
+                className="max-h-[72vh] max-w-full object-contain"
               />
+            </div>
+
+            <div className="pt-3 border-t border-slate-100 flex justify-between items-center text-xs text-slate-500">
+              <span>All dimensions in millimeters (mm) per IS 14665</span>
+              <button
+                onClick={() => setLightboxImg(null)}
+                className="px-4 py-1.5 rounded-xl bg-slate-900 text-white font-bold text-xs"
+              >
+                Close
+              </button>
             </div>
           </div>
         </div>
       )}
-
-      <CTASection
-        title="Ready to Plan Your Custom Elevator Installation?"
-        subtitle="Our engineering team provides complimentary site surveys, custom CAD layouts, and verified civil shaft calculations across Gujarat and Western India."
-        badge="Direct Bakrol Factory & Nikol Engineering Hub"
-        variant="gradient"
-      />
     </div>
   );
 }

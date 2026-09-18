@@ -62,3 +62,22 @@ export const companyData = {
     { title: "Smooth", desc: "Closed-loop V3F drive for gentle starts and bump-free stops." }
   ]
 };
+
+export const trustedSolutionSection = {
+  heading: "Trusted Elevator Solution",
+  imageBandWords: ["Smart", "Sophisticated", "Strength", "Spacious", "Smooth"],
+  quote:
+    "A flexible solution that unifies form and function. An all-round elevator applicable to multiple building types, with outstanding architectural flexibility for car, door and shaft dimensions. Precision assure a smooth and safe user experience.",
+  modernElevatorHeading: "Modern Elevator for Residential & Commercial Buildings",
+  modernElevatorParagraphs: [
+    "Created to enhance the modern and contemporary look of low, mid & high-rise residential buildings and low & mid-rise commercial buildings.",
+    "The design-rich KRUPA ELEVATORS now offer more flexibility to choose the ideal elevators that add to the look, feel, style and class of both your building's interiors and exteriors.",
+    "Excellent ride comfort, energy savings, product design with futuristic technology & impressive aesthetics all come together in perfect combination from KRUPA ELEVATORS, to take the quality of elevator experiences several notches higher for the builder, developer, architect, facility manager and the end user.",
+  ],
+  elevateYourExperience: [
+    "INSPIRING DESIGN",
+    "IMPROVED COMFORT",
+    "INCREASED ECO-EFFICIENCY",
+    "IDEAL PARTNER",
+  ],
+};

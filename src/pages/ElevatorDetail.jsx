@@ -112,13 +112,15 @@ export default function ElevatorDetail({ onOpenBrochure }) {
                   <span>Request Site Survey & Layout</span>
                   <ArrowRight className="w-4 h-4" />
                 </Link>
-                <a
-                  href="#civil-specifications"
-                  className="px-5 py-3.5 rounded-xl bg-slate-900/90 hover:bg-slate-800 text-slate-200 border border-slate-700 text-xs sm:text-sm font-bold transition-all flex items-center space-x-2"
+                <button
+                  onClick={() => {
+                    document.getElementById("civil-specifications")?.scrollIntoView({ behavior: "smooth" });
+                  }}
+                  className="px-5 py-3.5 rounded-xl bg-slate-900/90 hover:bg-slate-800 text-slate-200 border border-slate-700 text-xs sm:text-sm font-bold transition-all flex items-center space-x-2 cursor-pointer"
                 >
                   <SlidersHorizontal className="w-4 h-4 text-brand-teal" />
                   <span>View Specifications Matrix</span>
-                </a>
+                </button>
               </div>
             </div>
 

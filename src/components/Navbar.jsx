@@ -102,15 +102,15 @@ export default function Navbar() {
 
           <div className="flex items-center space-x-3 text-[11px]">
             <Link
-              to="/interior"
+              to="/interiors"
               className="inline-flex items-center space-x-1 text-slate-300 hover:text-brand-teal transition-colors"
             >
-              <Sparkles className="w-3 h-3 text-brand-teal" />
+              <Sparkles className="w-3.5 h-3.5 text-brand-teal" />
               <span className="font-medium">11 Cabin Finishes</span>
             </Link>
             <span className="text-slate-600">&bull;</span>
             <Link
-              to="/elevators#civil-matrix"
+              to="/elevators"
               className="text-slate-300 hover:text-brand-orange transition-colors font-medium"
             >
               CAD Dimensions

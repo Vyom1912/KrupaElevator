@@ -108,7 +108,7 @@ export default function ProductCard({
           </button>
         ) : (
           <Link
-            to="/elevators#civil-matrix"
+            to="/elevators"
             className="flex-1 py-2.5 px-3 rounded-xl bg-slate-900 hover:bg-brand-teal text-white text-xs font-bold transition-all flex items-center justify-center space-x-1.5 shadow-sm active:scale-95"
           >
             <SlidersHorizontal className="w-3.5 h-3.5 text-brand-teal" />

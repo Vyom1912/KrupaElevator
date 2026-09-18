@@ -21,208 +21,200 @@ import {
   Cpu,
   Wrench,
   Clock,
-  Phone
+  Phone,
+  Mail,
+  MapPin,
+  Send,
+  Check,
+  AlertCircle,
+  Eye,
+  Settings,
+  Scale,
+  Quote,
+  Maximize2
 } from "lucide-react";
-import { companyData } from "../data/companyData";
+import { companyData, trustedSolutionSection } from "../data/companyData";
 import { elevatorMaster } from "../data/elevatorMaster";
 import { interiorSeries } from "../data/interiorsMaster";
-import { technologiesMaster } from "../data/technologiesMaster";
-import { servicesMaster } from "../data/servicesMaster";
-import CustomizationProcess from "../components/CustomizationProcess";
-import SectionHeader from "../components/common/SectionHeader";
-import TrustStats from "../components/common/TrustStats";
-import FAQAccordion from "../components/common/FAQAccordion";
-import CTASection from "../components/common/CTASection";
 import ScrollReveal from "../components/ScrollReveal";
 import { assetUrl } from "../utils/assetPath";
 
+// Hero visual scenes
 const heroScenes = [
   {
     id: "building",
-    tag: "High-Rise Residential",
-    title: "Residential Towers & High-Rise",
-    subtitle: "High-speed passenger elevator with precision group control",
+    tag: "High-Rise Residential & Commercial",
+    title: "Passenger Elevators",
+    subtitle: "High-speed passenger elevator with precision group dispatch and whisper-quiet PMSM drive",
     image: assetUrl("/assets/hero/building.jpg"),
+    link: "/elevators"
   },
   {
     id: "villa",
-    tag: "Private Luxury Villa",
-    title: "Private Villas & Bungalows",
-    subtitle: "Panoramic glass home lift with whisper-quiet acoustics",
+    tag: "Private Luxury Villas & Bungalows",
+    title: "Home Villa Lifts",
+    subtitle: "Panoramic glass home lift with shallow 550mm pit and single-phase 220V power compatibility",
     image: assetUrl("/assets/generated/home-elevator.jpg"),
+    link: "/elevators"
   },
   {
     id: "commercial",
-    tag: "Commercial Atrium",
-    title: "Atriums & Shopping Malls",
-    subtitle: "High-traffic panoramic capsule elevators with smart dispatch",
+    tag: "Commercial Atriums & Retail",
+    title: "Capsule Elevators",
+    subtitle: "High-impact panoramic glass capsule elevators with architectural exterior contours",
     image: assetUrl("/assets/generated/capsule-hero.jpg"),
+    link: "/elevators"
   },
   {
     id: "hospital",
-    tag: "Hospital & Medical",
-    title: "Hospitals & Medical Centers",
-    subtitle: "Stretcher-friendly jerk-free bed elevators with priority recall",
+    tag: "Healthcare & Critical Care",
+    title: "Hospital Bed Elevators",
+    subtitle: "Stretcher-friendly bed lifts with micro-leveling accuracy (±3mm) and priority medical recall",
     image: assetUrl("/assets/hero/hospital.jpg"),
+    link: "/elevators"
   },
   {
     id: "car-park",
-    tag: "Automotive Car Park",
-    title: "Automated Car Parks",
-    subtitle: "Heavy-capacity automotive vehicle lifts & puzzle parking",
+    tag: "Automotive & Parking Facilities",
+    title: "Car Elevators & Parking",
+    subtitle: "Heavy-capacity automotive vehicle lifts up to 4000 kg with dual-side cabin operating stations",
     image: assetUrl("/assets/hero/car-park.jpg"),
+    link: "/elevators"
   },
   {
     id: "industrial",
-    tag: "Industrial Logistics",
-    title: "Industrial Warehouses",
-    subtitle: "Rugged high-tonnage freight cargo lifts with reinforced sills",
+    tag: "Industrial Logistics & Warehousing",
+    title: "Goods & Freight Lifts",
+    subtitle: "Rugged high-tonnage freight cargo lifts with reinforced steel sills and collapsible gates",
     image: assetUrl("/assets/hero/industrial.jpg"),
-  },
+    link: "/elevators"
+  }
 ];
 
-// 5 Visual Cards immediately below Hero
-const efficiencyCards = [
+// Elevator Mechanisms & Detailed Benefits Data
+const elevatorMechanisms = [
   {
-    title: "Energy Efficient",
-    tagline: "Up to 30% Power Savings",
-    desc: "Permanent Magnet Synchronous (PMS) gearless motors and V3F vector drives minimize electricity draw and reduce building peak electrical load.",
+    id: "pmsm",
+    name: "Permanent Magnet Synchronous Motor (PMSM) Gearless Drive",
+    shortTitle: "PMSM Gearless Traction",
+    tag: "Green Traction Technology",
     icon: Zap,
-    color: "teal"
+    color: "teal",
+    mechanism: "Direct-drive synchronous motor utilizing high-coercivity rare-earth neodymium permanent magnets. Rotates synchronously with the stator electromagnetic field without requiring a mechanical worm reduction gearbox.",
+    benefits: [
+      "Consumes up to 30% less electrical energy compared to conventional geared traction machines.",
+      "Whisper-quiet acoustic performance under 50 dB — eliminates mechanical gear meshing whine and vibrations.",
+      "100% oil-free and maintenance-friendly: zero gear oil, zero oil changes, and zero environmental leakage.",
+      "Compact, low-profile machine geometry fits directly inside shaft overhead for Machine-Room-Less (MRL) architecture."
+    ],
+    brochureRef: "Pages 12 & 13"
   },
   {
-    title: "Low Noise",
-    tagline: "Sub-50 dB Acoustic Comfort",
-    desc: "Direct-drive gearless machinery eliminates mechanical gear meshing noise and vibration, providing whisper-quiet journeys.",
-    icon: VolumeX,
-    color: "teal"
-  },
-  {
-    title: "Smooth Operation",
-    tagline: "Precision S-Curve Acceleration",
-    desc: "German-engineered inverter curves guarantee jerk-free start/stop transitions with millimeter-level leveling accuracy (±3 mm).",
+    id: "v3f",
+    name: "Variable Voltage Variable Frequency (V3F) Vector Inverter",
+    shortTitle: "V3F Vector Drive",
+    tag: "Ride Comfort & Motion Control",
     icon: Activity,
-    color: "teal"
+    color: "teal",
+    mechanism: "Microprocessor-controlled solid-state inverter modulating supply frequency and AC voltage with high-resolution closed-loop rotary encoder feedback, delivering continuous torque control across all speed ranges.",
+    benefits: [
+      "Custom German-engineered S-curve acceleration and deceleration profiles eliminate passenger head jolts and vibration.",
+      "Millimeter-level floor leveling accuracy (±3 mm) preventing tripping hazards for children, elderly, and wheelchair users.",
+      "Drastically suppresses inrush starting current, eliminating building electrical voltage dips and transformer heating.",
+      "Extends the operational lifespan of wire ropes, guide rails, and traction sheaves by minimizing mechanical shock loads."
+    ],
+    brochureRef: "Page 13"
   },
   {
-    title: "Long-Lasting Components",
-    tagline: "Rigorous Factory Testing",
-    desc: "100% factory-bench tested parts from our Bakrol facility, high-strength steel wire ropes, and solid-state LED systems with 6x lifespan.",
-    icon: Shield,
-    color: "orange"
-  },
-  {
-    title: "Customized Solutions",
-    tagline: "Tailored to Any Shaft",
-    desc: "Bespoke hoistway dimensions, shallow pit depths (550 mm for villas), MRL rooftop savings, and single-phase 220V domestic power compatibility.",
-    icon: SlidersHorizontal,
-    color: "orange"
-  }
-];
-
-// Quick Topic Directory Cards with details and direct links
-const topicCards = [
-  {
-    title: "Elevator Applications",
-    tagline: "Custom Shaft Engineering",
-    desc: "Passenger, Panoramic Capsule, Hospital Bed, Heavy Goods, Car Parking, MRL, and Luxury Villa Home lifts.",
-    link: "/elevators",
-    cta: "Explore Elevators",
-    icon: Building2,
-    badge: "Applications"
-  },
-  {
-    title: "Door Systems",
-    tagline: "Manual & Automatic Entrances",
-    desc: "VVVF automatic center-opening, telescopic sliding, imperforated folding gates, and architectural glass doors.",
-    link: "/doors",
-    cta: "Explore Door Systems",
-    icon: DoorOpen,
-    badge: "Entrances"
-  },
-  {
-    title: "Cabin Interiors",
-    tagline: "Curated Cabin Series",
-    desc: "Basic, Standard, Semi, Design, and Premium series with decorative laser etching patterns and modern COP/LOPs.",
-    link: "/interiors",
-    cta: "Explore Interiors",
-    icon: Sparkles,
-    badge: "Aesthetics"
-  },
-  {
-    title: "Technology & Machines",
-    tagline: "Gearless PMSM & Geared Drives",
-    desc: "High-efficiency Permanent Magnet direct-drive motors, German-know-how V3F inverters, and failsafe ARD.",
-    link: "/technology",
-    cta: "Explore Technology",
-    icon: Cpu,
-    badge: "Engineering"
-  },
-  {
-    title: "Service & Maintenance",
-    tagline: "Factory Care & 24/7 Response",
-    desc: "Emergency technician squads across Gujarat, preventive health audits, genuine spare parts, and modernization.",
-    link: "/services",
-    cta: "Explore Services",
-    icon: Wrench,
-    badge: "Support"
-  }
-];
-
-// 5 Engineering Pillars for Why Choose Us
-const whyUsPillars = [
-  {
-    title: "Direct In-House Manufacturing",
-    subtitle: "Bakrol Fabrication Plant",
-    desc: "Every hoistway component, cabin frame, and door system is precision-manufactured and bench-tested at our Bakrol facility under strict quality controls.",
-    icon: Award,
-    highlight: "Zero Intermediary Markups"
-  },
-  {
-    title: "Dedicated CAD & Civil Design Office",
-    subtitle: "Nikol Engineering Headquarters",
-    desc: "Our specialized design office generates custom AutoCAD General Arrangement (GA) layouts and structural load calculations for architects and builders.",
-    icon: Compass,
-    highlight: "Turnkey Civil Guidance"
-  },
-  {
-    title: "IS 14665 & BIS Standard Compliance",
-    subtitle: "Certified Safety Ecosystem",
-    desc: "Full adherence to Indian Standards and international safety codes, featuring certified overspeed governors, progressive safety gear, and Inbuilt CDL locks.",
+    id: "ard",
+    name: "Automatic Rescue Device (ARD) & Progressive Safety Gear",
+    shortTitle: "ARD Failsafe Rescue",
+    tag: "Blackout Emergency Protection",
     icon: ShieldCheck,
-    highlight: "100% Safety Certified"
+    color: "orange",
+    mechanism: "Integrated solid-state battery power pack with intelligent logic controller paired with a centrifugal bi-directional overspeed governor and hardened tool-steel progressive safety wedges mounted under the car frame.",
+    benefits: [
+      "Instantly engages upon city grid power failure: safely navigates car to the nearest floor and opens doors automatically.",
+      "Zero passenger entrapment risk during blackouts; operates fully unattended without requiring technician rescue.",
+      "Centrifugal governor continuously monitors car speed: trips safety clamps within milliseconds if rated velocity exceeds 115%.",
+      "Manufactured and 100% bench-tested strictly in compliance with IS 14665 Indian Standard elevator safety regulations."
+    ],
+    brochureRef: "Pages 14 & 15"
   },
   {
-    title: "24/7 Breakdown & Rapid Response",
-    subtitle: "Regional Technician Squads",
-    desc: "Mobile service engineers stationed across Ahmedabad, Gandhinagar, and Gujarat ready for immediate emergency breakdown callouts with genuine parts.",
-    icon: Clock,
-    highlight: "Immediate Assistance"
+    id: "curtain",
+    name: "Full-Height Multi-Beam Infrared Safety Light Curtains",
+    shortTitle: "Infrared Door Curtains",
+    tag: "Non-Contact Entrance Safety",
+    icon: Eye,
+    color: "teal",
+    mechanism: "Dense optical matrix comprising up to 154 criss-crossing invisible infrared beams spanning from 20 mm above floor level up to 1800 mm height across the elevator entrance threshold.",
+    benefits: [
+      "Non-contact passenger detection: interrupts door closing cycle immediately before any physical contact occurs.",
+      "Safeguards small children, pet leashes, hand luggage, wheelchair rims, and hospital stretchers from door pinching.",
+      "Self-diagnosing optical circuitry continuously verifies emitter/receiver alignment and signals door reopen on fault.",
+      "Operates reliably in bright sunlight, ambient elevator lobby illumination, and dusty environments."
+    ],
+    brochureRef: "Page 09"
   },
   {
-    title: "Bespoke Architectural Flexibility",
-    subtitle: "Tailored to Any Building",
-    desc: "Shallow pit depth (550 mm for villas), compact overhead (3100 mm), single-phase 220V household power compatibility, and machine-roomless (MRL) designs.",
-    icon: SlidersHorizontal,
-    highlight: "Fits Challenging Shafts"
+    id: "geared",
+    name: "Heavy-Duty Geared Traction Drive (High-Tonnage Freight & Car Lifts)",
+    shortTitle: "Heavy-Duty Geared Drive",
+    tag: "Industrial Load Carrying",
+    icon: Settings,
+    color: "orange",
+    mechanism: "Precision-machined centrifugally cast phosphor bronze worm wheel paired with a carburized case-hardened alloy steel worm shaft housed in a rigid cast-iron oil bath case, driven by a high-starting-torque electric motor.",
+    benefits: [
+      "Enormous load-bearing torque capacity designed to withstand dynamic shock loads of 1000 kg to 5000 kg freight.",
+      "Heavy-gauge structural counterweight and guide rail assemblies built to endure industrial forklift and pallet truck loading.",
+      "Smooth crawl-speed precision leveling for seamless rolling vehicle and wheeled cart transfer.",
+      "Rugged durability with 25+ years expected service life under intense industrial logistics duty cycles."
+    ],
+    brochureRef: "Pages 16 & 17"
   }
 ];
 
 export default function Home({ onOpenBrochure }) {
   const [currentHeroIndex, setCurrentHeroIndex] = useState(0);
 
-  // Carousel timer
+  // In-page Query Form State
+  const [queryForm, setQueryForm] = useState({
+    name: "",
+    phone: "",
+    email: "",
+    buildingType: "Residential Apartment",
+    elevatorType: "Passenger Elevator",
+    stops: "G + 4 Floors",
+    capacity: "8 Persons (544 kg)",
+    location: "",
+    message: ""
+  });
+  const [querySubmitted, setQuerySubmitted] = useState(false);
+  const [querySubmitting, setQuerySubmitting] = useState(false);
+
+  // Hero carousel timer
   useEffect(() => {
     const timer = setInterval(() => {
       setCurrentHeroIndex((prev) => (prev + 1) % heroScenes.length);
-    }, 3500);
+    }, 4000);
     return () => clearInterval(timer);
   }, []);
+
+  const handleQuerySubmit = (e) => {
+    e.preventDefault();
+    setQuerySubmitting(true);
+    // Simulate instantaneous clean submission
+    setTimeout(() => {
+      setQuerySubmitting(false);
+      setQuerySubmitted(true);
+    }, 600);
+  };
 
   return (
     <div className="space-y-16 sm:space-y-24 pb-20 overflow-x-hidden">
       {/* ========================================================================= */}
-      {/* 1. HERO SECTION: Viewport-fitted, smooth background loop, fixed copy       */}
+      {/* 1. HERO SECTION                                                           */}
       {/* ========================================================================= */}
       <section className="relative w-full h-[calc(100vh-64px)] min-h-[580px] max-h-[820px] bg-slate-950 overflow-hidden flex items-center">
         {/* Animated Background Scenes */}
@@ -243,7 +235,7 @@ export default function Home({ onOpenBrochure }) {
                     isActive ? "scale-105" : "scale-100"
                   }`}
                 />
-                <div className="absolute inset-0 bg-gradient-to-r from-slate-950/95 via-slate-950/80 to-slate-950/40" />
+                <div className="absolute inset-0 bg-gradient-to-r from-slate-950/95 via-slate-950/80 to-slate-950/45" />
               </div>
             );
           })}
@@ -265,11 +257,11 @@ export default function Home({ onOpenBrochure }) {
                 </span>
               </h1>
               <p className="text-sm sm:text-base text-slate-300 leading-relaxed max-w-xl">
-                We engineer and manufacture elevator solutions focused on energy efficiency, smooth performance, comfort, and long-term reliability. With a range of 8 elevator applications, traction technologies, door systems, and custom configurations, we deliver solutions tailored to your building.
+                We engineer and manufacture certified elevator solutions focused on energy efficiency, smooth acoustic comfort, and long-term reliability. From 8 elevator applications to custom CAD hoistway configurations, our Nikol design team and Bakrol works deliver complete turnkey installations.
               </p>
             </div>
 
-            {/* CTA Buttons */}
+            {/* Quick CTAs */}
             <div className="pt-2 flex flex-wrap items-center gap-3">
               <Link
                 to="/elevators"
@@ -278,12 +270,14 @@ export default function Home({ onOpenBrochure }) {
                 <span>Explore Elevators</span>
                 <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
               </Link>
-              <Link
-                to="/contact"
-                className="px-6 py-3.5 rounded-xl bg-brand-orange hover:bg-brand-orange-hover text-white text-xs sm:text-sm font-bold shadow-lg shadow-brand-orange/20 transition-all flex items-center space-x-2"
+              <button
+                onClick={() => {
+                  document.getElementById("query-section")?.scrollIntoView({ behavior: "smooth" });
+                }}
+                className="px-6 py-3.5 rounded-xl bg-brand-orange hover:bg-brand-orange-hover text-white text-xs sm:text-sm font-bold shadow-lg shadow-brand-orange/20 transition-all flex items-center space-x-2 cursor-pointer"
               >
-                <span>Discuss Your Requirement</span>
-              </Link>
+                <span>Submit Query / Get Quote</span>
+              </button>
               {onOpenBrochure && (
                 <button
                   onClick={onOpenBrochure}
@@ -320,7 +314,7 @@ export default function Home({ onOpenBrochure }) {
             <button
               key={scene.id}
               onClick={() => setCurrentHeroIndex(idx)}
-              className={`h-2 rounded-full transition-all duration-300 ${
+              className={`h-2 rounded-full transition-all duration-300 cursor-pointer ${
                 idx === currentHeroIndex
                   ? "w-8 bg-brand-teal"
                   : "w-2 bg-white/30 hover:bg-white/60"
@@ -333,271 +327,405 @@ export default function Home({ onOpenBrochure }) {
       </section>
 
       {/* ========================================================================= */}
-      {/* 2. CORE TOPIC EXPLORER ROW: Details & Direct Links to Specific Pages       */}
+      {/* 2. ABOUT SECTION: Trusted Elevator Solution                              */}
       {/* ========================================================================= */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 -mt-6 sm:-mt-10 relative z-30">
-        <div className="bg-white rounded-3xl p-6 sm:p-8 border border-slate-200/90 shadow-xl space-y-6">
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-slate-100 pb-4">
-            <div>
-              <span className="text-xs font-bold text-brand-teal uppercase tracking-widest block mb-0.5">
-                Quick Directory
+      <section id="about-section" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-14 sm:space-y-20">
+        {/* Tier 1: Section Header & Architectural Manifesto Quote (Open Editorial) */}
+        <div className="space-y-8">
+          {/* Eyebrow & Standard Trust Line */}
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-slate-200 pb-4">
+            <div className="flex items-center space-x-3">
+              <div className="w-2.5 h-2.5 rounded-full bg-brand-teal animate-pulse" />
+              <span className="text-xs font-mono font-bold uppercase tracking-widest text-brand-teal">
+                ARCHITECTURAL SPECIFICATION & OVERVIEW
               </span>
-              <h2 className="text-xl sm:text-2xl font-black text-slate-900 tracking-tight">
-                Vertical Transportation Catalog & Systems
-              </h2>
             </div>
-            <p className="text-xs text-slate-500 max-w-md">
-              Select any core engineering domain below to inspect specifications, CAD hoistway drawings, and certified component catalogs.
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
-            {topicCards.map((topic, idx) => {
-              const Icon = topic.icon;
-              return (
-                <ScrollReveal
-                  key={topic.title}
-                  direction="up"
-                  delay={idx * 40}
-                  distance={15}
-                  className="h-full"
-                >
-                  <div className="bg-slate-50 hover:bg-white rounded-2xl p-4 sm:p-5 border border-slate-200/80 hover:border-brand-teal hover:shadow-lg transition-all duration-300 flex flex-col justify-between h-full group">
-                    <div className="space-y-2.5">
-                      <div className="flex items-center justify-between">
-                        <div className="w-10 h-10 rounded-xl bg-white border border-slate-200 text-brand-teal group-hover:bg-brand-teal group-hover:text-white flex items-center justify-center transition-colors shadow-2xs">
-                          <Icon className="w-5 h-5" />
-                        </div>
-                        <span className="text-[10px] font-bold px-2 py-0.5 rounded-md bg-slate-200/60 text-slate-700 uppercase tracking-wider">
-                          {topic.badge}
-                        </span>
-                      </div>
-                      <div>
-                        <h3 className="text-sm font-bold text-slate-900 group-hover:text-brand-teal transition-colors">
-                          {topic.title}
-                        </h3>
-                        <span className="text-[11px] font-semibold text-brand-orange block mt-0.5">
-                          {topic.tagline}
-                        </span>
-                      </div>
-                      <p className="text-[11px] text-slate-600 leading-relaxed line-clamp-3">
-                        {topic.desc}
-                      </p>
-                    </div>
-
-                    <div className="pt-3 border-t border-slate-200/60 mt-3">
-                      <Link
-                        to={topic.link}
-                        className="inline-flex items-center space-x-1.5 text-xs font-bold text-slate-900 group-hover:text-brand-teal transition-colors"
-                      >
-                        <span>{topic.cta}</span>
-                        <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
-                      </Link>
-                    </div>
-                  </div>
-                </ScrollReveal>
-              );
-            })}
-          </div>
-        </div>
-      </section>
-
-      {/* ========================================================================= */}
-      {/* 2. ENGINEERED FOR EFFICIENCY: 5 Visual Cards Immediately Below Hero        */}
-      {/* ========================================================================= */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="space-y-6">
-          <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
-            <div>
-              <span className="text-xs font-bold text-brand-teal uppercase tracking-widest block mb-1">
-                Core Engineering Philosophy
+            <div className="flex items-center space-x-4 text-xs font-medium text-slate-500">
+              <span className="flex items-center space-x-1.5">
+                <ShieldCheck className="w-4 h-4 text-brand-teal" />
+                <span>IS 14665 & BIS Certified</span>
               </span>
-              <h2 className="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight">
-                Engineered for Efficiency
+              <span className="hidden sm:inline text-slate-300">|</span>
+              <span className="hidden sm:flex items-center space-x-1.5 text-slate-600">
+                <MapPin className="w-3.5 h-3.5 text-brand-orange" />
+                <span>Nikol Studio & Bakrol Plant, Ahmedabad</span>
+              </span>
+            </div>
+          </div>
+
+          {/* Main Title & Open Architectural Statement */}
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start">
+            <div className="lg:col-span-5 space-y-3">
+              <h2 className="text-3xl sm:text-5xl font-black text-slate-900 tracking-tight leading-[1.08]">
+                {trustedSolutionSection.heading}
               </h2>
-              <p className="text-xs sm:text-sm text-slate-600 max-w-xl mt-1">
-                Five technical benchmarks that define every Krupa elevator installation from our Nikol design office to your building shaft.
+              <p className="text-sm text-slate-600 leading-relaxed max-w-md">
+                Pioneering precision vertical transportation engineered for seamless integration across contemporary residential towers and commercial infrastructures.
               </p>
             </div>
-            <Link
-              to="/technology"
-              className="inline-flex items-center space-x-1.5 text-xs font-bold text-brand-orange hover:text-brand-orange-hover"
-            >
-              <span>Explore Green Tech & PMS Drives</span>
-              <ChevronRight className="w-4 h-4" />
-            </Link>
-          </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
-            {efficiencyCards.map((card, idx) => {
-              const Icon = card.icon;
-              const isOrange = card.color === "orange";
+            {/* Architectural Pull Quote - Open, Left Bordered, Typographic Elegance */}
+            <div className="lg:col-span-7 relative pl-6 sm:pl-8 border-l-2 border-brand-teal">
+              <div className="absolute -left-2 top-0 w-4 h-4 rounded-full bg-brand-teal/20 flex items-center justify-center">
+                <div className="w-2 h-2 rounded-full bg-brand-teal" />
+              </div>
+              <p className="text-lg sm:text-2xl text-slate-800 font-light italic leading-relaxed tracking-tight">
+                "{trustedSolutionSection.quote}"
+              </p>
+              <div className="mt-4 flex flex-wrap items-center gap-x-4 gap-y-1 text-xs text-slate-500 font-mono">
+                <span className="font-bold text-brand-teal tracking-wider">KRUPA ELEVATORS DIRECTIVE</span>
+                <span className="text-slate-300">&bull;</span>
+                <span className="text-slate-600">Unified Form & Architectural Function</span>
+                <span className="text-slate-300">&bull;</span>
+                <span className="text-slate-600">Zero Middleman Markup</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Tier 2: 5 Defining Attributes — Open Architectural Metric Strip (No card boxes!) */}
+        <div className="space-y-2">
+          <span className="text-[11px] font-mono font-bold uppercase tracking-widest text-slate-500 block">
+            Five Core Attributes Defining Every Krupa Installation
+          </span>
+          <div className="border-y border-slate-200 divide-y sm:divide-y-0 sm:divide-x divide-slate-200 grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-5">
+            {trustedSolutionSection.imageBandWords.map((word, wIdx) => {
+              const attrIcons = [Cpu, Sparkles, ShieldCheck, Maximize2, Activity];
+              const Icon = attrIcons[wIdx] || Sparkles;
+              const descriptions = [
+                "Microprocessor logic & IoT telemetry",
+                "Architectural SS & titanium finishes",
+                "Certified heavy-gauge structural steel",
+                "Maximized usable cabin floor area",
+                "Sub-50dB closed-loop S-curve travel"
+              ];
+              const metricHighlights = [
+                "32-Bit Dual CPU",
+                "Grade 304 / 316",
+                "IS 14665 Tested",
+                "+18% Usable Vol",
+                "±3mm Floor Level"
+              ];
+
               return (
-                <ScrollReveal
-                  key={card.title}
-                  direction="up"
-                  delay={idx * 50}
-                  distance={20}
-                  className="h-full"
+                <div
+                  key={wIdx}
+                  className="group relative p-5 lg:p-6 transition-all duration-300 hover:bg-teal-50/40 flex flex-col justify-between space-y-4"
                 >
-                  <div className="bg-white rounded-2xl p-5 border border-slate-200/80 shadow-xs hover:shadow-lg hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between h-full group">
-                    <div className="space-y-3">
-                      <div
-                        className={`w-10 h-10 rounded-xl flex items-center justify-center transition-colors ${
-                          isOrange
-                            ? "bg-orange-50 text-brand-orange group-hover:bg-brand-orange group-hover:text-white"
-                            : "bg-teal-50 text-brand-teal group-hover:bg-brand-teal group-hover:text-white"
-                        }`}
-                      >
-                        <Icon className="w-5 h-5" />
-                      </div>
-                      <div>
-                        <h3 className="text-sm font-bold text-slate-900 group-hover:text-brand-teal transition-colors">
-                          {card.title}
-                        </h3>
-                        <span className="text-[11px] font-bold text-teal-700 block mt-0.5">
-                          {card.tagline}
-                        </span>
-                      </div>
-                      <p className="text-[11px] text-slate-600 leading-relaxed">
-                        {card.desc}
-                      </p>
-                    </div>
-                  </div>
-                </ScrollReveal>
-              );
-            })}
-          </div>
-        </div>
-      </section>
+                  {/* Top Accent Line on Hover */}
+                  <div className="absolute top-0 left-0 right-0 h-0.5 bg-brand-teal opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
 
-      {/* ========================================================================= */}
-      {/* 3. TRUST STATS BAR: Key quantitative metrics & engineering authority       */}
-      {/* ========================================================================= */}
-      <TrustStats />
-
-      {/* ========================================================================= */}
-      {/* 4. WHY CHOOSE KRUPA ELEVATORS ("WHY US")                                   */}
-      {/* ========================================================================= */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
-        <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
-          <div>
-            <span className="text-xs font-bold text-brand-orange uppercase tracking-widest block mb-1">
-              Proven Engineering Authority
-            </span>
-            <h2 className="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight">
-              Why Choose Krupa Elevators
-            </h2>
-            <p className="text-xs sm:text-sm text-slate-600 max-w-xl mt-1">
-              Direct factory manufacturing, certified safety engineering, and dedicated CAD assistance tailored to your specific building shaft.
-            </p>
-          </div>
-          <Link
-            to="/contact"
-            className="inline-flex items-center space-x-1.5 text-xs font-bold text-brand-teal hover:text-teal-700"
-          >
-            <span>Book a Site Survey with Nikol Office</span>
-            <ChevronRight className="w-4 h-4" />
-          </Link>
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4">
-          {whyUsPillars.map((pillar, idx) => {
-            const Icon = pillar.icon;
-            return (
-              <ScrollReveal
-                key={pillar.title}
-                direction="up"
-                delay={idx * 50}
-                distance={20}
-                className="h-full"
-              >
-                <div className="bg-white rounded-2xl p-5 border border-slate-200/80 shadow-xs hover:shadow-xl hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between h-full group">
                   <div className="space-y-3">
-                    <div className="w-11 h-11 rounded-xl bg-teal-50 border border-teal-100 text-brand-teal group-hover:bg-brand-teal group-hover:text-white flex items-center justify-center transition-colors">
-                      <Icon className="w-5 h-5" />
+                    <div className="flex items-center justify-between">
+                      <span className="font-mono text-xs font-black text-slate-400 group-hover:text-brand-teal transition-colors">
+                        0{wIdx + 1}
+                      </span>
+                      <Icon className="w-4 h-4 text-slate-400 group-hover:text-brand-teal transition-colors" />
                     </div>
                     <div>
-                      <h3 className="text-sm font-bold text-slate-900 group-hover:text-brand-teal transition-colors">
-                        {pillar.title}
+                      <h3 className="text-lg font-black text-slate-900 tracking-tight group-hover:text-brand-teal transition-colors">
+                        {word}
                       </h3>
-                      <span className="text-[11px] font-semibold text-slate-500 block mt-0.5">
-                        {pillar.subtitle}
+                      <span className="inline-block mt-0.5 text-[10px] font-mono font-bold uppercase tracking-wider text-brand-orange">
+                        {metricHighlights[wIdx]}
                       </span>
                     </div>
-                    <p className="text-[11px] text-slate-600 leading-relaxed">
-                      {pillar.desc}
+                    <p className="text-xs text-slate-600 leading-relaxed font-normal">
+                      {descriptions[wIdx]}
                     </p>
                   </div>
-                  <div className="pt-3 border-t border-slate-100 mt-3 text-[11px] font-bold text-brand-orange">
-                    {pillar.highlight}
-                  </div>
                 </div>
-              </ScrollReveal>
-            );
-          })}
+              );
+            })}
+          </div>
         </div>
-      </section>
 
-      {/* ========================================================================= */}
-      {/* 5. ABOUT KRUPA ELEVATORS                                                  */}
-      {/* ========================================================================= */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 rounded-3xl p-6 sm:p-12 text-white border border-slate-800 shadow-xl relative overflow-hidden">
-          <div className="absolute right-0 bottom-0 w-96 h-96 bg-brand-teal/10 rounded-full blur-3xl pointer-events-none" />
-          
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
-            <div className="lg:col-span-8 space-y-4">
-              <div className="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-teal-500/20 text-teal-300 text-xs font-bold uppercase tracking-wider border border-teal-500/30">
-                <Building2 className="w-3.5 h-3.5" />
-                <span>Manufacturing Authority Since 2008</span>
+        {/* Tier 3: Modern Elevator Narrative — Editorial Split Flow (No boxes inside boxes!) */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-center">
+          {/* Left Column: Visual Architectural Showcase with Blueprint Spec Overlays (5 cols) */}
+          <div className="lg:col-span-5 relative">
+            <div className="relative rounded-3xl overflow-hidden shadow-xl aspect-[4/5] sm:aspect-[3/4] lg:aspect-[4/5] bg-slate-950 group">
+              <img
+                src={assetUrl("/assets/hero/building.jpg")}
+                alt="Modern Building Elevator"
+                className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-700 opacity-90"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/20 to-transparent pointer-events-none" />
+
+              {/* Floating Blueprint Dimension Overlays */}
+              <div className="absolute top-4 left-4 right-4 flex items-center justify-between text-[11px] font-mono text-white/90">
+                <span className="bg-slate-900/85 backdrop-blur-md px-2.5 py-1 rounded-md border border-white/10 flex items-center space-x-1.5">
+                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
+                  <span>URBAN TOWERS & RESIDENCES</span>
+                </span>
+                <span className="bg-slate-900/85 backdrop-blur-md px-2.5 py-1 rounded-md border border-white/10">
+                  G + 1 TO G + 40
+                </span>
               </div>
-              <h2 className="text-2xl sm:text-3xl font-black text-white tracking-tight">
-                Trusted Elevator Solutions Across Gujarat & Western India
-              </h2>
-              <p className="text-xs sm:text-sm text-slate-300 leading-relaxed max-w-2xl">
-                A flexible solution that unifies form and function. An all-round elevator applicable to multiple building types, with outstanding architectural flexibility for cabin, door, and shaft dimensions. Precision assures a smooth, quiet, and safe user experience.
-              </p>
-              <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-2 text-xs">
-                <div className="bg-slate-800/80 p-3 rounded-xl border border-slate-700">
-                  <strong className="text-teal-300 block font-bold text-sm">Inspiring Design</strong>
-                  <span className="text-slate-400 text-[11px]">Architectural SS & glass</span>
+
+              {/* Bottom Technical Spec Overlay */}
+              <div className="absolute bottom-4 left-4 right-4 p-4 rounded-2xl bg-slate-900/90 backdrop-blur-md border border-white/10 text-white space-y-2">
+                <div className="flex items-center justify-between text-xs">
+                  <span className="font-bold text-brand-teal uppercase tracking-wider">
+                    Direct Plant Engineering
+                  </span>
+                  <span className="text-[10px] text-slate-400 font-mono">
+                    CAD DWG // REV-04
+                  </span>
                 </div>
-                <div className="bg-slate-800/80 p-3 rounded-xl border border-slate-700">
-                  <strong className="text-brand-orange block font-bold text-sm">Improved Comfort</strong>
-                  <span className="text-slate-400 text-[11px]">Sub-50dB closed loop</span>
+                <p className="text-xs text-slate-300 leading-relaxed">
+                  Full hoistway layout drawings & GA structural calculations generated at Nikol design office, fabricated at Bakrol works.
+                </p>
+                <div className="pt-2 flex items-center justify-between text-[10px] font-mono text-slate-400 border-t border-white/10">
+                  <span>SPEED: 0.65 – 2.0 M/S</span>
+                  <span>CAPACITY: 4 – 26 PASS</span>
+                  <span>IS 14665</span>
                 </div>
-                <div className="bg-slate-800/80 p-3 rounded-xl border border-slate-700">
-                  <strong className="text-teal-300 block font-bold text-sm">Eco-Efficiency</strong>
-                  <span className="text-slate-400 text-[11px]">Up to 30% PMS savings</span>
+              </div>
+            </div>
+          </div>
+
+          {/* Right Column: Narrative Steps — Open Vertical Hoistway Transit Track (7 cols) */}
+          <div className="lg:col-span-7 space-y-6">
+            <div className="space-y-2">
+              <div className="inline-flex items-center space-x-2 text-xs font-bold text-brand-orange uppercase tracking-wider">
+                <Building2 className="w-4 h-4" />
+                <span>Contemporary Urban Mobility</span>
+              </div>
+              <h3 className="text-2xl sm:text-3xl lg:text-4xl font-black text-slate-900 tracking-tight leading-tight">
+                {trustedSolutionSection.modernElevatorHeading}
+              </h3>
+            </div>
+
+            {/* Vertical Transit Track (No grey cards!) */}
+            <div className="relative pl-8 space-y-8 before:absolute before:left-3 before:top-2 before:bottom-2 before:w-0.5 before:bg-gradient-to-b before:from-brand-teal before:via-brand-orange before:to-slate-200">
+              {trustedSolutionSection.modernElevatorParagraphs.map((para, pIdx) => {
+                const stepMeta = [
+                  {
+                    floor: "01",
+                    title: "Architectural Integration & Hoistway Planning",
+                    tag: "Low, Mid & High-Rise Buildings"
+                  },
+                  {
+                    floor: "02",
+                    title: "Interior & Exterior Design Flexibility",
+                    tag: "Aesthetic Customization"
+                  },
+                  {
+                    floor: "03",
+                    title: "Synergy of Ride Comfort & Futuristic Technology",
+                    tag: "V3F & PMSM Efficiency"
+                  }
+                ];
+                const meta = stepMeta[pIdx];
+
+                return (
+                  <div key={pIdx} className="relative group">
+                    {/* Floor Node Marker on Track */}
+                    <div className="absolute -left-8 top-0.5 w-6 h-6 rounded-full bg-white border-2 border-brand-teal group-hover:border-brand-orange group-hover:bg-brand-orange transition-all duration-300 flex items-center justify-center shadow-xs">
+                      <span className="text-[9px] font-mono font-black text-slate-800 group-hover:text-white transition-colors">
+                        {meta.floor}
+                      </span>
+                    </div>
+
+                    <div className="space-y-1">
+                      <div className="flex flex-wrap items-center gap-x-3 gap-y-0.5">
+                        <h4 className="text-base font-bold text-slate-900 group-hover:text-brand-teal transition-colors">
+                          {meta.title}
+                        </h4>
+                        <span className="text-[10px] font-mono text-slate-600 uppercase font-semibold">
+                          [{meta.tag}]
+                        </span>
+                      </div>
+                      <p className="text-xs sm:text-sm text-slate-600 leading-relaxed font-normal">
+                        {para}
+                      </p>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+
+            {/* Direct Action Link */}
+            <div className="pt-4 border-t border-slate-200 flex flex-wrap items-center justify-between gap-4">
+              <span className="text-xs text-slate-500 font-medium">
+                Tailored for architects, builders, structural consultants, and project heads.
+              </span>
+              <Link
+                to="/elevators"
+                className="inline-flex items-center space-x-2 text-xs sm:text-sm font-bold text-brand-teal hover:text-teal-700 group"
+              >
+                <span>Explore All 8 Elevator Models & Layouts</span>
+                <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+              </Link>
+            </div>
+          </div>
+        </div>
+
+        {/* Tier 4: Elevate Your Experience — Open Architectural Quadrant (No card boxes!) */}
+        <div className="space-y-6">
+          <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-3">
+            <div>
+              <span className="text-xs font-mono font-bold uppercase tracking-widest text-brand-teal block mb-1">
+                CORE ENGINEERING PILLARS
+              </span>
+              <h3 className="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight">
+                Elevate Your Experience
+              </h3>
+            </div>
+            <span className="text-xs text-slate-500 max-w-sm">
+              Four technical cornerstones ensuring safety, durability, and luxury throughout the elevator's 25+ year lifespan.
+            </span>
+          </div>
+
+          {/* Open 4-Column Panel bounded by Hairline Dividers — NO BOX CARDS! */}
+          <div className="border-t border-b border-slate-200 divide-y md:divide-y-0 md:divide-x divide-slate-200 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 py-4">
+            {trustedSolutionSection.elevateYourExperience.map((pillar, pilIdx) => {
+              const pillarConfigs = [
+                {
+                  code: "ARC-01",
+                  cat: "Aesthetics",
+                  icon: Sparkles,
+                  badge: "11 Cabin Finishes",
+                  desc: "Futuristic cabin architecture, titanium gold, rose gold, and etched stainless steel that redefine building lobby and interior prestige."
+                },
+                {
+                  code: "MOT-02",
+                  cat: "Acoustics & Ride",
+                  icon: Activity,
+                  badge: "Sub-50 dB Serenity",
+                  desc: "German-engineered S-curve vector inverters and millimeter-level (±3 mm) precision leveling for a gentle, jerk-free passenger ride."
+                },
+                {
+                  code: "ECO-03",
+                  cat: "Sustainability",
+                  icon: Zap,
+                  badge: "Up to 30% Power Savings",
+                  desc: "Permanent Magnet Synchronous (PMSM) direct-drive gearless machinery and auto-idle sleep standby circuitry minimizing energy consumption."
+                },
+                {
+                  code: "SRV-04",
+                  cat: "Lifecycle Support",
+                  icon: ShieldCheck,
+                  badge: "Turnkey Civil Guidance",
+                  desc: "From Nikol CAD layout drafting and direct Bakrol manufacturing to 24/7 rapid emergency breakdown support squads across Gujarat."
+                }
+              ];
+              const cfg = pillarConfigs[pilIdx];
+              const Icon = cfg.icon;
+
+              return (
+                <div
+                  key={pilIdx}
+                  className="p-5 lg:p-6 space-y-4 group transition-all duration-300 hover:bg-slate-50/60"
+                >
+                  <div className="flex items-center justify-between">
+                    <span className="font-mono text-[10px] font-bold text-slate-400 group-hover:text-brand-teal transition-colors">
+                      {cfg.code} // {cfg.cat}
+                    </span>
+                    <div className="w-8 h-8 rounded-lg bg-slate-100 group-hover:bg-brand-teal group-hover:text-white text-slate-700 flex items-center justify-center transition-all duration-300">
+                      <Icon className="w-4 h-4" />
+                    </div>
+                  </div>
+
+                  <div className="space-y-1.5">
+                    <h4 className="text-base font-black text-slate-900 group-hover:text-brand-teal transition-colors">
+                      {pillar}
+                    </h4>
+                    <span className="inline-block text-[11px] font-mono font-bold text-brand-orange">
+                      {cfg.badge}
+                    </span>
+                  </div>
+
+                  <p className="text-xs text-slate-600 leading-relaxed font-normal">
+                    {cfg.desc}
+                  </p>
                 </div>
-                <div className="bg-slate-800/80 p-3 rounded-xl border border-slate-700">
-                  <strong className="text-brand-orange block font-bold text-sm">Ideal Partner</strong>
-                  <span className="text-slate-400 text-[11px]">Full lifecycle care</span>
+              );
+            })}
+          </div>
+        </div>
+
+        {/* Tier 5: Direct Engineering Presence — Unified Dual-Hub Infrastructure */}
+        <div className="space-y-4">
+          <div className="flex items-center justify-between text-xs text-slate-500 border-b border-slate-200 pb-2">
+            <div className="flex items-center space-x-2 font-mono font-bold text-slate-700 uppercase tracking-wider">
+              <Building2 className="w-4 h-4 text-brand-teal" />
+              <span>Direct In-House Infrastructure (Zero Intermediaries)</span>
+            </div>
+            <span className="hidden sm:inline font-mono text-[11px] text-brand-orange">
+              Nikol Drafting &bull; Bakrol Works &bull; 100% Bench Tested
+            </span>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-stretch">
+            {/* Nikol Studio Pane */}
+            <div className="relative rounded-3xl overflow-hidden bg-slate-900 border border-slate-200 group">
+              <div className="h-56 sm:h-64 relative overflow-hidden">
+                <img
+                  src={assetUrl("/assets/facilities/design-studio.jpg")}
+                  alt="Nikol CAD Design Studio"
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 opacity-80"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/40 to-transparent" />
+                <div className="absolute top-3 left-3 bg-slate-900/80 backdrop-blur-md px-2.5 py-1 rounded-md text-[10px] font-mono font-bold text-teal-300 border border-teal-500/20">
+                  HUB 01 // NIKOL DESIGN OFFICE
+                </div>
+                <div className="absolute bottom-3 left-3 right-3 text-white">
+                  <h4 className="text-lg font-bold text-white leading-tight">
+                    Nikol CAD & Civil Engineering Center
+                  </h4>
+                  <span className="text-xs text-teal-200 font-mono">
+                    AutoCAD GA Hoistway Drawings & Structural Load Guidance
+                  </span>
+                </div>
+              </div>
+              <div className="p-5 bg-white space-y-3">
+                <p className="text-xs text-slate-600 leading-relaxed">
+                  Dedicated engineering team preparing custom General Arrangement (GA) hoistway layouts, overhead beam structural calculations, pit depth guidance, and 3D architectural renderings tailored for builder project proposals.
+                </p>
+                <div className="pt-2 border-t border-slate-100 flex items-center justify-between text-xs text-slate-500 font-mono">
+                  <span className="flex items-center space-x-1">
+                    <Compass className="w-3.5 h-3.5 text-brand-teal" />
+                    <span>Nikol, Ahmedabad</span>
+                  </span>
+                  <span className="text-slate-800 font-bold">AutoCAD GA Service</span>
                 </div>
               </div>
             </div>
 
-            <div className="lg:col-span-4 bg-slate-800/90 rounded-2xl p-6 border border-slate-700 space-y-4 text-center sm:text-left">
-              <span className="text-xs font-bold text-teal-300 uppercase tracking-wider block">
-                Direct Engineering Facility
-              </span>
-              <p className="text-xs text-slate-300 leading-relaxed">
-                Nikol design headquarters handles civil layouts, structural analysis, and AutoCAD assistance. In-house fabrication takes place at our Bakrol plant.
-              </p>
-              <div className="pt-2 border-t border-slate-700 flex flex-col gap-2">
-                <Link
-                  to="/elevators"
-                  className="w-full py-2.5 rounded-xl bg-brand-teal hover:bg-teal-600 text-white text-xs font-bold text-center transition-colors"
-                >
-                  Browse Elevator Catalog
-                </Link>
-                <Link
-                  to="/contact"
-                  className="w-full py-2.5 rounded-xl bg-slate-700 hover:bg-slate-600 text-slate-200 text-xs font-bold text-center transition-colors"
-                >
-                  Consult Nikol Office
-                </Link>
+            {/* Bakrol Plant Pane */}
+            <div className="relative rounded-3xl overflow-hidden bg-slate-900 border border-slate-200 group">
+              <div className="h-56 sm:h-64 relative overflow-hidden">
+                <img
+                  src={assetUrl("/assets/facilities/bakrol-facility.jpg")}
+                  alt="Bakrol Manufacturing Facility"
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 opacity-80"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/40 to-transparent" />
+                <div className="absolute top-3 left-3 bg-slate-900/80 backdrop-blur-md px-2.5 py-1 rounded-md text-[10px] font-mono font-bold text-orange-300 border border-orange-500/20">
+                  HUB 02 // BAKROL MANUFACTURING PLANT
+                </div>
+                <div className="absolute bottom-3 left-3 right-3 text-white">
+                  <h4 className="text-lg font-bold text-white leading-tight">
+                    Bakrol Fabrication & Assembly Works
+                  </h4>
+                  <span className="text-xs text-orange-200 font-mono">
+                    CNC Laser Cutting, Press Brakes & Dynamic Safety Testing
+                  </span>
+                </div>
+              </div>
+              <div className="p-5 bg-white space-y-3">
+                <p className="text-xs text-slate-600 leading-relaxed">
+                  Fully equipped manufacturing plant featuring CNC fiber laser cutting, CNC hydraulic press brakes, precision welding fixtures, and full-height test towers verifying safety gears, governors, and car balances before dispatch.
+                </p>
+                <div className="pt-2 border-t border-slate-100 flex items-center justify-between text-xs text-slate-500 font-mono">
+                  <span className="flex items-center space-x-1">
+                    <Building2 className="w-3.5 h-3.5 text-brand-orange" />
+                    <span>Bakrol, Ahmedabad</span>
+                  </span>
+                  <span className="text-slate-800 font-bold">Direct In-House Works</span>
+                </div>
               </div>
             </div>
           </div>
@@ -605,37 +733,38 @@ export default function Home({ onOpenBrochure }) {
       </section>
 
       {/* ========================================================================= */}
-      {/* 5. ELEVATOR APPLICATIONS: 8 Models with Direct Detail Links                */}
+      {/* 3. OUR ELEVATOR SECTION                                                   */}
       {/* ========================================================================= */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
+      <section id="our-elevators-section" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
         <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
           <div>
             <span className="text-xs font-bold text-brand-teal uppercase tracking-widest block mb-1">
-              Comprehensive Range
+              Purpose-Built Product Lines
             </span>
             <h2 className="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight">
-              Elevator Applications
+              Our Elevator Applications
             </h2>
             <p className="text-xs sm:text-sm text-slate-600 max-w-xl mt-1">
-              Click "View Details" on any elevator to explore its dedicated engineering page, structural breakdown, and GA hoistway layout drawings.
+              Raw technical breakdown of 8 certified elevator models engineered for distinct structural dimensions, speed requirements, and duty cycles.
             </p>
           </div>
           <Link
             to="/elevators"
-            className="inline-flex items-center space-x-1.5 text-xs font-bold text-brand-teal hover:text-teal-700"
+            className="inline-flex items-center space-x-1.5 px-4 py-2 rounded-xl bg-slate-900 text-white text-xs font-bold hover:bg-brand-teal transition-all shadow-xs shrink-0"
           >
-            <span>Explore All Elevator Models</span>
+            <span>Open Elevator Engineering Console</span>
             <ArrowRight className="w-3.5 h-3.5" />
           </Link>
         </div>
 
+        {/* 8 Elevator Cards */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
           {elevatorMaster.map((elevator, idx) => (
             <ScrollReveal
               key={elevator.id}
               direction="up"
               delay={idx * 30}
-              distance={20}
+              distance={15}
               className="h-full"
             >
               <div className="bg-white rounded-3xl border border-slate-200 overflow-hidden shadow-xs hover:shadow-xl hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between group h-full">
@@ -646,7 +775,7 @@ export default function Home({ onOpenBrochure }) {
                       alt={elevator.name}
                       className="w-full h-full object-cover group-hover/img:scale-105 transition-transform duration-500"
                     />
-                    <div className="absolute top-2.5 left-2.5 bg-slate-900/80 backdrop-blur-md px-2.5 py-0.5 rounded-full text-[10px] font-bold text-teal-300 border border-slate-700">
+                    <div className="absolute top-2.5 left-2.5 bg-slate-900/85 backdrop-blur-md px-2.5 py-0.5 rounded-full text-[10px] font-bold text-teal-300 border border-slate-700">
                       {elevator.category}
                     </div>
                   </div>
@@ -660,17 +789,17 @@ export default function Home({ onOpenBrochure }) {
                     </p>
                     <div className="pt-2 border-t border-slate-100 flex justify-between text-[11px] text-slate-500">
                       <span>Speed: <strong className="text-slate-800">{elevator.standardSpecs.ratedSpeed}</strong></span>
-                      <span>Cap: <strong className="text-brand-teal">{elevator.standardSpecs.capacity.split(' ')[0]}P</strong></span>
+                      <span>Capacity: <strong className="text-brand-teal">{elevator.standardSpecs.capacity.split(' ')[0]}P</strong></span>
                     </div>
                   </div>
                 </div>
 
                 <div className="p-5 pt-0">
                   <Link
-                    to={`/elevators/${elevator.id}`}
+                    to="/elevators"
                     className="w-full py-2 px-3 rounded-xl bg-slate-100 group-hover:bg-slate-900 text-slate-800 group-hover:text-white text-xs font-bold transition-all flex items-center justify-center space-x-1.5"
                   >
-                    <span>View Details</span>
+                    <span>Inspect Drawing & Specs</span>
                     <ArrowRight className="w-3.5 h-3.5" />
                   </Link>
                 </div>
@@ -681,76 +810,26 @@ export default function Home({ onOpenBrochure }) {
       </section>
 
       {/* ========================================================================= */}
-      {/* 6. ELEVATOR TECHNOLOGIES PREVIEW: PMS, Gearless, Inverter, LED, etc.      */}
+      {/* 4. INTERIOR SECTION                                                       */}
       {/* ========================================================================= */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="bg-slate-900 rounded-3xl p-6 sm:p-10 text-white border border-slate-800 space-y-8 shadow-xl">
-          <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 border-b border-slate-800 pb-6">
-            <div>
-              <span className="text-xs font-bold text-teal-300 uppercase tracking-widest block mb-1">
-                Green Innovation
-              </span>
-              <h2 className="text-2xl sm:text-3xl font-black text-white">
-                Elevator Technologies
-              </h2>
-              <p className="text-xs sm:text-sm text-slate-300 max-w-xl mt-1">
-                Advanced German-know-how V3F drives, Permanent Magnet Synchronous traction, smart microprocessors, and ARD failsafes.
-              </p>
-            </div>
-            <Link
-              to="/technology"
-              className="inline-flex items-center space-x-2 px-5 py-2.5 rounded-xl bg-brand-teal hover:bg-teal-600 text-white text-xs font-bold transition-all shadow-sm shrink-0"
-            >
-              <span>Explore All Technologies</span>
-              <ArrowRight className="w-4 h-4" />
-            </Link>
-          </div>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-            {technologiesMaster.pillars.slice(0, 6).map((tech) => (
-              <div
-                key={tech.id}
-                className="bg-slate-800/70 p-5 rounded-2xl border border-slate-700/70 hover:border-brand-teal/60 transition-all space-y-2.5 flex flex-col justify-between"
-              >
-                <div className="space-y-2">
-                  <span className="text-[10px] font-bold px-2 py-0.5 rounded-md bg-teal-500/20 text-teal-300 border border-teal-500/30 uppercase">
-                    {tech.tag}
-                  </span>
-                  <h3 className="text-base font-bold text-white">{tech.name}</h3>
-                  <p className="text-xs text-slate-300 leading-relaxed line-clamp-2">
-                    {tech.summary}
-                  </p>
-                </div>
-                <div className="pt-2 border-t border-slate-700/60 text-[11px] text-teal-200 font-medium">
-                  {tech.claim}
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ========================================================================= */}
-      {/* 8. INTERIOR COLLECTIONS: Architectural Cabin Preview                      */}
-      {/* ========================================================================= */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
+      <section id="interior-section" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
         <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
           <div>
             <span className="text-xs font-bold uppercase tracking-widest text-brand-teal block mb-1">
-              Freedom of Design
+              Architectural Aesthetics & Finishes
             </span>
             <h2 className="text-2xl sm:text-3xl font-black text-slate-900">
-              Interior Collections
+              Cabin Interior Series
             </h2>
             <p className="text-xs sm:text-sm text-slate-600 max-w-xl mt-1">
-              Classified across Basic, Standard, Semi, Design, and Premium series with titanium gold, rose gold, and laser etched mirrors.
+              Classified across Basic, Standard, Semi, Design, and Premium series with titanium gold, rose gold, laser etching, and modern LED lighting.
             </p>
           </div>
           <Link
             to="/interiors"
             className="inline-flex items-center space-x-1.5 text-xs font-bold text-brand-orange hover:text-brand-orange-hover"
           >
-            <span>Launch Full Cabin Studio</span>
+            <span>Explore All 11 Cabin Finishes</span>
             <ChevronRight className="w-4 h-4" />
           </Link>
         </div>
@@ -760,8 +839,8 @@ export default function Home({ onOpenBrochure }) {
             <ScrollReveal
               key={item.id}
               direction="up"
-              delay={idx * 50}
-              distance={20}
+              delay={idx * 40}
+              distance={15}
               className="h-full"
             >
               <div className="bg-white rounded-3xl border border-slate-200 overflow-hidden shadow-xs hover:shadow-xl hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between group h-full">
@@ -805,7 +884,7 @@ export default function Home({ onOpenBrochure }) {
                     to="/interiors"
                     className="w-full flex items-center justify-center space-x-1 py-2.5 rounded-xl bg-slate-100 text-slate-800 text-xs font-bold hover:bg-slate-900 hover:text-white transition-colors"
                   >
-                    <span>Inspect Materials & Specifications</span>
+                    <span>Inspect Specifications</span>
                     <ArrowRight className="w-3.5 h-3.5" />
                   </Link>
                 </div>
@@ -816,140 +895,354 @@ export default function Home({ onOpenBrochure }) {
       </section>
 
       {/* ========================================================================= */}
-      {/* 9. DOOR SYSTEMS PREVIEW: Manual vs. Automatic Comparison                  */}
+      {/* 5. ELEVATOR MECHANISMS & BENEFITS SECTION                                  */}
       {/* ========================================================================= */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="bg-slate-100/80 rounded-3xl p-6 sm:p-10 border border-slate-200 space-y-6">
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-200 pb-4">
-            <div>
-              <span className="text-xs font-bold text-brand-teal uppercase tracking-widest block mb-1">
-                Entrance Configurations
-              </span>
-              <h2 className="text-2xl sm:text-3xl font-black text-slate-900">
-                Door Systems: Manual & Automatic
-              </h2>
-              <p className="text-xs sm:text-sm text-slate-600 max-w-xl mt-1">
-                Engineered for high-traffic speed, economic shaft footprint constraints, and architectural visibility.
-              </p>
-            </div>
-            <Link
-              to="/doors"
-              className="px-5 py-2.5 rounded-xl bg-slate-900 hover:bg-brand-teal text-white text-xs font-bold transition-all shadow-xs shrink-0 flex items-center space-x-2"
-            >
-              <span>Explore Door Systems</span>
-              <ArrowRight className="w-4 h-4" />
-            </Link>
+      <section id="mechanisms-section" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
+        <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
+          <div>
+            <span className="text-xs font-bold text-brand-teal uppercase tracking-widest block mb-1">
+              Core Technical Engineering
+            </span>
+            <h2 className="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight">
+              Elevator Mechanisms & Their Benefits
+            </h2>
+            <p className="text-xs sm:text-sm text-slate-600 max-w-2xl mt-1">
+              A transparent, raw engineering guide to the electro-mechanical drive systems, safety components, and motion control mechanisms powering Krupa elevators.
+            </p>
           </div>
+          <Link
+            to="/technology"
+            className="inline-flex items-center space-x-1.5 text-xs font-bold text-brand-orange hover:text-brand-orange-hover shrink-0"
+          >
+            <span>Explore Green Tech & Safety</span>
+            <ChevronRight className="w-4 h-4" />
+          </Link>
+        </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div className="bg-white p-6 rounded-2xl border border-slate-200 space-y-3">
-              <div className="flex items-center space-x-2 text-brand-orange">
-                <DoorClosed className="w-5 h-5" />
-                <h3 className="text-base font-bold text-slate-900">Manual Doors</h3>
-              </div>
-              <p className="text-xs text-slate-600 leading-relaxed">
-                Collapsible gates, imperforated folding leaves, and powder-coated full glass swing doors. Suited for residential apartments and tight shafts with economic requirements.
-              </p>
-              <Link
-                to="/doors"
-                className="inline-flex items-center space-x-1 text-xs font-bold text-brand-orange hover:text-brand-orange-hover pt-1"
-              >
-                <span>Browse Manual Doors</span>
-                <ChevronRight className="w-3.5 h-3.5" />
-              </Link>
-            </div>
+        {/* Mechanisms Breakdown Cards */}
+        <div className="space-y-6">
+          {elevatorMechanisms.map((item, idx) => {
+            const Icon = item.icon;
+            const isOrange = item.color === "orange";
 
-            <div className="bg-white p-6 rounded-2xl border border-slate-200 space-y-3">
-              <div className="flex items-center space-x-2 text-brand-teal">
-                <DoorOpen className="w-5 h-5" />
-                <h3 className="text-base font-bold text-slate-900">Automatic Doors</h3>
-              </div>
-              <p className="text-xs text-slate-600 leading-relaxed">
-                VVVF center-opening, telescopic side-slide, big vision glass, and 4-panel freight entrance systems. Fast, silent, and safe with full-height light curtains.
-              </p>
-              <Link
-                to="/doors"
-                className="inline-flex items-center space-x-1 text-xs font-bold text-brand-teal hover:text-teal-700 pt-1"
+            return (
+              <ScrollReveal
+                key={item.id}
+                direction="up"
+                delay={idx * 30}
+                distance={15}
               >
-                <span>Browse Automatic Doors</span>
-                <ChevronRight className="w-3.5 h-3.5" />
-              </Link>
-            </div>
-          </div>
+                <div className="bg-white rounded-3xl p-6 sm:p-8 border border-slate-200/90 shadow-sm hover:shadow-md transition-all">
+                  <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+                    {/* Left Col: Mechanism Header & Operating Principle (5 cols) */}
+                    <div className="lg:col-span-5 space-y-4">
+                      <div className="flex items-center space-x-3">
+                        <div
+                          className={`w-12 h-12 rounded-2xl flex items-center justify-center shrink-0 ${
+                            isOrange
+                              ? "bg-orange-50 text-brand-orange"
+                              : "bg-teal-50 text-brand-teal"
+                          }`}
+                        >
+                          <Icon className="w-6 h-6" />
+                        </div>
+                        <div>
+                          <span className="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-md bg-slate-100 text-slate-700">
+                            {item.tag}
+                          </span>
+                          <h3 className="text-lg sm:text-xl font-black text-slate-900 mt-1">
+                            {item.name}
+                          </h3>
+                        </div>
+                      </div>
+
+                      <div className="space-y-1.5 bg-slate-50 p-4 rounded-2xl border border-slate-200/70">
+                        <span className="text-[11px] font-bold text-slate-500 uppercase tracking-wider block">
+                          How the Mechanism Works:
+                        </span>
+                        <p className="text-xs text-slate-700 leading-relaxed font-medium">
+                          {item.mechanism}
+                        </p>
+                      </div>
+
+                      <div className="flex items-center space-x-2 text-xs text-slate-500">
+                        <span className="font-semibold">Brochure Reference:</span>
+                        <span className="font-mono text-slate-700 bg-slate-100 px-2 py-0.5 rounded">
+                          {item.brochureRef}
+                        </span>
+                      </div>
+                    </div>
+
+                    {/* Right Col: Concrete Engineering Benefits (7 cols) */}
+                    <div className="lg:col-span-7 bg-slate-900 rounded-2xl p-5 sm:p-6 text-white space-y-3">
+                      <div className="flex items-center justify-between border-b border-slate-800 pb-2">
+                        <span className="text-xs font-bold text-teal-300 uppercase tracking-wider flex items-center space-x-1.5">
+                          <CheckCircle2 className="w-4 h-4 text-brand-teal" />
+                          <span>Key Advantages & Building Benefits</span>
+                        </span>
+                        <span className="text-[10px] text-slate-400 font-mono">100% Bench Tested</span>
+                      </div>
+
+                      <ul className="space-y-2.5 text-xs text-slate-300 pt-1">
+                        {item.benefits.map((benefit, bIdx) => (
+                          <li key={bIdx} className="flex items-start space-x-2.5">
+                            <span className="w-1.5 h-1.5 rounded-full bg-brand-teal mt-1.5 shrink-0" />
+                            <span className="leading-relaxed">{benefit}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </ScrollReveal>
+            );
+          })}
         </div>
       </section>
 
       {/* ========================================================================= */}
-      {/* 9. CUSTOMIZATION SECTION: 8-Step Engineering Workflow                      */}
+      {/* 6. QUERY SECTION                                                          */}
       {/* ========================================================================= */}
-      <CustomizationProcess />
+      <section id="query-section" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 scroll-mt-24">
+        <div className="bg-slate-900 rounded-3xl p-6 sm:p-12 text-white border border-slate-800 shadow-2xl relative overflow-hidden">
+          <div className="absolute top-0 right-0 w-96 h-96 bg-brand-orange/10 rounded-full blur-3xl pointer-events-none" />
 
-      {/* ========================================================================= */}
-      {/* 10. SERVICE & MAINTENANCE PREVIEW                                         */}
-      {/* ========================================================================= */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="bg-slate-900 rounded-3xl p-6 sm:p-10 text-white border border-slate-800 space-y-6 shadow-xl">
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-800 pb-4">
-            <div>
-              <span className="text-xs font-bold text-teal-300 uppercase tracking-widest block mb-1">
-                Support Beyond Installation
-              </span>
-              <h2 className="text-2xl sm:text-3xl font-black text-white">
-                Professional Elevator Service & Care
-              </h2>
-              <p className="text-xs sm:text-sm text-slate-300 max-w-xl mt-1">
-                Combining specialized certified technicians, supervisory quality audits, genuine OEM spare parts, and 24/7 telemetry monitoring.
-              </p>
-            </div>
-            <Link
-              to="/services"
-              className="px-5 py-2.5 rounded-xl bg-brand-orange hover:bg-brand-orange-hover text-white text-xs font-bold transition-all shadow-sm shrink-0 flex items-center space-x-2"
-            >
-              <span>Explore AMC Packages</span>
-              <ArrowRight className="w-4 h-4" />
-            </Link>
-          </div>
-
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-            {servicesMaster.pillars.slice(0, 3).map((serv) => (
-              <div
-                key={serv.id}
-                className="p-5 rounded-2xl bg-slate-800/80 border border-slate-700/80 space-y-2"
-              >
-                <span className="text-xs font-bold text-teal-300 font-mono">
-                  PILLAR {serv.number}
-                </span>
-                <h3 className="text-base font-bold text-white">{serv.title}</h3>
-                <p className="text-xs text-slate-300 leading-relaxed line-clamp-3">
-                  {serv.desc}
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10">
+            {/* Left Column: Context & Contact Details (5 cols) */}
+            <div className="lg:col-span-5 space-y-6">
+              <div className="space-y-3">
+                <div className="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-orange-500/20 text-orange-300 text-xs font-bold uppercase tracking-wider border border-orange-500/30">
+                  <Mail className="w-3.5 h-3.5" />
+                  <span>Technical Consultation & Query</span>
+                </div>
+                <h2 className="text-2xl sm:text-4xl font-black text-white tracking-tight">
+                  Discuss Your Elevator Requirement
+                </h2>
+                <p className="text-xs sm:text-sm text-slate-300 leading-relaxed">
+                  Submit your building parameters below. Our Nikol engineering headquarters prepares complimentary AutoCAD General Arrangement (GA) hoistway layouts, structural load calculations, and turnkey quotations.
                 </p>
               </div>
-            ))}
+
+              {/* Direct Reach Contacts */}
+              <div className="space-y-3 pt-2 text-xs">
+                <a
+                  href={`tel:${companyData.contacts.phoneRaw}`}
+                  className="flex items-center space-x-3 p-3.5 rounded-2xl bg-slate-800/80 border border-slate-700 hover:border-brand-orange transition-colors"
+                >
+                  <div className="w-9 h-9 rounded-xl bg-brand-orange text-white flex items-center justify-center shrink-0">
+                    <Phone className="w-4 h-4" />
+                  </div>
+                  <div>
+                    <span className="text-slate-400 block text-[11px]">Direct Technical Engineer:</span>
+                    <span className="font-bold text-white text-sm">{companyData.contacts.phone}</span>
+                  </div>
+                </a>
+
+                <a
+                  href={`https://wa.me/${companyData.contacts.whatsapp}?text=${encodeURIComponent(
+                    "Hello Krupa Elevators, I would like to submit an elevator query and request a site survey."
+                  )}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center space-x-3 p-3.5 rounded-2xl bg-slate-800/80 border border-slate-700 hover:border-emerald-500 transition-colors"
+                >
+                  <div className="w-9 h-9 rounded-xl bg-emerald-500 text-white flex items-center justify-center shrink-0">
+                    <CheckCircle2 className="w-4 h-4" />
+                  </div>
+                  <div>
+                    <span className="text-slate-400 block text-[11px]">WhatsApp Direct Chat:</span>
+                    <span className="font-bold text-emerald-400 text-sm">+91 {companyData.contacts.whatsapp}</span>
+                  </div>
+                </a>
+
+                <div className="flex items-start space-x-3 p-3.5 rounded-2xl bg-slate-800/80 border border-slate-700">
+                  <div className="w-9 h-9 rounded-xl bg-brand-teal text-white flex items-center justify-center shrink-0 mt-0.5">
+                    <MapPin className="w-4 h-4" />
+                  </div>
+                  <div>
+                    <span className="text-slate-400 block text-[11px]">Nikol Engineering Office:</span>
+                    <span className="text-slate-200 text-xs leading-relaxed block">
+                      {companyData.contacts.office.address}
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Right Column: Query Form (7 cols) */}
+            <div className="lg:col-span-7 bg-white rounded-3xl p-6 sm:p-8 text-slate-900 shadow-xl">
+              {querySubmitted ? (
+                <div className="py-12 text-center space-y-4">
+                  <div className="w-16 h-16 rounded-full bg-emerald-100 text-emerald-600 mx-auto flex items-center justify-center">
+                    <Check className="w-8 h-8" />
+                  </div>
+                  <h3 className="text-xl font-black text-slate-900">Query Received Successfully!</h3>
+                  <p className="text-xs sm:text-sm text-slate-600 max-w-md mx-auto leading-relaxed">
+                    Thank you! Our senior technical engineer from Nikol office will examine your hoistway specifications and contact you shortly with a customized GA layout drawing and quote.
+                  </p>
+                  <button
+                    onClick={() => setQuerySubmitted(false)}
+                    className="mt-4 px-6 py-2.5 rounded-xl bg-slate-900 text-white text-xs font-bold hover:bg-brand-teal transition-colors cursor-pointer"
+                  >
+                    Submit Another Query
+                  </button>
+                </div>
+              ) : (
+                <form onSubmit={handleQuerySubmit} className="space-y-4">
+                  <div className="border-b border-slate-100 pb-3">
+                    <h3 className="text-lg font-black text-slate-900">Elevator Technical Query Form</h3>
+                    <p className="text-xs text-slate-500">Provide details about your proposed installation.</p>
+                  </div>
+
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                      <label className="block text-xs font-bold text-slate-700 mb-1">
+                        Your Full Name *
+                      </label>
+                      <input
+                        type="text"
+                        required
+                        value={queryForm.name}
+                        onChange={(e) => setQueryForm({ ...queryForm, name: e.target.value })}
+                        placeholder="e.g. Rajesh Patel"
+                        className="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 border border-slate-200 text-xs focus:ring-2 focus:ring-brand-teal focus:bg-white outline-hidden transition-all"
+                      />
+                    </div>
+
+                    <div>
+                      <label className="block text-xs font-bold text-slate-700 mb-1">
+                        Phone Number / WhatsApp *
+                      </label>
+                      <input
+                        type="tel"
+                        required
+                        value={queryForm.phone}
+                        onChange={(e) => setQueryForm({ ...queryForm, phone: e.target.value })}
+                        placeholder="e.g. +91 98250 XXXXX"
+                        className="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 border border-slate-200 text-xs focus:ring-2 focus:ring-brand-teal focus:bg-white outline-hidden transition-all"
+                      />
+                    </div>
+                  </div>
+
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                      <label className="block text-xs font-bold text-slate-700 mb-1">
+                        Email Address (Optional)
+                      </label>
+                      <input
+                        type="email"
+                        value={queryForm.email}
+                        onChange={(e) => setQueryForm({ ...queryForm, email: e.target.value })}
+                        placeholder="e.g. client@example.com"
+                        className="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 border border-slate-200 text-xs focus:ring-2 focus:ring-brand-teal focus:bg-white outline-hidden transition-all"
+                      />
+                    </div>
+
+                    <div>
+                      <label className="block text-xs font-bold text-slate-700 mb-1">
+                        Site Location / City *
+                      </label>
+                      <input
+                        type="text"
+                        required
+                        value={queryForm.location}
+                        onChange={(e) => setQueryForm({ ...queryForm, location: e.target.value })}
+                        placeholder="e.g. Ahmedabad, Gandhinagar, Vadodara"
+                        className="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 border border-slate-200 text-xs focus:ring-2 focus:ring-brand-teal focus:bg-white outline-hidden transition-all"
+                      />
+                    </div>
+                  </div>
+
+                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                    <div>
+                      <label className="block text-xs font-bold text-slate-700 mb-1">
+                        Elevator Application
+                      </label>
+                      <select
+                        value={queryForm.elevatorType}
+                        onChange={(e) => setQueryForm({ ...queryForm, elevatorType: e.target.value })}
+                        className="w-full px-3 py-2.5 rounded-xl bg-slate-50 border border-slate-200 text-xs focus:ring-2 focus:ring-brand-teal focus:bg-white outline-hidden"
+                      >
+                        <option value="Passenger Elevator">Passenger Elevator</option>
+                        <option value="Capsule Elevator">Capsule Elevator</option>
+                        <option value="Hospital Bed Elevator">Hospital Bed Elevator</option>
+                        <option value="Goods / Freight Lift">Goods / Freight Lift</option>
+                        <option value="Car Elevator / Parking">Car Elevator / Parking</option>
+                        <option value="MRL Gearless Lift">MRL Gearless Lift</option>
+                        <option value="Home Villa Elevator">Home Villa Elevator</option>
+                        <option value="Hydraulic Lift">Hydraulic Lift</option>
+                      </select>
+                    </div>
+
+                    <div>
+                      <label className="block text-xs font-bold text-slate-700 mb-1">
+                        Number of Floors / Stops
+                      </label>
+                      <input
+                        type="text"
+                        value={queryForm.stops}
+                        onChange={(e) => setQueryForm({ ...queryForm, stops: e.target.value })}
+                        placeholder="e.g. G + 3 Floors"
+                        className="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 border border-slate-200 text-xs focus:ring-2 focus:ring-brand-teal focus:bg-white outline-hidden"
+                      />
+                    </div>
+
+                    <div>
+                      <label className="block text-xs font-bold text-slate-700 mb-1">
+                        Desired Capacity
+                      </label>
+                      <select
+                        value={queryForm.capacity}
+                        onChange={(e) => setQueryForm({ ...queryForm, capacity: e.target.value })}
+                        className="w-full px-3 py-2.5 rounded-xl bg-slate-50 border border-slate-200 text-xs focus:ring-2 focus:ring-brand-teal focus:bg-white outline-hidden"
+                      >
+                        <option value="4-6 Persons (272-408 kg)">4-6 Persons (272-408 kg)</option>
+                        <option value="8 Persons (544 kg)">8 Persons (544 kg)</option>
+                        <option value="10-13 Persons (680-884 kg)">10-13 Persons (680-884 kg)</option>
+                        <option value="16-26 Persons (1088-1768 kg)">16-26 Persons (1088-1768 kg)</option>
+                        <option value="Heavy Freight 1000 - 3000 kg">Heavy Freight 1000 - 3000 kg</option>
+                        <option value="Car Vehicle Lift 3000+ kg">Car Vehicle Lift 3000+ kg</option>
+                      </select>
+                    </div>
+                  </div>
+
+                  <div>
+                    <label className="block text-xs font-bold text-slate-700 mb-1">
+                      Query Details / Available Shaft Dimensions
+                    </label>
+                    <textarea
+                      rows={3}
+                      value={queryForm.message}
+                      onChange={(e) => setQueryForm({ ...queryForm, message: e.target.value })}
+                      placeholder="Mention hoistway width, depth, pit depth, or specific architectural cabin requirements..."
+                      className="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 border border-slate-200 text-xs focus:ring-2 focus:ring-brand-teal focus:bg-white outline-hidden transition-all"
+                    />
+                  </div>
+
+                  <button
+                    type="submit"
+                    disabled={querySubmitting}
+                    className="w-full py-3.5 rounded-xl bg-brand-teal hover:bg-teal-600 text-white text-xs font-bold shadow-md hover:shadow-lg transition-all flex items-center justify-center space-x-2 cursor-pointer disabled:opacity-70"
+                  >
+                    {querySubmitting ? (
+                      <span>Submitting Query...</span>
+                    ) : (
+                      <>
+                        <Send className="w-4 h-4" />
+                        <span>Submit Technical Query to Nikol Engineering Desk</span>
+                      </>
+                    )}
+                  </button>
+                </form>
+              )}
+            </div>
           </div>
         </div>
       </section>
 
       {/* ========================================================================= */}
-      {/* 11. FAQS SECTION: Answers to Frequently Asked Questions                   */}
+      {/* 7. FOOTER SECTION (Rendered in App.jsx layout)                           */}
       {/* ========================================================================= */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <SectionHeader
-          badge="Transparent Guidance"
-          title="Frequently Asked Questions"
-          description="Clear answers regarding civil pit depth, overhead clearance, single-phase 220V power, MRL space savings, and safety mechanisms."
-        />
-        <FAQAccordion defaultOpen={0} />
-      </section>
-
-      {/* ========================================================================= */}
-      {/* 12. TECHNICAL CTA: Discuss Your Elevator Requirement                      */}
-      {/* ========================================================================= */}
-      <CTASection
-        title="Discuss Your Elevator Requirement"
-        subtitle="Our senior technical consultants provide complimentary site surveys, custom CAD layouts, and verified civil shaft calculations across Ahmedabad, Gujarat, and Western India."
-        badge="Nikol Design Office & Direct Bakrol Manufacturing"
-        variant="gradient"
-      />
     </div>
   );
 }
