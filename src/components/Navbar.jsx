@@ -17,7 +17,7 @@ export default function Navbar() {
     { name: "Interiors", path: "/interiors" },
     { name: "Technology", path: "/technology" },
     { name: "Service", path: "/services" },
-    { name: "Contact / Enquiry", path: "/contact" },
+    { name: "Contact", path: "/contact" },
   ];
 
   const isActive = (path) => {
@@ -136,8 +136,8 @@ export default function Navbar() {
       {/* Main Compact Navbar */}
       <nav
         className={`bg-white/95 backdrop-blur-md border-b transition-all duration-200 ${scrolled
-            ? "shadow-sm border-slate-200/90 py-0"
-            : "border-slate-200/70 py-0.5"
+          ? "shadow-sm border-slate-200/90 py-0"
+          : "border-slate-200/70 py-0.5"
           }`}
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -164,8 +164,8 @@ export default function Navbar() {
                     key={link.name}
                     to={link.path}
                     className={`px-3 py-1.5 rounded-lg text-xs xl:text-[13px] font-semibold transition-all ${active
-                        ? "text-brand-teal bg-brand-teal-light font-bold"
-                        : "text-slate-600 hover:text-brand-teal hover:bg-slate-100/70"
+                      ? "text-brand-teal bg-brand-teal-light font-bold"
+                      : "text-slate-600 hover:text-brand-teal hover:bg-slate-100/70"
                       }`}
                   >
                     {link.name}
@@ -263,8 +263,8 @@ export default function Navbar() {
                   to={link.path}
                   onClick={() => setMobileMenuOpen(false)}
                   className={`flex justify-between items-center px-3.5 py-2.5 rounded-xl text-xs font-bold transition-all ${active
-                      ? "text-brand-teal bg-brand-teal-light"
-                      : "text-slate-700 hover:bg-slate-50"
+                    ? "text-brand-teal bg-brand-teal-light"
+                    : "text-slate-700 hover:bg-slate-50"
                     }`}
                 >
                   <span>{link.name}</span>
@@ -275,26 +275,6 @@ export default function Navbar() {
 
             <div className="pt-3 border-t border-slate-100 space-y-2">
               {/* Quick Contact Buttons for Mobile */}
-              <div className="grid grid-cols-2 gap-2">
-                <a
-                  href={`tel:${companyData.contacts.phoneRaw}`}
-                  className="flex items-center justify-center space-x-2 py-2.5 px-3 rounded-xl bg-slate-100 text-slate-800 text-xs font-bold border border-slate-200 hover:bg-slate-200 transition-colors"
-                >
-                  <Phone className="w-3.5 h-3.5 text-brand-orange" />
-                  <span>Call Direct</span>
-                </a>
-                <a
-                  href={`https://wa.me/${companyData.contacts.whatsapp}?text=${encodeURIComponent(
-                    "Hello Krupa Elevators, I would like to inquire about elevator solutions."
-                  )}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center justify-center space-x-2 py-2.5 px-3 rounded-xl bg-[#25D366] text-white text-xs font-bold hover:bg-[#20bd5a] transition-colors shadow-xs"
-                >
-                  <WhatsAppIcon className="w-3.5 h-3.5" />
-                  <span>WhatsApp</span>
-                </a>
-              </div>
 
               <Link
                 to="/contact"
