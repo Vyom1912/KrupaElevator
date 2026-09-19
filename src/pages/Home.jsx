@@ -194,11 +194,11 @@ export default function Home({ onOpenBrochure }) {
   const [querySubmitted, setQuerySubmitted] = useState(false);
   const [querySubmitting, setQuerySubmitting] = useState(false);
 
-  // Hero carousel timer
+  // Hero carousel timer — 5.5 s per slide
   useEffect(() => {
     const timer = setInterval(() => {
       setCurrentHeroIndex((prev) => (prev + 1) % heroScenes.length);
-    }, 4000);
+    }, 5500);
     return () => clearInterval(timer);
   }, []);
 
@@ -219,136 +219,124 @@ export default function Home({ onOpenBrochure }) {
       {/* ========================================================================= */}
       <section className="relative w-full h-[calc(100vh-64px)] min-h-[580px] max-h-[820px] bg-slate-950 overflow-hidden flex items-center">
 
-        {/* ── Sliding Background Strip ──────────────────────────────────────────── */}
-        {/* All images laid side-by-side in one strip; translateX drives the slide  */}
-        <div className="absolute inset-0 z-0 pointer-events-none">
-          <div
-            className="flex h-full transition-transform duration-700 ease-in-out"
-            style={{
-              width: `${heroScenes.length * 100}%`,
-              transform: `translateX(-${(currentHeroIndex * 100) / heroScenes.length}%)`,
-            }}
-          >
-            {heroScenes.map((scene) => (
-              <div
-                key={scene.id}
-                className="relative h-full flex-shrink-0"
-                style={{ width: `${100 / heroScenes.length}%` }}
-              >
-                <img
-                  src={scene.image}
-                  alt={scene.title}
-                  className="w-full h-full object-cover object-right md:object-center"
-                />
-                <div className="absolute inset-0 bg-gradient-to-r from-slate-950/95 via-slate-950/80 to-slate-950/45" />
-              </div>
-            ))}
-          </div>
-        </div>
+        {/* ── Full-layer crossfade slides ────────────────────────────────────────
+            Every slide is one absolute layer = image + gradient + text content.
+            Only the active layer is opacity-1; all others opacity-0.
+            Both image and text dissolve together for a seamless blend.          */}
+        {heroScenes.map((scene, index) => {
+          const isActive = index === currentHeroIndex;
+          return (
+            <div
+              key={scene.id}
+              className="absolute inset-0 flex items-center"
+              style={{
+                opacity: isActive ? 1 : 0,
+                transition: "opacity 1.2s ease-in-out",
+                zIndex: isActive ? 10 : 0,
+                pointerEvents: isActive ? "auto" : "none",
+              }}
+            >
+              {/* Background image */}
+              <img
+                src={scene.image}
+                alt={scene.title}
+                className="absolute inset-0 w-full h-full object-cover object-right md:object-center"
+              />
 
-        {/* ── Sliding Foreground Content Strip ──────────────────────────────────── */}
-        {/* Slides in perfect sync with the background; each panel is viewport-wide */}
-        <div className="absolute inset-0 z-20 pointer-events-none">
-          <div
-            className="flex h-full transition-transform duration-700 ease-in-out"
-            style={{
-              width: `${heroScenes.length * 100}%`,
-              transform: `translateX(-${(currentHeroIndex * 100) / heroScenes.length}%)`,
-            }}
-          >
-            {heroScenes.map((scene) => (
-              <div
-                key={scene.id}
-                className="relative h-full flex-shrink-0 flex items-center"
-                style={{ width: `${100 / heroScenes.length}%` }}
-              >
-                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full py-8 pointer-events-auto">
-                  <div className="max-w-2xl space-y-5">
+              {/* Dark gradient overlay — same as original */}
+              <div className="absolute inset-0 bg-gradient-to-r from-slate-950/95 via-slate-950/80 to-slate-950/45" />
 
-                    {/* Slide-specific category tag */}
-                    <div className="inline-flex items-center space-x-2 px-3.5 py-1.5 rounded-full bg-brand-teal/20 border border-brand-teal/40 text-brand-teal text-xs font-bold uppercase tracking-wider backdrop-blur-md">
-                      <Sparkles className="w-3.5 h-3.5 text-brand-orange flex-shrink-0" />
-                      <span>{scene.tag}</span>
-                    </div>
+              {/* Foreground text content — sits on top of the gradient */}
+              <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full py-8">
+                <div className="max-w-2xl space-y-5">
 
-                    {/* Slide-specific title + subtitle */}
-                    <div className="space-y-3">
-                      <h1 className="text-3xl sm:text-5xl lg:text-6xl font-black text-white tracking-tight leading-[1.1]">
-                        {scene.title}
-                        <span className="block text-transparent bg-clip-text bg-gradient-to-r from-brand-teal via-teal-200 to-white mt-1">
-                          by KRUPA Elevators
-                        </span>
-                      </h1>
-                      <p className="text-sm sm:text-base text-slate-300 leading-relaxed max-w-xl">
-                        {scene.subtitle}
-                      </p>
-                    </div>
+                  {/* Category tag */}
+                  <div className="inline-flex items-center space-x-2 px-3.5 py-1.5 rounded-full bg-brand-teal/20 border border-brand-teal/40 text-brand-teal text-xs font-bold uppercase tracking-wider backdrop-blur-md">
+                    <Sparkles className="w-3.5 h-3.5 text-brand-orange flex-shrink-0" />
+                    <span>{scene.tag}</span>
+                  </div>
 
-                    {/* Company info strip — the 3 key facts */}
-                    <div className="flex flex-wrap gap-2">
-                      {[
-                        { icon: ShieldCheck, text: "IS 14665 & BIS Certified", color: "text-brand-teal" },
-                        { icon: Zap,         text: "Up to 30% Energy Savings",  color: "text-brand-teal" },
-                        { icon: MapPin,      text: "Ahmedabad, Gujarat — Direct Factory",  color: "text-brand-orange" },
-                      ].map(({ icon: Icon, text, color }) => (
-                        <span key={text} className={`inline-flex items-center gap-1.5 text-xs font-semibold ${color} bg-slate-950/50 backdrop-blur-sm border border-white/10 px-3 py-1.5 rounded-full`}>
-                          <Icon className="w-3.5 h-3.5 flex-shrink-0" />
-                          {text}
-                        </span>
-                      ))}
-                    </div>
+                  {/* Title + subtitle */}
+                  <div className="space-y-3">
+                    <h1 className="text-3xl sm:text-5xl lg:text-6xl font-black text-white tracking-tight leading-[1.1]">
+                      {scene.title}
+                      <span className="block text-transparent bg-clip-text bg-gradient-to-r from-brand-teal via-teal-200 to-white mt-1">
+                        by KRUPA Elevators
+                      </span>
+                    </h1>
+                    <p className="text-sm sm:text-base text-slate-300 leading-relaxed max-w-xl">
+                      {scene.subtitle}
+                    </p>
+                  </div>
 
-                    {/* CTAs — unchanged */}
-                    <div className="pt-1 flex flex-wrap items-center gap-3">
-                      <Link
-                        to="/elevators"
-                        className="px-6 py-3.5 rounded-xl bg-brand-teal hover:bg-teal-600 text-white text-xs sm:text-sm font-bold shadow-lg shadow-brand-teal/25 hover:shadow-brand-teal/40 transition-all flex items-center space-x-2 group"
+                  {/* Company info badges */}
+                  <div className="flex flex-wrap gap-2">
+                    {[
+                      { icon: ShieldCheck, text: "IS 14665 & BIS Certified",           color: "text-brand-teal"   },
+                      { icon: Zap,         text: "Up to 30% Energy Savings",            color: "text-brand-teal"   },
+                      { icon: MapPin,      text: "Ahmedabad, Gujarat — Direct Factory", color: "text-brand-orange" },
+                    ].map(({ icon: Icon, text, color }) => (
+                      <span
+                        key={text}
+                        className={`inline-flex items-center gap-1.5 text-xs font-semibold ${color} bg-slate-950/50 backdrop-blur-sm border border-white/10 px-3 py-1.5 rounded-full`}
                       >
-                        <span>Explore Elevators</span>
-                        <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-                      </Link>
-                      <button
-                        onClick={() => {
-                          document.getElementById("query-section")?.scrollIntoView({ behavior: "smooth" });
-                        }}
-                        className="px-6 py-3.5 rounded-xl bg-brand-orange hover:bg-brand-orange-hover text-white text-xs sm:text-sm font-bold shadow-lg shadow-brand-orange/20 transition-all flex items-center space-x-2 cursor-pointer"
-                      >
-                        <span>Submit Query / Get Quote</span>
-                      </button>
-                    </div>
+                        <Icon className="w-3.5 h-3.5 flex-shrink-0" />
+                        {text}
+                      </span>
+                    ))}
+                  </div>
 
-                    {/* Trust highlights strip */}
-                    <div className="pt-2 flex flex-wrap items-center gap-y-2 gap-x-6 text-xs text-slate-400 font-medium">
-                      <div className="flex items-center space-x-1.5">
-                        <CheckCircle2 className="w-4 h-4 text-brand-teal shrink-0" />
-                        <span>Direct Bakrol Manufacturing</span>
-                      </div>
-                      <div className="flex items-center space-x-1.5">
-                        <CheckCircle2 className="w-4 h-4 text-brand-orange shrink-0" />
-                        <span>24/7 Breakdown Assistance</span>
-                      </div>
-                      <div className="flex items-center space-x-1.5">
-                        <CheckCircle2 className="w-4 h-4 text-brand-teal shrink-0" />
-                        <span>Turnkey Installation</span>
-                      </div>
+                  {/* CTAs */}
+                  <div className="pt-1 flex flex-wrap items-center gap-3">
+                    <Link
+                      to="/elevators"
+                      className="px-6 py-3.5 rounded-xl bg-brand-teal hover:bg-teal-600 text-white text-xs sm:text-sm font-bold shadow-lg shadow-brand-teal/25 hover:shadow-brand-teal/40 transition-all flex items-center space-x-2 group"
+                    >
+                      <span>Explore Elevators</span>
+                      <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                    </Link>
+                    <button
+                      onClick={() => {
+                        document.getElementById("query-section")?.scrollIntoView({ behavior: "smooth" });
+                      }}
+                      className="px-6 py-3.5 rounded-xl bg-brand-orange hover:bg-brand-orange-hover text-white text-xs sm:text-sm font-bold shadow-lg shadow-brand-orange/20 transition-all flex items-center space-x-2 cursor-pointer"
+                    >
+                      <span>Submit Query / Get Quote</span>
+                    </button>
+                  </div>
+
+                  {/* Trust strip */}
+                  <div className="pt-2 flex flex-wrap items-center gap-y-2 gap-x-6 text-xs text-slate-400 font-medium">
+                    <div className="flex items-center space-x-1.5">
+                      <CheckCircle2 className="w-4 h-4 text-brand-teal shrink-0" />
+                      <span>Direct Bakrol Manufacturing</span>
+                    </div>
+                    <div className="flex items-center space-x-1.5">
+                      <CheckCircle2 className="w-4 h-4 text-brand-orange shrink-0" />
+                      <span>24/7 Breakdown Assistance</span>
+                    </div>
+                    <div className="flex items-center space-x-1.5">
+                      <CheckCircle2 className="w-4 h-4 text-brand-teal shrink-0" />
+                      <span>Turnkey Installation</span>
                     </div>
                   </div>
+
                 </div>
               </div>
-            ))}
-          </div>
-        </div>
+            </div>
+          );
+        })}
 
-        {/* ── Slide progress bar ────────────────────────────────────────────────── */}
+        {/* ── Progress bar — refills over 5.5 s, resets when index changes ───── */}
         <div className="absolute bottom-0 left-0 right-0 z-30 h-0.5 bg-white/10">
           <div
             key={currentHeroIndex}
             className="h-full bg-brand-teal origin-left"
-            style={{ animation: "hero-progress 4s linear forwards" }}
+            style={{ animation: "hero-progress 5.5s linear forwards" }}
           />
         </div>
 
-        {/* ── Navigation Dots ───────────────────────────────────────────────────── */}
+        {/* ── Navigation dots ──────────────────────────────────────────────────── */}
         <div className="absolute bottom-4 left-0 right-0 z-30 flex justify-center items-center space-x-2">
           {heroScenes.map((scene, idx) => (
             <button
