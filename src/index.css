@@ -150,3 +150,9 @@
   scrollbar-width: none;
 }
 
+
+/* Hero progress bar — runs once per slide (4 s) then resets via key change */
+@keyframes hero-progress {
+  from { transform: scaleX(0); }
+  to   { transform: scaleX(1); }
+}

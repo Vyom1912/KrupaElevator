@@ -28,6 +28,7 @@ import {
   Phone
 } from "lucide-react";
 import { technologiesMaster } from "../data/technologiesMaster";
+import { assetUrl } from "../utils/assetPath";
 import ScrollReveal from "../components/ScrollReveal";
 import PageHero from "../components/common/PageHero";
 import CTASection from "../components/common/CTASection";
@@ -58,47 +59,19 @@ export default function Technologies() {
   ];
 
   return (
-    <div className="min-h-screen bg-slate-50 pt-20 pb-20">
+    <div className="min-h-screen bg-slate-50 pt-8 pb-8">
       {/* ========================================================================= */}
       {/* 1. PAGE HEADER                                                            */}
       {/* ========================================================================= */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-4 pb-6 border-b border-slate-200">
-        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
-          <div>
-            <div className="flex items-center space-x-2 text-brand-teal text-xs font-bold uppercase tracking-widest mb-1">
-              <Cpu className="w-4 h-4" />
-              <span>Advanced Vertical Mobility • German Engineering Know-How</span>
-            </div>
-            <h1 className="text-2xl sm:text-3xl lg:text-4xl font-black text-slate-900 tracking-tight">
-              Traction Drive Systems & Advanced Elevator Technology
-            </h1>
-            <p className="text-xs sm:text-sm text-slate-600 max-w-3xl mt-1 leading-relaxed">
-              Combining Permanent Magnet Synchronous (PMSM) gearless direct drives, heavy-duty helical geared machines, and intelligent microprocessor control panels for up to 30% electricity savings.
-            </p>
-          </div>
 
-          <div className="flex flex-wrap items-center gap-2.5 self-start md:self-auto">
-            <a
-              href="tel:+919727764868"
-              className="px-4 py-2.5 rounded-xl bg-slate-900 hover:bg-brand-teal text-white text-xs font-bold flex items-center space-x-2 transition-all shadow-xs cursor-pointer"
-            >
-              <Phone className="w-3.5 h-3.5 text-brand-orange" />
-              <span>Call: +91 97277 64868</span>
-            </a>
-            <a
-              href={`https://wa.me/919727764868?text=${encodeURIComponent(
-                "Hello Krupa Elevators, I would like to consult regarding your traction machines, V3F drives, and control panel systems."
-              )}`}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="px-4 py-2.5 rounded-xl bg-[#25D366] hover:bg-[#20bd5a] text-white text-xs font-bold flex items-center space-x-2 shadow-xs transition-all cursor-pointer"
-            >
-              <WhatsAppIcon className="w-4 h-4 text-white" />
-              <span>WhatsApp Us</span>
-            </a>
-          </div>
-        </div>
-      </div>
+      <PageHero
+        icon={Cpu}
+        badge="Advanced Vertical Mobility • German Engineering Know-How"
+        title="Traction Drive Systems & Advanced Elevator Technology"
+        description="Combining Permanent Magnet Synchronous (PMSM) gearless direct drives, heavy-duty helical geared machines, and intelligent microprocessor control panels for up to 30% electricity savings."
+      />
+
+
 
       {/* Main Container with Sticky Navigation + Content */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6">
@@ -160,19 +133,19 @@ export default function Technologies() {
                     Traction Machine Architecture: Gearless PMSM vs. Geared
                   </h2>
                 </div>
-                <span className="text-xs font-semibold text-slate-600 bg-slate-100 px-3 py-1 rounded-full border border-slate-200">
+                {/* <span className="text-xs font-semibold text-slate-600 bg-slate-100 px-3 py-1 rounded-full border border-slate-200">
                   IS 14665 Standard
-                </span>
+                </span> */}
               </div>
 
               {/* Side-by-Side Comparison Cards */}
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
                 {/* Gearless PMSM Card */}
-                <div className="rounded-3xl border border-slate-200 overflow-hidden bg-slate-50 flex flex-col justify-between group hover:shadow-md transition-all">
+                <div className="rounded-3xl border overflow-hidden bg-slate-50 flex flex-col justify-between group hover:shadow-md transition-all">
                   <div>
                     <div className="h-60 bg-slate-950 relative overflow-hidden">
                       <img
-                        src="/assets/technologies/pms-motor.jpg"
+                        src={assetUrl("/assets/technologies/M67.png")}
                         alt="Permanent Magnet Synchronous Motor"
                         className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                       />
@@ -218,7 +191,7 @@ export default function Technologies() {
                   <div>
                     <div className="h-60 bg-slate-950 relative overflow-hidden">
                       <img
-                        src="/assets/drawings/page_18.png"
+                        src={assetUrl("/assets/technologies/I127.png")}
                         alt="Geared Traction Machine"
                         className="w-full h-full object-contain p-4 group-hover:scale-105 transition-transform duration-500"
                       />
@@ -290,7 +263,7 @@ export default function Technologies() {
               <div className="p-6 rounded-2xl bg-gradient-to-r from-slate-900 to-slate-800 text-white flex flex-col md:flex-row items-center gap-6">
                 <div className="w-28 h-28 bg-slate-800 rounded-2xl p-2 border border-slate-700 shrink-0 flex items-center justify-center">
                   <img
-                    src="/assets/technologies/v3f-control.jpg"
+                    src={assetUrl("/assets/technologies/v3f-control.jpg")}
                     alt="Control Panel Cabinet"
                     className="max-h-24 w-auto object-contain"
                   />
