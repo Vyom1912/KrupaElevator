@@ -132,38 +132,55 @@ The repository is configured for automated deployment to GitHub Pages via **GitH
 ```
 krupa-elevators/
 ├── public/
-│   ├── assets/
-│   │   ├── elevators/      # 6 Application type photorealistic visuals
-│   │   ├── interiors/      # 11 KEC cabin interior design renders
-│   │   ├── pages/          # Reference high-resolution catalog spreads
-│   │   └── logo.jpg        # Krupa Elevators brand mark
-│   └── favicon.svg
+│   └── assets/
+│       ├── doors/          # Landing & car door style assets
+│       ├── drawings/       # Architectural GA hoistway plans & elevations
+│       ├── elevators/      # Elevator application visuals
+│       ├── hero/           # Hero visual backdrops
+│       ├── interiors/      # KEC cabin finishes & COP/LOP panels
+│       ├── pages/          # Reference high-resolution catalog spreads (page-[1-12].webp)
+│       ├── technologies/   # Motor & drive photography
+│       ├── krupa-brochure.pdf # Official complete catalog PDF
+│       └── logo.jpg        # Krupa Elevators brand mark
 ├── src/
 │   ├── components/
-│   │   ├── BrochureModal.jsx     # Full catalog inspection modal
-│   │   ├── CabinConfigurator.jsx # Live interior finishes visualizer
-│   │   ├── ElevatorFinder.jsx    # Application recommendation wizard
-│   │   ├── Footer.jsx            # Footer with contact & plant details
-│   │   ├── Navbar.jsx            # Animated navbar with outside-click dismiss
-│   │   └── ProductModal.jsx      # Technical specifications modal
+│   │   ├── common/         # Reusable CTA, PageHero, StickyNav, etc.
+│   │   ├── BrochureModal.jsx
+│   │   ├── CustomizationProcess.jsx
+│   │   ├── ElevatorStructureViewer.jsx
+│   │   ├── Footer.jsx
+│   │   ├── MergedCivilTable.jsx
+│   │   ├── MergedSpecTable.jsx
+│   │   ├── Navbar.jsx
+│   │   ├── ScrollReveal.jsx
+│   │   └── StandardSpecTable.jsx
 │   ├── data/
-│   │   ├── companyData.js        # Company profile, stats, addresses
-│   │   ├── interiorsData.js      # KEC-01 to KEC-11 cabin specifications
-│   │   ├── productsData.js       # Elevator solutions & 6 application profiles
-│   │   ├── servicesData.js       # Maintenance & repair protocols
-│   │   ├── specificationsData.js # Civil hoistway & pit dimensions
-│   │   └── technologiesData.js   # PMS motor, V3F drive & ARD safety specs
+│   │   ├── companyData.js
+│   │   ├── doorSpecificationsTable.js
+│   │   ├── doorsMaster.js
+│   │   ├── elevatorApplicationDetails.js
+│   │   ├── elevatorMaster.js
+│   │   ├── elevatorSingleTables.js
+│   │   ├── interiorsSeriesData.js
+│   │   ├── krupaElevatorsData.js
+│   │   ├── projectsData.js
+│   │   ├── servicesMaster.js
+│   │   └── technologiesMaster.js
 │   ├── pages/
-│   │   ├── Contact.jsx           # Quote request & site survey form
-│   │   ├── Home.jsx              # Hero simulator, applications, highlights
-│   │   ├── Interior.jsx          # Cabin designs studio & etching motifs
-│   │   ├── Products.jsx          # Complete elevator solutions & door systems
-│   │   ├── Services.jsx          # Maintenance contracts & emergency response
-│   │   ├── Specifications.jsx    # Searchable civil dimension matrices
-│   │   └── Technologies.jsx      # Deep dive into green motors & safety
-│   ├── App.jsx                   # Main application router
-│   ├── index.css                 # Base Tailwind & keyframe animations
-│   └── main.jsx                  # React DOM root entry
+│   │   ├── Contact.jsx
+│   │   ├── DoorSystems.jsx
+│   │   ├── ElevatorDetail.jsx
+│   │   ├── Home.jsx
+│   │   ├── Interior.jsx
+│   │   ├── Products.jsx
+│   │   ├── Projects.jsx
+│   │   ├── Services.jsx
+│   │   └── Technologies.jsx
+│   ├── utils/
+│   │   └── assetPath.js
+│   ├── App.jsx
+│   ├── index.css
+│   └── main.jsx
 ├── package.json
 ├── tailwind.config.js
 └── vite.config.js

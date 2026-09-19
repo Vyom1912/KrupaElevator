@@ -1,31 +1,14 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
 import {
   Zap,
   Cpu,
   ShieldCheck,
-  CheckCircle,
-  Settings,
   BatteryCharging,
-  Maximize2,
   CheckCircle2,
-  SlidersHorizontal,
-  Sparkles,
-  ArrowRight,
   Layers,
-  Activity,
-  Radio,
-  Scale,
-  Gauge,
-  VolumeX,
-  Clock,
-  ArrowUpRight,
-  AlertTriangle,
-  Lightbulb,
   Check,
   ChevronDown,
-  ChevronUp,
-  Phone
+  ChevronUp
 } from "lucide-react";
 import { technologiesMaster } from "../data/technologiesMaster";
 import { assetUrl } from "../utils/assetPath";

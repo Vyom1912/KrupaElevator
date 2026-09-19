@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { X, ChevronLeft, ChevronRight, Download, ExternalLink, ZoomIn } from "lucide-react";
+import { X, ChevronLeft, ChevronRight, Download } from "lucide-react";
 import { companyData } from "../data/companyData";
 import { assetUrl } from "../utils/assetPath";
 

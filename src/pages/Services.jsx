@@ -3,18 +3,10 @@ import { Link } from "react-router-dom";
 import {
   Wrench,
   ShieldCheck,
-  Clock,
-  CheckCircle,
-  Phone,
   Layers,
-  ArrowRight,
-  Sparkles,
-  Zap,
   CheckCircle2,
   Users,
-  ShieldAlert,
-  Radio,
-  FileText
+  Radio
 } from "lucide-react";
 import { servicesMaster } from "../data/servicesMaster";
 import { companyData } from "../data/companyData";

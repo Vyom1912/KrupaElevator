@@ -1,19 +1,8 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
 import {
-  Sparkles,
-  Layers,
-  ArrowRight,
   Maximize2,
-  CheckCircle2,
-  Phone,
-  Compass,
-  Eye,
   X,
   Palette,
-  SlidersHorizontal,
-  ChevronRight,
-  ShieldCheck,
   Check
 } from "lucide-react";
 import {

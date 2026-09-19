@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { Phone, Mail, MapPin, Download, ArrowUpRight, ShieldCheck, HeartHandshake } from "lucide-react";
+import { Phone, Mail, MapPin, Download } from "lucide-react";
 import { companyData } from "../data/companyData";
 import WhatsAppIcon from "./common/WhatsAppIcon";
 

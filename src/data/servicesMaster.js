@@ -1,5 +1,3 @@
-import { assetUrl } from "../utils/assetPath";
-
 export const servicesMaster = {
   headline: "Reliable Support Throughout the Life of Your Elevator",
   subheadline: "Our service team provides professional installation support, preventive maintenance, troubleshooting, and ongoing elevator care. We combine trained personnel, supervisory support, genuine spare parts, and monitoring solutions to maintain reliable elevator performance.",

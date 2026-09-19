@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { Phone, Mail, MapPin, Menu, X, ChevronRight, ArrowRight, Sparkles } from "lucide-react";
+import { Phone, Mail, MapPin, Menu, X, ChevronRight, ArrowRight } from "lucide-react";
 import { companyData } from "../data/companyData";
 import WhatsAppIcon from "./common/WhatsAppIcon";
 

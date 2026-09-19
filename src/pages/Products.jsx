@@ -1,22 +1,9 @@
 import React, { useState } from "react";
 import {
   Building2,
-  DoorOpen,
-  DoorClosed,
-  Cpu,
   ShieldCheck,
-  ArrowRight,
-  CheckCircle2,
   Maximize2,
-  X,
-  Info,
-  Layers,
-  Phone,
-  Compass,
-  FileSpreadsheet,
-  Check,
-  Zap,
-  SlidersHorizontal
+  X
 } from "lucide-react";
 import { elevatorMaster } from "../data/elevatorMaster";
 import { elevatorApplicationDetails } from "../data/elevatorApplicationDetails";

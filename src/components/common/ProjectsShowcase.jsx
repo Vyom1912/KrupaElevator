@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { MapPin, ArrowRight, ShieldCheck, Layers, Sparkles } from "lucide-react";
+import { MapPin, ArrowRight } from "lucide-react";
 import { projectsData } from "../../data/projectsData";
 import ScrollReveal from "../ScrollReveal";
 import { assetUrl } from "../../utils/assetPath";

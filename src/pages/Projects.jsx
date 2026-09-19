@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import { Download, Phone, ArrowRight, Filter, Building2, MapPin } from "lucide-react";
+import { Download, ArrowRight } from "lucide-react";
 import PageHero from "../components/common/PageHero";
 import SectionHeader from "../components/common/SectionHeader";
 import ProjectsShowcase from "../components/common/ProjectsShowcase";

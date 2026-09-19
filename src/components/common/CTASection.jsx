@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { Phone, ArrowRight, Download, MapPin, ShieldCheck } from "lucide-react";
+import { Phone, ArrowRight, ShieldCheck } from "lucide-react";
 import { companyData } from "../../data/companyData";
 import ScrollReveal from "../ScrollReveal";
 

@@ -8,8 +8,7 @@ import {
   carElevatorTechnical,
   mrlElevatorTechnical,
   homeElevatorTechnical,
-  hydraulicElevatorTechnical,
-  generalNotes
+  hydraulicElevatorTechnical
 } from "./krupaElevatorsData";
 
 export const elevatorMaster = [

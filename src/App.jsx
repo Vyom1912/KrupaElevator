@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { BrowserRouter as Router, Routes, Route, useLocation, Navigate } from "react-router-dom";
-import { Phone, MessageSquare } from "lucide-react";
+import { Phone } from "lucide-react";
 import WhatsAppIcon from "./components/common/WhatsAppIcon";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";

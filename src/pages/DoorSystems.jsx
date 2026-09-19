@@ -4,15 +4,8 @@ import {
   DoorClosed,
   DoorOpen,
   SlidersHorizontal,
-  Compass,
   Maximize2,
-  X,
-  ArrowRight,
-  ShieldCheck,
-  Sparkles,
-  CheckCircle2,
-  Building2,
-  Layers
+  X
 } from "lucide-react";
 import { manualDoors, automaticDoors, allDoors } from "../data/doorsMaster";
 import SectionHeader from "../components/common/SectionHeader";

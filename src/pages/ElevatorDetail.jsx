@@ -3,22 +3,16 @@ import { useParams, Link, Navigate } from "react-router-dom";
 import {
   ArrowRight,
   Phone,
-  ShieldCheck,
   Compass,
   Maximize2,
   X,
-  FileText,
   SlidersHorizontal,
   ChevronRight,
-  Download,
   CheckCircle2,
   Building2,
   Sparkles,
   Cpu,
-  Layers,
-  DoorClosed,
-  Info,
-  Shield
+  DoorClosed
 } from "lucide-react";
 import { elevatorMaster } from "../data/elevatorMaster";
 import { allDoors } from "../data/doorsMaster";

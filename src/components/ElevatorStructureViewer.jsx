@@ -12,7 +12,6 @@ import {
   Info,
   CheckCircle2
 } from "lucide-react";
-import { assetUrl } from "../utils/assetPath";
 
 const componentIcons = {
   machine: Cpu,

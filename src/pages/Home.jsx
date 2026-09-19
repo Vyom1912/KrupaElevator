@@ -5,37 +5,24 @@ import {
   ShieldCheck,
   Zap,
   Sparkles,
-  Download,
   CheckCircle2,
-  Award,
   Compass,
   ChevronRight,
-  DoorClosed,
-  DoorOpen,
-  SlidersHorizontal,
-  VolumeX,
   Activity,
-  Shield,
-  Layers,
   Building2,
   Cpu,
-  Wrench,
-  Clock,
   Phone,
   Mail,
   MapPin,
   Send,
   Check,
-  AlertCircle,
   Eye,
   Settings,
-  Scale,
   Quote,
   Maximize2
 } from "lucide-react";
 import { companyData, trustedSolutionSection } from "../data/companyData";
 import { elevatorMaster } from "../data/elevatorMaster";
-import { interiorSeries } from "../data/interiorsMaster";
 import ScrollReveal from "../components/ScrollReveal";
 import { assetUrl } from "../utils/assetPath";
 import WhatsAppIcon from "../components/common/WhatsAppIcon";

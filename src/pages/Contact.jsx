@@ -2,15 +2,12 @@ import React, { useState } from "react";
 import {
   Phone,
   Mail,
-  MapPin,
-  Clock,
   Send,
   CheckCircle2,
   Download,
   Building,
   Factory,
   MessageSquare,
-  HelpCircle,
   ChevronDown
 } from "lucide-react";
 import { companyData } from "../data/companyData";
@@ -60,7 +57,7 @@ export default function Contact({ onOpenBrochure }) {
   ];
 
   return (
-    <div className="space-y-16 pb-20">
+    <div className="min-h-screen bg-slate-50 pt-8 pb-8">
       {/* Page Hero */}
       <PageHero
         icon={Phone}
