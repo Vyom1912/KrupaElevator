@@ -126,7 +126,7 @@ export default function App() {
             <Route path="/interior" element={<Navigate to="/interiors" replace />} />
 
             {/* 4. Technology */}
-            <Route
+            <Route 
               path="/technology"
               element={
                 <Technologies onOpenBrochurePage={(pg) => handleOpenBrochure(pg)} />

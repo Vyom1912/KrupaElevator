@@ -126,7 +126,7 @@ export default function Technologies() {
                 {/* Gearless PMSM Card */}
                 <div className="rounded-3xl border overflow-hidden bg-slate-50 flex flex-col justify-between group hover:shadow-md transition-all">
                   <div>
-                    <div className="h-60 bg-slate-950 relative overflow-hidden">
+                    <div className="h-60 bg-slate-50  relative overflow-hidden">
                       <img
                         src={assetUrl("/assets/technologies/M67.png")}
                         alt="Permanent Magnet Synchronous Motor"
@@ -172,7 +172,7 @@ export default function Technologies() {
                 {/* Geared Traction Machine Card */}
                 <div className="rounded-3xl border border-slate-200 overflow-hidden bg-slate-50 flex flex-col justify-between group hover:shadow-md transition-all">
                   <div>
-                    <div className="h-60 bg-slate-950 relative overflow-hidden">
+                    <div className="h-60 bg-slate-50 relative overflow-hidden">
                       <img
                         src={assetUrl("/assets/technologies/I127.png")}
                         alt="Geared Traction Machine"

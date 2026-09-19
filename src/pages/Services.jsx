@@ -23,7 +23,7 @@ export default function Services() {
     "elevator-monitoring": Radio
   };
 
-  return (
+  return (<>
     <div className="min-h-screen bg-slate-50 pt-8 pb-8 overflow-x-hidden">
       {/* Page Hero */}
 
@@ -36,7 +36,7 @@ export default function Services() {
       />
 
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-16">
+      <div className="max-w-7xl mx-auto pt-4 px-4 sm:px-6 lg:px-8 space-y-16">
         {/* 5 Service Pillars */}
         <div className="space-y-8">
           <div>
@@ -202,11 +202,14 @@ export default function Services() {
         </div>
       </div>
 
-      <CTASection
-        title="Schedule an On-Site Maintenance & Safety Audit"
-        subtitle="Our technical supervisors inspect your elevator hoist ropes, brake holding torque, leveling switches, and controller logs to ensure 100% statutory compliance."
-        variant="gradient"
-      />
+
     </div>
+    <CTASection
+      title="Schedule an On-Site Maintenance & Safety Audit"
+      subtitle="Our technical supervisors inspect your elevator hoist ropes, brake holding torque, leveling switches, and controller logs to ensure 100% statutory compliance."
+      variant="gradient"
+      className="rounded-none"
+    />
+  </>
   );
 }
