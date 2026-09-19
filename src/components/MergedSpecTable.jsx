@@ -60,7 +60,7 @@ export default function MergedSpecTable({ tableData }) {
   return (
     <div className="space-y-6">
       {/* Header Info */}
-      <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
+      {/* <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
         <div>
           <span className="text-xs font-bold text-brand-teal uppercase tracking-widest block mb-1">
             Standard Engineering Matrix
@@ -79,7 +79,7 @@ export default function MergedSpecTable({ tableData }) {
           <Info className="w-4 h-4 text-brand-orange" />
           <span>IS 14665 Compliant • Dimensions in mm</span>
         </div>
-      </div>
+      </div> */}
 
       {/* Architectural Dimension Key / Legend Badges */}
       {legend && Object.keys(legend).length > 0 && (
@@ -146,17 +146,15 @@ export default function MergedSpecTable({ tableData }) {
                     <td
                       key={col.key}
                       rowSpan={span > 1 ? span : undefined}
-                      className={`py-3 px-3.5 whitespace-nowrap border-r border-slate-100 last:border-r-0 align-middle ${
-                        isMerged
-                          ? "bg-slate-50/90 font-bold text-slate-900 border-l border-r border-slate-200 text-center"
-                          : ""
-                      } ${
-                        isKeyCol && !isMerged
+                      className={`py-3 px-3.5 whitespace-nowrap border-r border-slate-100 last:border-r-0 align-middle ${isMerged
+                        ? "bg-slate-50/90 font-bold text-slate-900 border-l border-r border-slate-200 text-center"
+                        : ""
+                        } ${isKeyCol && !isMerged
                           ? "font-bold text-slate-900 font-mono"
                           : isDimension
-                          ? "font-semibold text-brand-teal font-mono"
-                          : "text-slate-700 font-mono"
-                      }`}
+                            ? "font-semibold text-brand-teal font-mono"
+                            : "text-slate-700 font-mono"
+                        }`}
                     >
                       {val !== null && val !== undefined ? String(val) : "—"}
                     </td>

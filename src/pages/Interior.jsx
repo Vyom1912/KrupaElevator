@@ -28,6 +28,7 @@ import StickySidebarNav from "../components/common/StickySidebarNav";
 import CTASection from "../components/common/CTASection";
 import WhatsAppIcon from "../components/common/WhatsAppIcon";
 import { assetUrl } from "../utils/assetPath";
+import PageHero from "../components/common/PageHero";
 
 export default function Interior({ onOpenBrochure }) {
   // Lightbox state for zooming images
@@ -51,51 +52,20 @@ export default function Interior({ onOpenBrochure }) {
   ];
 
   return (
-    <div className="min-h-screen bg-slate-50 pt-20 pb-20">
+    <div className="min-h-screen bg-slate-50 pt-8 pb-8">
       {/* ========================================================================= */}
       {/* 1. PAGE HEADER                                                            */}
       {/* ========================================================================= */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-4 pb-6 border-b border-slate-200">
-        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
-          <div>
-            <div className="flex items-center space-x-2 text-brand-teal text-xs font-bold uppercase tracking-widest mb-1">
-              <Palette className="w-4 h-4" />
-              <span>Architectural Interior Aesthetics & Fixtures</span>
-            </div>
-            <h1 className="text-2xl sm:text-3xl lg:text-4xl font-black text-slate-900 tracking-tight">
-              Cabin Interior Series & Operating Panels
-            </h1>
-            <p className="text-xs sm:text-sm text-slate-600 max-w-3xl mt-1 leading-relaxed">
-              Discover Krupa's architectural cabin interiors categorized across Basic, Standard, Semi Designer, and Premium series, complemented by PVD laser-etched AG Series motifs and certified COP/LOP fixtures.
-            </p>
-          </div>
-
-          <div className="flex flex-wrap items-center gap-2.5 self-start md:self-auto">
-            <a
-              href="tel:+919727764868"
-              className="px-4 py-2.5 rounded-xl bg-slate-900 hover:bg-brand-teal text-white text-xs font-bold flex items-center space-x-2 transition-all shadow-xs cursor-pointer"
-            >
-              <Phone className="w-3.5 h-3.5 text-brand-orange" />
-              <span>Call: +91 97277 64868</span>
-            </a>
-            <a
-              href={`https://wa.me/919727764868?text=${encodeURIComponent(
-                "Hello Krupa Elevators, I would like to consult regarding cabin interior designs, material swatches, and COP/LOP panels."
-              )}`}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="px-4 py-2.5 rounded-xl bg-[#25D366] hover:bg-[#20bd5a] text-white text-xs font-bold flex items-center space-x-2 shadow-xs transition-all cursor-pointer"
-            >
-              <WhatsAppIcon className="w-4 h-4 text-white" />
-              <span>WhatsApp Inquiry</span>
-            </a>
-          </div>
-        </div>
-      </div>
+      <PageHero
+        icon={Palette}
+        badge="Architectural Interior Aesthetics & Fixtures"
+        title="Cabin Interior Series & Operating Panels"
+        description="Discover Krupa's architectural cabin interiors categorized across Basic, Standard, Semi Designer, and Premium series, complemented by PVD laser-etched AG Series motifs and certified COP/LOP fixtures."
+      />
 
       {/* Main Container with Sticky Navigation + Content */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6">
-        <div className="flex flex-col lg:flex-row gap-8 items-start">
+        <div className="w-full flex flex-col lg:flex-row gap-8 items-start">
           {/* Sticky Navigation (Mobile Horizontal Bar + Desktop Left Sidebar) */}
           <StickySidebarNav
             sections={sidebarSections}
@@ -414,9 +384,8 @@ export default function Interior({ onOpenBrochure }) {
                   <div
                     key={m.id}
                     id={`model-${m.id}`}
-                    className={`grid grid-cols-1 lg:grid-cols-12 gap-8 items-start scroll-mt-28 ${
-                      idx > 0 ? "pt-12" : ""
-                    }`}
+                    className={`grid grid-cols-1 lg:grid-cols-12 gap-8 items-start scroll-mt-28 ${idx > 0 ? "pt-12" : ""
+                      }`}
                   >
                     {/* Left: Image with Zoom */}
                     <div className="lg:col-span-5 space-y-3">
@@ -660,12 +629,12 @@ export default function Interior({ onOpenBrochure }) {
               {/* Visual Showcase: Left Hero COP Column | Right 6 Paired Models */}
               <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
                 {/* Left: Hero Luxury Brushed Stainless Steel COP */}
-                <div className="lg:col-span-4 bg-slate-950 rounded-3xl p-6 border border-slate-800 text-white flex flex-col items-center space-y-4">
+                <div className="lg:col-span-4 rounded-3xl p-6 border border-slate-800 text-white flex flex-col items-center space-y-4">
                   <div className="text-center space-y-1">
                     <span className="text-[10px] font-bold uppercase tracking-wider text-teal-300 block">
                       In-Cabin Masterpiece
                     </span>
-                    <h4 className="text-sm font-black">Full-Height Column COP</h4>
+                    <h4 className="text-sm text-slate-900 font-black">Full-Height Column COP</h4>
                     <p className="text-[11px] text-slate-400">
                       Brushed stainless steel with red digital floor matrix & round luminous buttons.
                     </p>
@@ -701,7 +670,7 @@ export default function Interior({ onOpenBrochure }) {
                           className="rounded-2xl border border-slate-200 overflow-hidden bg-slate-50 flex flex-col justify-between p-3.5 space-y-3 hover:shadow-md transition-all"
                         >
                           <div className="space-y-2">
-                            <div className="bg-slate-900 rounded-xl p-2 flex items-center justify-center h-48">
+                            <div className=" rounded-xl p-2 flex items-center justify-center h-48">
                               <img
                                 src={imageFile}
                                 alt={item.code}

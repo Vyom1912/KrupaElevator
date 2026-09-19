@@ -108,7 +108,7 @@ export default function StickySidebarNav({
       {/* ------------------------------------------------------------------- */}
       {/* 1. MOBILE FIRST: HORIZONTAL STICKY BAR (Below top navbar, < lg)     */}
       {/* ------------------------------------------------------------------- */}
-      <div className="block lg:hidden sticky top-16 z-30 bg-white/95 backdrop-blur-md border-b border-slate-200/80 shadow-xs -mx-4 sm:-mx-6 px-3 py-2">
+      <div className=" w-full block lg:hidden sticky top-20 z-30 bg-white/95 backdrop-blur-md border-b border-slate-200/80 shadow-xs  px-3  py-2 ">
         <div
           ref={mobileContainerRef}
           className="flex items-center space-x-2 overflow-x-auto no-scrollbar scroll-smooth"
@@ -123,11 +123,10 @@ export default function StickySidebarNav({
                 key={item.id}
                 ref={isActive ? activePillRef : null}
                 onClick={() => scrollToSection(item.id)}
-                className={`px-3 py-1.5 rounded-xl text-xs font-bold shrink-0 transition-all cursor-pointer flex items-center space-x-1.5 ${
-                  isActive
-                    ? "bg-slate-900 text-white shadow-xs"
-                    : "bg-slate-100 hover:bg-slate-200 text-slate-700"
-                } ${item.isSub ? "text-[11px] font-medium" : ""}`}
+                className={`px-3 py-1.5 rounded-xl text-xs font-bold shrink-0 transition-all cursor-pointer flex items-center space-x-1.5 ${isActive
+                  ? "bg-slate-900 text-white shadow-xs"
+                  : "bg-slate-100 hover:bg-slate-200 text-slate-700"
+                  } ${item.isSub ? "text-[11px] font-medium" : ""}`}
               >
                 {item.isSub && <span className="opacity-50 text-[10px]">•</span>}
                 <span>{item.label}</span>
@@ -163,21 +162,19 @@ export default function StickySidebarNav({
                 <div key={section.id} className="space-y-1">
                   <button
                     onClick={() => scrollToSection(section.id)}
-                    className={`w-full text-left px-3 py-2 rounded-xl transition-all flex items-center justify-between group cursor-pointer ${
-                      isDirectlyActive
-                        ? "bg-slate-900 text-white font-bold shadow-xs"
-                        : isSectionHighlighted
+                    className={`w-full text-left px-3 py-2 rounded-xl transition-all flex items-center justify-between group cursor-pointer ${isDirectlyActive
+                      ? "bg-slate-900 text-white font-bold shadow-xs"
+                      : isSectionHighlighted
                         ? "bg-slate-100 text-slate-900 font-bold"
                         : "text-slate-600 hover:text-slate-900 hover:bg-slate-50"
-                    }`}
+                      }`}
                   >
                     <span className="truncate">{section.label}</span>
                     <ChevronRight
-                      className={`w-3.5 h-3.5 shrink-0 transition-transform ${
-                        isSectionHighlighted
-                          ? "translate-x-0.5 text-brand-teal"
-                          : "opacity-40 group-hover:opacity-100"
-                      }`}
+                      className={`w-3.5 h-3.5 shrink-0 transition-transform ${isSectionHighlighted
+                        ? "translate-x-0.5 text-brand-teal"
+                        : "opacity-40 group-hover:opacity-100"
+                        }`}
                     />
                   </button>
 
@@ -190,11 +187,10 @@ export default function StickySidebarNav({
                           <button
                             key={sub.id}
                             onClick={() => scrollToSection(sub.id)}
-                            className={`w-full text-left px-2.5 py-1.5 rounded-lg text-[11px] transition-colors truncate block cursor-pointer ${
-                              isSubActive
-                                ? "bg-teal-50 text-teal-900 font-bold border-l-2 border-brand-teal"
-                                : "text-slate-500 hover:text-slate-800 hover:bg-slate-50"
-                            }`}
+                            className={`w-full text-left px-2.5 py-1.5 rounded-lg text-[11px] transition-colors truncate block cursor-pointer ${isSubActive
+                              ? "bg-teal-50 text-teal-900 font-bold border-l-2 border-brand-teal"
+                              : "text-slate-500 hover:text-slate-800 hover:bg-slate-50"
+                              }`}
                           >
                             {sub.label}
                           </button>

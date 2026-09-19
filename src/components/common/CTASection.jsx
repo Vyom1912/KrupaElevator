@@ -18,30 +18,28 @@ export default function CTASection({
   };
 
   return (
-    <section className={`max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 ${className}`}>
+
+
+    <section className={`w-full m-auto px-4 sm:px-6 lg:px-8 rounded-2xl p-8 sm:p-12 lg:p-14 shadow-2xl ${className} ${variantStyles[variant] || variantStyles.gradient} overflow-hidden `}>
+
       <ScrollReveal direction="up" distance={20} duration={500}>
         <div
-          className={`rounded-3xl p-8 sm:p-12 lg:p-14 flex flex-col lg:flex-row justify-between items-center gap-8 shadow-2xl relative overflow-hidden ${variantStyles[variant] || variantStyles.gradient}`}
+          className={` flex flex-col lg:flex justify-between  gap-8  relative `}
         >
           {/* Ambient light blur */}
           <div className="absolute -top-16 -right-16 w-72 h-72 bg-brand-orange/20 rounded-full blur-3xl pointer-events-none" />
 
           {/* Left Text */}
-          <div className="space-y-3 text-center lg:text-left max-w-2xl relative z-10">
-            {badge && (
-              <span className="inline-flex items-center space-x-1.5 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider bg-white/15 text-teal-100 backdrop-blur-xs">
-                <MapPin className="w-3.5 h-3.5 text-brand-orange" />
-                <span>{badge}</span>
-              </span>
-            )}
-            <h2 className="text-2xl sm:text-4xl lg:text-5xl font-black tracking-tight leading-tight">
+          <div className="space-y-3 text-center lg:text-left m-auto max-w-2xl relative z-10">
+
+            <h2 className="text-2xl sm:text-2xl lg:text-5xl font-black tracking-tight leading-tight ">
               {title}
             </h2>
             <p className="text-xs sm:text-sm lg:text-base text-teal-100/90 leading-relaxed font-normal">
               {subtitle}
             </p>
 
-            <div className="flex flex-wrap items-center justify-center lg:justify-start gap-4 pt-2 text-xs text-teal-200">
+            <div className="flex flex-wrap justify-center  lg:justify-start gap-4 pt-2 text-xs text-teal-200">
               <span className="flex items-center space-x-1">
                 <ShieldCheck className="w-4 h-4 text-brand-orange" />
                 <span>Zero Cost Site Consultation</span>
@@ -54,7 +52,7 @@ export default function CTASection({
           </div>
 
           {/* Right Action Buttons */}
-          <div className="flex flex-col sm:flex-row items-center gap-3 w-full lg:w-auto relative z-10 shrink-0">
+          <div className=" w-full flex flex-col sm:flex-row items-center justify-center gap-3 lg:w-auto relative z-10 shrink-0">
             <Link
               to="/contact"
               className="w-full sm:w-auto px-7 py-3.5 rounded-full bg-brand-orange hover:bg-brand-orange-hover text-white text-xs sm:text-sm font-bold shadow-xl transition-all transform active:scale-95 flex items-center justify-center space-x-2"

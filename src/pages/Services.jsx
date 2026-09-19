@@ -32,32 +32,17 @@ export default function Services() {
   };
 
   return (
-    <div className="space-y-16 sm:space-y-24 pb-20 overflow-x-hidden">
+    <div className="min-h-screen bg-slate-50 pt-8 pb-8 overflow-x-hidden">
       {/* Page Hero */}
+
       <PageHero
+        icon={Wrench}
         badge="Certified Engineering • Lifecycle Support"
         title="Reliable Support Throughout the Life of Your Elevator"
-        subtitle="Our service team provides professional installation support, preventive maintenance, troubleshooting, and ongoing elevator care. We combine trained personnel, supervisory support, genuine spare parts, and monitoring solutions to maintain reliable elevator performance."
-        breadcrumbs={[{ label: "Service & Maintenance" }]}
-        actions={
-          <>
-            <Link
-              to="/contact"
-              className="px-6 py-3 rounded-full bg-brand-orange hover:bg-brand-orange-hover text-white text-xs sm:text-sm font-bold shadow-lg transition-colors flex items-center space-x-2"
-            >
-              <span>Book Preventive Maintenance</span>
-              <CheckCircle className="w-4 h-4" />
-            </Link>
-            <a
-              href={`tel:${companyData.contacts.phoneRaw}`}
-              className="px-5 py-3 rounded-full bg-slate-800/90 border border-slate-700 text-white text-xs sm:text-sm font-bold hover:bg-slate-700 transition-colors flex items-center space-x-2"
-            >
-              <Phone className="w-4 h-4 text-brand-teal" />
-              <span>24/7 Breakdown Hotline</span>
-            </a>
-          </>
-        }
+        description="Our service team provides professional installation support, preventive maintenance, troubleshooting, and ongoing elevator care. We combine trained personnel, supervisory support, genuine spare parts, and monitoring solutions to maintain reliable elevator performance."
+
       />
+
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-16">
         {/* 5 Service Pillars */}
@@ -138,20 +123,18 @@ export default function Services() {
             {servicesMaster.amcPackages.map((pkg) => (
               <div
                 key={pkg.id}
-                className={`rounded-3xl p-6 sm:p-8 flex flex-col justify-between border transition-all ${
-                  pkg.popular
-                    ? "bg-slate-900 text-white border-brand-teal shadow-xl scale-[1.02]"
-                    : "bg-white text-slate-900 border-slate-200 shadow-xs"
-                }`}
+                className={`rounded-3xl p-6 sm:p-8 flex flex-col justify-between border transition-all ${pkg.popular
+                  ? "bg-slate-900 text-white border-brand-teal shadow-xl scale-[1.02]"
+                  : "bg-white text-slate-900 border-slate-200 shadow-xs"
+                  }`}
               >
                 <div className="space-y-4">
                   <div className="flex justify-between items-center">
                     <span
-                      className={`text-[10px] font-bold uppercase tracking-wider px-3 py-1 rounded-full ${
-                        pkg.popular
-                          ? "bg-brand-teal text-white"
-                          : "bg-slate-100 text-slate-600"
-                      }`}
+                      className={`text-[10px] font-bold uppercase tracking-wider px-3 py-1 rounded-full ${pkg.popular
+                        ? "bg-brand-teal text-white"
+                        : "bg-slate-100 text-slate-600"
+                        }`}
                     >
                       {pkg.tag}
                     </span>
@@ -162,9 +145,8 @@ export default function Services() {
 
                   <h3 className="text-xl font-bold">{pkg.name}</h3>
                   <p
-                    className={`text-xs leading-relaxed ${
-                      pkg.popular ? "text-slate-300" : "text-slate-600"
-                    }`}
+                    className={`text-xs leading-relaxed ${pkg.popular ? "text-slate-300" : "text-slate-600"
+                      }`}
                   >
                     Ideal for: <strong>{pkg.idealFor}</strong>
                   </p>
@@ -173,9 +155,8 @@ export default function Services() {
                     {pkg.features.map((f, fIdx) => (
                       <div key={fIdx} className="flex items-start space-x-2">
                         <CheckCircle2
-                          className={`w-4 h-4 shrink-0 mt-0.5 ${
-                            pkg.popular ? "text-teal-300" : "text-brand-teal"
-                          }`}
+                          className={`w-4 h-4 shrink-0 mt-0.5 ${pkg.popular ? "text-teal-300" : "text-brand-teal"
+                            }`}
                         />
                         <span className="leading-snug">{f}</span>
                       </div>
@@ -186,11 +167,10 @@ export default function Services() {
                 <div className="pt-6 mt-6 border-t border-slate-100 dark:border-slate-800">
                   <Link
                     to="/contact"
-                    className={`w-full py-3 rounded-xl text-xs font-bold text-center block transition-colors ${
-                      pkg.popular
-                        ? "bg-brand-orange hover:bg-brand-orange-hover text-white shadow-md"
-                        : "bg-slate-900 hover:bg-brand-teal text-white"
-                    }`}
+                    className={`w-full py-3 rounded-xl text-xs font-bold text-center block transition-colors ${pkg.popular
+                      ? "bg-brand-orange hover:bg-brand-orange-hover text-white shadow-md"
+                      : "bg-slate-900 hover:bg-brand-teal text-white"
+                      }`}
                   >
                     Get Package Quote
                   </Link>

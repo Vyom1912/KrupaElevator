@@ -114,7 +114,7 @@ export default function Navbar() {
             </div>
           </div>
 
-          <div className="flex items-center space-x-3 text-[11px]">
+          {/* <div className="flex items-center space-x-3 text-[11px]">
             <Link
               to="/interiors"
               className="inline-flex items-center space-x-1 text-slate-300 hover:text-brand-teal transition-colors"
@@ -129,7 +129,7 @@ export default function Navbar() {
             >
               CAD Dimensions
             </Link>
-          </div>
+          </div> */}
         </div>
       </div>
 
@@ -176,8 +176,8 @@ export default function Navbar() {
 
             {/* Right Action Buttons - Modern Call, WhatsApp & Survey */}
             <div className="hidden lg:flex items-center space-x-2">
-              {/* Modern Phone Call Button */}
-              <a
+
+              {/* <a
                 href={`tel:${companyData.contacts.phoneRaw}`}
                 className="inline-flex items-center space-x-1.5 px-3 py-1.5 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-800 text-xs font-bold transition-all border border-slate-200 hover:scale-105 active:scale-95"
                 title="Call Technical Desk: +91 97277 64868"
@@ -185,8 +185,6 @@ export default function Navbar() {
                 <Phone className="w-3.5 h-3.5 text-brand-orange" />
                 <span>Call</span>
               </a>
-
-              {/* Modern WhatsApp Button */}
               <a
                 href={`https://wa.me/${companyData.contacts.whatsapp}?text=${encodeURIComponent(
                   "Hello Krupa Elevators, I would like to inquire about elevator solutions."
@@ -198,7 +196,7 @@ export default function Navbar() {
               >
                 <WhatsAppIcon className="w-3.5 h-3.5" />
                 <span>WhatsApp</span>
-              </a>
+              </a> */}
 
               <Link
                 to="/contact"
@@ -211,7 +209,7 @@ export default function Navbar() {
 
             {/* Mobile Quick Action Buttons & Menu Hamburger */}
             <div className="flex items-center lg:hidden space-x-1.5">
-              <a
+              {/* <a
                 href={`tel:${companyData.contacts.phoneRaw}`}
                 className="p-2 rounded-full bg-slate-100 text-slate-800 hover:bg-slate-200 transition-all active:scale-90 border border-slate-200"
                 aria-label="Call Krupa Elevators"
@@ -230,7 +228,7 @@ export default function Navbar() {
                 title="WhatsApp Message"
               >
                 <WhatsAppIcon className="w-4 h-4" />
-              </a>
+              </a> */}
               <button
                 onClick={() => setMobileMenuOpen((prev) => !prev)}
                 className="p-1.5 rounded-lg text-slate-700 hover:bg-slate-100 focus:outline-none transition-colors"

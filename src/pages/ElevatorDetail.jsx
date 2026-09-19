@@ -88,12 +88,12 @@ export default function ElevatorDetail({ onOpenBrochure }) {
                 <span className="px-3.5 py-1 rounded-full bg-brand-teal/20 border border-brand-teal/40 text-brand-teal text-xs font-bold uppercase tracking-wider">
                   {elevator.category}
                 </span>
-                <span className="px-3 py-1 rounded-full bg-slate-800 border border-slate-700 text-slate-300 text-xs font-semibold">
+                {/* <span className="px-3 py-1 rounded-full bg-slate-800 border border-slate-700 text-slate-300 text-xs font-semibold">
                   ISO 9001:2015 Certified
                 </span>
                 <span className="px-3 py-1 rounded-full bg-orange-500/20 text-orange-300 border border-orange-500/30 text-xs font-bold">
                   IS 14665 Standard
-                </span>
+                </span> */}
               </div>
 
               <div className="space-y-3">
@@ -118,7 +118,7 @@ export default function ElevatorDetail({ onOpenBrochure }) {
                   <ArrowRight className="w-4 h-4" />
                 </Link>
 
-                <a
+                {/* <a
                   href={`tel:${companyData.contacts.phoneRaw}`}
                   className="px-5 py-3.5 rounded-xl bg-slate-900/90 hover:bg-slate-800 text-slate-200 border border-slate-700 text-xs sm:text-sm font-bold transition-all flex items-center space-x-2"
                   title="Call Technical Engineer"
@@ -138,7 +138,7 @@ export default function ElevatorDetail({ onOpenBrochure }) {
                 >
                   <WhatsAppIcon className="w-4 h-4" />
                   <span>WhatsApp</span>
-                </a>
+                </a> */}
 
                 <button
                   onClick={() => {
@@ -171,7 +171,7 @@ export default function ElevatorDetail({ onOpenBrochure }) {
             </div>
           </div>
         </div>
-      </section>
+      </section >
 
       {/* ========================================================================= */}
       {/* 2. OVERVIEW & TYPICAL APPLICATIONS                                        */}
@@ -280,28 +280,27 @@ export default function ElevatorDetail({ onOpenBrochure }) {
                     key === "main"
                       ? "Main GA"
                       : key === "plan"
-                      ? "Plan View"
-                      : key === "elevation"
-                      ? "Elevation View"
-                      : key === "door" || key === "doors"
-                      ? "Door Details"
-                      : key === "threeD" || key === "threeDShafts"
-                      ? "3D Shaft"
-                      : key === "terrace"
-                      ? "Terrace Level"
-                      : key === "parkingSystems"
-                      ? "Parking Stacker"
-                      : key.toUpperCase();
+                        ? "Plan View"
+                        : key === "elevation"
+                          ? "Elevation View"
+                          : key === "door" || key === "doors"
+                            ? "Door Details"
+                            : key === "threeD" || key === "threeDShafts"
+                              ? "3D Shaft"
+                              : key === "terrace"
+                                ? "Terrace Level"
+                                : key === "parkingSystems"
+                                  ? "Parking Stacker"
+                                  : key.toUpperCase();
 
                   return (
                     <button
                       key={key}
                       onClick={() => setActiveDrawingKey(key)}
-                      className={`px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer ${
-                        isSelected
-                          ? "bg-brand-teal text-white shadow-sm"
-                          : "text-slate-400 hover:text-white hover:bg-slate-700"
-                      }`}
+                      className={`px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer ${isSelected
+                        ? "bg-brand-teal text-white shadow-sm"
+                        : "text-slate-400 hover:text-white hover:bg-slate-700"
+                        }`}
                     >
                       {label}
                     </button>
@@ -497,43 +496,45 @@ export default function ElevatorDetail({ onOpenBrochure }) {
       </section>
 
       {/* Lightbox for Zooming CAD Drawing */}
-      {lightboxOpen && (
-        <div
-          className="fixed inset-0 z-50 bg-slate-950/90 backdrop-blur-md flex flex-col items-center justify-center p-4 animate-in fade-in duration-200"
-          onClick={() => setLightboxOpen(false)}
-        >
+      {
+        lightboxOpen && (
           <div
-            className="relative bg-white rounded-3xl p-6 max-w-4xl w-full max-h-[90vh] flex flex-col items-center shadow-2xl border border-slate-700"
-            onClick={(e) => e.stopPropagation()}
+            className="fixed inset-0 z-50 bg-slate-950/90 backdrop-blur-md flex flex-col items-center justify-center p-4 animate-in fade-in duration-200"
+            onClick={() => setLightboxOpen(false)}
           >
-            <div className="w-full flex justify-between items-center pb-4 border-b border-slate-100">
-              <div className="flex items-center space-x-2">
-                <Compass className="w-5 h-5 text-brand-teal" />
-                <h3 className="text-base font-black text-slate-900">
-                  {elevator.name} — General Arrangement Hoistway Drawing
-                </h3>
+            <div
+              className="relative bg-white rounded-3xl p-6 max-w-4xl w-full max-h-[90vh] flex flex-col items-center shadow-2xl border border-slate-700"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <div className="w-full flex justify-between items-center pb-4 border-b border-slate-100">
+                <div className="flex items-center space-x-2">
+                  <Compass className="w-5 h-5 text-brand-teal" />
+                  <h3 className="text-base font-black text-slate-900">
+                    {elevator.name} — General Arrangement Hoistway Drawing
+                  </h3>
+                </div>
+                <button
+                  onClick={() => setLightboxOpen(false)}
+                  className="p-2 rounded-full hover:bg-slate-100 text-slate-500 hover:text-slate-900 transition-colors cursor-pointer"
+                  aria-label="Close drawing preview"
+                >
+                  <X className="w-6 h-6" />
+                </button>
               </div>
-              <button
-                onClick={() => setLightboxOpen(false)}
-                className="p-2 rounded-full hover:bg-slate-100 text-slate-500 hover:text-slate-900 transition-colors cursor-pointer"
-                aria-label="Close drawing preview"
-              >
-                <X className="w-6 h-6" />
-              </button>
-            </div>
-            <div className="overflow-auto max-h-[72vh] w-full flex items-center justify-center p-4 bg-slate-50/60 rounded-2xl my-3">
-              <img
-                src={activeDrawingUrl}
-                alt={`${elevator.name} Engineering Drawing`}
-                className="max-h-[65vh] object-contain rounded-lg shadow-sm"
-              />
-            </div>
-            <div className="w-full text-center text-xs text-slate-500 pt-2">
-              All civil dimensions in millimeters (mm). Compliant with IS 14665 & BIS engineering standards.
+              <div className="overflow-auto max-h-[72vh] w-full flex items-center justify-center p-4 bg-slate-50/60 rounded-2xl my-3">
+                <img
+                  src={activeDrawingUrl}
+                  alt={`${elevator.name} Engineering Drawing`}
+                  className="max-h-[65vh] object-contain rounded-lg shadow-sm"
+                />
+              </div>
+              <div className="w-full text-center text-xs text-slate-500 pt-2">
+                All civil dimensions in millimeters (mm). Compliant with IS 14665 & BIS engineering standards.
+              </div>
             </div>
           </div>
-        </div>
-      )}
-    </div>
+        )
+      }
+    </div >
   );
 }
