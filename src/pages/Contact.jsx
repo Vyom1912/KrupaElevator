@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { Link, useLocation } from "react-router-dom";
 import {
   Phone,
   Mail,
@@ -10,7 +10,9 @@ import {
   Factory,
   MessageSquare,
   ChevronDown,
-  ArrowUpRight
+  ArrowUpRight,
+  ShieldCheck,
+  Lock
 } from "lucide-react";
 import { companyData } from "../data/companyData";
 import ScrollReveal from "../components/ScrollReveal";
@@ -19,6 +21,8 @@ import WhatsAppIcon from "../components/common/WhatsAppIcon";
 import Seo from "../components/common/Seo";
 
 export default function Contact({ onOpenBrochure }) {
+  const location = useLocation();
+  const [decodedInquiry, setDecodedInquiry] = useState(null);
   const [formSubmitted, setFormSubmitted] = useState(false);
   const [formData, setFormData] = useState({
     name: "",
@@ -31,6 +35,29 @@ export default function Contact({ onOpenBrochure }) {
     city: "Ahmedabad",
     message: ""
   });
+
+  useEffect(() => {
+    const params = new URLSearchParams(location.search);
+    const token = params.get("token") || params.get("spec");
+    if (token) {
+      try {
+        const jsonStr = decodeURIComponent(escape(atob(token)));
+        const data = JSON.parse(jsonStr);
+        setDecodedInquiry(data);
+        if (data.application) {
+          setFormData((prev) => ({
+            ...prev,
+            buildingType: data.application,
+            floors: data.floors || prev.floors,
+            capacity: data.capacity || prev.capacity,
+            message: `[Decoded Inquiry Ref: ${data.inquiryId}] Shaft: ${data.hoistwayClear}, Car: ${data.internalCar}, Pit: ${data.pitDepth}, OH: ${data.overheadClearance}, Aesthetic: ${data.aesthetic}`
+          }));
+        }
+      } catch (err) {
+        console.warn("Unable to decode token:", err);
+      }
+    }
+  }, [location.search]);
 
   const [openFaq, setOpenFaq] = useState(0);
 
@@ -222,6 +249,49 @@ export default function Contact({ onOpenBrochure }) {
                 Fill out the technical requirements below and our sales engineering division will provide a comprehensive proposal.
               </p>
             </div>
+
+            {/* Decoded WhatsApp Token Specifications Banner */}
+            {decodedInquiry && (
+              <div className="p-4 rounded-2xl bg-teal-50/90 border border-teal-200 text-teal-950 space-y-2.5">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-2">
+                    <ShieldCheck className="w-5 h-5 text-brand-teal" />
+                    <span className="text-xs font-bold uppercase tracking-wider text-teal-900">
+                      Decoded WhatsApp Specification ({decodedInquiry.inquiryId})
+                    </span>
+                  </div>
+                  <span className="text-[10px] font-bold text-teal-800 bg-teal-200/60 px-2 py-0.5 rounded-full flex items-center gap-1">
+                    <Lock className="w-3 h-3" /> Verified Token
+                  </span>
+                </div>
+                <div className="grid grid-cols-2 sm:grid-cols-3 gap-2.5 text-xs pt-1 border-t border-teal-200/60">
+                  <div>
+                    <span className="text-[10px] text-teal-700 block">Category:</span>
+                    <strong className="text-teal-950">{decodedInquiry.application}</strong>
+                  </div>
+                  <div>
+                    <span className="text-[10px] text-teal-700 block">Stops / Floors:</span>
+                    <strong className="text-teal-950">{decodedInquiry.floors}</strong>
+                  </div>
+                  <div>
+                    <span className="text-[10px] text-teal-700 block">Capacity:</span>
+                    <strong className="text-teal-950">{decodedInquiry.capacity}</strong>
+                  </div>
+                  <div>
+                    <span className="text-[10px] text-teal-700 block">Shaft Size (W x D):</span>
+                    <strong className="text-teal-950">{decodedInquiry.hoistwayClear}</strong>
+                  </div>
+                  <div>
+                    <span className="text-[10px] text-teal-700 block">Pit / Overhead:</span>
+                    <strong className="text-teal-950">{decodedInquiry.pitDepth} / {decodedInquiry.overheadClearance}</strong>
+                  </div>
+                  <div>
+                    <span className="text-[10px] text-teal-700 block">Aesthetic Finish:</span>
+                    <strong className="text-teal-950">{decodedInquiry.aesthetic}</strong>
+                  </div>
+                </div>
+              </div>
+            )}
 
             {formSubmitted ? (
               <div className="p-8 rounded-2xl bg-teal-50 border border-teal-200 text-teal-950 text-center space-y-3">

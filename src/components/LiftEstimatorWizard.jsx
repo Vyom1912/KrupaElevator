@@ -557,30 +557,26 @@ export default function LiftEstimatorWizard({ onOpenBrochure }) {
 
               {/* Action CTAs */}
               <div className="space-y-2.5 pt-2 border-t border-slate-800/80">
-                {/* Direct Encrypted Submission Button */}
-                <button
-                  type="button"
-                  onClick={handleSecureSubmit}
-                  disabled={isSubmitting}
-                  className="w-full flex items-center justify-center space-x-2 py-3 px-4 rounded-xl bg-gradient-to-r from-teal-600 to-emerald-600 hover:from-teal-500 hover:to-emerald-500 text-white font-bold text-sm shadow-lg shadow-emerald-900/30 transition-all hover:scale-[1.02] active:scale-[0.98] disabled:opacity-60 disabled:pointer-events-none"
+                {/* Direct Encrypted WhatsApp Submission Button */}
+                <a
+                  href={encodedEstimation.whatsappUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onClick={() => {
+                    setSubmissionSuccess(true);
+                    setSubmissionResult(encodedEstimation);
+                  }}
+                  className="w-full flex items-center justify-center space-x-2 py-3.5 px-4 rounded-xl bg-[#25D366] hover:bg-[#20bd5a] text-white font-bold text-sm shadow-lg shadow-emerald-900/30 transition-all hover:scale-[1.02] active:scale-[0.98]"
                 >
-                  {isSubmitting ? (
-                    <>
-                      <RefreshCw className="w-4 h-4 animate-spin text-white" />
-                      <span>Encoding &amp; Transmitting via HTTPS...</span>
-                    </>
-                  ) : (
-                    <>
-                      <Lock className="w-4 h-4 text-emerald-200" />
-                      <span>Send Encrypted Estimation (HTTPS)</span>
-                    </>
-                  )}
-                </button>
+                  <WhatsAppIcon className="w-5 h-5 text-white" />
+                  <Lock className="w-4 h-4 text-emerald-100" />
+                  <span>Send Encoded Estimate to WhatsApp</span>
+                </a>
 
                 {/* Zero Exposure Guarantee */}
                 <div className="flex items-center justify-center gap-1.5 text-[10.5px] text-slate-400 text-center pt-0.5">
                   <ShieldCheck className="w-3.5 h-3.5 text-emerald-400 flex-shrink-0" />
-                  <span>Zero-Exposure Guarantee: Specs are encoded and sent via secure HTTPS POST.</span>
+                  <span>Data is encoded into a secure token before sending to +91 63533 44875 so no one can see it.</span>
                 </div>
 
                 {/* Link to Architects Corner */}
@@ -598,7 +594,7 @@ export default function LiftEstimatorWizard({ onOpenBrochure }) {
                     <PhoneCall className="w-3 h-3 text-brand-orange" />
                     Direct Desk:
                   </span>
-                  <a href={`tel:${companyData.contacts.whatsapp}`} className="font-bold text-slate-200 hover:text-brand-orange">
+                  <a href={`tel:${companyData.contacts.phoneRaw}`} className="font-bold text-slate-200 hover:text-brand-orange">
                     {companyData.contacts.phone}
                   </a>
                 </div>
