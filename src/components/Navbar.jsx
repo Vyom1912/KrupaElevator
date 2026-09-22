@@ -1,33 +1,68 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { Phone, Mail, MapPin, Menu, X, ChevronRight, ArrowRight } from "lucide-react";
+import { Menu, X, ChevronRight, ChevronDown, ArrowRight } from "lucide-react";
 import { companyData } from "../data/companyData";
-import WhatsAppIcon from "./common/WhatsAppIcon";
+
+const navGroups = [
+  { name: "Home", path: "/" },
+  {
+    name: "Products",
+    path: "/products",
+    children: [
+      { name: "Products Overview", path: "/products", desc: "Full catalogue in one place" },
+      { name: "Elevator Models", path: "/products/elevators", desc: "8 engineered elevator classes" },
+      { name: "Door Systems", path: "/products/doors", desc: "Manual & automatic landing doors" },
+      { name: "Interior Cabins", path: "/products/interiors", desc: "11 cabin finish series" },
+      { name: "Technology & Drive Systems", path: "/products/technology", desc: "PMSM, V3F, ARD, safety" },
+      { name: "Architects & CAD Hub", path: "/products/architects-corner", desc: "Civil drawings & dimensions" },
+    ],
+  },
+  {
+    name: "Services",
+    path: "/services",
+    children: [
+      { name: "Services Overview", path: "/services", desc: "All support & AMC offerings" },
+      { name: "AMC & Maintenance", path: "/services/amc-maintenance", desc: "Preventive maintenance plans" },
+      { name: "Modernization", path: "/services/modernization", desc: "Retrofit & upgrade services" },
+      { name: "Installation Process", path: "/services/installation", desc: "Site survey to commissioning" },
+      { name: "Emergency Support", path: "/services/emergency-support", desc: "24/7 breakdown dispatch" },
+    ],
+  },
+  {
+    name: "About",
+    path: "/about",
+    children: [
+      { name: "About Us", path: "/about", desc: "Company, mission & facilities" },
+      { name: "Projects & Clients", path: "/about/projects", desc: "Verified installations" },
+    ],
+  },
+  { name: "Contact", path: "/contact" },
+];
 
 export default function Navbar() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [mobileOpenGroup, setMobileOpenGroup] = useState(null);
+  const [desktopOpenGroup, setDesktopOpenGroup] = useState(null);
   const [scrolled, setScrolled] = useState(false);
   const [scrollProgress, setScrollProgress] = useState(0);
   const navRef = useRef(null);
   const location = useLocation();
-
-  const navLinks = [
-    { name: "Home", path: "/" },
-    { name: "Elevators", path: "/elevators" },
-    { name: "Interiors", path: "/interiors" },
-    { name: "Technology", path: "/technology" },
-    { name: "Service", path: "/services" },
-    { name: "Contact", path: "/contact" },
-  ];
 
   const isActive = (path) => {
     if (path === "/") return location.pathname === "/";
     return location.pathname.startsWith(path);
   };
 
+  const isGroupActive = (group) => {
+    if (isActive(group.path)) return true;
+    return (group.children || []).some((c) => isActive(c.path));
+  };
+
   // Close when route changes
   useEffect(() => {
     setMobileMenuOpen(false);
+    setMobileOpenGroup(null);
+    setDesktopOpenGroup(null);
   }, [location.pathname]);
 
   // Scroll listener for elevation effect & smooth reading progress
@@ -48,19 +83,22 @@ export default function Navbar() {
     const handleOutsideClick = (e) => {
       if (navRef.current && !navRef.current.contains(e.target)) {
         setMobileMenuOpen(false);
+        setDesktopOpenGroup(null);
       }
     };
 
     const handleKeyDown = (e) => {
       if (e.key === "Escape") {
         setMobileMenuOpen(false);
+        setDesktopOpenGroup(null);
       }
     };
 
+    document.addEventListener("mousedown", handleOutsideClick);
+    document.addEventListener("touchstart", handleOutsideClick, { passive: true });
+    document.addEventListener("keydown", handleKeyDown);
+
     if (mobileMenuOpen) {
-      document.addEventListener("mousedown", handleOutsideClick);
-      document.addEventListener("touchstart", handleOutsideClick, { passive: true });
-      document.addEventListener("keydown", handleKeyDown);
       document.body.style.overflow = "hidden";
     } else {
       document.body.style.overflow = "";
@@ -76,63 +114,6 @@ export default function Navbar() {
 
   return (
     <header ref={navRef} className="sticky top-0 z-50 transition-all duration-200">
-      {/* Slim Top Utility Strip */}
-      <div className="bg-slate-950 text-slate-400 text-[11px] py-1 border-b border-slate-800/80">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center">
-          <div className="flex items-center space-x-5">
-            <a
-              href={`tel:${companyData.contacts.phoneRaw}`}
-              className="flex items-center space-x-1.5 text-slate-300 hover:text-brand-orange transition-colors"
-              title="Call Krupa Elevators"
-            >
-              <Phone className="w-3 h-3 text-brand-orange" />
-              <span className="font-semibold">{companyData.contacts.phone}</span>
-            </a>
-            <a
-              href={`https://wa.me/${companyData.contacts.whatsapp}?text=${encodeURIComponent(
-                "Hello Krupa Elevators, I would like to inquire about elevator solutions."
-              )}`}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-center space-x-1.5 text-emerald-400 hover:text-emerald-300 transition-colors"
-              title="Chat on WhatsApp"
-            >
-              <WhatsAppIcon className="w-3 h-3 text-[#25D366]" />
-              <span className="font-semibold">WhatsApp</span>
-            </a>
-            <a
-              href={`mailto:${companyData.contacts.emailPrimary}`}
-              className="hidden md:flex items-center space-x-1.5 hover:text-brand-teal transition-colors"
-            >
-              <Mail className="w-3 h-3 text-brand-teal" />
-              <span>{companyData.contacts.emailPrimary}</span>
-            </a>
-            <span className="hidden lg:inline text-slate-500">|</span>
-            <div className="hidden lg:flex items-center space-x-1 text-slate-400">
-              <MapPin className="w-3 h-3 text-slate-500" />
-              <span>Nikol & Bakrol Hub, Ahmedabad</span>
-            </div>
-          </div>
-
-          {/* <div className="flex items-center space-x-3 text-[11px]">
-            <Link
-              to="/interiors"
-              className="inline-flex items-center space-x-1 text-slate-300 hover:text-brand-teal transition-colors"
-            >
-              <Sparkles className="w-3.5 h-3.5 text-brand-teal" />
-              <span className="font-medium">11 Cabin Finishes</span>
-            </Link>
-            <span className="text-slate-600">&bull;</span>
-            <Link
-              to="/elevators"
-              className="text-slate-300 hover:text-brand-orange transition-colors font-medium"
-            >
-              CAD Dimensions
-            </Link>
-          </div> */}
-        </div>
-      </div>
-
       {/* Main Compact Navbar */}
       <nav
         className={`bg-white/95 backdrop-blur-md border-b transition-all duration-200 ${scrolled
@@ -155,49 +136,82 @@ export default function Navbar() {
               />
             </Link>
 
-            {/* Desktop Navigation Links - Compact, Refined & Elegant */}
-            <div className="hidden lg:flex items-center space-x-1 xl:space-x-1.5">
-              {navLinks.map((link) => {
-                const active = isActive(link.path);
+            {/* Desktop Navigation Links with Dropdowns */}
+            <div className="hidden lg:flex items-center space-x-0.5 xl:space-x-1">
+              {navGroups.map((group) => {
+                const active = isGroupActive(group);
+                const hasChildren = Array.isArray(group.children) && group.children.length > 0;
+
+                if (!hasChildren) {
+                  return (
+                    <Link
+                      key={group.name}
+                      to={group.path}
+                      className={`px-3 py-1.5 rounded-lg text-xs xl:text-[13px] font-semibold transition-all ${active
+                        ? "text-brand-teal bg-brand-teal-light font-bold"
+                        : "text-slate-600 hover:text-brand-teal hover:bg-slate-100/70"
+                        }`}
+                    >
+                      {group.name}
+                    </Link>
+                  );
+                }
+
+                const open = desktopOpenGroup === group.name;
                 return (
-                  <Link
-                    key={link.name}
-                    to={link.path}
-                    className={`px-3 py-1.5 rounded-lg text-xs xl:text-[13px] font-semibold transition-all ${active
-                      ? "text-brand-teal bg-brand-teal-light font-bold"
-                      : "text-slate-600 hover:text-brand-teal hover:bg-slate-100/70"
-                      }`}
+                  <div
+                    key={group.name}
+                    className="relative"
+                    onMouseEnter={() => setDesktopOpenGroup(group.name)}
+                    onMouseLeave={() => setDesktopOpenGroup((prev) => (prev === group.name ? null : prev))}
                   >
-                    {link.name}
-                  </Link>
+                    <button
+                      onClick={() => setDesktopOpenGroup((prev) => (prev === group.name ? null : group.name))}
+                      className={`flex items-center gap-1 px-3 py-1.5 rounded-lg text-xs xl:text-[13px] font-semibold transition-all cursor-pointer ${active
+                        ? "text-brand-teal bg-brand-teal-light font-bold"
+                        : "text-slate-600 hover:text-brand-teal hover:bg-slate-100/70"
+                        }`}
+                      aria-haspopup="true"
+                      aria-expanded={open}
+                    >
+                      <span>{group.name}</span>
+                      <ChevronDown className={`w-3.5 h-3.5 transition-transform ${open ? "rotate-180" : ""}`} />
+                    </button>
+
+                    {open && (
+                      <div className="absolute top-full left-0 pt-2 w-72 z-50">
+                        <div className="bg-white rounded-2xl border border-slate-200 shadow-xl p-2 divide-y divide-slate-100">
+                          {group.children.map((child) => (
+                            <Link
+                              key={child.path}
+                              to={child.path}
+                              className={`block px-3.5 py-2.5 rounded-xl transition-colors ${isActive(child.path)
+                                ? "bg-brand-teal-light text-brand-teal"
+                                : "hover:bg-slate-50 text-slate-700"
+                                }`}
+                            >
+                              <span className="block text-xs font-bold">{child.name}</span>
+                              {child.desc && (
+                                <span className="block text-[11px] text-slate-500 mt-0.5">{child.desc}</span>
+                              )}
+                            </Link>
+                          ))}
+                        </div>
+                      </div>
+                    )}
+                  </div>
                 );
               })}
             </div>
 
-            {/* Right Action Buttons - Modern Call, WhatsApp & Survey */}
+            {/* Right Action Buttons */}
             <div className="hidden lg:flex items-center space-x-2">
-
-              {/* <a
-                href={`tel:${companyData.contacts.phoneRaw}`}
-                className="inline-flex items-center space-x-1.5 px-3 py-1.5 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-800 text-xs font-bold transition-all border border-slate-200 hover:scale-105 active:scale-95"
-                title="Call Technical Desk: +91 97277 64868"
+              <Link
+                to="/#estimator"
+                className="inline-flex items-center space-x-1.5 px-3 py-1.5 rounded-full bg-slate-900 hover:bg-brand-teal text-white text-xs font-bold transition-all shadow-xs hover:scale-105 active:scale-95"
               >
-                <Phone className="w-3.5 h-3.5 text-brand-orange" />
-                <span>Call</span>
-              </a>
-              <a
-                href={`https://wa.me/${companyData.contacts.whatsapp}?text=${encodeURIComponent(
-                  "Hello Krupa Elevators, I would like to inquire about elevator solutions."
-                )}`}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center space-x-1.5 px-3.5 py-1.5 rounded-full bg-[#25D366] hover:bg-[#20bd5a] text-white text-xs font-bold transition-all shadow-xs hover:scale-105 active:scale-95"
-                title="Chat with Engineer on WhatsApp"
-              >
-                <WhatsAppIcon className="w-3.5 h-3.5" />
-                <span>WhatsApp</span>
-              </a> */}
-
+                <span>60s Estimate</span>
+              </Link>
               <Link
                 to="/contact"
                 className="inline-flex items-center space-x-1.5 px-4 py-1.5 rounded-full bg-brand-orange text-white text-xs font-bold shadow-xs hover:bg-brand-orange-hover transition-all transform active:scale-95"
@@ -207,28 +221,8 @@ export default function Navbar() {
               </Link>
             </div>
 
-            {/* Mobile Quick Action Buttons & Menu Hamburger */}
+            {/* Mobile Menu Hamburger */}
             <div className="flex items-center lg:hidden space-x-1.5">
-              {/* <a
-                href={`tel:${companyData.contacts.phoneRaw}`}
-                className="p-2 rounded-full bg-slate-100 text-slate-800 hover:bg-slate-200 transition-all active:scale-90 border border-slate-200"
-                aria-label="Call Krupa Elevators"
-                title="Call: +91 97277 64868"
-              >
-                <Phone className="w-4 h-4 text-brand-orange" />
-              </a>
-              <a
-                href={`https://wa.me/${companyData.contacts.whatsapp}?text=${encodeURIComponent(
-                  "Hello Krupa Elevators, I would like to inquire about elevator solutions."
-                )}`}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="p-2 rounded-full bg-[#25D366] text-white hover:bg-[#20bd5a] transition-all active:scale-90 shadow-xs"
-                aria-label="WhatsApp Krupa Elevators"
-                title="WhatsApp Message"
-              >
-                <WhatsAppIcon className="w-4 h-4" />
-              </a> */}
               <button
                 onClick={() => setMobileMenuOpen((prev) => !prev)}
                 className="p-1.5 rounded-lg text-slate-700 hover:bg-slate-100 focus:outline-none transition-colors"
@@ -250,30 +244,73 @@ export default function Navbar() {
           />
         )}
 
-        {/* Mobile Slide-Down Menu */}
+        {/* Mobile Slide-Down Menu (accordion for groups) */}
         {mobileMenuOpen && (
-          <div className="relative z-50 lg:hidden bg-white border-t border-slate-200 px-4 pt-2 pb-5 space-y-2 shadow-xl animate-in slide-in-from-top-2 duration-200 max-h-[78vh] overflow-y-auto">
-            {navLinks.map((link) => {
-              const active = isActive(link.path);
+          <div className="relative z-50 lg:hidden bg-white border-t border-slate-200 px-4 pt-2 pb-5 space-y-1.5 shadow-xl animate-in slide-in-from-top-2 duration-200 max-h-[78vh] overflow-y-auto">
+            {navGroups.map((group) => {
+              const active = isGroupActive(group);
+              const hasChildren = Array.isArray(group.children) && group.children.length > 0;
+
+              if (!hasChildren) {
+                return (
+                  <Link
+                    key={group.name}
+                    to={group.path}
+                    onClick={() => setMobileMenuOpen(false)}
+                    className={`flex justify-between items-center px-3.5 py-2.5 rounded-xl text-xs font-bold transition-all ${active
+                      ? "text-brand-teal bg-brand-teal-light"
+                      : "text-slate-700 hover:bg-slate-50"
+                      }`}
+                  >
+                    <span>{group.name}</span>
+                    <ChevronRight className="w-3.5 h-3.5 text-slate-400" />
+                  </Link>
+                );
+              }
+
+              const expanded = mobileOpenGroup === group.name;
               return (
-                <Link
-                  key={link.name}
-                  to={link.path}
-                  onClick={() => setMobileMenuOpen(false)}
-                  className={`flex justify-between items-center px-3.5 py-2.5 rounded-xl text-xs font-bold transition-all ${active
-                    ? "text-brand-teal bg-brand-teal-light"
-                    : "text-slate-700 hover:bg-slate-50"
-                    }`}
-                >
-                  <span>{link.name}</span>
-                  <ChevronRight className="w-3.5 h-3.5 text-slate-400" />
-                </Link>
+                <div key={group.name} className="rounded-xl overflow-hidden">
+                  <button
+                    onClick={() => setMobileOpenGroup((prev) => (prev === group.name ? null : group.name))}
+                    className={`w-full flex justify-between items-center px-3.5 py-2.5 rounded-xl text-xs font-bold transition-all ${active
+                      ? "text-brand-teal bg-brand-teal-light"
+                      : "text-slate-700 hover:bg-slate-50"
+                      }`}
+                    aria-expanded={expanded}
+                  >
+                    <span>{group.name}</span>
+                    <ChevronDown className={`w-3.5 h-3.5 transition-transform ${expanded ? "rotate-180" : ""}`} />
+                  </button>
+                  {expanded && (
+                    <div className="pl-3 pr-1 py-1 space-y-1">
+                      {group.children.map((child) => (
+                        <Link
+                          key={child.path}
+                          to={child.path}
+                          onClick={() => setMobileMenuOpen(false)}
+                          className={`block px-3.5 py-2 rounded-lg text-[11px] font-semibold transition-all ${isActive(child.path)
+                            ? "text-brand-teal bg-brand-teal-light"
+                            : "text-slate-600 hover:bg-slate-50"
+                            }`}
+                        >
+                          {child.name}
+                        </Link>
+                      ))}
+                    </div>
+                  )}
+                </div>
               );
             })}
 
             <div className="pt-3 border-t border-slate-100 space-y-2">
-              {/* Quick Contact Buttons for Mobile */}
-
+              <Link
+                to="/#estimator"
+                onClick={() => setMobileMenuOpen(false)}
+                className="w-full flex justify-center items-center space-x-1.5 px-4 py-2.5 rounded-xl bg-slate-900 text-white text-xs font-bold shadow-sm"
+              >
+                <span>60s Lift Estimator</span>
+              </Link>
               <Link
                 to="/contact"
                 onClick={() => setMobileMenuOpen(false)}

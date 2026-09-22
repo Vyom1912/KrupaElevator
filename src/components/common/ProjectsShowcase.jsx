@@ -110,7 +110,7 @@ export default function ProjectsShowcase({
       {showViewAll && (
         <div className="text-center pt-2">
           <Link
-            to="/projects"
+            to="/about/projects"
             className="inline-flex items-center space-x-2 px-6 py-3 rounded-full bg-slate-900 hover:bg-brand-teal text-white text-xs font-bold transition-all shadow-md"
           >
             <span>Explore All Verified Installations</span>

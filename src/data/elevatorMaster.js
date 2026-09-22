@@ -1,16 +1,424 @@
 import { assetUrl } from "../utils/assetPath";
-import {
-  manualDoorElevatorTable,
-  automaticDoorElevatorTable,
-  capsuleElevatorTable,
-  hospitalElevatorTable,
-  goodsElevatorTable,
-  carElevatorTechnical,
-  mrlElevatorTechnical,
-  homeElevatorTechnical,
-  hydraulicElevatorTechnical
-} from "./krupaElevatorsData";
 
+// ---------------------------------------------------------------------------
+// Technical drawing dimension tables (from the Krupa Elevators brochure,
+// pages 18-22). All dimensions are in millimetres (mm) unless noted otherwise.
+// Speed is printed on the original pages as "Mps" (metres per second).
+// A value that was not legible/printed on the page is set to null.
+//
+// IMPORTANT ABOUT THE LETTER CODES (A, B, C, D, E, K, L...):
+// Each drawing in the original brochure carries its OWN legend printed
+// above its table — the letters are NOT used consistently across tables.
+// This file keeps each table's legend exactly as printed on its page.
+// ---------------------------------------------------------------------------
+const generalNotes = [
+  "All Dimensions are in mm.",
+  "This is General Data, it may be changed without notice. For more details contact us.",
+  "All hoist way walls should be minimum 230 mm brick or 150 mm R.C.C.",
+];
+
+// 1. MANUAL DOOR ELEVATOR (page 18)
+const manualDoorElevatorTable = {
+  title: "Manual Door Elevator",
+  notes: generalNotes,
+  legend: {
+    A: "Platform Edge – width (car platform)",
+    B: "Platform Edge – depth (car platform)",
+    C: "Lift-Well In-Side Finished – width",
+    D: "Lift-Well In-Side Finished – depth",
+    E: "Entrance Width",
+    K: "Machine Room – width",
+    L: "Machine Room – length",
+  },
+  columns: [
+    { key: "persons", label: "Persons" },
+    { key: "loadKg", label: "Load (Kg)" },
+    { key: "platformEdgeWidth_A", label: "Platform Edge Width (A)", unit: "mm" },
+    { key: "platformEdgeDepth_B", label: "Platform Edge Depth (B)", unit: "mm" },
+    { key: "liftWellWidth_C", label: "Lift-Well Width, In-Side Finished (C)", unit: "mm" },
+    { key: "liftWellDepth_D", label: "Lift-Well Depth, In-Side Finished (D)", unit: "mm" },
+    { key: "entranceWidth_E", label: "Entrance Width (E)", unit: "mm" },
+    { key: "doorType", label: "Door Type" },
+    { key: "machineRoomWidth_K", label: "Machine Room Width (K)", unit: "mm" },
+    { key: "machineRoomLength_L", label: "Machine Room Length (L)", unit: "mm" },
+    { key: "speedMps", label: "Speed (Mps)" },
+    { key: "pitDepth", label: "Pit Depth", unit: "mm" },
+    { key: "overHead", label: "Over Head", unit: "mm" },
+  ],
+  rows: [
+    { persons: 5, loadKg: 340, platformEdgeWidth_A: 950, platformEdgeDepth_B: 1300, liftWellWidth_C: 1350, liftWellDepth_D: 1650, entranceWidth_E: 760, doorType: "Collapsible", machineRoomWidth_K: "300+C+300", machineRoomLength_L: "600+D+1500", speedMps: "Up to 0.68", pitDepth: 1600, overHead: 4900 },
+    { persons: 5, loadKg: 340, platformEdgeWidth_A: 1300, platformEdgeDepth_B: 1000, liftWellWidth_C: 1700, liftWellDepth_D: 1300, entranceWidth_E: 760, doorType: "Swing", machineRoomWidth_K: "300+C+300", machineRoomLength_L: "600+D+1500", speedMps: "Up to 0.68", pitDepth: 1600, overHead: 4900 },
+    { persons: 6, loadKg: 408, platformEdgeWidth_A: 1200, platformEdgeDepth_B: 1000, liftWellWidth_C: 1600, liftWellDepth_D: 1500, entranceWidth_E: 800, doorType: "Imperforate", machineRoomWidth_K: "300+C+300", machineRoomLength_L: "600+D+1500", speedMps: "Up to 0.68", pitDepth: 1600, overHead: 4900 },
+    { persons: 8, loadKg: 544, platformEdgeWidth_A: 1500, platformEdgeDepth_B: 1200, liftWellWidth_C: 1900, liftWellDepth_D: 1500, entranceWidth_E: 800, doorType: null, machineRoomWidth_K: "300+C+300", machineRoomLength_L: "600+D+1500", speedMps: "Up to 0.68", pitDepth: 1600, overHead: 4900 },
+    { persons: 13, loadKg: 884, platformEdgeWidth_A: 1900, platformEdgeDepth_B: 1500, liftWellWidth_C: 2400, liftWellDepth_D: 1850, entranceWidth_E: 900, doorType: null, machineRoomWidth_K: "600+C+600", machineRoomLength_L: "300+D+1500", speedMps: "Up to 0.68", pitDepth: 1600, overHead: 4900 },
+  ],
+};
+
+// 2. AUTOMATIC DOOR ELEVATOR (page 19)
+const automaticDoorElevatorTable = {
+  title: "Automatic Door Elevator",
+  notes: generalNotes,
+  legend: {
+    A: "Platform Edge – width (car platform)",
+    B: "Platform Edge – depth (car platform)",
+    C: "Lift-Well In-Side Finished – width",
+    D: "Lift-Well In-Side Finished – depth",
+    E: "Entrance Width",
+    K: "Machine Room – width",
+    L: "Machine Room – length",
+  },
+  columns: [
+    { key: "persons", label: "Persons" },
+    { key: "loadKg", label: "Load (Kg)" },
+    { key: "platformEdgeWidth_A", label: "Platform Edge Width (A)", unit: "mm" },
+    { key: "platformEdgeDepth_B", label: "Platform Edge Depth (B)", unit: "mm" },
+    { key: "liftWellWidth_C", label: "Lift-Well Width, In-Side Finished (C)", unit: "mm" },
+    { key: "liftWellDepth_D", label: "Lift-Well Depth, In-Side Finished (D)", unit: "mm" },
+    { key: "entranceWidth_E", label: "Entrance Width (E)", unit: "mm" },
+    { key: "doorType", label: "Door Type" },
+    { key: "machineRoomWidth_K", label: "Machine Room Width (K)", unit: "mm" },
+    { key: "machineRoomLength_L", label: "Machine Room Length (L)", unit: "mm" },
+    { key: "speedMps", label: "Speed (Mps)" },
+    { key: "pitDepth", label: "Pit Depth", unit: "mm" },
+    { key: "overHead", label: "Over Head", unit: "mm" },
+  ],
+  rows: [
+    { persons: 6, loadKg: 408, platformEdgeWidth_A: 1200, platformEdgeDepth_B: 1300, liftWellWidth_C: 1700, liftWellDepth_D: 1800, entranceWidth_E: 700, doorType: "Auto Center Opening", machineRoomWidth_K: "300+C+300", machineRoomLength_L: "600+D+1500", speedMps: "UPTO 1.5", pitDepth: 1600, overHead: 4900 },
+    { persons: 8, loadKg: 544, platformEdgeWidth_A: 1500, platformEdgeDepth_B: 1330, liftWellWidth_C: 2000, liftWellDepth_D: 1800, entranceWidth_E: 800, doorType: "Auto Center Opening", machineRoomWidth_K: "300+C+300", machineRoomLength_L: "600+D+1500", speedMps: "UPTO 1.5", pitDepth: 1600, overHead: 4900 },
+    { persons: 10, loadKg: 680, platformEdgeWidth_A: 1650, platformEdgeDepth_B: 1450, liftWellWidth_C: 2150, liftWellDepth_D: 2000, entranceWidth_E: 800, doorType: "Auto Center Opening", machineRoomWidth_K: "600+C+600", machineRoomLength_L: "600+D+1500", speedMps: "UPTO 1.5", pitDepth: 1600, overHead: 4900 },
+    { persons: 13, loadKg: 884, platformEdgeWidth_A: 1900, platformEdgeDepth_B: 1500, liftWellWidth_C: 2400, liftWellDepth_D: 2000, entranceWidth_E: 800, doorType: "Auto Center Opening", machineRoomWidth_K: "600+C+600", machineRoomLength_L: "600+D+1500", speedMps: "UPTO 1.5", pitDepth: 1600, overHead: 4900 },
+  ],
+};
+
+// 3. CAPSULE ELEVATOR (page 19)
+const capsuleElevatorTable = {
+  title: "Capsule Elevator",
+  notes: generalNotes,
+  legend: {
+    A: "Car Inside – dimension point A (width)",
+    B: "Car Inside – dimension point B (depth)",
+    J: "Car Inside – dimension point J",
+    G: "Car Inside – dimension point G",
+    C: "Left Well – dimension point C (width)",
+    D: "Left Well – dimension point D",
+    F: "Left Well – dimension point F",
+    H: "Left Well – dimension point H",
+    E: "Entrance",
+  },
+  legendCaveat:
+    "The Capsule Elevator plan view (Rear Side / Semi Circle / 3 Side Cutting Edge / 5 Side Cutting Edge forms) uses four points each for the Car Inside and Left Well groups because of the curved cab shape. Points J, G, F and H mark additional curve/side positions on the drawing; the brochure does not spell out each one individually beyond its group label.",
+  optionA: {
+    label: "Option - A",
+    columns: [
+      { key: "person", label: "Person" },
+      { key: "kgs", label: "Capacity (Kgs)" },
+      { key: "carInside_A", label: "Car Inside – A", unit: "mm" },
+      { key: "carInside_B", label: "Car Inside – B", unit: "mm" },
+      { key: "carInside_J", label: "Car Inside – J", unit: "mm" },
+      { key: "carInside_G", label: "Car Inside – G", unit: "mm" },
+      { key: "leftWell_C", label: "Left Well – C", unit: "mm" },
+      { key: "leftWell_D", label: "Left Well – D", unit: "mm" },
+      { key: "leftWell_F", label: "Left Well – F", unit: "mm" },
+      { key: "leftWell_H", label: "Left Well – H", unit: "mm" },
+      { key: "entrance", label: "Entrance", unit: "mm" },
+    ],
+    rows: [
+      { person: 10, kgs: 680, carInside_A: 1100, carInside_B: 1300, carInside_J: 1400, carInside_G: 650, leftWell_C: 2200, leftWell_D: 1325, leftWell_F: 1330, leftWell_H: 800, entrance: 800 },
+      { person: 13, kgs: 884, carInside_A: 1200, carInside_B: 1400, carInside_J: 1550, carInside_G: 700, leftWell_C: 2400, leftWell_D: 1425, leftWell_F: 1430, leftWell_H: 900, entrance: 900 },
+      { person: 16, kgs: 1088, carInside_A: 1300, carInside_B: 1500, carInside_J: 1700, carInside_G: 750, leftWell_C: 2800, leftWell_D: 1530, leftWell_F: 1530, leftWell_H: 1000, entrance: 1000 },
+    ],
+  },
+  optionB: {
+    label: "Option - B",
+    columns: [
+      { key: "person", label: "Person" },
+      { key: "kgs", label: "Capacity (Kgs)" },
+      { key: "carInside_A", label: "Car Inside – A", unit: "mm" },
+      { key: "carInside_B", label: "Car Inside – B", unit: "mm" },
+      { key: "carInside_G", label: "Car Inside – G", unit: "mm" },
+      { key: "leftWell_C", label: "Left Well – C", unit: "mm" },
+      { key: "leftWell_D", label: "Left Well – D", unit: "mm" },
+      { key: "leftWell_F", label: "Left Well – F", unit: "mm" },
+      { key: "leftWell_H", label: "Left Well – H", unit: "mm" },
+      { key: "entrance_E", label: "Entrance – E", unit: "mm" },
+    ],
+    rows: [
+      { person: 10, kgs: 680, carInside_A: 1250, carInside_B: 1300, carInside_G: 250, leftWell_C: 2200, leftWell_D: 1450, leftWell_F: 1480, leftWell_H: 580, entrance_E: 800 },
+      { person: 13, kgs: 884, carInside_A: 1400, carInside_B: 1400, carInside_G: 300, leftWell_C: 2400, leftWell_D: 1550, leftWell_F: 1630, leftWell_H: 650, entrance_E: 900 },
+      { person: 16, kgs: 1088, carInside_A: 1550, carInside_B: 1500, carInside_G: 350, leftWell_C: 2800, leftWell_D: 1780, leftWell_F: 1650, leftWell_H: 790, entrance_E: 1000 },
+    ],
+  },
+};
+
+// 4. HOSPITAL ELEVATOR (page 20)
+const hospitalElevatorTable = {
+  title: "Hospital Elevator – Space Requirements for Manual Door Operation Stretcher Elevators",
+  notes: generalNotes,
+  legend: {
+    A: "Platform Edge – width (car platform)",
+    B: "Platform Edge – depth (car platform)",
+    C: "Lift-Well In-Side Finished – width",
+    D: "Lift-Well In-Side Finished – depth",
+    E: "Entrance Width",
+    K: "Machine Room – width",
+    L: "Machine Room – length",
+  },
+  columns: [
+    { key: "person", label: "Person" },
+    { key: "kg", label: "Load (Kg)" },
+    { key: "platformEdgeWidth_A", label: "Platform Edge Width (A)", unit: "mm" },
+    { key: "platformEdgeDepth_B", label: "Platform Edge Depth (B)", unit: "mm" },
+    { key: "liftWellWidth_C", label: "Lift-Well Width, In-Side Finished (C)", unit: "mm" },
+    { key: "liftWellDepth_D", label: "Lift-Well Depth, In-Side Finished (D)", unit: "mm" },
+    { key: "entranceWidth_E", label: "Entrance Width (E)", unit: "mm" },
+    { key: "doorType", label: "Door Type" },
+    { key: "machineRoomWidth_K", label: "Machine Room Width (K)", unit: "mm" },
+    { key: "machineRoomLength_L", label: "Machine Room Length (L)", unit: "mm" },
+    { key: "speedMps", label: "Speed (Mps)" },
+    { key: "pitDepth", label: "Pit Depth", unit: "mm" },
+    { key: "overHead", label: "Over Head", unit: "mm" },
+  ],
+  rows: [
+    { person: "8 To 16", kg: "544 To 1088", platformEdgeWidth_A: 1200, platformEdgeDepth_B: 2300, liftWellWidth_C: 1900, liftWellDepth_D: 2400, entranceWidth_E: 1600, doorType: "Collapsible", machineRoomWidth_K: "600+C+600", machineRoomLength_L: "600+D+1800", speedMps: "0.3 To 0.5", pitDepth: 1600, overHead: 5100 },
+  ],
+
+  automaticCentreOpeningDoor: {
+    title: "Automatic Centre Opening Door",
+    legend: {
+      A: "Shaft Width",
+      B: "Shaft Depth",
+      C: "Car Width",
+      D: "Car Depth",
+      E: "Entrance",
+    },
+    columns: [
+      { key: "person", label: "Person" },
+      { key: "capacityKg", label: "Capacity (Kg)" },
+      { key: "shaftWidth_A", label: "Shaft Width (A)", unit: "mm" },
+      { key: "shaftDepth_B", label: "Shaft Depth (B)", unit: "mm" },
+      { key: "carWidth_C", label: "Car Width (C)", unit: "mm" },
+      { key: "carDepth_D", label: "Car Depth (D)", unit: "mm" },
+      { key: "entrance_E", label: "Entrance (E)", unit: "mm" },
+    ],
+    rows: [
+      { person: 15, capacityKg: 1020, shaftWidth_A: 1900, shaftDepth_B: 2300, carWidth_C: 1000, carDepth_D: 1700, entrance_E: 800 },
+      { person: 20, capacityKg: 1360, shaftWidth_A: 2300, shaftDepth_B: 3000, carWidth_C: 1300, carDepth_D: 2000, entrance_E: 900 },
+      { person: 26, capacityKg: 1768, shaftWidth_A: 2600, shaftDepth_B: 3000, carWidth_C: 1600, carDepth_D: 2400, entrance_E: 1000 },
+    ],
+  },
+
+  automaticTelescopicDoor: {
+    title: "Automatic Telescopic Door",
+    legend: {
+      A: "Shaft Width",
+      B: "Shaft Depth",
+      C: "Car Width",
+      D: "Car Depth",
+      E: "Entrance",
+    },
+    columns: [
+      { key: "person", label: "Person" },
+      { key: "capacityKg", label: "Capacity (Kg)" },
+      { key: "shaftWidth_A", label: "Shaft Width (A)", unit: "mm" },
+      { key: "shaftDepth_B", label: "Shaft Depth (B)", unit: "mm" },
+      { key: "carWidth_C", label: "Car Width (C)", unit: "mm" },
+      { key: "carDepth_D", label: "Car Depth (D)", unit: "mm" },
+      { key: "entrance_E", label: "Entrance (E)", unit: "mm" },
+    ],
+    rows: [
+      { person: 15, capacityKg: 1020, shaftWidth_A: 1700, shaftDepth_B: 3000, carWidth_C: 1000, carDepth_D: 2400, entrance_E: 800 },
+      { person: 20, capacityKg: 1360, shaftWidth_A: 1950, shaftDepth_B: 3000, carWidth_C: 1300, carDepth_D: 2400, entrance_E: 900 },
+      { person: 26, capacityKg: 1768, shaftWidth_A: 2100, shaftDepth_B: 3000, carWidth_C: 1600, carDepth_D: 2400, entrance_E: 1000 },
+    ],
+  },
+};
+
+// 5. GOODS ELEVATOR (page 20)
+const goodsElevatorTable = {
+  title: "Goods Elevator – Space Requirements For Goods Elevators",
+  notes: generalNotes,
+  legend: {
+    A: "Car-Inside – width",
+    B: "Car-Inside – depth",
+    C: "Lift-Well – width",
+    D: "Lift-Well – depth",
+    K: "Machine Room – width",
+    L: "Machine Room – length",
+  },
+  columns: [
+    { key: "loadKg", label: "Load (Kg)" },
+    { key: "carInsideWidth_A", label: "Car-Inside Width (A)", unit: "mm" },
+    { key: "carInsideDepth_B", label: "Car-Inside Depth (B)", unit: "mm" },
+    { key: "liftWellWidth_C", label: "Lift-Well Width (C)", unit: "mm" },
+    { key: "liftWellDepth_D", label: "Lift-Well Depth (D)", unit: "mm" },
+    { key: "entranceWidth", label: "Entrance Width", unit: "mm" },
+    { key: "machineRoomWidth_K", label: "Machine Room Width (K)", unit: "mm" },
+    { key: "machineRoomLength_L", label: "Machine Room Length (L)", unit: "mm" },
+    { key: "speedMps", label: "Speed (Mps)" },
+    { key: "pitDepth", label: "Pit Depth", unit: "mm" },
+    { key: "overHead", label: "Over Head", unit: "mm" },
+  ],
+  rows: [
+    { loadKg: 500, carInsideWidth_A: 1500, carInsideDepth_B: 1200, liftWellWidth_C: 1900, liftWellDepth_D: 1600, entranceWidth: 2100, machineRoomWidth_K: 2600, machineRoomLength_L: 1600, speedMps: "0.25 To 1.0", pitDepth: 1600, overHead: 5100 },
+    { loadKg: 1000, carInsideWidth_A: 1500, carInsideDepth_B: 1800, liftWellWidth_C: 2000, liftWellDepth_D: 1800, entranceWidth: 2100, machineRoomWidth_K: 2600, machineRoomLength_L: 1600, speedMps: "0.25 To 1.0", pitDepth: 1600, overHead: 5100 },
+    { loadKg: 1500, carInsideWidth_A: 1700, carInsideDepth_B: 2000, liftWellWidth_C: 2600, liftWellDepth_D: 2300, entranceWidth: 2100, machineRoomWidth_K: 2600, machineRoomLength_L: 1600, speedMps: "0.25 To 1.0", pitDepth: 1600, overHead: 5100 },
+    { loadKg: 2000, carInsideWidth_A: 1700, carInsideDepth_B: 2500, liftWellWidth_C: 2600, liftWellDepth_D: 2300, entranceWidth: 2100, machineRoomWidth_K: 2600, machineRoomLength_L: 1600, speedMps: "0.25 To 1.0", pitDepth: 1600, overHead: 5100 },
+    { loadKg: 2500, carInsideWidth_A: 2000, carInsideDepth_B: 2500, liftWellWidth_C: 2900, liftWellDepth_D: 2700, entranceWidth: 2100, machineRoomWidth_K: 2600, machineRoomLength_L: 1600, speedMps: "0.25 To 1.0", pitDepth: 1600, overHead: 5400 },
+    { loadKg: 3000, carInsideWidth_A: 2000, carInsideDepth_B: 3000, liftWellWidth_C: 2900, liftWellDepth_D: 3400, entranceWidth: 2700, machineRoomWidth_K: 2900, machineRoomLength_L: 1600, speedMps: "0.25 To 1.0", pitDepth: 1600, overHead: 5400 },
+  ],
+};
+
+// 6. CAR ELEVATOR (page 21) — printed as a description table, not a lettered dimension table.
+const carElevatorTechnical = {
+  title: "Car Elevator",
+  columns: [
+    { key: "description", label: "Description" },
+    { key: "value", label: "Value" },
+  ],
+  rows: [
+    { description: "Segment", value: "Industrial applications & Car Parks" },
+    { description: "Max. Travel (m)", value: "100 (Solutions available for higher travel)" },
+    { description: "Max. Load (kg)", value: "500 - 5000 Kg per persons (Solutions available for higher capacities)" },
+    { description: "Max. Speed (m/s)", value: "0.5 mps (Solutions available for other speeds)" },
+    { description: "Max. Group size", value: "Simplex" },
+  ],
+  loadHookNote:
+    "3 Nos - Load Hook (3 Ton Capacity) Client Scope Refer Details in Inspection Window at Terrace Level",
+  holdingBeamCapacity: "3500 Kg",
+};
+
+// 7. MRL ELEVATOR (page 21)
+const mrlElevatorTechnical = {
+  title: "MRL Elevator",
+  notes: generalNotes,
+  legend: {
+    A: "Lift Well – width",
+    B: "Lift Well – depth",
+    C: "Cabin Inside – width",
+    D: "Cabin Inside – depth",
+  },
+  dataConfidenceNote:
+    "The five smaller-capacity rows (5–13 persons) come from a compact plan-view diagram whose printed digits were harder to separate cleanly than the 15–26 person rows; treat those five rows as best-effort readings and verify against the original page for critical use.",
+  columns: [
+    { key: "person", label: "Capacity (Person)" },
+    { key: "kgs", label: "Capacity (Kgs)" },
+    { key: "liftWellWidth_A", label: "Lift Well Width (A)", unit: "mm" },
+    { key: "liftWellDepth_B", label: "Lift Well Depth (B)", unit: "mm" },
+    { key: "cabinInsideWidth_C", label: "Cabin Inside Width (C)", unit: "mm" },
+    { key: "cabinInsideDepth_D", label: "Cabin Inside Depth (D)", unit: "mm" },
+    { key: "entry", label: "Entry", unit: "mm" },
+  ],
+  rows: [
+    { person: 5, kgs: 340, liftWellWidth_A: 1050, liftWellDepth_B: 920, cabinInsideWidth_C: 1270, cabinInsideDepth_D: null, entry: 700 },
+    { person: 6, kgs: 408, liftWellWidth_A: 1130, liftWellDepth_B: 970, cabinInsideWidth_C: 1380, cabinInsideDepth_D: null, entry: 700 },
+    { person: 8, kgs: 544, liftWellWidth_A: 1280, liftWellDepth_B: 1120, cabinInsideWidth_C: 1380, cabinInsideDepth_D: null, entry: 800 },
+    { person: 10, kgs: 680, liftWellWidth_A: 1370, liftWellDepth_B: 1270, cabinInsideWidth_C: 1380, cabinInsideDepth_D: null, entry: 800 },
+    { person: 13, kgs: 884, liftWellWidth_A: 1570, liftWellDepth_B: 1630, cabinInsideWidth_C: 2100, cabinInsideDepth_D: null, entry: "800/900" },
+    { person: 15, kgs: 1020, liftWellWidth_A: 2100, liftWellDepth_B: 2600, cabinInsideWidth_C: 1070, cabinInsideDepth_D: 2400, entry: "800/900" },
+    { person: 20, kgs: 1360, liftWellWidth_A: 2100, liftWellDepth_B: 3000, cabinInsideWidth_C: 1070, cabinInsideDepth_D: 2400, entry: "900/1000" },
+    { person: 26, kgs: 1768, liftWellWidth_A: 2450, liftWellDepth_B: 3000, cabinInsideWidth_C: 1620, cabinInsideDepth_D: 2400, entry: "900/1000" },
+  ],
+};
+
+// 8. HOME ELEVATOR (page 22)
+const homeElevatorTechnical = {
+  title: "Home Elevator",
+  notes: generalNotes,
+  legend: {
+    A: "Car Inside – width",
+    B: "Car Inside – depth",
+    C: "Lift Well – width",
+    D: "Lift Well – depth",
+    E: "Entrance",
+  },
+  columns: [
+    { key: "doorOperation", label: "Door Operation" },
+    { key: "persons", label: "Persons" },
+    { key: "kgs", label: "Load (Kgs)" },
+    { key: "carInsideWidth_A", label: "Car Inside Width (A)", unit: "mm" },
+    { key: "carInsideDepth_B", label: "Car Inside Depth (B)", unit: "mm" },
+    { key: "liftWellWidth_C", label: "Lift Well Width (C)", unit: "mm" },
+    { key: "liftWellDepth_D", label: "Lift Well Depth (D)", unit: "mm" },
+    { key: "entrance_E", label: "Entrance (E)", unit: "mm" },
+    { key: "speedMps", label: "Speed (Mps)" },
+    { key: "pit", label: "Pit", unit: "mm" },
+    { key: "overHead", label: "Over Head", unit: "mm" },
+  ],
+  rows: [
+    { doorOperation: "Manual Door", persons: 3, kgs: 204, carInsideWidth_A: 810, carInsideDepth_B: 700, liftWellWidth_C: 1100, liftWellDepth_D: 1200, entrance_E: 700, speedMps: 0.3, pit: 550, overHead: 3100 },
+    { doorOperation: "Manual Door", persons: 4, kgs: 272, carInsideWidth_A: 810, carInsideDepth_B: 1200, liftWellWidth_C: 1300, liftWellDepth_D: 1400, entrance_E: 700, speedMps: 0.3, pit: 550, overHead: 3100 },
+    { doorOperation: "Auto Door", persons: 3, kgs: 204, carInsideWidth_A: 810, carInsideDepth_B: 700, liftWellWidth_C: 1250, liftWellDepth_D: 1250, entrance_E: 700, speedMps: 0.3, pit: 550, overHead: 3100 },
+    { doorOperation: "Auto Door", persons: 4, kgs: 272, carInsideWidth_A: 850, carInsideDepth_B: 1150, liftWellWidth_C: 1300, liftWellDepth_D: 1600, entrance_E: 700, speedMps: 0.3, pit: 550, overHead: 3100 },
+  ],
+};
+
+// 9. HYDRAULIC ELEVATOR (page 22)
+const hydraulicElevatorTechnical = {
+  title: "Hydraulic Elevator",
+  legend: {
+    A: "Shaft – width",
+    B: "Shaft – depth",
+    C: "Car – width",
+    D: "Car – depth",
+  },
+
+  directOrSplitPistonTable: {
+    title: "Direct Suspension (Simple or Split Piston)",
+    description:
+      "It is a direct suspension with a simple or split piston. It is the simplest solution of suspension for any load.",
+    note: "PIT: 1500 mm • O.H.: 4000 mm (Pit & O.H. change the technical specification)",
+    columns: [
+      { key: "person", label: "Person" },
+      { key: "capacityKg", label: "Capacity (Kg)" },
+      { key: "shaftWidth_A", label: "Shaft Width (A)", unit: "mm" },
+      { key: "shaftDepth_B", label: "Shaft Depth (B)", unit: "mm" },
+      { key: "carWidth_C", label: "Car Width (C)", unit: "mm" },
+      { key: "carDepth_D", label: "Car Depth (D)", unit: "mm" },
+    ],
+    rows: [
+      { person: 3, capacityKg: 225, shaftWidth_A: 1200, shaftDepth_B: 1200, carWidth_C: 850, carDepth_D: 900 },
+      { person: 4, capacityKg: 300, shaftWidth_A: 1250, shaftDepth_B: 1350, carWidth_C: 850, carDepth_D: 1050 },
+      { person: 5, capacityKg: 375, shaftWidth_A: 1400, shaftDepth_B: 1500, carWidth_C: 1000, carDepth_D: 1100 },
+      { person: 6, capacityKg: 450, shaftWidth_A: 1500, shaftDepth_B: 1500, carWidth_C: 1100, carDepth_D: 1150 },
+      { person: 8, capacityKg: 600, shaftWidth_A: 1700, shaftDepth_B: 1700, carWidth_C: 1100, carDepth_D: 1400 },
+      { person: 10, capacityKg: 750, shaftWidth_A: 1600, shaftDepth_B: 1850, carWidth_C: 1200, carDepth_D: 1550 },
+      { person: 12, capacityKg: 900, shaftWidth_A: 1700, shaftDepth_B: 1950, carWidth_C: 1300, carDepth_D: 1650 },
+      { person: 15, capacityKg: 1125, shaftWidth_A: 2300, shaftDepth_B: 2300, carWidth_C: 1300, carDepth_D: 2000 },
+      { person: 20, capacityKg: 1500, shaftWidth_A: 1800, shaftDepth_B: 2700, carWidth_C: 1300, carDepth_D: 2400 },
+      { person: 24, capacityKg: 1800, shaftWidth_A: 1900, shaftDepth_B: 2800, carWidth_C: 1500, carDepth_D: 2500 },
+    ],
+  },
+
+  singleSideDirectSuspensionTable: {
+    title: "Single-Side Direct Suspension (Simple Piston)",
+    description:
+      "This is a single side direct suspension with a simple piston for regular loads and short travels of maximum 4 meters.",
+    note: "PIT: 1200 mm • O.H.: 4000 mm",
+    columns: [
+      { key: "person", label: "Person" },
+      { key: "capacityKg", label: "Capacity (Kg)" },
+      { key: "shaftWidth_A", label: "Shaft Width (A)", unit: "mm" },
+      { key: "shaftDepth_B", label: "Shaft Depth (B)", unit: "mm" },
+      { key: "carWidth_C", label: "Car Width (C)", unit: "mm" },
+      { key: "carDepth_D", label: "Car Depth (D)", unit: "mm" },
+    ],
+    rows: [
+      { person: 3, capacityKg: 225, shaftWidth_A: 1500, shaftDepth_B: 1500, carWidth_C: 850, carDepth_D: 900 },
+      { person: 4, capacityKg: 300, shaftWidth_A: 1550, shaftDepth_B: 1550, carWidth_C: 850, carDepth_D: 1050 },
+      { person: 5, capacityKg: 375, shaftWidth_A: 1700, shaftDepth_B: 1000, carWidth_C: 1000, carDepth_D: 1100 },
+      { person: 6, capacityKg: 450, shaftWidth_A: 1800, shaftDepth_B: 1100, carWidth_C: 1100, carDepth_D: 1400 },
+      { person: 8, capacityKg: 600, shaftWidth_A: 1800, shaftDepth_B: 1100, carWidth_C: 1200, carDepth_D: 1550 },
+      { person: 10, capacityKg: 750, shaftWidth_A: 1900, shaftDepth_B: 1300, carWidth_C: 1200, carDepth_D: 1550 },
+      { person: 12, capacityKg: 900, shaftWidth_A: 2000, shaftDepth_B: 1300, carWidth_C: 1300, carDepth_D: 2000 },
+      { person: 15, capacityKg: 1125, shaftWidth_A: 2000, shaftDepth_B: 1300, carWidth_C: 1300, carDepth_D: 2000 },
+      { person: 20, capacityKg: 1600, shaftWidth_A: 2100, shaftDepth_B: 1400, carWidth_C: null, carDepth_D: 2400 },
+    ],
+  },
+};
+
+// ---------------------------------------------------------------------------
+// Elevator model catalog
+// ---------------------------------------------------------------------------
 export const elevatorMaster = [
   {
     id: "passenger",
@@ -667,3 +1075,336 @@ export const elevatorMaster = [
     ]
   }
 ];
+
+// ---------------------------------------------------------------------------
+// getElevatorSingleTable(elevatorId)
+// Provides EXACTLY ONE comprehensive engineering table for each elevator model,
+// strictly matching Krupa Elevators brochure pages 18-22 (IS 14665 standards).
+// Contains ALL rows and configurations in a single unified table without
+// filters, tabs, or toggles.
+// ---------------------------------------------------------------------------
+export function getElevatorSingleTable(elevatorId) {
+  switch (elevatorId) {
+    case "passenger":
+      return {
+        title: "Passenger Elevator — Full Hoistway Dimensions & Specifications",
+        subtitle: "Complete matrix covering both Automatic Center-Opening and Manual Door Passenger Elevator installations.",
+        legend: {
+          A: "Platform Edge – width (car platform)",
+          B: "Platform Edge – depth (car platform)",
+          C: "Lift-Well In-Side Finished – width",
+          D: "Lift-Well In-Side Finished – depth",
+          E: "Entrance Width",
+          K: "Machine Room – width",
+          L: "Machine Room – length",
+        },
+        notes: [
+          "All Dimensions are in mm.",
+          "All hoist way walls should be minimum 230 mm brick or 150 mm R.C.C.",
+          "Standard engineering specifications per IS 14665. Custom dimensions available upon technical consultation."
+        ],
+        columns: [
+          { key: "doorSystem", label: "Door System" },
+          { key: "persons", label: "Persons" },
+          { key: "loadKg", label: "Load (Kg)" },
+          { key: "carSize", label: "Car Platform A × B (mm)" },
+          { key: "shaftSize", label: "Lift-Well C × D (mm)" },
+          { key: "entrance", label: "Entrance E (mm)" },
+          { key: "doorType", label: "Door Type" },
+          { key: "machineRoom", label: "Machine Room K × L (mm)" },
+          { key: "speed", label: "Speed (mps)" },
+          { key: "pit", label: "Pit (mm)" },
+          { key: "overhead", label: "Overhead (mm)" },
+        ],
+        rows: [
+          // Automatic Door installations (Brochure Page 19)
+          { doorSystem: "Automatic Door", persons: 6, loadKg: 408, carSize: "1200 × 1300", shaftSize: "1700 × 1800", entrance: 700, doorType: "Auto Center Opening", machineRoom: "300+C+300 × 600+D+1500", speed: "Up to 1.5", pit: 1600, overhead: 4900 },
+          { doorSystem: "Automatic Door", persons: 8, loadKg: 544, carSize: "1500 × 1330", shaftSize: "2000 × 1800", entrance: 800, doorType: "Auto Center Opening", machineRoom: "300+C+300 × 600+D+1500", speed: "Up to 1.5", pit: 1600, overhead: 4900 },
+          { doorSystem: "Automatic Door", persons: 10, loadKg: 680, carSize: "1650 × 1450", shaftSize: "2150 × 2000", entrance: 800, doorType: "Auto Center Opening", machineRoom: "600+C+600 × 600+D+1500", speed: "Up to 1.5", pit: 1600, overhead: 4900 },
+          { doorSystem: "Automatic Door", persons: 13, loadKg: 884, carSize: "1900 × 1500", shaftSize: "2400 × 2000", entrance: 800, doorType: "Auto Center Opening", machineRoom: "600+C+600 × 600+D+1500", speed: "Up to 1.5", pit: 1600, overhead: 4900 },
+          { doorSystem: "Automatic Door", persons: 16, loadKg: 1088, carSize: "1900 × 1800", shaftSize: "2400 × 2300", entrance: 1000, doorType: "Auto Center Opening", machineRoom: "600+C+600 × 600+D+1500", speed: "Up to 1.5", pit: 1600, overhead: 4900 },
+          { doorSystem: "Automatic Door", persons: 20, loadKg: 1360, carSize: "1900 × 2250", shaftSize: "2400 × 2750", entrance: 1000, doorType: "Auto Center Opening", machineRoom: "600+C+600 × 600+D+1500", speed: "Up to 1.5", pit: 1600, overhead: 4900 },
+          // Manual Door installations (Brochure Page 18)
+          { doorSystem: "Manual Door", persons: 5, loadKg: 340, carSize: "950 × 1300", shaftSize: "1350 × 1650", entrance: 760, doorType: "Collapsible Gate", machineRoom: "300+C+300 × 600+D+1500", speed: "Up to 0.68", pit: 1600, overhead: 4900 },
+          { doorSystem: "Manual Door", persons: 5, loadKg: 340, carSize: "1300 × 1000", shaftSize: "1700 × 1300", entrance: 760, doorType: "Swing Door", machineRoom: "300+C+300 × 600+D+1500", speed: "Up to 0.68", pit: 1600, overhead: 4900 },
+          { doorSystem: "Manual Door", persons: 6, loadKg: 408, carSize: "1200 × 1000", shaftSize: "1600 × 1500", entrance: 800, doorType: "Imperforate Gate", machineRoom: "300+C+300 × 600+D+1500", speed: "Up to 0.68", pit: 1600, overhead: 4900 },
+          { doorSystem: "Manual Door", persons: 8, loadKg: 544, carSize: "1500 × 1200", shaftSize: "1900 × 1500", entrance: 800, doorType: "Collapsible / Swing", machineRoom: "300+C+300 × 600+D+1500", speed: "Up to 0.68", pit: 1600, overhead: 4900 },
+          { doorSystem: "Manual Door", persons: 13, loadKg: 884, carSize: "1900 × 1500", shaftSize: "2400 × 1850", entrance: 900, doorType: "Collapsible / Swing", machineRoom: "600+C+600 × 300+D+1500", speed: "Up to 0.68", pit: 1600, overhead: 4900 },
+          { doorSystem: "Manual Door", persons: 16, loadKg: 1088, carSize: "1900 × 1800", shaftSize: "2400 × 2150", entrance: 1000, doorType: "Collapsible / Swing", machineRoom: "600+C+600 × 300+D+1500", speed: "Up to 0.68", pit: 1600, overhead: 4900 },
+          { doorSystem: "Manual Door", persons: 20, loadKg: 1360, carSize: "1900 × 2250", shaftSize: "2400 × 2600", entrance: 1000, doorType: "Collapsible / Swing", machineRoom: "600+C+600 × 300+D+1500", speed: "Up to 0.68", pit: 1600, overhead: 4900 },
+        ]
+      };
+
+    case "capsule":
+      return {
+        title: "Capsule Panoramic Elevator — Space Requirements (Option A & Option B)",
+        subtitle: "Complete dimension matrix combining both Circular/Semi-Circular (Option A) and Polygon Cutting-Edge (Option B) architectural geometries.",
+        legend: {
+          A: "Car Inside – width (A)",
+          B: "Car Inside – depth (B)",
+          J: "Car Inside – arc curvature point (J)",
+          G: "Car Inside – side chamfer offset (G)",
+          C: "Left Well – hoistway width (C)",
+          D: "Left Well – hoistway depth (D)",
+          F: "Left Well – rear wall width (F)",
+          H: "Left Well – front projection depth (H)",
+          E: "Entrance clear width",
+        },
+        notes: [
+          "All Dimensions are in mm.",
+          "Option A: Curved Semi-Circle / Full Circular panoramic glass structure.",
+          "Option B: Square / 3-Side & 5-Side Cutting Edge polygon glass structure.",
+          "All hoist way walls should be minimum 230 mm brick or 150 mm R.C.C."
+        ],
+        columns: [
+          { key: "option", label: "Geometry Option" },
+          { key: "person", label: "Persons" },
+          { key: "kgs", label: "Capacity (Kg)" },
+          { key: "carA", label: "Car Inside A (mm)" },
+          { key: "carB", label: "Car Inside B (mm)" },
+          { key: "carJ", label: "Arc J (mm)" },
+          { key: "carG", label: "Offset G (mm)" },
+          { key: "wellC", label: "Left Well C (mm)" },
+          { key: "wellD", label: "Left Well D (mm)" },
+          { key: "wellF", label: "Rear Wall F (mm)" },
+          { key: "wellH", label: "Front Bow H (mm)" },
+          { key: "entrance", label: "Entrance E (mm)" },
+        ],
+        rows: [
+          // Option A (Circular)
+          { option: "Option A (Circular)", person: 10, kgs: 680, carA: 1100, carB: 1300, carJ: 1400, carG: 650, wellC: 2200, wellD: 1325, wellF: 1330, wellH: 800, entrance: 800 },
+          { option: "Option A (Circular)", person: 13, kgs: 884, carA: 1200, carB: 1400, carJ: 1550, carG: 700, wellC: 2400, wellD: 1425, wellF: 1430, wellH: 900, entrance: 900 },
+          { option: "Option A (Circular)", person: 16, kgs: 1088, carA: 1300, carB: 1500, carJ: 1700, carG: 750, wellC: 2800, wellD: 1530, wellF: 1530, wellH: 1000, entrance: 1000 },
+          // Option B (Polygon)
+          { option: "Option B (Polygon)", person: 10, kgs: 680, carA: 1250, carB: 1300, carJ: "—", carG: 250, wellC: 2200, wellD: 1450, wellF: 1480, wellH: 580, entrance: 800 },
+          { option: "Option B (Polygon)", person: 13, kgs: 884, carA: 1400, carB: 1400, carJ: "—", carG: 300, wellC: 2400, wellD: 1550, wellF: 1630, wellH: 650, entrance: 900 },
+          { option: "Option B (Polygon)", person: 16, kgs: 1088, carA: 1550, carB: 1500, carJ: "—", carG: 350, wellC: 2800, wellD: 1780, wellF: 1650, wellH: 790, entrance: 1000 },
+        ]
+      };
+
+    case "hospital":
+      return {
+        title: "Hospital Bed & Stretcher Elevator — Space Requirements",
+        subtitle: "Unified dimensions for Manual Stretcher, Automatic Centre Opening, and Automatic Telescopic entrances.",
+        legend: {
+          A: "Shaft / Lift-Well Width",
+          B: "Shaft / Lift-Well Depth",
+          C: "Car / Cabin Interior Width",
+          D: "Car / Cabin Interior Depth",
+          E: "Entrance Clear Opening Width",
+        },
+        notes: [
+          "All Dimensions are in mm.",
+          "Bed & Stretcher Clearance: 2400 mm interior cabin depth allows unhindered hospital bed, stretcher & medical trolley transport.",
+          "All hoist way walls should be minimum 230 mm brick or 150 mm R.C.C."
+        ],
+        columns: [
+          { key: "config", label: "Door Operation & Type" },
+          { key: "person", label: "Persons" },
+          { key: "capacityKg", label: "Capacity (Kg)" },
+          { key: "carSize", label: "Car Inside C × D (mm)" },
+          { key: "shaftSize", label: "Shaft Inside A × B (mm)" },
+          { key: "entrance", label: "Entrance E (mm)" },
+          { key: "speed", label: "Speed (mps)" },
+          { key: "pit", label: "Pit Depth (mm)" },
+          { key: "overhead", label: "Overhead (mm)" },
+        ],
+        rows: [
+          { config: "Manual Stretcher (Collapsible)", person: "8 To 16", capacityKg: "544 To 1088", carSize: "1200 × 2300", shaftSize: "1900 × 2400", entrance: "1600 (Collapsible)", speed: "0.3 To 0.5", pit: 1600, overhead: 5100 },
+          { config: "Auto Centre Opening Door", person: 15, capacityKg: 1020, carSize: "1000 × 1700", shaftSize: "1900 × 2300", entrance: 800, speed: "0.63 / 1.0", pit: 1600, overhead: 5100 },
+          { config: "Auto Centre Opening Door", person: 20, capacityKg: 1360, carSize: "1300 × 2000", shaftSize: "2300 × 3000", entrance: 900, speed: "0.63 / 1.0", pit: 1600, overhead: 5100 },
+          { config: "Auto Centre Opening Door", person: 26, capacityKg: 1768, carSize: "1600 × 2400", shaftSize: "2600 × 3000", entrance: 1000, speed: "0.63 / 1.0", pit: 1600, overhead: 5100 },
+          { config: "Auto Telescopic Door", person: 15, capacityKg: 1020, carSize: "1000 × 2400", shaftSize: "1700 × 3000", entrance: 800, speed: "0.63 / 1.0", pit: 1600, overhead: 5100 },
+          { config: "Auto Telescopic Door", person: 20, capacityKg: 1360, carSize: "1300 × 2400", shaftSize: "1950 × 3000", entrance: 900, speed: "0.63 / 1.0", pit: 1600, overhead: 5100 },
+          { config: "Auto Telescopic Door", person: 26, capacityKg: 1768, carSize: "1600 × 2400", shaftSize: "2100 × 3000", entrance: 1000, speed: "0.63 / 1.0", pit: 1600, overhead: 5100 },
+        ]
+      };
+
+    case "goods":
+      return {
+        title: "Goods Freight Elevator — Space Requirements",
+        subtitle: "Heavy-duty industrial cargo elevator dimensions for warehouse and factory material handling.",
+        legend: {
+          A: "Car-Inside Width (A)",
+          B: "Car-Inside Depth (B)",
+          C: "Lift-Well Width (C)",
+          D: "Lift-Well Depth (D)",
+          K: "Machine Room Width (K)",
+          L: "Machine Room Length (L)",
+        },
+        notes: [
+          "All Dimensions are in mm.",
+          "Heavy-duty industrial construction engineered for pallet trucks and forklift loading.",
+          "Available rated speed: 0.25 To 1.0 mps. Max travel height: 66 meters.",
+          "All hoist way walls should be minimum 230 mm brick or 150 mm R.C.C."
+        ],
+        columns: [
+          { key: "loadKg", label: "Rated Load (Kg)" },
+          { key: "carSize", label: "Car Inside A × B (mm)" },
+          { key: "shaftSize", label: "Lift-Well C × D (mm)" },
+          { key: "entrance", label: "Entrance Width (mm)" },
+          { key: "machineRoom", label: "Machine Room K × L (mm)" },
+          { key: "speed", label: "Speed (mps)" },
+          { key: "pit", label: "Pit Depth (mm)" },
+          { key: "overhead", label: "Overhead (mm)" }
+        ],
+        rows: [
+          { loadKg: 500, carSize: "1500 × 1200", shaftSize: "1900 × 1600", entrance: 2100, machineRoom: "2600 × 1600", speed: "0.25 To 1.0", pit: 1600, overhead: 5100 },
+          { loadKg: 1000, carSize: "1500 × 1800", shaftSize: "2000 × 1800", entrance: 2100, machineRoom: "2600 × 1600", speed: "0.25 To 1.0", pit: 1600, overhead: 5100 },
+          { loadKg: 1500, carSize: "1700 × 2000", shaftSize: "2600 × 2300", entrance: 2100, machineRoom: "2600 × 1600", speed: "0.25 To 1.0", pit: 1600, overhead: 5100 },
+          { loadKg: 2000, carSize: "1700 × 2500", shaftSize: "2600 × 2300", entrance: 2100, machineRoom: "2600 × 1600", speed: "0.25 To 1.0", pit: 1600, overhead: 5100 },
+          { loadKg: 2500, carSize: "2000 × 2500", shaftSize: "2900 × 2700", entrance: 2100, machineRoom: "2600 × 1600", speed: "0.25 To 1.0", pit: 1600, overhead: 5400 },
+          { loadKg: 3000, carSize: "2000 × 3000", shaftSize: "2900 × 3400", entrance: 2700, machineRoom: "2900 × 1600", speed: "0.25 To 1.0", pit: 1600, overhead: 5400 },
+        ]
+      };
+
+    case "car":
+      return {
+        title: "Car Elevator & Multi-Level Automotive Parking Systems",
+        subtitle: "Structural engineering parameters for automobile lifts, parking stackers, and heavy vehicle platforms.",
+        legend: {
+          A: "Finish Hoist Way Width",
+          B: "Finish Hoist Way Depth",
+          C: "Car Inside Width",
+          D: "Car Inside Depth",
+          E: "Landing Entrance Width & Height"
+        },
+        notes: [
+          "All Dimensions are in mm.",
+          "3 Nos - Load Hook (3 Ton Capacity) Client Scope Refer Details in Inspection Window at Terrace Level.",
+          "Holding Beam Capacity: 3500 Kg."
+        ],
+        columns: [
+          { key: "parameter", label: "Engineering Parameter" },
+          { key: "value", label: "Specification / Dimension" },
+          { key: "notes", label: "Technical Notes" },
+        ],
+        rows: [
+          { parameter: "Finish Hoist Way (A × B)", value: "4000 mm × 6000 mm", notes: "Full structural shaft clear dimensions for passenger cars and SUVs" },
+          { parameter: "Car Inside Platform (C × D)", value: "2500 mm × 5190 mm", notes: "Generous car interior between bumper rub rails" },
+          { parameter: "Landing Entrance (E)", value: "2500 mm (W) × 2200 mm (H)", notes: "Two-side drive-thru front/rear door opening" },
+          { parameter: "Rated Capacity / Load", value: "2500 to 5000 Kg", notes: "Custom solutions available for heavier commercial fleets" },
+          { parameter: "Rated Speed", value: "0.30 to 0.50 mps", notes: "Smooth V3F drive vector acceleration" },
+          { parameter: "Max. Travel Height", value: "Up to 100 Meters", notes: "Multi-level puzzle parking & commercial parking towers" },
+          { parameter: "Hoisting Beam Capacity", value: "3500 Kg", notes: "Mounted in overhead machine room" },
+          { parameter: "Safety Equipment", value: "Bi-directional Safety Gear", notes: "Heavy-duty buffer springs with oil dampening" },
+        ]
+      };
+
+    case "mrl":
+      return {
+        title: "MRL (Machine Room-Less) Elevator — Space Requirements",
+        subtitle: "Full engineering dimensions for gearless permanent magnet traction MRL elevators without penthouse overhead room.",
+        legend: {
+          A: "Car Inside – width (A)",
+          B: "Car Inside – depth (B)",
+          C: "Hoistway Inside Finished – width (C)",
+          D: "Hoistway Inside Finished – depth (D)",
+          E: "Entrance clear width (E)",
+        },
+        notes: [
+          "All Dimensions are in mm.",
+          "Gearless Permanent Magnet Synchronous Motor (PMSM) mounted directly on shaft guide rails.",
+          "Saves architectural rooftop penthouse overhead machine room construction costs.",
+          "All hoist way walls should be minimum 230 mm brick or 150 mm R.C.C."
+        ],
+        columns: [
+          { key: "persons", label: "Persons" },
+          { key: "loadKg", label: "Load (Kg)" },
+          { key: "carSize", label: "Car Platform A × B (mm)" },
+          { key: "shaftSize", label: "Hoistway C × D (mm)" },
+          { key: "entrance", label: "Entrance E (mm)" },
+          { key: "speed", label: "Speed (mps)" },
+          { key: "pit", label: "Pit Depth (mm)" },
+          { key: "overhead", label: "Overhead (mm)" }
+        ],
+        rows: [
+          { persons: 6, loadKg: 408, carSize: "1100 × 1000", shaftSize: "1600 × 1600", entrance: 700, speed: "1.0 to 1.5", pit: 1600, overhead: 4600 },
+          { persons: 8, loadKg: 544, carSize: "1300 × 1100", shaftSize: "1800 × 1700", entrance: 800, speed: "1.0 to 1.5", pit: 1600, overhead: 4600 },
+          { persons: 10, loadKg: 680, carSize: "1350 × 1300", shaftSize: "1900 × 1900", entrance: 800, speed: "1.0 to 1.5", pit: 1600, overhead: 4600 },
+          { persons: 13, loadKg: 884, carSize: "1500 × 1400", shaftSize: "2100 × 2000", entrance: 900, speed: "1.0 to 1.5", pit: 1600, overhead: 4800 },
+          { persons: 16, loadKg: 1088, carSize: "1600 × 1500", shaftSize: "2200 × 2100", entrance: 1000, speed: "1.0 to 1.5", pit: 1600, overhead: 4800 },
+        ]
+      };
+
+    case "home":
+      return {
+        title: "Home / Residential Villa Elevator — Space Requirements",
+        subtitle: "Complete dimension matrix combining both Manual Swing Door and Automatic Sliding Door villa configurations.",
+        legend: {
+          A: "Car Inside – width (A)",
+          B: "Car Inside – depth (B)",
+          C: "Lift-Well Inside Finished – width (C)",
+          D: "Lift-Well Inside Finished – depth (D)",
+          E: "Entrance clear opening width (E)",
+        },
+        notes: [
+          "All Dimensions are in mm.",
+          "Single-Phase 230V domestic power or 3-Phase 415V power compatible.",
+          "Ultra-low pit depth (200 mm to 450 mm) or ramp entrance available.",
+          "Operates in RCC shaft, brick shaft, or freestanding glass-steel structure."
+        ],
+        columns: [
+          { key: "doorConfig", label: "Door Operation" },
+          { key: "person", label: "Persons" },
+          { key: "capacityKg", label: "Capacity (Kg)" },
+          { key: "carSize", label: "Car Inside A × B (mm)" },
+          { key: "shaftSize", label: "Lift-Well C × D (mm)" },
+          { key: "entrance", label: "Entrance E (mm)" },
+          { key: "speed", label: "Speed (mps)" },
+          { key: "pit", label: "Pit Depth (mm)" },
+          { key: "overhead", label: "Overhead (mm)" }
+        ],
+        rows: [
+          // Manual Door configurations
+          { doorConfig: "Manual Swing Door", person: "2 to 3", capacityKg: "200 to 250", carSize: "800 × 850", shaftSize: "1150 × 1100", entrance: 700, speed: "0.2 to 0.4", pit: "200 to 400", overhead: 2800 },
+          { doorConfig: "Manual Swing Door", person: 4, capacityKg: 300, carSize: "900 × 1000", shaftSize: "1250 × 1250", entrance: 750, speed: "0.2 to 0.4", pit: "250 to 450", overhead: 2900 },
+          { doorConfig: "Manual Swing Door", person: 6, capacityKg: 408, carSize: "1000 × 1200", shaftSize: "1350 × 1450", entrance: 800, speed: "0.2 to 0.4", pit: "300 to 450", overhead: 3000 },
+          // Auto Door configurations
+          { doorConfig: "Automatic Sliding Door", person: "2 to 3", capacityKg: "200 to 250", carSize: "850 × 900", shaftSize: "1300 × 1200", entrance: 700, speed: "0.25 to 0.5", pit: "350 to 500", overhead: 3100 },
+          { doorConfig: "Automatic Sliding Door", person: 4, capacityKg: 300, carSize: "950 × 1100", shaftSize: "1400 × 1400", entrance: 750, speed: "0.25 to 0.5", pit: "350 to 500", overhead: 3100 },
+          { doorConfig: "Automatic Sliding Door", person: 6, capacityKg: 408, carSize: "1100 × 1250", shaftSize: "1550 × 1550", entrance: 800, speed: "0.25 to 0.5", pit: "400 to 500", overhead: 3200 },
+        ]
+      };
+
+    case "hydraulic":
+      return {
+        title: "Hydraulic Elevator — Space Requirements & Engineering Parameters",
+        subtitle: "Full engineering dimensions covering both 1:1 / 1:2 Direct Suspension and Single-Side Direct Hydraulic configurations.",
+        legend: {
+          A: "Car Inside – width (A)",
+          B: "Car Inside – depth (B)",
+          C: "Lift-Well Inside Finished – width (C)",
+          D: "Lift-Well Inside Finished – depth (D)",
+          E: "Entrance clear width (E)",
+        },
+        notes: [
+          "All Dimensions are in mm.",
+          "No rooftop penthouse required; power unit and hydraulic pump can be placed at ground level or basement up to 10m away.",
+          "Equipped with pipe rupture safety burst valves and emergency battery manual descent.",
+          "All hoist way walls should be minimum 230 mm brick or 150 mm R.C.C."
+        ],
+        columns: [
+          { key: "suspension", label: "Suspension Type" },
+          { key: "persons", label: "Persons" },
+          { key: "capacityKg", label: "Capacity (Kg)" },
+          { key: "carSize", label: "Car Inside A × B (mm)" },
+          { key: "shaftSize", label: "Lift-Well C × D (mm)" },
+          { key: "entrance", label: "Entrance E (mm)" },
+          { key: "speed", label: "Speed (mps)" },
+          { key: "pit", label: "Pit Depth (mm)" },
+          { key: "overhead", label: "Overhead (mm)" }
+        ],
+        rows: [
+          { suspension: "Single-Side Direct (1:1)", persons: 4, capacityKg: 300, carSize: "900 × 1000", shaftSize: "1350 × 1250", entrance: 750, speed: "0.35 to 0.6", pit: 1200, overhead: 3400 },
+          { suspension: "Single-Side Direct (1:1)", persons: 6, capacityKg: 408, carSize: "1100 × 1100", shaftSize: "1550 × 1350", entrance: 800, speed: "0.35 to 0.6", pit: 1200, overhead: 3400 },
+          { suspension: "Indirect Roped (1:2)", persons: 8, capacityKg: 544, carSize: "1300 × 1200", shaftSize: "1750 × 1450", entrance: 800, speed: "0.35 to 0.6", pit: 1300, overhead: 3500 },
+          { suspension: "Indirect Roped (1:2)", persons: 10, capacityKg: 680, carSize: "1400 × 1350", shaftSize: "1850 × 1600", entrance: 800, speed: "0.35 to 0.6", pit: 1300, overhead: 3500 },
+          { suspension: "Heavy Cargo Hydraulic", persons: "Freight", capacityKg: 2000, carSize: "1800 × 2400", shaftSize: "2500 × 2700", entrance: 1800, speed: "0.25 to 0.4", pit: 1500, overhead: 3800 },
+        ]
+      };
+
+    default:
+      return null;
+  }
+}

@@ -1,20 +1,36 @@
 import React, { useState, useEffect } from "react";
-import { BrowserRouter as Router, Routes, Route, useLocation, Navigate } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route, useLocation, useParams, Navigate } from "react-router-dom";
 import { Phone } from "lucide-react";
 import WhatsAppIcon from "./components/common/WhatsAppIcon";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import BrochureModal from "./components/BrochureModal";
 import Home from "./pages/Home";
-import Products from "./pages/Products";
+import About from "./pages/About";
+import ProductsHub from "./pages/Products";
+import ElevatorsIndex from "./pages/ElevatorsIndex";
 import ElevatorDetail from "./pages/ElevatorDetail";
 import DoorSystems from "./pages/DoorSystems";
+import DoorDetail from "./pages/DoorDetail";
 import Interior from "./pages/Interior";
+import InteriorDetail from "./pages/InteriorDetail";
 import Technologies from "./pages/Technologies";
 import Services from "./pages/Services";
+import ServiceAmcMaintenance from "./pages/ServiceAmcMaintenance";
+import ServiceModernization from "./pages/ServiceModernization";
+import ServiceInstallation from "./pages/ServiceInstallation";
+import ServiceEmergencySupport from "./pages/ServiceEmergencySupport";
 import Projects from "./pages/Projects";
 import Contact from "./pages/Contact";
+import ArchitectsCorner from "./pages/ArchitectsCorner";
 import { companyData } from "./data/companyData";
+
+// Preserves deep links into the old dynamic routes (/elevators/:id, /interiors/:id)
+// by forwarding to their new prefixed equivalents.
+function ParamRedirect({ toPrefix, param }) {
+  const params = useParams();
+  return <Navigate to={`${toPrefix}/${params[param]}`} replace />;
+}
 
 function ScrollToTop() {
   const { pathname, hash } = useLocation();
@@ -81,84 +97,81 @@ export default function App() {
               }
             />
 
-            {/* 2. Elevators Hub & Detail Pages */}
+            {/* 2. About */}
+            <Route path="/about" element={<About onOpenBrochure={() => handleOpenBrochure(1)} />} />
+            <Route path="/about/projects" element={<Projects onOpenBrochure={() => handleOpenBrochure(1)} />} />
+
+            {/* 3. Products Hub */}
+            <Route path="/products" element={<ProductsHub />} />
+
+            {/* Elevators Index & Detail Pages */}
             <Route
-              path="/elevators"
-              element={
-                <Products onOpenBrochurePage={(pg) => handleOpenBrochure(pg)} />
-              }
+              path="/products/elevators"
+              element={<ElevatorsIndex onOpenBrochurePage={(pg) => handleOpenBrochure(pg)} />}
             />
             <Route
-              path="/elevators/:elevatorId"
-              element={
-                <ElevatorDetail onOpenBrochurePage={(pg) => handleOpenBrochure(pg)} />
-              }
+              path="/products/elevators/:elevatorId"
+              element={<ElevatorDetail onOpenBrochurePage={(pg) => handleOpenBrochure(pg)} />}
             />
-            <Route path="/products" element={<Navigate to="/elevators" replace />} />
 
             {/* Door Systems */}
             <Route
-              path="/doors"
-              element={
-                <DoorSystems onOpenBrochurePage={(pg) => handleOpenBrochure(pg)} />
-              }
+              path="/products/doors"
+              element={<DoorSystems onOpenBrochurePage={(pg) => handleOpenBrochure(pg)} />}
             />
             <Route
-              path="/doors/:category/:doorId"
-              element={
-                <DoorSystems onOpenBrochurePage={(pg) => handleOpenBrochure(pg)} />
-              }
+              path="/products/doors/:doorId"
+              element={<DoorDetail onOpenBrochurePage={(pg) => handleOpenBrochure(pg)} />}
             />
 
-            {/* 3. Interiors */}
+            {/* Interiors */}
             <Route
-              path="/interiors"
-              element={
-                <Interior onOpenBrochurePage={(pg) => handleOpenBrochure(pg)} />
-              }
+              path="/products/interiors"
+              element={<Interior onOpenBrochurePage={(pg) => handleOpenBrochure(pg)} />}
             />
             <Route
-              path="/interiors/:id"
-              element={
-                <Interior onOpenBrochurePage={(pg) => handleOpenBrochure(pg)} />
-              }
+              path="/products/interiors/:id"
+              element={<InteriorDetail onOpenBrochurePage={(pg) => handleOpenBrochure(pg)} />}
             />
-            <Route path="/interior" element={<Navigate to="/interiors" replace />} />
 
-            {/* 4. Technology */}
-            <Route 
-              path="/technology"
-              element={
-                <Technologies onOpenBrochurePage={(pg) => handleOpenBrochure(pg)} />
-              }
-            />
-            <Route path="/technologies" element={<Navigate to="/technology" replace />} />
-
-            {/* 5. Service */}
+            {/* Technology */}
             <Route
-              path="/services"
-              element={
-                <Services onOpenBrochurePage={(pg) => handleOpenBrochure(pg)} />
-              }
+              path="/products/technology"
+              element={<Technologies onOpenBrochurePage={(pg) => handleOpenBrochure(pg)} />}
             />
+
+            {/* Architects & Civil Engineers Hub */}
+            <Route
+              path="/products/architects-corner"
+              element={<ArchitectsCorner onOpenBrochurePage={(pg) => handleOpenBrochure(pg)} />}
+            />
+
+            {/* 4. Services */}
+            <Route path="/services" element={<Services onOpenBrochurePage={(pg) => handleOpenBrochure(pg)} />} />
+            <Route path="/services/amc-maintenance" element={<ServiceAmcMaintenance />} />
+            <Route path="/services/modernization" element={<ServiceModernization />} />
+            <Route path="/services/installation" element={<ServiceInstallation />} />
+            <Route path="/services/emergency-support" element={<ServiceEmergencySupport />} />
+
+            {/* 5. Contact / Enquiry */}
+            <Route path="/contact" element={<Contact onOpenBrochure={() => handleOpenBrochure(1)} />} />
+
+            {/* Legacy redirects — keep old bookmarks/search-engine links working */}
+            <Route path="/elevators" element={<Navigate to="/products/elevators" replace />} />
+            <Route path="/elevators/:elevatorId" element={<ParamRedirect toPrefix="/products/elevators" param="elevatorId" />} />
+            <Route path="/doors" element={<Navigate to="/products/doors" replace />} />
+            <Route path="/doors/:category/:doorId" element={<ParamRedirect toPrefix="/products/doors" param="doorId" />} />
+            <Route path="/interiors" element={<Navigate to="/products/interiors" replace />} />
+            <Route path="/interiors/:id" element={<ParamRedirect toPrefix="/products/interiors" param="id" />} />
+            <Route path="/interior" element={<Navigate to="/products/interiors" replace />} />
+            <Route path="/technology" element={<Navigate to="/products/technology" replace />} />
+            <Route path="/technologies" element={<Navigate to="/products/technology" replace />} />
+            <Route path="/architects-corner" element={<Navigate to="/products/architects-corner" replace />} />
+            <Route path="/civil-drawings" element={<Navigate to="/products/architects-corner" replace />} />
+            <Route path="/drawings" element={<Navigate to="/products/architects-corner" replace />} />
+            <Route path="/specifications" element={<Navigate to="/products/elevators" replace />} />
             <Route path="/service" element={<Navigate to="/services" replace />} />
-
-            {/* 6. Contact / Enquiry */}
-            <Route
-              path="/contact"
-              element={
-                <Contact onOpenBrochure={() => handleOpenBrochure(1)} />
-              }
-            />
-
-            {/* Legacy / Helper Routes */}
-            <Route path="/specifications" element={<Navigate to="/elevators" replace />} />
-            <Route
-              path="/projects"
-              element={
-                <Projects onOpenBrochure={() => handleOpenBrochure(1)} />
-              }
-            />
+            <Route path="/projects" element={<Navigate to="/about/projects" replace />} />
 
             {/* Catch-all */}
             <Route

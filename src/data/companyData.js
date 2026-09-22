@@ -21,7 +21,7 @@ export const companyData = {
     },
     factory: {
       title: "Manufacturing Works",
-      address: "353, Gopal Charan Industrial Hub, Kujad-Bakrol Road, Bakrol, Ahmedabad-382430, Gujarat, India",
+      address: "1, Heritage Industrial Hub, Nr. Global Industrial Estate, Nr. Kotak Mahindra Bank, Kathwada GIDC Road No 5, Ahmedabad-382430, Gujarat, India",
       city: "Ahmedabad",
       pincode: "382430"
     }

@@ -8,31 +8,39 @@ import {
   X
 } from "lucide-react";
 import { manualDoors, automaticDoors, allDoors } from "../data/doorsMaster";
-import SectionHeader from "../components/common/SectionHeader";
 import PageHero from "../components/common/PageHero";
 import CTASection from "../components/common/CTASection";
+import Seo from "../components/common/Seo";
 import ScrollReveal from "../components/ScrollReveal";
 
 export default function DoorSystems() {
   const [selectedCategory, setSelectedCategory] = useState("all"); // "all", "manual", "automatic"
-  const [selectedDoor, setSelectedDoor] = useState(null);
   const [lightboxDrawing, setLightboxDrawing] = useState(null);
 
   const displayedDoors =
     selectedCategory === "all"
       ? allDoors
       : selectedCategory === "manual"
-      ? manualDoors
-      : automaticDoors;
+        ? manualDoors
+        : automaticDoors;
 
   return (
-    <div className="space-y-16 sm:space-y-24 pb-20 overflow-x-hidden">
+    <div className="min-h-screen bg-slate-50 space-y-12 sm:space-y-16 pb-20 overflow-x-hidden">
+      <Seo
+        title="Door Systems"
+        description="Complete catalog of manual and automatic elevator entrance door configurations, engineered for safety, reliability, and high-speed cycling."
+      />
+
       {/* Page Hero */}
       <PageHero
+        breadcrumbs={[
+          { label: "Products", to: "/products" },
+          { label: "Door Systems" }
+        ]}
+        icon={DoorClosed}
         badge="Certified Landing Entrances • Manual & Automatic Doors"
         title="Elevator Door Systems"
         description="Complete catalog of manual and automatic elevator entrance door configurations. Focused on three core engineering pillars: safety, reliability, and speed."
-        breadcrumbs={[{ label: "Door Systems" }]}
       />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10">
@@ -41,32 +49,29 @@ export default function DoorSystems() {
           <div className="flex items-center space-x-2">
             <button
               onClick={() => setSelectedCategory("all")}
-              className={`px-4 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer ${
-                selectedCategory === "all"
-                  ? "bg-slate-900 text-white shadow-xs"
-                  : "text-slate-600 hover:bg-slate-100"
-              }`}
+              className={`px-4 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer ${selectedCategory === "all"
+                ? "bg-slate-900 text-white shadow-xs"
+                : "text-slate-600 hover:bg-slate-100"
+                }`}
             >
               All Doors ({allDoors.length})
             </button>
             <button
               onClick={() => setSelectedCategory("manual")}
-              className={`px-4 py-2 rounded-xl text-xs font-bold transition-all flex items-center space-x-1.5 cursor-pointer ${
-                selectedCategory === "manual"
-                  ? "bg-brand-orange text-white shadow-xs"
-                  : "text-slate-600 hover:bg-slate-100"
-              }`}
+              className={`px-4 py-2 rounded-xl text-xs font-bold transition-all flex items-center space-x-1.5 cursor-pointer ${selectedCategory === "manual"
+                ? "bg-brand-orange text-white shadow-xs"
+                : "text-slate-600 hover:bg-slate-100"
+                }`}
             >
               <DoorClosed className="w-3.5 h-3.5" />
               <span>Manual Doors ({manualDoors.length})</span>
             </button>
             <button
               onClick={() => setSelectedCategory("automatic")}
-              className={`px-4 py-2 rounded-xl text-xs font-bold transition-all flex items-center space-x-1.5 cursor-pointer ${
-                selectedCategory === "automatic"
-                  ? "bg-brand-teal text-white shadow-xs"
-                  : "text-slate-600 hover:bg-slate-100"
-              }`}
+              className={`px-4 py-2 rounded-xl text-xs font-bold transition-all flex items-center space-x-1.5 cursor-pointer ${selectedCategory === "automatic"
+                ? "bg-brand-teal text-white shadow-xs"
+                : "text-slate-600 hover:bg-slate-100"
+                }`}
             >
               <DoorOpen className="w-3.5 h-3.5" />
               <span>Automatic Doors ({automaticDoors.length})</span>
@@ -85,8 +90,8 @@ export default function DoorSystems() {
               {selectedCategory === "manual"
                 ? "Manual Doors — Economic & Space-Saving"
                 : selectedCategory === "automatic"
-                ? "Automatic Doors — High-Speed & High-Safety Cycling"
-                : "Manual & Automatic Door Entrance Solutions"}
+                  ? "Automatic Doors — High-Speed & High-Safety Cycling"
+                  : "Manual & Automatic Door Entrance Solutions"}
             </h2>
             <p className="text-xs text-slate-300 max-w-2xl leading-relaxed">
               From economic collapsible gates and full-glass residential swing doors to heavy 4-panel center-opening automotive entrance operators, every door is engineered for durable duty cycles.
@@ -115,19 +120,18 @@ export default function DoorSystems() {
                 <div className="bg-white rounded-3xl border border-slate-200 overflow-hidden shadow-xs hover:shadow-xl hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between group h-full">
                   <div>
                     {/* Image / Drawing Header */}
-                    <div className="h-52 bg-slate-900 relative overflow-hidden flex items-center justify-center p-3">
+                    <div className="h-52relative overflow-hidden flex items-center justify-center p-3">
                       <img
-                        src={door.drawing || door.image}
+                        src={door.image}
                         alt={door.name}
                         className="max-h-44 object-contain transition-transform duration-500 group-hover:scale-105"
                       />
                       <div className="absolute top-3 left-3">
                         <span
-                          className={`px-3 py-1 rounded-full text-[10px] font-black tracking-wider uppercase backdrop-blur-md ${
-                            isManual
-                              ? "bg-orange-500/90 text-white"
-                              : "bg-teal-500/90 text-white"
-                          }`}
+                          className={`px-3 py-1 rounded-full text-[10px] font-black tracking-wider uppercase backdrop-blur-md ${isManual
+                            ? "bg-orange-500/90 text-white"
+                            : "bg-teal-500/90 text-white"
+                            }`}
                         >
                           {isManual ? "Manual Door" : "Automatic Door"}
                         </span>
@@ -182,13 +186,13 @@ export default function DoorSystems() {
 
                   {/* Card Actions */}
                   <div className="p-6 pt-0 flex gap-2">
-                    <button
-                      onClick={() => setSelectedDoor(door)}
+                    <Link
+                      to={`/products/doors/${door.id}`}
                       className="flex-1 py-2.5 px-3 rounded-xl bg-slate-900 hover:bg-brand-teal text-white text-xs font-bold transition-colors flex items-center justify-center space-x-1.5 cursor-pointer shadow-xs"
                     >
                       <SlidersHorizontal className="w-3.5 h-3.5 text-teal-300" />
-                      <span>Technical Specs</span>
-                    </button>
+                      <span>View Details</span>
+                    </Link>
                     <Link
                       to="/contact"
                       className="py-2.5 px-3.5 rounded-xl bg-brand-orange hover:bg-brand-orange-hover text-white text-xs font-bold transition-colors flex items-center justify-center"
@@ -202,100 +206,6 @@ export default function DoorSystems() {
           })}
         </div>
       </div>
-
-      {/* Door Specification Detail Modal */}
-      {selectedDoor && (
-        <div
-          className="fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-sm flex items-center justify-center p-4 overflow-y-auto"
-          onClick={() => setSelectedDoor(null)}
-        >
-          <div
-            className="relative bg-white rounded-3xl p-6 sm:p-8 max-w-2xl w-full max-h-[90vh] overflow-y-auto space-y-6 shadow-2xl border border-slate-200 my-8"
-            onClick={(e) => e.stopPropagation()}
-          >
-            <div className="flex justify-between items-start pb-4 border-b border-slate-100">
-              <div>
-                <span className="text-xs font-bold text-brand-teal uppercase tracking-wider block">
-                  {selectedDoor.category === "manual" ? "Manual Door" : "Automatic Door"} System
-                </span>
-                <h3 className="text-xl sm:text-2xl font-black text-slate-900">
-                  {selectedDoor.name}
-                </h3>
-              </div>
-              <button
-                onClick={() => setSelectedDoor(null)}
-                className="p-2 rounded-full hover:bg-slate-100 text-slate-500 hover:text-slate-900 transition-colors cursor-pointer"
-              >
-                <X className="w-6 h-6" />
-              </button>
-            </div>
-
-            {/* Drawing Preview */}
-            <div className="bg-slate-900 rounded-2xl p-4 flex flex-col items-center justify-center text-white">
-              <span className="text-[11px] text-slate-400 font-mono mb-2">
-                Technical GA Entrance Detail
-              </span>
-              <div className="bg-white rounded-xl p-3 w-full flex items-center justify-center">
-                <img
-                  src={selectedDoor.drawing || selectedDoor.image}
-                  alt={selectedDoor.name}
-                  className="max-h-56 object-contain"
-                />
-              </div>
-            </div>
-
-            <p className="text-xs sm:text-sm text-slate-700 leading-relaxed">
-              {selectedDoor.description}
-            </p>
-
-            {/* Full Specs List */}
-            <div className="bg-slate-50 rounded-2xl p-4 space-y-2 text-xs">
-              <strong className="text-slate-900 block font-bold mb-1">
-                Technical Specifications:
-              </strong>
-              {Object.entries(selectedDoor.specs).map(([k, v]) => (
-                <div key={k} className="flex justify-between border-b border-slate-200/60 pb-1.5">
-                  <span className="text-slate-500 capitalize">{k.replace(/([A-Z])/g, ' $1')}:</span>
-                  <span className="font-bold text-slate-800 text-right max-w-xs">{v}</span>
-                </div>
-              ))}
-            </div>
-
-            {/* Compatible Elevators */}
-            <div>
-              <span className="text-xs font-bold text-slate-400 uppercase tracking-wider block mb-2">
-                Compatible Elevators:
-              </span>
-              <div className="flex flex-wrap gap-2">
-                {selectedDoor.compatibleElevators.map((eid) => (
-                  <Link
-                    key={eid}
-                    to={`/elevators/${eid}`}
-                    className="px-3 py-1 rounded-lg bg-teal-50 border border-teal-200 text-brand-teal text-xs font-bold hover:bg-brand-teal hover:text-white transition-colors"
-                  >
-                    {eid.replace(/-/g, ' ').toUpperCase()} &rarr;
-                  </Link>
-                ))}
-              </div>
-            </div>
-
-            <div className="pt-4 border-t border-slate-100 flex justify-end gap-3">
-              <button
-                onClick={() => setSelectedDoor(null)}
-                className="px-5 py-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-800 text-xs font-bold transition-colors cursor-pointer"
-              >
-                Close
-              </button>
-              <Link
-                to="/contact"
-                className="px-6 py-2.5 rounded-xl bg-brand-orange hover:bg-brand-orange-hover text-white text-xs font-bold transition-colors"
-              >
-                Request Custom Door Quote
-              </Link>
-            </div>
-          </div>
-        </div>
-      )}
 
       {/* Lightbox for Zooming Drawing */}
       {lightboxDrawing && (
@@ -329,11 +239,13 @@ export default function DoorSystems() {
         </div>
       )}
 
-      <CTASection
-        title="Need Custom Entrance Dimensions for Your Shaft?"
-        subtitle="Our engineering consultants evaluate your clear entrance width, sill depth, and wall fire rating to configure the exact door system required."
-        variant="gradient"
-      />
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <CTASection
+          title="Need Custom Entrance Dimensions for Your Shaft?"
+          subtitle="Our engineering consultants evaluate your clear entrance width, sill depth, and wall fire rating to configure the exact door system required."
+          variant="gradient"
+        />
+      </div>
     </div>
   );
 }

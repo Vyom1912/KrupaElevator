@@ -7,24 +7,52 @@ import {
   Maximize2,
   X,
   SlidersHorizontal,
-  ChevronRight,
   CheckCircle2,
   Building2,
   Sparkles,
   Cpu,
-  DoorClosed
+  DoorClosed,
+  Layers,
+  Anchor,
+  Minimize2,
+  ArrowDownCircle,
+  ArrowUpCircle
 } from "lucide-react";
-import { elevatorMaster } from "../data/elevatorMaster";
+import { elevatorMaster, getElevatorSingleTable } from "../data/elevatorMaster";
 import { allDoors } from "../data/doorsMaster";
 import { companyData } from "../data/companyData";
 import StandardSpecTable from "../components/StandardSpecTable";
-import ElevatorStructureViewer from "../components/ElevatorStructureViewer";
 import CustomizationProcess from "../components/CustomizationProcess";
 import MergedCivilTable from "../components/MergedCivilTable";
 import ScrollReveal from "../components/ScrollReveal";
 import WhatsAppIcon from "../components/common/WhatsAppIcon";
-import { getElevatorSingleTable } from "../data/elevatorSingleTables";
 import MergedSpecTable from "../components/MergedSpecTable";
+import Seo from "../components/common/Seo";
+import PageHero from "../components/common/PageHero";
+
+const componentIcons = {
+  machine: Cpu,
+  controller: Layers,
+  hoistRopes: Anchor,
+  guideRails: Minimize2,
+  counterweight: Maximize2,
+  doorSystem: DoorClosed,
+  landingDoors: DoorClosed,
+  pit: ArrowDownCircle,
+  overhead: ArrowUpCircle
+};
+
+const componentLabels = {
+  machine: "Traction Machine",
+  controller: "Microprocessor Controller",
+  hoistRopes: "Suspension / Hoist Ropes",
+  guideRails: "Machined Steel Guide Rails",
+  counterweight: "Counterweight System",
+  doorSystem: "Cabin Door Operator",
+  landingDoors: "Landing Entrances & Interlocks",
+  pit: "Pit & Buffers",
+  overhead: "Overhead Clearance & Safety"
+};
 
 export default function ElevatorDetail({ onOpenBrochure }) {
   const { elevatorId } = useParams();
@@ -34,7 +62,7 @@ export default function ElevatorDetail({ onOpenBrochure }) {
 
   // If not found, redirect to elevators hub
   if (!elevator) {
-    return <Navigate to="/elevators" replace />;
+    return <Navigate to="/products/elevators" replace />;
   }
 
   // Active layout drawing tab
@@ -51,121 +79,76 @@ export default function ElevatorDetail({ onOpenBrochure }) {
   );
 
   return (
-    <div className="space-y-16 sm:space-y-24 pb-20 overflow-x-hidden">
+    <div className="min-h-screen bg-slate-50 space-y-12 sm:space-y-16 pb-20 overflow-x-hidden">
+      <Seo
+        title={elevator.name}
+        description={elevator.overview?.slice(0, 155)}
+      />
+
       {/* ========================================================================= */}
-      {/* 1. HERO BANNER: Model Title, Brochure Ref, High-Impact Visual             */}
+      {/* 1. UNIFIED PAGE HERO                                                      */}
       {/* ========================================================================= */}
-      <section className="relative bg-slate-950 text-white overflow-hidden py-12 sm:py-20 border-b border-slate-800">
-        <div className="absolute inset-0 z-0 pointer-events-none opacity-20">
-          <img
-            src={elevator.image}
-            alt={elevator.name}
-            className="w-full h-full object-cover filter blur-sm scale-105"
-          />
-          <div className="absolute inset-0 bg-gradient-to-r from-slate-950 via-slate-950/90 to-slate-950/60" />
-        </div>
+      <PageHero
+        breadcrumbs={[
+          { label: "Products", to: "/products" },
+          { label: "Elevator Models", to: "/products/elevators" },
+          { label: elevator.name }
+        ]}
+        icon={Building2}
+        badge={elevator.category}
+        title={elevator.name}
+        tagline={elevator.tagline}
+        description={elevator.overview}
+        actions={
+          <div className="flex flex-wrap items-center gap-2.5">
+            <Link
+              to="/contact"
+              className="px-5 py-3 rounded-xl bg-brand-orange hover:bg-brand-orange-hover text-white text-xs sm:text-sm font-bold shadow-md transition-all flex items-center space-x-2"
+            >
+              <span>Request Site Survey & Layout</span>
+              <ArrowRight className="w-4 h-4" />
+            </Link>
 
-        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          {/* Breadcrumbs */}
-          <nav className="flex items-center space-x-2 text-xs text-slate-400 mb-6 font-medium">
-            <Link to="/" className="hover:text-brand-teal transition-colors">Home</Link>
-            <ChevronRight className="w-3 h-3 text-slate-600" />
-            <Link to="/elevators" className="hover:text-brand-teal transition-colors">Elevators</Link>
-            <ChevronRight className="w-3 h-3 text-slate-600" />
-            <span className="text-teal-300 font-bold">{elevator.name}</span>
-          </nav>
+            <button
+              onClick={() => {
+                document.getElementById("civil-specifications")?.scrollIntoView({ behavior: "smooth" });
+              }}
+              className="px-4 py-3 rounded-xl bg-slate-900 hover:bg-slate-800 text-white text-xs sm:text-sm font-bold transition-all flex items-center space-x-2 cursor-pointer shadow-xs"
+            >
+              <SlidersHorizontal className="w-4 h-4 text-brand-teal" />
+              <span>Specifications Matrix</span>
+            </button>
 
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
-            {/* Left Content */}
-            <div className="lg:col-span-7 space-y-6">
-              <div className="flex flex-wrap items-center gap-2">
-                <span className="px-3.5 py-1 rounded-full bg-brand-teal/20 border border-brand-teal/40 text-brand-teal text-xs font-bold uppercase tracking-wider">
-                  {elevator.category}
-                </span>
-                {/* <span className="px-3 py-1 rounded-full bg-slate-800 border border-slate-700 text-slate-300 text-xs font-semibold">
-                  ISO 9001:2015 Certified
-                </span>
-                <span className="px-3 py-1 rounded-full bg-orange-500/20 text-orange-300 border border-orange-500/30 text-xs font-bold">
-                  IS 14665 Standard
-                </span> */}
-              </div>
-
-              <div className="space-y-3">
-                <h1 className="text-3xl sm:text-5xl lg:text-6xl font-black text-white tracking-tight leading-tight">
-                  {elevator.name}
-                </h1>
-                <p className="text-base sm:text-lg text-teal-200 font-medium">
-                  {elevator.tagline}
-                </p>
-                <p className="text-xs sm:text-sm text-slate-300 leading-relaxed max-w-2xl">
-                  {elevator.overview}
-                </p>
-              </div>
-
-              {/* Action Buttons */}
-              <div className="pt-2 flex flex-wrap items-center gap-3">
-                <Link
-                  to="/contact"
-                  className="px-6 py-3.5 rounded-xl bg-brand-orange hover:bg-brand-orange-hover text-white text-xs sm:text-sm font-bold shadow-lg transition-all flex items-center space-x-2"
-                >
-                  <span>Request Site Survey & Layout</span>
-                  <ArrowRight className="w-4 h-4" />
-                </Link>
-
-                {/* <a
-                  href={`tel:${companyData.contacts.phoneRaw}`}
-                  className="px-5 py-3.5 rounded-xl bg-slate-900/90 hover:bg-slate-800 text-slate-200 border border-slate-700 text-xs sm:text-sm font-bold transition-all flex items-center space-x-2"
-                  title="Call Technical Engineer"
-                >
-                  <Phone className="w-4 h-4 text-brand-orange" />
-                  <span>Call Us</span>
-                </a>
-
-                <a
-                  href={`https://wa.me/${companyData.contacts.whatsapp}?text=${encodeURIComponent(
-                    `Hello Krupa Elevators, I would like to inquire about ${elevator.name} specifications and request a quote.`
-                  )}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="px-5 py-3.5 rounded-xl bg-[#25D366] hover:bg-[#20bd5a] text-white text-xs sm:text-sm font-bold transition-all flex items-center space-x-2 shadow-sm"
-                  title="Chat on WhatsApp"
-                >
-                  <WhatsAppIcon className="w-4 h-4" />
-                  <span>WhatsApp</span>
-                </a> */}
-
-                <button
-                  onClick={() => {
-                    document.getElementById("civil-specifications")?.scrollIntoView({ behavior: "smooth" });
-                  }}
-                  className="px-5 py-3.5 rounded-xl bg-slate-900/90 hover:bg-slate-800 text-slate-200 border border-slate-700 text-xs sm:text-sm font-bold transition-all flex items-center space-x-2 cursor-pointer"
-                >
-                  <SlidersHorizontal className="w-4 h-4 text-brand-teal" />
-                  <span>Specifications Matrix</span>
-                </button>
-              </div>
-            </div>
-
-            {/* Right Card: High-Res Visual */}
-            <div className="lg:col-span-5">
-              <div className="relative rounded-3xl overflow-hidden border border-slate-700/80 shadow-2xl bg-slate-900 group">
-                <img
-                  src={elevator.image}
-                  alt={elevator.name}
-                  className="w-full h-80 sm:h-96 object-cover group-hover:scale-105 transition-transform duration-700"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/20 to-transparent" />
-                <div className="absolute bottom-4 left-4 right-4 flex items-center justify-between text-xs text-white">
-                  <span className="font-bold">{elevator.name}</span>
-                  <span className="px-2.5 py-1 rounded-lg bg-slate-900/80 backdrop-blur-md text-teal-300 font-mono text-[11px] border border-slate-700">
-                    Direct Bakrol Factory
-                  </span>
-                </div>
-              </div>
+            <a
+              href={`https://wa.me/919727764868?text=${encodeURIComponent(
+                `Hello Krupa Elevators, I would like to inquire about ${elevator.name} specifications and request a quote.`
+              )}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="px-4 py-3 rounded-xl bg-[#25D366] hover:bg-[#20bd5a] text-white text-xs sm:text-sm font-bold transition-all flex items-center space-x-2 shadow-xs cursor-pointer"
+            >
+              <WhatsAppIcon className="w-4 h-4 text-white" />
+              <span>WhatsApp</span>
+            </a>
+          </div>
+        }
+        media={
+          <div className="relative rounded-3xl overflow-hidden border border-slate-200 shadow-xl bg-slate-900 group">
+            <img
+              src={elevator.image}
+              alt={elevator.name}
+              className="w-full h-72 sm:h-80 object-cover group-hover:scale-105 transition-transform duration-700"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/20 to-transparent" />
+            <div className="absolute bottom-4 left-4 right-4 flex items-center justify-between text-xs text-white">
+              <span className="font-bold">{elevator.name}</span>
+              <span className="px-2.5 py-1 rounded-lg bg-slate-900/80 backdrop-blur-md text-teal-300 font-mono text-[11px] border border-slate-700">
+                Direct Kathwada Factory
+              </span>
             </div>
           </div>
-        </div>
-      </section >
+        }
+      />
 
       {/* ========================================================================= */}
       {/* 2. OVERVIEW & TYPICAL APPLICATIONS                                        */}
@@ -229,25 +212,52 @@ export default function ElevatorDetail({ onOpenBrochure }) {
                 </div>
               </div>
             )}
+
+            {/* Annotated Engineering Breakdown */}
+            {elevator.structure && (
+              <div className="pt-6 border-t border-slate-100 space-y-4">
+                <div>
+                  <span className="text-xs font-bold text-brand-teal uppercase tracking-widest block mb-1">
+                    Engineering Sub-Assemblies
+                  </span>
+                  <h3 className="text-xl sm:text-2xl font-black text-slate-900">
+                    Annotated Structural & Mechanical Breakdown
+                  </h3>
+                  <p className="text-xs sm:text-sm text-slate-500 mt-0.5">
+                    Core electro-mechanical sub-assemblies engineered to BIS IS 14665 standards for {elevator.name}.
+                  </p>
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3.5 pt-1">
+                  {Object.entries(elevator.structure).map(([key, value]) => {
+                    const Icon = componentIcons[key] || Layers;
+                    const label = componentLabels[key] || key;
+                    return (
+                      <div
+                        key={key}
+                        className="p-4 rounded-2xl bg-slate-50 border border-slate-200/80 space-y-1.5"
+                      >
+                        <div className="flex items-center space-x-2.5 text-slate-900 font-bold text-xs">
+                          <div className="w-7 h-7 rounded-xl bg-teal-50 border border-teal-100 flex items-center justify-center shrink-0">
+                            <Icon className="w-3.5 h-3.5 text-brand-teal" />
+                          </div>
+                          <span className="truncate">{label}</span>
+                        </div>
+                        <p className="text-xs text-slate-600 leading-relaxed font-normal">
+                          {value}
+                        </p>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+            )}
           </div>
         </ScrollReveal>
       </section>
 
       {/* ========================================================================= */}
-      {/* 3. ELEVATOR STRUCTURE: Annotated Technical Illustration & 9 Components     */}
-      {/* ========================================================================= */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <ScrollReveal direction="up" distance={20}>
-          <ElevatorStructureViewer
-            structure={elevator.structure}
-            elevatorName={elevator.name}
-            drawingUrl={elevator.drawings.main}
-          />
-        </ScrollReveal>
-      </section>
-
-      {/* ========================================================================= */}
-      {/* 4. HOISTWAY LAYOUT DRAWINGS: Plan, Elevation, Machine & Door Views         */}
+      {/* 3. HOISTWAY LAYOUT DRAWINGS: Plan, Elevation, Machine & Door Views         */}
       {/* ========================================================================= */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <ScrollReveal direction="up" distance={20}>
@@ -352,7 +362,7 @@ export default function ElevatorDetail({ onOpenBrochure }) {
       </section>
 
       {/* ========================================================================= */}
-      {/* 5. TECHNICAL SPECIFICATIONS & MERGED CIVIL DIMENSIONS MATRIX               */}
+      {/* 4. TECHNICAL SPECIFICATIONS & MERGED CIVIL DIMENSIONS MATRIX               */}
       {/* ========================================================================= */}
       <section id="civil-specifications" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
         {/* Standard Technical Specifications */}
@@ -379,7 +389,7 @@ export default function ElevatorDetail({ onOpenBrochure }) {
       </section>
 
       {/* ========================================================================= */}
-      {/* 6. COMPATIBLE DOOR SYSTEMS & MACHINES                                      */}
+      {/* 5. COMPATIBLE DOOR SYSTEMS & MACHINES                                      */}
       {/* ========================================================================= */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <ScrollReveal direction="up" distance={20}>
@@ -462,7 +472,7 @@ export default function ElevatorDetail({ onOpenBrochure }) {
         <div className="rounded-3xl bg-gradient-to-r from-brand-teal via-teal-800 to-slate-900 text-white p-8 sm:p-12 flex flex-col md:flex-row justify-between items-center gap-6 shadow-2xl">
           <div className="space-y-2 text-center md:text-left">
             <span className="text-xs font-bold uppercase tracking-widest text-teal-200">
-              Nikol Engineering Office & Bakrol Factory
+              Nikol Engineering Office & Kathwada Factory
             </span>
             <h2 className="text-2xl sm:text-3xl font-black">
               Planning a {elevator.name} Installation?

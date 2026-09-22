@@ -64,18 +64,13 @@ export default function Footer({ onOpenBrochure }) {
                 </Link>
               </li>
               <li>
-                <Link to="/elevators" className="hover:text-white transition-colors">
-                  Elevator Models (10)
+                <Link to="/products" className="hover:text-white transition-colors">
+                  Products Hub
                 </Link>
               </li>
               <li>
-                <Link to="/interiors" className="hover:text-white transition-colors">
-                  Interior Cabin Series
-                </Link>
-              </li>
-              <li>
-                <Link to="/technology" className="hover:text-white transition-colors">
-                  Green Tech & Safety
+                <Link to="/about" className="hover:text-white transition-colors">
+                  About Krupa Elevators
                 </Link>
               </li>
               <li>
@@ -84,12 +79,17 @@ export default function Footer({ onOpenBrochure }) {
                 </Link>
               </li>
               <li>
-                <Link to="/elevators" className="hover:text-white transition-colors">
-                  Civil Hoistway Matrix
+                <Link to="/products/architects-corner" className="hover:text-white transition-colors text-brand-teal font-semibold">
+                  Architects CAD Hub (Drawings)
                 </Link>
               </li>
               <li>
-                <Link to="/projects" className="hover:text-white transition-colors">
+                <Link to="/#estimator" className="hover:text-white transition-colors text-brand-orange font-semibold">
+                  60s Lift Estimator Wizard
+                </Link>
+              </li>
+              <li>
+                <Link to="/about/projects" className="hover:text-white transition-colors">
                   Projects Portfolio
                 </Link>
               </li>
@@ -104,52 +104,57 @@ export default function Footer({ onOpenBrochure }) {
           {/* Product Lines */}
           <div className="space-y-3">
             <h4 className="text-xs font-bold uppercase tracking-wider text-white border-l-2 border-brand-orange pl-2">
-              Elevator Applications
+              Products
             </h4>
             <ul className="space-y-2 text-sm">
               <li>
-                <Link to="/elevators#elev-passenger" className="hover:text-white transition-colors">
+                <Link to="/products/elevators" className="hover:text-white transition-colors">
+                  Elevator Models
+                </Link>
+              </li>
+              <li>
+                <Link to="/products/doors" className="hover:text-white transition-colors">
+                  Door Systems
+                </Link>
+              </li>
+              <li>
+                <Link to="/products/interiors" className="hover:text-white transition-colors">
+                  Interior Cabin Series
+                </Link>
+              </li>
+              <li>
+                <Link to="/products/technology" className="hover:text-white transition-colors">
+                  Technology & Drive Systems
+                </Link>
+              </li>
+              <li>
+                <Link to="/products/elevators/passenger" className="hover:text-white transition-colors">
                   Passenger Elevators
                 </Link>
               </li>
               <li>
-                <Link to="/elevators#elev-capsule" className="hover:text-white transition-colors">
+                <Link to="/products/elevators/capsule" className="hover:text-white transition-colors">
                   Capsule Panoramic Lifts
                 </Link>
               </li>
               <li>
-                <Link to="/elevators#elev-hospital" className="hover:text-white transition-colors">
+                <Link to="/products/elevators/hospital" className="hover:text-white transition-colors">
                   Hospital Bed Elevators
                 </Link>
               </li>
               <li>
-                <Link to="/elevators#elev-goods" className="hover:text-white transition-colors">
+                <Link to="/products/elevators/goods" className="hover:text-white transition-colors">
                   Goods & Freight Lifts
                 </Link>
               </li>
               <li>
-                <Link to="/elevators#elev-car" className="hover:text-white transition-colors">
-                  Car Elevators & Parking
-                </Link>
-              </li>
-              <li>
-                <Link to="/elevators#elev-mrl" className="hover:text-white transition-colors">
+                <Link to="/products/elevators/mrl" className="hover:text-white transition-colors">
                   MRL Gearless Lifts
                 </Link>
               </li>
               <li>
-                <Link to="/elevators#elev-home" className="hover:text-white transition-colors">
+                <Link to="/products/elevators/home" className="hover:text-white transition-colors">
                   Home Villa Elevators
-                </Link>
-              </li>
-              <li>
-                <Link to="/elevators#elev-hydraulic" className="hover:text-white transition-colors">
-                  Hydraulic Low-Rise Lifts
-                </Link>
-              </li>
-              <li>
-                <Link to="/elevators#elevator-doors-section" className="hover:text-brand-orange transition-colors font-medium">
-                  Door Systems (Manual & Auto)
                 </Link>
               </li>
             </ul>
@@ -215,9 +220,9 @@ export default function Footer({ onOpenBrochure }) {
           <p>
             © {currentYear} {companyData.name}. All rights reserved. Reliable Riding Experience.
           </p>
-          <p className="max-w-xl text-center sm:text-right text-[11px] text-slate-600">
+          {/* <p className="max-w-xl text-center sm:text-right text-[11px] text-slate-600">
             Note: Technical engineering data is subject to site survey and customized architectural requirements. Consult KRUPA ELEVATORS engineering team for exact site hoistway and pit drawings.
-          </p>
+          </p> */}
         </div>
       </div>
     </footer>

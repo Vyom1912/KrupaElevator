@@ -51,7 +51,7 @@ export default function CTASection({
               <span>&bull;</span>
               <span>24/7 Breakdown Assistance</span>
               <span>&bull;</span>
-              <span>Bakrol Works Delivery</span>
+              <span>Kathwada Works Delivery</span>
             </div>
           </div>
 

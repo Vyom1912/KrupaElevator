@@ -52,7 +52,7 @@ const steps = [
   {
     step: "06",
     title: "Manufacturing",
-    desc: "Precision fabrication at our direct Bakrol manufacturing plant with multi-stage quality and safety testing.",
+    desc: "Precision fabrication at our direct Kathwada manufacturing plant with multi-stage quality and safety testing.",
     icon: Factory,
     color: "orange"
   },

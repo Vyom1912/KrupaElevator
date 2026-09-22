@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 import {
   Phone,
   Mail,
@@ -8,13 +9,14 @@ import {
   Building,
   Factory,
   MessageSquare,
-  ChevronDown
+  ChevronDown,
+  ArrowUpRight
 } from "lucide-react";
 import { companyData } from "../data/companyData";
 import ScrollReveal from "../components/ScrollReveal";
 import PageHero from "../components/common/PageHero";
-import { assetUrl } from "../utils/assetPath";
 import WhatsAppIcon from "../components/common/WhatsAppIcon";
+import Seo from "../components/common/Seo";
 
 export default function Contact({ onOpenBrochure }) {
   const [formSubmitted, setFormSubmitted] = useState(false);
@@ -52,14 +54,20 @@ export default function Contact({ onOpenBrochure }) {
     },
     {
       q: "Where are KRUPA elevators manufactured?",
-      a: "Our advanced manufacturing facility is located at 353, Gopal Charan Industrial Hub, Kujad-Bakrol Road, Bakrol, Ahmedabad-382430. All structural frames, car sling assemblies, and electrical control cabinets undergo stringent testing before site delivery."
+      a: "Our advanced manufacturing facility is located at 1, Heritage Industrial Hub, Nr. Global Industrial Estate, Nr. Kotak Mahindra Bank, Kathwada GIDC Road No 5, Ahmedabad-382430. All structural frames, car sling assemblies, and electrical control cabinets undergo stringent testing before site delivery."
     }
   ];
 
   return (
-    <div className="min-h-screen bg-slate-50 pt-8 pb-8">
+    <div className="min-h-screen bg-slate-50 pb-12">
+      <Seo
+        title="Contact Us"
+        description="Contact Krupa Elevators for a free site survey, custom CAD layout, or elevator quotation. Registered office in Nikol and manufacturing works in Kathwada, Ahmedabad."
+      />
+
       {/* Page Hero */}
       <PageHero
+        breadcrumbs={[{ label: "Contact" }]}
         icon={Phone}
         badge="Direct Factory & Nikol Engineering Hub"
         title="Let's Plan Your Elevator Solution"
@@ -69,71 +77,59 @@ export default function Contact({ onOpenBrochure }) {
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-16">
         {/* Facilities & Quick Contacts Cards */}
+        <div className="flex items-center justify-between gap-3 -mb-2">
+          <span className="text-xs font-bold uppercase tracking-widest text-slate-500">
+            Facilities & Quick Contacts
+          </span>
+          <Link
+            to="/about"
+            className="inline-flex items-center gap-1 text-xs font-bold text-brand-teal hover:text-teal-700"
+          >
+            <span>View full company & facilities info</span>
+            <ArrowUpRight className="w-3.5 h-3.5" />
+          </Link>
+        </div>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          {/* Office with Architectural CAD Design Studio Image */}
-          <ScrollReveal direction="up" distance={18} delay={0} className="bg-white rounded-3xl border border-slate-200 shadow-sm overflow-hidden hover:shadow-lg transition-all flex flex-col justify-between group">
-            <div>
-              <div className="h-40 w-full relative overflow-hidden bg-slate-900">
-                <img
-                  src={assetUrl("/assets/facilities/design-studio.jpg")}
-                  alt="Krupa Elevators Corporate Office & Design Studio in Nikol Ahmedabad"
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-transparent" />
-                <div className="absolute top-3 left-3 bg-brand-orange text-white px-2.5 py-0.5 rounded-full text-[10px] font-black uppercase tracking-wider shadow">
-                  Nikol Hub
-                </div>
-                <div className="absolute bottom-2.5 left-3 right-3 text-white">
-                  <span className="text-[11px] font-bold text-slate-200">CAD Studio & Corporate Desk</span>
-                </div>
+          {/* Registered Office — compact; full facility detail lives on /about */}
+          <ScrollReveal direction="up" distance={18} delay={0} className="bg-white p-6 rounded-3xl border border-slate-200 shadow-sm space-y-3 hover:shadow-lg transition-all flex flex-col justify-between">
+            <div className="space-y-2">
+              <div className="w-10 h-10 rounded-2xl bg-brand-orange-light text-brand-orange flex items-center justify-center">
+                <Building className="w-5 h-5" />
               </div>
-              <div className="p-5 space-y-2">
-                <div className="flex items-center space-x-2">
-                  <div className="w-8 h-8 rounded-xl bg-brand-orange-light text-brand-orange flex items-center justify-center shrink-0">
-                    <Building className="w-4 h-4" />
-                  </div>
-                  <strong className="text-sm font-black text-slate-900 block">Registered Office</strong>
-                </div>
-                <p className="text-xs text-slate-600 leading-relaxed pt-1">
-                  {companyData.contacts.office.address}
-                </p>
-              </div>
+              <strong className="text-sm font-black text-slate-900 block">{companyData.contacts.office.title}</strong>
+              <p className="text-xs text-slate-600 leading-relaxed">
+                {companyData.contacts.office.address}
+              </p>
+              <a
+                href={`tel:${companyData.contacts.phoneRaw}`}
+                className="block text-xs font-bold text-slate-800 hover:text-brand-orange"
+              >
+                {companyData.contacts.phone}
+              </a>
             </div>
-            <div className="px-5 pb-5 pt-1 text-[11px] text-slate-400 border-t border-slate-100 mx-5 mt-auto">
+            <div className="pt-2 border-t border-slate-100 text-[11px] text-slate-400">
               Open Mon - Sat: 9:00 AM to 7:00 PM
             </div>
           </ScrollReveal>
 
-          {/* Factory with Bakrol Works Image */}
-          <ScrollReveal direction="up" distance={18} delay={60} className="bg-white rounded-3xl border border-slate-200 shadow-sm overflow-hidden hover:shadow-lg transition-all flex flex-col justify-between group">
-            <div>
-              <div className="h-40 w-full relative overflow-hidden bg-slate-900">
-                <img
-                  src={assetUrl("/assets/facilities/bakrol-facility.jpg")}
-                  alt="Krupa Elevators Bakrol Manufacturing Plant in Ahmedabad"
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-transparent" />
-                <div className="absolute top-3 left-3 bg-brand-teal text-white px-2.5 py-0.5 rounded-full text-[10px] font-black uppercase tracking-wider shadow">
-                  Bakrol Works
-                </div>
-                <div className="absolute bottom-2.5 left-3 right-3 text-white">
-                  <span className="text-[11px] font-bold text-teal-300">Fabrication & Testing Facility</span>
-                </div>
+          {/* Manufacturing Works — compact; full facility detail lives on /about */}
+          <ScrollReveal direction="up" distance={18} delay={60} className="bg-white p-6 rounded-3xl border border-slate-200 shadow-sm space-y-3 hover:shadow-lg transition-all flex flex-col justify-between">
+            <div className="space-y-2">
+              <div className="w-10 h-10 rounded-2xl bg-brand-teal-light text-brand-teal flex items-center justify-center">
+                <Factory className="w-5 h-5" />
               </div>
-              <div className="p-5 space-y-2">
-                <div className="flex items-center space-x-2">
-                  <div className="w-8 h-8 rounded-xl bg-brand-teal-light text-brand-teal flex items-center justify-center shrink-0">
-                    <Factory className="w-4 h-4" />
-                  </div>
-                  <strong className="text-sm font-black text-slate-900 block">Manufacturing Plant</strong>
-                </div>
-                <p className="text-xs text-slate-600 leading-relaxed pt-1">
-                  {companyData.contacts.factory.address}
-                </p>
-              </div>
+              <strong className="text-sm font-black text-slate-900 block">{companyData.contacts.factory.title}</strong>
+              <p className="text-xs text-slate-600 leading-relaxed">
+                {companyData.contacts.factory.address}
+              </p>
+              <a
+                href={`tel:${companyData.contacts.phoneRaw}`}
+                className="block text-xs font-bold text-slate-800 hover:text-brand-teal"
+              >
+                {companyData.contacts.phone}
+              </a>
             </div>
-            <div className="px-5 pb-5 pt-1 text-[11px] text-slate-400 border-t border-slate-100 mx-5 mt-auto">
+            <div className="pt-2 border-t border-slate-100 text-[11px] text-slate-400">
               Visitors welcome by appointment
             </div>
           </ScrollReveal>

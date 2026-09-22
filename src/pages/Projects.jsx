@@ -8,6 +8,7 @@ import CTASection from "../components/common/CTASection";
 import { projectsData } from "../data/projectsData";
 import { companyData } from "../data/companyData";
 import ScrollReveal from "../components/ScrollReveal";
+import Seo from "../components/common/Seo";
 
 export default function Projects({ onOpenBrochure }) {
   const [selectedCategory, setSelectedCategory] = useState("All");
@@ -27,18 +28,26 @@ export default function Projects({ onOpenBrochure }) {
   );
 
   return (
-    <div className="space-y-16 pb-20">
+    <div className="min-h-screen bg-slate-50 space-y-12 sm:space-y-16 pb-20">
+      <Seo
+        title="Projects & Clients"
+        description="Verified elevator installations across Gujarat and Western India — residential towers, luxury villas, hospitals, and industrial facilities engineered by Krupa Elevators."
+      />
+
       {/* Page Hero */}
       <PageHero
+        breadcrumbs={[
+          { label: "About", to: "/about" },
+          { label: "Projects & Clients" }
+        ]}
         badge="Verified Installations Portfolio"
         title="Elevator Projects Across Gujarat & Western India"
         description="From high-rise residential towers along SG Highway to luxury penthouses in Surat and specialized trauma bed elevators in Rajkot. Explore real-world vertical transportation systems engineered by Krupa Elevators."
-        breadcrumbs={[{ label: "Projects" }]}
         actions={
-          <>
+          <div className="flex flex-wrap items-center gap-3">
             <Link
               to="/contact"
-              className="px-6 py-3 rounded-full bg-brand-orange hover:bg-brand-orange-hover text-white text-xs sm:text-sm font-bold shadow-lg transition-colors flex items-center space-x-2"
+              className="px-5 py-3 rounded-xl bg-brand-orange hover:bg-brand-orange-hover text-white text-xs sm:text-sm font-bold shadow-md transition-colors flex items-center space-x-2"
             >
               <span>Book Site Survey</span>
               <ArrowRight className="w-4 h-4" />
@@ -47,12 +56,12 @@ export default function Projects({ onOpenBrochure }) {
               href={companyData.brochurePdf}
               target="_blank"
               rel="noopener noreferrer"
-              className="px-5 py-3 rounded-full bg-slate-800/90 border border-slate-700 text-white text-xs sm:text-sm font-bold hover:bg-slate-700 transition-colors flex items-center space-x-2"
+              className="px-4 py-3 rounded-xl bg-slate-900 hover:bg-slate-800 text-white text-xs sm:text-sm font-bold transition-colors flex items-center space-x-2 shadow-xs"
             >
               <Download className="w-4 h-4 text-brand-teal" />
               <span>Download Brochure</span>
             </a>
-          </>
+          </div>
         }
       />
 

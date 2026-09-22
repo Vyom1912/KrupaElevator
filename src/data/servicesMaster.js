@@ -36,7 +36,7 @@ export const servicesMaster = {
       tagline: "100% Tested OEM Inventory",
       desc: "All supplied spare parts undergo strict test procedures before delivery. With an extensive distribution logistics network across Ahmedabad, Gujarat, and Northern India, we maintain ready stock of genuine traction parts, door operators, electronic PCBs, and wire ropes for rapid supply.",
       benefits: [
-        "100% factory-tested, certified original OEM elevator components direct from Bakrol",
+        "100% factory-tested, certified original OEM elevator components direct from our Kathwada works",
         "Extensive warehousing across Ahmedabad, Surat, Vadodara, and Northern India",
         "Guaranteed rapid supply preventing unnecessary elevator downtime in high-traffic buildings",
         "Transparent warranty coverage and traceability on all replaced parts"

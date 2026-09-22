@@ -17,6 +17,7 @@ import PageHero from "../components/common/PageHero";
 import CTASection from "../components/common/CTASection";
 import StickySidebarNav from "../components/common/StickySidebarNav";
 import WhatsAppIcon from "../components/common/WhatsAppIcon";
+import Seo from "../components/common/Seo";
 
 export default function Technologies() {
   const { pillars, machineComparison, safetyEcosystem } = technologiesMaster;
@@ -42,12 +43,21 @@ export default function Technologies() {
   ];
 
   return (
-    <div className="min-h-screen bg-slate-50 pt-8 pb-8">
+    <div className="min-h-screen bg-slate-50 pb-12">
+      <Seo
+        title="Technology & Drive Systems"
+        description="PMS gearless & geared traction machines, microprocessor control panels, V3F inverter drives, and the passenger safety ecosystem behind every Krupa Elevators installation."
+      />
+
       {/* ========================================================================= */}
       {/* 1. PAGE HEADER                                                            */}
       {/* ========================================================================= */}
 
       <PageHero
+        breadcrumbs={[
+          { label: "Products", to: "/products" },
+          { label: "Technology & Drive Systems" }
+        ]}
         icon={Cpu}
         badge="Advanced Vertical Mobility • German Engineering Know-How"
         title="Traction Drive Systems & Advanced Elevator Technology"

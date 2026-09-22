@@ -1,9 +1,11 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 import {
-  Maximize2,
-  X,
   Palette,
-  Check
+  Check,
+  Sparkles,
+  ArrowRight,
+  X
 } from "lucide-react";
 import {
   basicSeries,
@@ -15,37 +17,125 @@ import {
 } from "../data/interiorsSeriesData";
 import StickySidebarNav from "../components/common/StickySidebarNav";
 import CTASection from "../components/common/CTASection";
-import WhatsAppIcon from "../components/common/WhatsAppIcon";
+import Seo from "../components/common/Seo";
 import { assetUrl } from "../utils/assetPath";
 import PageHero from "../components/common/PageHero";
 
+// Accent color tokens reused across series card groups
+const ACCENTS = {
+  teal: {
+    badgeText: "text-brand-teal",
+    chipBg: "bg-teal-50",
+    chipBorder: "border-teal-200",
+    chipText: "text-teal-950",
+    check: "text-brand-teal",
+    button: "bg-slate-900 hover:bg-brand-teal"
+  },
+  orange: {
+    badgeText: "text-brand-orange",
+    chipBg: "bg-orange-50",
+    chipBorder: "border-orange-200",
+    chipText: "text-orange-950",
+    check: "text-brand-orange",
+    button: "bg-slate-900 hover:bg-brand-orange"
+  },
+  amber: {
+    badgeText: "text-amber-600",
+    chipBg: "bg-amber-50",
+    chipBorder: "border-amber-200",
+    chipText: "text-amber-950",
+    check: "text-amber-600",
+    button: "bg-slate-900 hover:bg-amber-600"
+  }
+};
+
+// Compact model summary card — image + name + tagline + 2-3 highlights + link to detail page
+function ModelSummaryCard({ model, accent = "teal" }) {
+  const a = ACCENTS[accent] || ACCENTS.teal;
+  return (
+    <div className="rounded-3xl border border-slate-200 bg-slate-50/60 overflow-hidden flex flex-col hover:shadow-md hover:border-slate-300 transition-all">
+      <div className="relative h-48 sm:h-56 w-full bg-slate-950">
+        <img
+          src={model.image}
+          alt={model.name}
+          className="w-full h-full object-cover"
+          loading="lazy"
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-slate-950/85 via-transparent to-transparent pointer-events-none" />
+        <span className="absolute top-3 left-3 px-2.5 py-0.5 rounded-full bg-slate-900/85 backdrop-blur-md text-[11px] font-black font-mono text-white border border-slate-700">
+          {model.model}
+        </span>
+        <div className="absolute bottom-3 left-4 right-4 text-white">
+          <h3 className="text-sm font-black leading-snug">{model.name}</h3>
+          <p className="text-[11px] text-slate-300 line-clamp-1">{model.tagline}</p>
+        </div>
+      </div>
+
+      <div className="p-4 sm:p-5 flex-1 flex flex-col space-y-3">
+        <div className={`p-3 rounded-xl ${a.chipBg} border ${a.chipBorder} space-y-1.5 flex-1`}>
+          <strong className={`text-[10px] font-bold ${a.chipText} uppercase tracking-wider block`}>
+            Design Highlights
+          </strong>
+          <ul className="space-y-1 text-xs text-slate-700">
+            {model.keyHighlights.slice(0, 3).map((h, i) => (
+              <li key={i} className="flex items-start space-x-1.5">
+                <Check className={`w-3.5 h-3.5 ${a.check} shrink-0 mt-0.5`} />
+                <span className="line-clamp-2">{h}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        <Link
+          to={`/products/interiors/${model.id}`}
+          className={`w-full px-4 py-2.5 rounded-xl ${a.button} text-white text-xs font-bold flex items-center justify-center space-x-2 transition-all`}
+        >
+          <span>View Full Details &amp; Specifications</span>
+          <ArrowRight className="w-3.5 h-3.5" />
+        </Link>
+      </div>
+    </div>
+  );
+}
+
 export default function Interior({ onOpenBrochure }) {
-  // Lightbox state for zooming images
+  // Lightbox state for zooming AG swatches & COP/LOP fixture images
   const [lightboxImg, setLightboxImg] = useState(null);
 
-  // Sticky navigation items
+  // Thumbnail quick-nav derived from the 11 real cabin models across all series
+  const thumbnailModels = [
+    ...basicSeries.models,
+    ...standardSeries.models,
+    ...semiDesignerSeries.models,
+    ...premiumSeries.models
+  ];
+
+  // Sticky navigation items — all anchors point within this index page
   const sidebarSections = [
+    { id: "cabin-finishes-section", label: "11 Cabin Finishes" },
     { id: "basic-series-section", label: "Basic Series (KEC-01)" },
     { id: "standard-series-section", label: "Standard Series (KEC-02)" },
     { id: "semi-series-section", label: "Semi Designer (KEC-03)" },
-    {
-      id: "premium-series-section",
-      label: "Premium Series",
-      subItems: premiumSeries.models.map((m) => ({
-        id: `model-${m.id}`,
-        label: m.model
-      }))
-    },
+    { id: "premium-series-section", label: "Premium Series (KEC-04 to 11)" },
     { id: "ag-series-section", label: "AG Surface Detailing" },
     { id: "cop-lop-section", label: "COP & LOP Fixtures" }
   ];
 
   return (
-    <div className="min-h-screen bg-slate-50 pt-8 pb-8">
+    <div className="min-h-screen bg-slate-50 pb-12">
+      <Seo
+        title="Interior Cabin Finishes"
+        description="Explore Krupa Elevators' 11 cabin interior models across Basic, Standard, Semi Designer, and Premium series, plus PVD laser-etched AG Series surface patterns and COP/LOP operating panels."
+      />
+
       {/* ========================================================================= */}
       {/* 1. PAGE HEADER                                                            */}
       {/* ========================================================================= */}
       <PageHero
+        breadcrumbs={[
+          { label: "Products", to: "/products" },
+          { label: "Interior Cabins" }
+        ]}
         icon={Palette}
         badge="Architectural Interior Aesthetics & Fixtures"
         title="Cabin Interior Series & Operating Panels"
@@ -63,13 +153,62 @@ export default function Interior({ onOpenBrochure }) {
 
           {/* Main Content Body */}
           <div className="flex-1 w-full min-w-0 space-y-16">
+
+            {/* Quick 11-Cabin Finishes Visual Explorer */}
+            <div
+              id="cabin-finishes-section"
+              className="bg-slate-900 rounded-3xl p-6 sm:p-8 text-white border border-slate-800 shadow-xl space-y-5 scroll-mt-24"
+            >
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-slate-800 pb-4">
+                <div>
+                  <span className="text-[11px] font-mono font-bold uppercase tracking-wider text-brand-teal block">
+                    Bespoke Architectural Finishes
+                  </span>
+                  <h2 className="text-xl sm:text-2xl font-black text-white">
+                    11 Cabin Finishes &amp; Material Series
+                  </h2>
+                </div>
+                <div className="flex items-center space-x-2 text-xs text-slate-400">
+                  <Sparkles className="w-4 h-4 text-brand-orange" />
+                  <span>Click any cabin to view full specifications</span>
+                </div>
+              </div>
+
+              {/* 11 Cabin Thumbnail Quick Navigation — links to real detail pages */}
+              <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-3">
+                {thumbnailModels.map((m) => (
+                  <Link
+                    key={m.id}
+                    to={`/products/interiors/${m.id}`}
+                    className="group relative rounded-2xl overflow-hidden border border-slate-800 bg-slate-950 p-1.5 hover:border-brand-teal transition-all text-left flex flex-col cursor-pointer"
+                  >
+                    <div className="h-24 sm:h-28 w-full rounded-xl overflow-hidden bg-slate-900 relative">
+                      <img
+                        src={m.image}
+                        alt={m.name}
+                        className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-slate-950/90 via-transparent to-transparent" />
+                      <span className="absolute bottom-1.5 left-2 text-[11px] font-black font-mono text-white">
+                        {m.model}
+                      </span>
+                    </div>
+                    <div className="p-1.5">
+                      <span className="text-[11px] font-semibold text-slate-300 group-hover:text-brand-teal transition-colors line-clamp-1">
+                        {m.tagline}
+                      </span>
+                    </div>
+                  </Link>
+                ))}
+              </div>
+            </div>
+
             {/* ===================================================================== */}
             {/* 1. BASIC SERIES (KEC-01)                                              */}
-            {/* Hierarchy: Series → Description → Image → Details → Specifications   */}
             {/* ===================================================================== */}
             <section
               id="basic-series-section"
-              className="bg-white rounded-3xl border border-slate-200 shadow-sm p-6 sm:p-8 space-y-8 scroll-mt-24"
+              className="bg-white rounded-3xl border border-slate-200 shadow-sm p-6 sm:p-8 space-y-6 scroll-mt-24"
             >
               <div className="border-b border-slate-100 pb-4 flex flex-col sm:flex-row sm:items-center justify-between gap-2">
                 <div>
@@ -79,81 +218,13 @@ export default function Interior({ onOpenBrochure }) {
                   <h2 className="text-xl sm:text-2xl font-black text-slate-900">
                     {basicSeries.seriesName}
                   </h2>
+                  <p className="text-xs text-slate-500 mt-0.5 max-w-2xl">{basicSeries.description}</p>
                 </div>
-                <span className="text-xs text-slate-500 font-medium bg-slate-100 px-3 py-1 rounded-full border border-slate-200">
-                  Model: {basicSeries.models[0].model}
-                </span>
               </div>
-
-              {/* Model Showcase */}
-              <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-                {/* Left: Image */}
-                <div className="lg:col-span-5 space-y-3">
-                  <div className="relative rounded-3xl overflow-hidden border border-slate-200 bg-slate-950 shadow-md group h-80 sm:h-96">
-                    <img
-                      src={basicSeries.models[0].image}
-                      alt={basicSeries.models[0].name}
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-transparent pointer-events-none" />
-                    <div className="absolute bottom-4 left-4 right-4 text-white">
-                      <h3 className="text-lg font-black">{basicSeries.models[0].name}</h3>
-                      <p className="text-xs text-slate-300">{basicSeries.models[0].tagline}</p>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Right: Description & Highlights */}
-                <div className="lg:col-span-7 space-y-5">
-                  <div className="space-y-2">
-                    <h3 className="text-xl font-black text-slate-900">
-                      {basicSeries.headline}
-                    </h3>
-                    <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">
-                      {basicSeries.models[0].clientOverview}
-                    </p>
-                  </div>
-
-                  {/* Key Highlights */}
-                  <div className="p-4 rounded-2xl bg-teal-50/60 border border-teal-200 space-y-2">
-                    <strong className="text-xs font-bold text-teal-950 uppercase tracking-wider block">
-                      Client-Focused Design Highlights:
-                    </strong>
-                    <ul className="space-y-1.5 text-xs text-slate-700">
-                      {basicSeries.models[0].keyHighlights.map((h, i) => (
-                        <li key={i} className="flex items-start space-x-2">
-                          <Check className="w-3.5 h-3.5 text-brand-teal shrink-0 mt-0.5" />
-                          <span>{h}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-
-                  {/* Dedicated Isolated Specifications Table */}
-                  <div className="space-y-2 pt-2">
-                    <span className="text-xs font-bold text-slate-900 block">
-                      Series Mechanical & Material Specifications:
-                    </span>
-                    <div className="overflow-x-auto rounded-2xl border border-slate-200">
-                      <table className="w-full text-left text-xs">
-                        <thead className="bg-slate-100 text-slate-700 font-bold border-b border-slate-200">
-                          <tr>
-                            <th className="p-3">Component</th>
-                            <th className="p-3">Material & Finish Specification</th>
-                          </tr>
-                        </thead>
-                        <tbody className="divide-y divide-slate-100 text-slate-600">
-                          {basicSeries.models[0].specifications.map((row, idx) => (
-                            <tr key={idx} className="hover:bg-slate-50">
-                              <td className="p-3 font-semibold text-slate-800">{row.parameter}</td>
-                              <td className="p-3">{row.value}</td>
-                            </tr>
-                          ))}
-                        </tbody>
-                      </table>
-                    </div>
-                  </div>
-                </div>
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+                {basicSeries.models.map((m) => (
+                  <ModelSummaryCard key={m.id} model={m} accent="teal" />
+                ))}
               </div>
             </section>
 
@@ -162,7 +233,7 @@ export default function Interior({ onOpenBrochure }) {
             {/* ===================================================================== */}
             <section
               id="standard-series-section"
-              className="bg-white rounded-3xl border border-slate-200 shadow-sm p-6 sm:p-8 space-y-8 scroll-mt-24"
+              className="bg-white rounded-3xl border border-slate-200 shadow-sm p-6 sm:p-8 space-y-6 scroll-mt-24"
             >
               <div className="border-b border-slate-100 pb-4 flex flex-col sm:flex-row sm:items-center justify-between gap-2">
                 <div>
@@ -172,81 +243,13 @@ export default function Interior({ onOpenBrochure }) {
                   <h2 className="text-xl sm:text-2xl font-black text-slate-900">
                     {standardSeries.seriesName}
                   </h2>
+                  <p className="text-xs text-slate-500 mt-0.5 max-w-2xl">{standardSeries.description}</p>
                 </div>
-                <span className="text-xs text-slate-500 font-medium bg-slate-100 px-3 py-1 rounded-full border border-slate-200">
-                  Model: {standardSeries.models[0].model}
-                </span>
               </div>
-
-              {/* Model Showcase */}
-              <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-                {/* Left: Image */}
-                <div className="lg:col-span-5 space-y-3">
-                  <div className="relative rounded-3xl overflow-hidden border border-slate-200 bg-slate-950 shadow-md group h-80 sm:h-96">
-                    <img
-                      src={standardSeries.models[0].image}
-                      alt={standardSeries.models[0].name}
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-transparent pointer-events-none" />
-                    <div className="absolute bottom-4 left-4 right-4 text-white">
-                      <h3 className="text-lg font-black">{standardSeries.models[0].name}</h3>
-                      <p className="text-xs text-slate-300">{standardSeries.models[0].tagline}</p>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Right: Description & Highlights */}
-                <div className="lg:col-span-7 space-y-5">
-                  <div className="space-y-2">
-                    <h3 className="text-xl font-black text-slate-900">
-                      {standardSeries.headline}
-                    </h3>
-                    <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">
-                      {standardSeries.models[0].clientOverview}
-                    </p>
-                  </div>
-
-                  {/* Key Highlights */}
-                  <div className="p-4 rounded-2xl bg-orange-50/60 border border-orange-200 space-y-2">
-                    <strong className="text-xs font-bold text-orange-950 uppercase tracking-wider block">
-                      Client-Focused Design Highlights:
-                    </strong>
-                    <ul className="space-y-1.5 text-xs text-slate-700">
-                      {standardSeries.models[0].keyHighlights.map((h, i) => (
-                        <li key={i} className="flex items-start space-x-2">
-                          <Check className="w-3.5 h-3.5 text-brand-orange shrink-0 mt-0.5" />
-                          <span>{h}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-
-                  {/* Dedicated Isolated Specifications Table */}
-                  <div className="space-y-2 pt-2">
-                    <span className="text-xs font-bold text-slate-900 block">
-                      Series Mechanical & Material Specifications:
-                    </span>
-                    <div className="overflow-x-auto rounded-2xl border border-slate-200">
-                      <table className="w-full text-left text-xs">
-                        <thead className="bg-slate-100 text-slate-700 font-bold border-b border-slate-200">
-                          <tr>
-                            <th className="p-3">Component</th>
-                            <th className="p-3">Material & Finish Specification</th>
-                          </tr>
-                        </thead>
-                        <tbody className="divide-y divide-slate-100 text-slate-600">
-                          {standardSeries.models[0].specifications.map((row, idx) => (
-                            <tr key={idx} className="hover:bg-slate-50">
-                              <td className="p-3 font-semibold text-slate-800">{row.parameter}</td>
-                              <td className="p-3">{row.value}</td>
-                            </tr>
-                          ))}
-                        </tbody>
-                      </table>
-                    </div>
-                  </div>
-                </div>
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+                {standardSeries.models.map((m) => (
+                  <ModelSummaryCard key={m.id} model={m} accent="orange" />
+                ))}
               </div>
             </section>
 
@@ -255,7 +258,7 @@ export default function Interior({ onOpenBrochure }) {
             {/* ===================================================================== */}
             <section
               id="semi-series-section"
-              className="bg-white rounded-3xl border border-slate-200 shadow-sm p-6 sm:p-8 space-y-8 scroll-mt-24"
+              className="bg-white rounded-3xl border border-slate-200 shadow-sm p-6 sm:p-8 space-y-6 scroll-mt-24"
             >
               <div className="border-b border-slate-100 pb-4 flex flex-col sm:flex-row sm:items-center justify-between gap-2">
                 <div>
@@ -265,81 +268,13 @@ export default function Interior({ onOpenBrochure }) {
                   <h2 className="text-xl sm:text-2xl font-black text-slate-900">
                     {semiDesignerSeries.seriesName}
                   </h2>
+                  <p className="text-xs text-slate-500 mt-0.5 max-w-2xl">{semiDesignerSeries.description}</p>
                 </div>
-                <span className="text-xs text-slate-500 font-medium bg-slate-100 px-3 py-1 rounded-full border border-slate-200">
-                  Model: {semiDesignerSeries.models[0].model}
-                </span>
               </div>
-
-              {/* Model Showcase */}
-              <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-                {/* Left: Image */}
-                <div className="lg:col-span-5 space-y-3">
-                  <div className="relative rounded-3xl overflow-hidden border border-slate-200 bg-slate-950 shadow-md group h-80 sm:h-96">
-                    <img
-                      src={semiDesignerSeries.models[0].image}
-                      alt={semiDesignerSeries.models[0].name}
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-transparent pointer-events-none" />
-                    <div className="absolute bottom-4 left-4 right-4 text-white">
-                      <h3 className="text-lg font-black">{semiDesignerSeries.models[0].name}</h3>
-                      <p className="text-xs text-slate-300">{semiDesignerSeries.models[0].tagline}</p>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Right: Description & Highlights */}
-                <div className="lg:col-span-7 space-y-5">
-                  <div className="space-y-2">
-                    <h3 className="text-xl font-black text-slate-900">
-                      {semiDesignerSeries.headline}
-                    </h3>
-                    <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">
-                      {semiDesignerSeries.models[0].clientOverview}
-                    </p>
-                  </div>
-
-                  {/* Key Highlights */}
-                  <div className="p-4 rounded-2xl bg-amber-50/60 border border-amber-200 space-y-2">
-                    <strong className="text-xs font-bold text-amber-950 uppercase tracking-wider block">
-                      Client-Focused Design Highlights:
-                    </strong>
-                    <ul className="space-y-1.5 text-xs text-slate-700">
-                      {semiDesignerSeries.models[0].keyHighlights.map((h, i) => (
-                        <li key={i} className="flex items-start space-x-2">
-                          <Check className="w-3.5 h-3.5 text-amber-600 shrink-0 mt-0.5" />
-                          <span>{h}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-
-                  {/* Dedicated Isolated Specifications Table */}
-                  <div className="space-y-2 pt-2">
-                    <span className="text-xs font-bold text-slate-900 block">
-                      Series Mechanical & Material Specifications:
-                    </span>
-                    <div className="overflow-x-auto rounded-2xl border border-slate-200">
-                      <table className="w-full text-left text-xs">
-                        <thead className="bg-slate-100 text-slate-700 font-bold border-b border-slate-200">
-                          <tr>
-                            <th className="p-3">Component</th>
-                            <th className="p-3">Material & Finish Specification</th>
-                          </tr>
-                        </thead>
-                        <tbody className="divide-y divide-slate-100 text-slate-600">
-                          {semiDesignerSeries.models[0].specifications.map((row, idx) => (
-                            <tr key={idx} className="hover:bg-slate-50">
-                              <td className="p-3 font-semibold text-slate-800">{row.parameter}</td>
-                              <td className="p-3">{row.value}</td>
-                            </tr>
-                          ))}
-                        </tbody>
-                      </table>
-                    </div>
-                  </div>
-                </div>
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+                {semiDesignerSeries.models.map((m) => (
+                  <ModelSummaryCard key={m.id} model={m} accent="amber" />
+                ))}
               </div>
             </section>
 
@@ -348,7 +283,7 @@ export default function Interior({ onOpenBrochure }) {
             {/* ===================================================================== */}
             <section
               id="premium-series-section"
-              className="bg-white rounded-3xl border border-slate-200 shadow-sm p-6 sm:p-8 space-y-8 scroll-mt-24"
+              className="bg-white rounded-3xl border border-slate-200 shadow-sm p-6 sm:p-8 space-y-6 scroll-mt-24"
             >
               <div className="border-b border-slate-100 pb-4 flex flex-col sm:flex-row sm:items-center justify-between gap-2">
                 <div>
@@ -358,108 +293,17 @@ export default function Interior({ onOpenBrochure }) {
                   <h2 className="text-xl sm:text-2xl font-black text-slate-900">
                     {premiumSeries.seriesName}
                   </h2>
-                  <p className="text-xs text-slate-500 mt-0.5">
+                  <p className="text-xs text-slate-500 mt-0.5 max-w-2xl">
                     {premiumSeries.headline}
                   </p>
                 </div>
-                <span className="text-xs font-bold text-brand-teal bg-teal-50 border border-teal-200 px-3 py-1 rounded-full">
+                <span className="text-xs font-bold text-brand-teal bg-teal-50 border border-teal-200 px-3 py-1 rounded-full shrink-0">
                   8 Bespoke Masterpieces
                 </span>
               </div>
-
-              {/* Open Field Display of All 8 Premium Cabin Models */}
-              <div className="space-y-12 divide-y divide-slate-200">
-                {premiumSeries.models.map((m, idx) => (
-                  <div
-                    key={m.id}
-                    id={`model-${m.id}`}
-                    className={`grid grid-cols-1 lg:grid-cols-12 gap-8 items-start scroll-mt-28 ${idx > 0 ? "pt-12" : ""
-                      }`}
-                  >
-                    {/* Left: Image with Zoom */}
-                    <div className="lg:col-span-5 space-y-3">
-                      <div className="relative rounded-3xl overflow-hidden border border-slate-200 bg-slate-950 shadow-md group h-80 sm:h-96">
-                        <img
-                          src={m.image}
-                          alt={m.name}
-                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
-                        />
-                        <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-transparent pointer-events-none" />
-                        <div className="absolute top-3 left-3 bg-slate-900/85 backdrop-blur-md px-3 py-1 rounded-full text-[10px] font-bold text-teal-300 border border-slate-700">
-                          {m.model}
-                        </div>
-                        <button
-                          onClick={() => setLightboxImg(m.image)}
-                          className="absolute top-3 right-3 p-2 rounded-xl bg-slate-900/80 hover:bg-slate-900 text-white transition-all cursor-pointer"
-                          title="Zoom Cabin"
-                        >
-                          <Maximize2 className="w-4 h-4" />
-                        </button>
-                        <div className="absolute bottom-4 left-4 right-4 text-white">
-                          <h3 className="text-lg font-black">{m.name}</h3>
-                          <p className="text-xs text-slate-300">{m.tagline}</p>
-                        </div>
-                      </div>
-                    </div>
-
-                    {/* Right: Description, Highlights & Isolated Specs Table */}
-                    <div className="lg:col-span-7 space-y-5">
-                      <div className="space-y-2">
-                        <div className="flex items-center gap-2">
-                          <span className="px-2.5 py-0.5 rounded-full bg-teal-50 text-brand-teal text-xs font-bold border border-teal-200">
-                            {m.model}
-                          </span>
-                          <span className="text-xs text-slate-500 font-medium">Bespoke Stainless Steel Theme</span>
-                        </div>
-                        <h3 className="text-xl font-black text-slate-900">
-                          {m.name}
-                        </h3>
-                        <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">
-                          {m.clientOverview}
-                        </p>
-                      </div>
-
-                      {/* Key Highlights */}
-                      <div className="p-4 rounded-2xl bg-teal-50/60 border border-teal-200 space-y-2">
-                        <strong className="text-xs font-bold text-teal-950 uppercase tracking-wider block">
-                          Architectural Highlights:
-                        </strong>
-                        <ul className="space-y-1.5 text-xs text-slate-700">
-                          {m.keyHighlights.map((h, i) => (
-                            <li key={i} className="flex items-start space-x-2">
-                              <Check className="w-3.5 h-3.5 text-brand-teal shrink-0 mt-0.5" />
-                              <span>{h}</span>
-                            </li>
-                          ))}
-                        </ul>
-                      </div>
-
-                      {/* Dedicated Isolated Specifications Table for this Model */}
-                      <div className="space-y-2 pt-2">
-                        <span className="text-xs font-bold text-slate-900 block">
-                          {m.model} Exact Material Specifications:
-                        </span>
-                        <div className="overflow-x-auto rounded-2xl border border-slate-200">
-                          <table className="w-full text-left text-xs">
-                            <thead className="bg-slate-100 text-slate-700 font-bold border-b border-slate-200">
-                              <tr>
-                                <th className="p-3">Component</th>
-                                <th className="p-3">Material & Finish Specification</th>
-                              </tr>
-                            </thead>
-                            <tbody className="divide-y divide-slate-100 text-slate-600">
-                              {m.specifications.map((row, rIdx) => (
-                                <tr key={rIdx} className="hover:bg-slate-50">
-                                  <td className="p-3 font-semibold text-slate-800">{row.parameter}</td>
-                                  <td className="p-3">{row.value}</td>
-                                </tr>
-                              ))}
-                            </tbody>
-                          </table>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+                {premiumSeries.models.map((m) => (
+                  <ModelSummaryCard key={m.id} model={m} accent="teal" />
                 ))}
               </div>
             </section>

@@ -6,13 +6,53 @@ import {
   Layers,
   CheckCircle2,
   Users,
-  Radio
+  Radio,
+  AlertTriangle,
+  Clock,
+  Sparkles,
+  ClipboardList,
+  ArrowRight
 } from "lucide-react";
 import { servicesMaster } from "../data/servicesMaster";
-import { companyData } from "../data/companyData";
 import ScrollReveal from "../components/ScrollReveal";
 import PageHero from "../components/common/PageHero";
 import CTASection from "../components/common/CTASection";
+import Seo from "../components/common/Seo";
+
+const teasers = [
+  {
+    to: "/services/amc-maintenance",
+    icon: Wrench,
+    badge: "Maintenance Contracts",
+    title: "AMC & Maintenance",
+    desc: "Three SLA-backed Annual Maintenance Contract tiers — Routine, Semi-Comprehensive, and Comprehensive — backed by certified technicians, supervisors, and genuine spare parts.",
+    cta: "View AMC Packages"
+  },
+  {
+    to: "/services/modernization",
+    icon: Sparkles,
+    badge: "Elevator Modernization",
+    title: "Modernization & Retrofitting",
+    desc: "Upgrade aging elevators with V3F drives, microprocessor controllers, automatic door systems, and refreshed cabin interiors without rebuilding the hoistway.",
+    cta: "Explore Modernization"
+  },
+  {
+    to: "/services/installation",
+    icon: ClipboardList,
+    badge: "Engineering Workflow",
+    title: "Installation Process",
+    desc: "Our 8-step process — from requirement consultation and building survey through manufacturing, on-site installation, and commissioning.",
+    cta: "See the Process"
+  },
+  {
+    to: "/services/emergency-support",
+    icon: AlertTriangle,
+    badge: "24/7 Breakdown Dispatch",
+    title: "Emergency Support",
+    desc: "30–45 minute emergency response guarantee with dedicated mobile service vans across Ahmedabad, Gandhinagar, and Sanand/Bavla.",
+    cta: "Get Emergency Help"
+  }
+];
 
 export default function Services() {
   const pillarIcons = {
@@ -24,17 +64,19 @@ export default function Services() {
   };
 
   return (<>
-    <div className="min-h-screen bg-slate-50 pt-8 pb-8 overflow-x-hidden">
+    <Seo
+      title="Services & Maintenance"
+      description="Professional elevator installation support, AMC maintenance contracts, modernization, and 24/7 emergency breakdown support from Krupa Elevators."
+    />
+    <div className="min-h-screen bg-slate-50 pb-12 overflow-x-hidden">
       {/* Page Hero */}
-
       <PageHero
+        breadcrumbs={[{ label: "Services" }]}
         icon={Wrench}
         badge="Certified Engineering • Lifecycle Support"
         title="Reliable Support Throughout the Life of Your Elevator"
-        description="Our service team provides professional installation support, preventive maintenance, troubleshooting, and ongoing elevator care. We combine trained personnel, supervisory support, genuine spare parts, and monitoring solutions to maintain reliable elevator performance."
-
+        description={servicesMaster.subheadline}
       />
-
 
       <div className="max-w-7xl mx-auto pt-4 px-4 sm:px-6 lg:px-8 space-y-16">
         {/* 5 Service Pillars */}
@@ -97,112 +139,88 @@ export default function Services() {
           </div>
         </div>
 
-        {/* AMC Packages Grid */}
+        {/* Service Sub-Pages Teaser Grid */}
         <div className="space-y-8">
           <div>
             <span className="text-xs font-bold text-brand-teal uppercase tracking-widest block mb-1">
-              Maintenance Contracts
+              Explore Our Services
             </span>
             <h2 className="text-2xl sm:text-3xl font-black text-slate-900">
-              Annual Maintenance Contract (AMC) Packages
+              Maintenance, Modernization & Support
             </h2>
             <p className="text-xs sm:text-sm text-slate-600 max-w-2xl mt-1">
-              Transparent, SLA-backed maintenance plans tailored to residential societies, high-traffic commercial complexes, and 24/7 hospitals.
+              Dedicated pages for each stage of your elevator's lifecycle — from AMC contracts to emergency dispatch.
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {servicesMaster.amcPackages.map((pkg) => (
-              <div
-                key={pkg.id}
-                className={`rounded-3xl p-6 sm:p-8 flex flex-col justify-between border transition-all ${pkg.popular
-                  ? "bg-slate-900 text-white border-brand-teal shadow-xl scale-[1.02]"
-                  : "bg-white text-slate-900 border-slate-200 shadow-xs"
-                  }`}
-              >
-                <div className="space-y-4">
-                  <div className="flex justify-between items-center">
-                    <span
-                      className={`text-[10px] font-bold uppercase tracking-wider px-3 py-1 rounded-full ${pkg.popular
-                        ? "bg-brand-teal text-white"
-                        : "bg-slate-100 text-slate-600"
-                        }`}
-                    >
-                      {pkg.tag}
-                    </span>
-                    <span className="text-xs font-mono text-slate-400">
-                      {pkg.priceIndicator}
-                    </span>
-                  </div>
-
-                  <h3 className="text-xl font-bold">{pkg.name}</h3>
-                  <p
-                    className={`text-xs leading-relaxed ${pkg.popular ? "text-slate-300" : "text-slate-600"
-                      }`}
-                  >
-                    Ideal for: <strong>{pkg.idealFor}</strong>
-                  </p>
-
-                  <div className="pt-4 border-t border-slate-100 dark:border-slate-800 space-y-2 text-xs">
-                    {pkg.features.map((f, fIdx) => (
-                      <div key={fIdx} className="flex items-start space-x-2">
-                        <CheckCircle2
-                          className={`w-4 h-4 shrink-0 mt-0.5 ${pkg.popular ? "text-teal-300" : "text-brand-teal"
-                            }`}
-                        />
-                        <span className="leading-snug">{f}</span>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-
-                <div className="pt-6 mt-6 border-t border-slate-100 dark:border-slate-800">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {teasers.map((t) => {
+              const Icon = t.icon;
+              return (
+                <ScrollReveal
+                  key={t.to}
+                  direction="up"
+                  distance={20}
+                  className="h-full"
+                >
                   <Link
-                    to="/contact"
-                    className={`w-full py-3 rounded-xl text-xs font-bold text-center block transition-colors ${pkg.popular
-                      ? "bg-brand-orange hover:bg-brand-orange-hover text-white shadow-md"
-                      : "bg-slate-900 hover:bg-brand-teal text-white"
-                      }`}
+                    to={t.to}
+                    className="group h-full bg-white rounded-3xl border border-slate-200 shadow-xs p-6 sm:p-8 hover:border-brand-teal/60 hover:shadow-lg transition-all flex flex-col justify-between space-y-4"
                   >
-                    Get Package Quote
+                    <div className="space-y-3">
+                      <div className="flex items-center justify-between">
+                        <span className="text-[10px] font-bold uppercase tracking-wider px-3 py-1 rounded-full bg-slate-100 text-slate-600">
+                          {t.badge}
+                        </span>
+                        <div className="w-10 h-10 rounded-xl bg-slate-100 text-slate-700 flex items-center justify-center group-hover:bg-brand-teal group-hover:text-white transition-colors">
+                          <Icon className="w-5 h-5" />
+                        </div>
+                      </div>
+
+                      <h3 className="text-lg font-bold text-slate-900">{t.title}</h3>
+                      <p className="text-xs text-slate-600 leading-relaxed">
+                        {t.desc}
+                      </p>
+                    </div>
+
+                    <div className="flex items-center space-x-2 text-xs font-bold text-brand-teal pt-2 border-t border-slate-100">
+                      <span>{t.cta}</span>
+                      <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
+                    </div>
                   </Link>
+                </ScrollReveal>
+              );
+            })}
+          </div>
+
+          {/* Compact emergency strip */}
+          <div className="bg-gradient-to-r from-slate-950 via-slate-900 to-slate-950 rounded-3xl p-6 sm:p-8 border border-slate-800 shadow-xl text-white relative overflow-hidden">
+            <div className="absolute -right-10 -bottom-10 w-56 h-56 bg-brand-orange/15 rounded-full blur-3xl pointer-events-none" />
+            <div className="relative z-10 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+              <div className="flex items-center space-x-3">
+                <div className="inline-flex items-center space-x-2 px-3.5 py-1 rounded-full bg-red-500/15 border border-red-500/30 text-red-400 text-xs font-bold uppercase tracking-wider shrink-0">
+                  <AlertTriangle className="w-3.5 h-3.5" />
+                  <span>24/7 Dispatch</span>
                 </div>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        {/* Modernization & Retrofitting Services */}
-        <div className="bg-slate-900 rounded-3xl p-6 sm:p-10 text-white border border-slate-800 space-y-6 shadow-xl">
-          <div className="space-y-1">
-            <span className="text-xs font-bold text-teal-300 uppercase tracking-widest block">
-              Elevator Modernization
-            </span>
-            <h2 className="text-2xl sm:text-3xl font-black">
-              Upgrade Aging Elevators with Green Tech
-            </h2>
-            <p className="text-xs sm:text-sm text-slate-300 max-w-2xl">
-              Transform existing legacy elevators with modern V3F drives, automatic doors, microprocessor controllers, and luxury cabin aesthetics without rebuilding the entire concrete hoistway.
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
-            {servicesMaster.modernizationServices.map((mod, idx) => (
-              <div
-                key={idx}
-                className="p-5 rounded-2xl bg-slate-800/80 border border-slate-700/80 space-y-2"
-              >
-                <h4 className="text-sm font-bold text-white">{mod.title}</h4>
-                <p className="text-xs text-slate-300 leading-relaxed">
-                  {mod.desc}
+                <p className="text-xs sm:text-sm text-slate-300">
+                  <span className="flex items-center gap-1.5 font-mono text-slate-400 mb-0.5">
+                    <Clock className="w-3.5 h-3.5 text-brand-orange" />
+                    30–45 minute emergency response guarantee
+                  </span>
+                  Breakdown? Get immediate help across Ahmedabad, Gandhinagar & Sanand/Bavla.
                 </p>
               </div>
-            ))}
+              <Link
+                to="/services/emergency-support"
+                className="inline-flex items-center justify-center space-x-2 px-6 py-3 rounded-xl bg-brand-orange hover:bg-brand-orange-hover text-white font-bold text-xs sm:text-sm shadow-md transition-all shrink-0"
+              >
+                <span>Emergency Support</span>
+                <ArrowRight className="w-4 h-4" />
+              </Link>
+            </div>
           </div>
         </div>
       </div>
-
-
     </div>
     <CTASection
       title="Schedule an On-Site Maintenance & Safety Audit"
